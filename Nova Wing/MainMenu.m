@@ -1,0 +1,575 @@
+//
+//  MyScene.m
+//  Nova Wing
+//
+//  Created by Bryan Todd on 8/11/14.
+//  Copyright (c) 2014 FIV3 Interactive, LLC. All rights reserved.
+//
+
+#import "MainMenu.h"
+#import "LevelOne.h"
+#import "LevelTwo.h"
+
+static const float BG_VELOCITY = 10.0;
+
+static inline CGPoint CGPointAdd(const CGPoint a, const CGPoint b)
+{
+    return CGPointMake(a.x + b.x, a.y + b.y);
+}
+
+static inline CGPoint CGPointMultiplyScalar(const CGPoint a, const CGFloat b)
+{
+    return CGPointMake(a.x * b, a.y * b);
+}
+
+
+@implementation MainMenu
+
+NSTimeInterval _lastUpdateTime;
+NSTimeInterval _dt;
+float volNum;
+
+-(id)initWithSize:(CGSize)size {
+    if (self = [super initWithSize:size]) {
+        /* Setup your scene here */
+        [GameState sharedGameData].levelIndex = 0;
+        [GameState sharedGameData].lvlIndexMax = 2;
+        
+        [self initializeScrollingBackground];
+        
+        [self addChild: [self addTitleNode]];
+        [self addChild: [self startButtonNode]];
+        [self addChild: [self leaderButtonNode]];
+        [self addChild: [self settingsButtonNode]];
+        [self createAudio];
+    }
+    return self;
+}
+
+#pragma mark --Create Background
+
+-(void)initializeScrollingBackground
+{
+    for (int i = 0; i < 2; i ++) {
+        SKSpriteNode *starBG = [SKSpriteNode spriteNodeWithImageNamed:@"Stars-Seamless.jpg"];
+        starBG.position = CGPointMake(0, i * starBG.size.height);
+        starBG.anchorPoint = CGPointZero;
+        starBG.name = @"starBG";
+        [self addChild:starBG];
+    }
+}
+
+-(void)moveBG
+{
+    [self enumerateChildNodesWithName:@"starBG" usingBlock: ^(SKNode *node, BOOL *stop)
+     {
+         SKSpriteNode * starBG = (SKSpriteNode *) node;
+         CGPoint bgVelocity = CGPointMake(0, -BG_VELOCITY);
+         CGPoint amtToMove = CGPointMultiplyScalar(bgVelocity,_dt);
+         starBG.position = CGPointAdd(starBG.position, amtToMove);
+         
+         //Checks if bg node is completely scrolled of the screen, if yes then put it at the end of the other node
+         if (starBG.position.y <= -starBG.size.height)
+         {
+             starBG.position = CGPointMake(starBG.position.x,
+                                           starBG.position.y + starBG.size.height*2);
+         }
+     }];
+}
+
+-(SKSpriteNode *)addTitleNode
+{
+    titleImage = [SKSpriteNode spriteNodeWithImageNamed:@"Title.png"];
+    titleImage.position = CGPointMake(self.size.width/2, 400);
+    titleImage.xScale = 0.5;
+    titleImage.yScale = 0.5;
+    return titleImage;
+}
+
+#pragma mark --Create Buttons
+-(SKSpriteNode *)startButtonNode
+{
+    startButton = [SKSpriteNode spriteNodeWithTexture: [SKTexture textureWithImageNamed:@"buttonStart.png"]];
+    startButton.position = CGPointMake(self.size.width/2-300, 250);
+    startButton.xScale = 0.5;
+    startButton.yScale = 0.5;
+    startButton.name = @"_startButton";
+    SKAction *buttonWait = [SKAction waitForDuration:1.0];
+    SKAction *buttonShift = [SKAction moveTo:CGPointMake(self.size.width/2, 250) duration:0.75];
+    buttonShift.timingMode = SKActionTimingEaseInEaseOut;
+    SKAction *buttonSequence = [SKAction sequence:@[buttonWait,buttonShift]];
+    [startButton runAction: buttonSequence];
+    return startButton;
+}
+
+-(SKSpriteNode *)leaderButtonNode
+{
+    leaderButton = [SKSpriteNode spriteNodeWithImageNamed:@"buttonLeaderboard.png"];
+    leaderButton.position = CGPointMake(self.size.width/2-300, 190);
+    leaderButton.xScale = 0.5;
+    leaderButton.yScale = 0.5;
+    leaderButton.name = @"_leaderButton";
+    SKAction *buttonWait = [SKAction waitForDuration:1.25];
+    SKAction *buttonShift = [SKAction moveTo:CGPointMake(self.size.width/2, 190) duration:0.75];
+    buttonShift.timingMode = SKActionTimingEaseInEaseOut;
+    SKAction *buttonSequence = [SKAction sequence:@[buttonWait,buttonShift]];
+    [leaderButton runAction: buttonSequence];
+    return leaderButton;
+}
+
+-(SKSpriteNode *)settingsButtonNode
+{
+    settingsButton = [SKSpriteNode spriteNodeWithImageNamed:@"buttonSettings.png"];
+    settingsButton.position = CGPointMake(self.size.width/2-300, 130);
+    settingsButton.xScale = 0.5;
+    settingsButton.yScale = 0.5;
+    settingsButton.name = @"_settingsButton";
+    SKAction *buttonWait = [SKAction waitForDuration:1.5];
+    SKAction *buttonShift = [SKAction moveTo:CGPointMake(self.size.width/2, 130) duration:0.75];
+    buttonShift.timingMode = SKActionTimingEaseInEaseOut;
+    SKAction *buttonSequence = [SKAction sequence:@[buttonWait,buttonShift]];
+    [settingsButton runAction: buttonSequence];
+    return settingsButton;
+}
+
+-(SKLabelNode *)backToMainButton
+{
+    
+    SKNode *mainButtonHouse;
+    mainButtonHouse.alpha = 0.0;
+    
+    SKLabelNode *backToMain = [SKLabelNode labelNodeWithFontNamed:@"SF Movie Poster"];
+    backToMain.alpha = 0.0;
+    backToMain.position = CGPointMake(60.0f, 520.0f);
+    backToMain.fontColor = [SKColor whiteColor];
+    backToMain.fontSize = 30;
+    backToMain.name = @"backToMain";
+    backToMain.text = @"BACK to MAIN";
+    
+    [self fadeInNode:backToMain withWait:1.0 fadeAlphaTo:1.0 fadeAlphaWithDuration:0.3];
+    
+    return backToMain;
+}
+
+#pragma mark --Create Audio
+-(void)createAudio
+{
+    volNum = 1.0;
+    NSString *soundFile = [[NSBundle mainBundle] pathForResource:@"menuMusic" ofType:@"m4a"];
+    NSURL *soundFileUrl = [NSURL fileURLWithPath:soundFile];
+    bgPlayer = [[AVAudioPlayer alloc] initWithContentsOfURL:soundFileUrl error:nil];
+    bgPlayer.numberOfLoops = -1;
+    bgPlayer.volume = volNum;
+    
+    [bgPlayer play];
+}
+
+#pragma mark --Level Select
+
+-(SKSpriteNode *)createRightArrowWithWait: (double)waitTime
+{
+    rightArrow = [SKSpriteNode spriteNodeWithImageNamed:@"arrowR"];
+    rightArrow.position = CGPointMake((self.size.width / 8)*7.5, self.size.height / 2);
+    rightArrow.name = @"rightArrow";
+    rightArrow.alpha = 0;
+    rightArrow.xScale = 0.7;
+    rightArrow.yScale = 0.7;
+    rightArrow.zPosition = 10;
+
+    [self fadeInNode:rightArrow withWait:waitTime fadeAlphaTo:1.0 fadeAlphaWithDuration:0.5];
+    
+    return rightArrow;
+}
+
+-(SKSpriteNode *)createLeftArrowWithWait: (double)waitTime
+{
+    leftArrow = [SKSpriteNode spriteNodeWithImageNamed:@"arrowL"];
+    leftArrow.position = CGPointMake((self.size.width / 8)*0.5, self.size.height /2);
+    leftArrow.name = @"leftArrow";
+    leftArrow.alpha = 0;
+    leftArrow.xScale = 0.7;
+    leftArrow.yScale = 0.7;
+    leftArrow.zPosition = 10;
+    
+    [self fadeInNode:leftArrow withWait:waitTime fadeAlphaTo:1.0 fadeAlphaWithDuration:0.5];
+    
+    return leftArrow;
+}
+
+-(SKSpriteNode *)levelOneButtonWithMultiplier: (double) PosMod
+{
+    // Create Level 1 Thumbnail
+    levelOneThumb = [SKSpriteNode spriteNodeWithImageNamed:@"Level-1.png"];
+    levelOneThumb.position = CGPointMake(self.size.width * PosMod, self.size.height/2);
+    levelOneThumb.name = @"_levelOne";
+    
+    // Add level name.
+    SKLabelNode *levelOneName = [SKLabelNode labelNodeWithFontNamed:@"SF Movie Poster"];
+    levelOneName.fontSize = 40;
+    levelOneName.text = @"Event Horizon";
+    levelOneName.position = CGPointMake(0, 125);
+    [levelOneThumb addChild:levelOneName];
+    
+    SKLabelNode *highScore = [[SKLabelNode alloc] initWithFontNamed:@"SF Movie Poster"];
+    highScore.position = CGPointMake(0, -150);
+    highScore.fontColor = [SKColor whiteColor];
+    highScore.fontSize = 35;
+    highScore.horizontalAlignmentMode = SKLabelHorizontalAlignmentModeCenter;
+    highScore.zPosition = 101;
+    highScore.text = [NSString stringWithFormat:@"High Score: %li", [GameState sharedGameData].highScoreL1];
+    [levelOneThumb addChild:highScore];
+    
+    return levelOneThumb;
+}
+
+-(SKSpriteNode *)levelTwoButton
+{
+    levelTwoThumb = [SKSpriteNode spriteNodeWithImageNamed:@"Level-2"];
+    levelTwoThumb.position = CGPointMake(self.size.width * 1.5, self.size.height / 2);
+    levelTwoThumb.name = @"_levelTwo";
+    
+    SKLabelNode *levelTwoName = [SKLabelNode labelNodeWithFontNamed:@"SF Movie Poster"];
+    levelTwoName.fontSize = 40;
+    levelTwoName.text = @"The Whispers";
+    levelTwoName.position = CGPointMake(0, 125);
+    [levelTwoThumb addChild:levelTwoName];
+    
+    SKLabelNode *highScore = [[SKLabelNode alloc] initWithFontNamed:@"SF Movie Poster"];
+    highScore.position = CGPointMake(0, -150);
+    highScore.fontColor = [SKColor whiteColor];
+    highScore.fontSize = 35;
+    highScore.horizontalAlignmentMode = SKLabelHorizontalAlignmentModeCenter;
+    highScore.zPosition = 101;
+    highScore.text = [NSString stringWithFormat:@"High Score: %li", [GameState sharedGameData].highScoreL2];
+    [levelTwoThumb addChild:highScore];
+    
+    return levelTwoThumb;
+}
+
+#pragma mark --Settings
+
+-(void)musicVolumeLabel {
+    SKLabelNode *musicVolume = [SKLabelNode labelNodeWithFontNamed:@"SF Movie Poster"];
+    musicVolume.fontColor = [SKColor whiteColor];
+    musicVolume.fontSize = 50;
+    musicVolume.position = CGPointMake(self.size.width * 1.5, (self.size.height / 8) * 6);
+    musicVolume.horizontalAlignmentMode = SKLabelHorizontalAlignmentModeCenter;
+    musicVolume.text = @"Music Volume";
+    
+    [self addChild:musicVolume];
+    [self animateLeft:musicVolume withDelay:1];
+}
+
+-(void)sfxVolumeLabel {
+    SKLabelNode *sfxVolume = [SKLabelNode labelNodeWithFontNamed:@"SF Movie Poster"];
+    sfxVolume.fontColor = [SKColor whiteColor];
+    sfxVolume.fontSize = 50;
+    sfxVolume.position = CGPointMake(self.size.width * 1.5, (self.size.height / 8) * 4);
+    sfxVolume.horizontalAlignmentMode = SKLabelHorizontalAlignmentModeCenter;
+    sfxVolume.text = @"SFX Volume";
+    
+    [self addChild:sfxVolume];
+    [self animateLeft:sfxVolume withDelay:1];
+}
+
+-(void)resetGameData {
+    GDReset = [SKLabelNode labelNodeWithFontNamed:@"SF Movie Poster"];
+    GDReset.fontColor = [SKColor whiteColor];
+    GDReset.fontSize = 50;
+    GDReset.position = CGPointMake(self.size.width * 1.5, (self.size.height / 8) * 2);
+    GDReset.horizontalAlignmentMode = SKLabelHorizontalAlignmentModeCenter;
+    GDReset.text = @"Reset Scores";
+    GDReset.name = @"GameReset";
+    
+    SKLabelNode *resetDisclaimer = [SKLabelNode labelNodeWithFontNamed:@"SF Movie Poster"];
+    resetDisclaimer.fontColor = [SKColor whiteColor];
+    resetDisclaimer.text = @"WARNING:: This will reset all high scores";
+    resetDisclaimer.fontSize = 25;
+    resetDisclaimer.position = CGPointMake(0, -25);
+    
+    [self addChild:GDReset];
+    [GDReset addChild:resetDisclaimer];
+    [self animateLeft:GDReset withDelay:1];
+}
+
+-(void)resetSuccessPop {
+    SKShapeNode *rect = [SKShapeNode node];
+    rect.path = [UIBezierPath bezierPathWithRect:CGRectMake(-100, -50, 200, 100)].CGPath;
+    rect.position = CGPointMake(self.size.width / 2, self.size.height / 8 * 7);
+    rect.fillColor = [SKColor blackColor];
+    rect.alpha = 0.6;
+    rect.lineWidth = 0;
+    
+    SKLabelNode *success = [SKLabelNode labelNodeWithFontNamed:@"SF Movie Poster"];
+    success.fontColor = [SKColor whiteColor];
+    success.fontSize = 70;
+    success.position = CGPointMake(self.size.width / 2, self.size.height / 8 * 7);
+    success.text = @"Success!";
+    
+    [self addChild:rect];
+    [self addChild:success];
+    [self fadeOutNode:rect withWait:2 fadeAlphaTo:0 fadeAlphaWithDuration:.5];
+    [self fadeOutNode:success withWait:2 fadeAlphaTo:0 fadeAlphaWithDuration:.5];
+    
+}
+
+#pragma mark --Actions
+
+-(void)mainMenuAnimateOut {
+    // Button Node Removal.
+    SKAction *startButtonRemoved = [SKAction moveTo:CGPointMake(self.size.width/2-300, 250)  duration:0.75];
+    SKAction *leaderButtonRemoved = [SKAction moveTo:CGPointMake(self.size.width/2-300, 190)  duration:0.75];
+    SKAction *settingsButtonRemoved = [SKAction moveTo:CGPointMake(self.size.width/2-300, 130)  duration:0.75];
+    
+    // Title Image Removal.
+    SKAction *titleRemoval = [SKAction moveTo:CGPointMake(self.size.width/2, 700) duration:0.75];
+    
+    // Group & Sequence Removal.
+    SKAction *unload = [SKAction removeFromParent];
+    
+    // Delays.
+    SKAction *titleWait = [SKAction waitForDuration:0.5];
+    SKAction *startWait = [SKAction waitForDuration:0.5];
+    SKAction *leaderWait = [SKAction waitForDuration:0.25];
+    
+    // Button Texture Change.
+    startButton.texture = [SKTexture textureWithImageNamed:@"buttonStart.png"];
+    
+    // Action Sequences.
+    SKAction *startSequence = [SKAction sequence:@[startWait,startButtonRemoved,unload]];
+    SKAction *leaderSequence = [SKAction sequence:@[leaderWait,leaderButtonRemoved,unload]];
+    SKAction *settingsSequence = [SKAction sequence:@[settingsButtonRemoved,unload]];
+    SKAction *titleSequence = [SKAction sequence:@[titleWait,titleRemoval,unload]];
+    
+    [startButton runAction: startSequence];
+    [leaderButton runAction: leaderSequence];
+    [settingsButton runAction: settingsSequence];
+    [titleImage runAction: titleSequence];
+}
+
+-(void)animateLeft: (SKNode *)levelNode withDelay: (double)delayTime
+{
+    SKAction *delay = [SKAction waitForDuration:delayTime];
+    SKAction *leftMove = [SKAction moveBy:CGVectorMake(-self.size.width, 0) duration:0.75];
+    leftMove.timingMode = SKActionTimingEaseInEaseOut;
+    SKAction *moveSequence = [SKAction sequence:@[delay, leftMove]];
+    [levelNode runAction: moveSequence];
+}
+
+-(void)animateRight: (SKNode *)levelNode withDelay: (double)delayTime
+{
+    SKAction *delay = [SKAction waitForDuration:delayTime];
+    SKAction *rightMove = [SKAction moveBy:CGVectorMake(self.size.width, 0) duration:0.75];
+    rightMove.timingMode = SKActionTimingEaseInEaseOut;
+    SKAction *moveSequence = [SKAction sequence:@[delay, rightMove]];
+    [levelNode runAction: moveSequence];
+}
+
+-(void)fadeOutNode: (SKNode *)fadingNode withWait: (double)waitTime fadeAlphaTo: (double)alpha fadeAlphaWithDuration: (double)fadeDuration
+{
+    SKAction *fadeDelay = [SKAction waitForDuration:waitTime];
+    SKAction *fade = [SKAction fadeAlphaTo:alpha duration: fadeDuration];
+    SKAction *unload = [SKAction removeFromParent];
+    SKAction *fadeSequence = [SKAction sequence:@[fadeDelay, fade, unload]];
+    
+    [fadingNode runAction: fadeSequence];
+}
+
+-(void)fadeInNode: (SKNode *)fadingNode withWait: (double)waitTime fadeAlphaTo: (double)alpha fadeAlphaWithDuration: (double)fadeDuration
+{
+    SKAction *fadeDelay = [SKAction waitForDuration:waitTime];
+    SKAction *fade = [SKAction fadeAlphaTo:alpha duration: fadeDuration];
+    SKAction *fadeSequence = [SKAction sequence:@[fadeDelay, fade]];
+    
+    [fadingNode runAction: fadeSequence];
+}
+
+-(void)backToMainAction
+{
+    
+}
+
+#pragma mark --Touch Events
+-(void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event {
+    
+    //Called when a touch begins
+    UITouch *touch = [touches anyObject];
+    CGPoint location = [touch locationInNode:self];
+    SKNode *node = [self nodeAtPoint:location];
+    
+    
+    //Start Button
+    if ([node.name isEqualToString:@"_startButton"]) {
+        startButton.texture = [SKTexture textureWithImageNamed:@"buttonPressStart.png"];
+    }
+    
+    //Leaderboard Button
+    if ([node.name isEqualToString:@"_leaderButton"]) {
+        leaderButton.texture = [SKTexture textureWithImageNamed:@"buttonPressLeaderboard.png"];
+    }
+    
+    //Settings Button
+    if ([node.name isEqualToString:@"_settingsButton"]) {
+        settingsButton.texture = [SKTexture textureWithImageNamed:@"buttonPressSettings.png"];
+    }
+}
+
+-(void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event {
+    //Called when a touch ends
+    UITouch *touchLift = [touches anyObject];
+    CGPoint locationLift = [touchLift locationInNode:self];
+    SKNode *nodeLift = [self nodeAtPoint:locationLift];
+    
+    //Global Transition Properties
+    SKColor *fadeColor = [SKColor colorWithRed:0 green:0 blue:0 alpha:1];
+    static double levelFadeDuration = 0.5;
+    
+    
+    //Start Button
+    if ([nodeLift.name isEqualToString:@"_startButton"]) {
+        
+        [self mainMenuAnimateOut];
+        
+        // Load level select area
+        [GameState sharedGameData].levelIndex = 1;
+        [self addChild:[self levelOneButtonWithMultiplier:1.5]];
+        [self animateLeft:levelOneThumb withDelay:0.5];
+        [self addChild:[self createRightArrowWithWait:0.5]];
+        [self addChild:[self backToMainButton]];
+        
+        
+    }
+    if (![nodeLift.name isEqualToString:@"_startButton"] && ![nodeLift.name isEqualToString:@"_leaderButton"] && ![nodeLift.name isEqualToString:@"_settingsButton"]) {
+        startButton.texture = [SKTexture textureWithImageNamed:@"buttonStart.png"];
+        leaderButton.texture = [SKTexture textureWithImageNamed:@"buttonLeaderboard.png"];
+        settingsButton.texture = [SKTexture textureWithImageNamed:@"buttonSettings.png"];
+    }
+    
+    //Leaderboard Button
+    if ([nodeLift.name isEqualToString:@"_leaderButton"]) {
+        //SKTransition
+    }
+    
+    //Settings Button
+    if ([nodeLift.name isEqualToString:@"_settingsButton"]) {
+        //SKTransition
+        [self mainMenuAnimateOut];
+        [self musicVolumeLabel];
+        [self sfxVolumeLabel];
+        [self resetGameData];
+    }
+    
+    if ([nodeLift.name isEqualToString:@"GameReset"]) {
+        [[GameState sharedGameData] resetAll];
+        [[GameState sharedGameData] save];
+        [self resetSuccessPop];
+    }
+    
+    if ([nodeLift.name isEqualToString:@"rightArrow"]) {
+        
+        switch ([GameState sharedGameData].levelIndex) {
+            case 1:
+                [self animateLeft:levelOneThumb withDelay:0.0];
+                [self addChild:[self levelTwoButton]];
+                [self animateLeft:levelTwoThumb withDelay:0.0];
+                [GameState sharedGameData].levelIndex = [GameState sharedGameData].levelIndex + 1;
+                break;
+            case 2:
+                break;
+                
+            default:
+                break;
+        }
+    }
+    
+    if ([nodeLift.name isEqualToString:@"leftArrow"]) {
+        switch ([GameState sharedGameData].levelIndex) {
+            case 1:
+                break;
+            case 2:
+                [self animateRight:levelTwoThumb withDelay:0.0];
+                [self addChild:[self levelOneButtonWithMultiplier: -0.5]];
+                [self animateRight: levelOneThumb withDelay:0.0];
+                [GameState sharedGameData].levelIndex = [GameState sharedGameData].levelIndex - 1;
+                break;
+                
+            default:
+                break;
+        }
+    }
+#pragma mark --Level Button Actions
+    
+    
+    //Level 1 Select
+    if ([nodeLift.name isEqualToString:@"_levelOne"]) {
+        // Transition to Level One Scene
+        // Configure the developer view.
+        SKView * levelOneView = (SKView *)self.view;
+        levelOneView.showsFPS = YES;
+        levelOneView.showsNodeCount = YES;
+        
+        // Create and configure the scene.
+        SKScene * levelOneScene = [[LevelOne alloc] initWithSize:levelOneView.bounds.size];
+        levelOneScene.scaleMode = SKSceneScaleModeAspectFill;
+        SKTransition *levelOneTrans = [SKTransition fadeWithColor:fadeColor duration:levelFadeDuration];
+        
+        // Present the scene.
+        [levelOneView presentScene:levelOneScene transition:levelOneTrans];
+    }
+    
+    //Level 2 Select
+    if ([nodeLift.name isEqualToString:@"_levelTwo"]) {
+        // Transition to Level One Scene
+        // Configure the developer view.
+        SKView * levelTwoView = (SKView *)self.view;
+        levelTwoView.showsFPS = YES;
+        levelTwoView.showsNodeCount = YES;
+        
+        // Create and configure the scene.
+        SKScene * levelTwoScene = [[LevelTwo alloc] initWithSize:levelTwoView.bounds.size andDirection:self.direction];
+        levelTwoScene.scaleMode = SKSceneScaleModeAspectFill;
+        SKTransition *levelTwoTrans = [SKTransition fadeWithColor:fadeColor duration:levelFadeDuration];
+        
+        // Present the scene.
+        [levelTwoView presentScene:levelTwoScene transition:levelTwoTrans];
+    }
+    
+
+    
+}
+
+#pragma mark --Update
+
+-(void)update:(CFTimeInterval)currentTime {
+    if (_lastUpdateTime)
+    {
+        _dt = currentTime - _lastUpdateTime;
+    }
+    else
+    {
+        _dt = 0;
+    }
+    _lastUpdateTime = currentTime;
+    
+
+    // Fades right arrow when needed
+    if ([GameState sharedGameData].levelIndex == [GameState sharedGameData].lvlIndexMax) {
+        [self fadeOutNode:rightArrow withWait:0.6 fadeAlphaTo:0.0 fadeAlphaWithDuration:0.3];
+    }
+    
+    if ([GameState sharedGameData].levelIndex == 1 && [self.children containsObject:leftArrow]) {
+        [self fadeOutNode:leftArrow withWait:0.5 fadeAlphaTo:0.0 fadeAlphaWithDuration:0.5];
+    }
+    
+    if ([GameState sharedGameData].levelIndex > 1 && ![self.children containsObject:leftArrow]) {
+        [self addChild:[self createLeftArrowWithWait:0.3]];
+    }
+    
+    if (![self.children containsObject:rightArrow] && [GameState sharedGameData].levelIndex < [GameState sharedGameData].lvlIndexMax && [GameState sharedGameData].levelIndex > 0) {
+        [self addChild:[self createRightArrowWithWait:0.5]];
+    }
+    [self moveBG];
+}
+
+
+@end

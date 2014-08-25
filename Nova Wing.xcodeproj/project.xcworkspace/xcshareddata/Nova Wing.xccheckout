@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>IDESourceControlProjectFavoriteDictionaryKey</key>
+	<false/>
+	<key>IDESourceControlProjectIdentifier</key>
+	<string>D388A6CC-B55C-4049-9D01-AE3F0D8B8557</string>
+	<key>IDESourceControlProjectName</key>
+	<string>Nova Wing</string>
+	<key>IDESourceControlProjectOriginsDictionary</key>
+	<dict>
+		<key>51BD18A7-62CB-47CC-9125-C14E8139E736</key>
+		<string>https://bitbucket.org/fiv3int/nova-wing.git</string>
+	</dict>
+	<key>IDESourceControlProjectPath</key>
+	<string>Nova Wing.xcodeproj/project.xcworkspace</string>
+	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
+	<dict>
+		<key>51BD18A7-62CB-47CC-9125-C14E8139E736</key>
+		<string>../..</string>
+	</dict>
+	<key>IDESourceControlProjectURL</key>
+	<string>https://bitbucket.org/fiv3int/nova-wing.git</string>
+	<key>IDESourceControlProjectVersion</key>
+	<integer>110</integer>
+	<key>IDESourceControlProjectWCCIdentifier</key>
+	<string>51BD18A7-62CB-47CC-9125-C14E8139E736</string>
+	<key>IDESourceControlProjectWCConfigurations</key>
+	<array>
+		<dict>
+			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
+			<string>public.vcs.git</string>
+			<key>IDESourceControlWCCIdentifierKey</key>
+			<string>51BD18A7-62CB-47CC-9125-C14E8139E736</string>
+			<key>IDESourceControlWCCName</key>
+			<string>NovaWing 3031</string>
+		</dict>
+	</array>
+</dict>
+</plist>
