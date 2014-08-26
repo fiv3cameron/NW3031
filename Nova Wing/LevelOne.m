@@ -217,6 +217,7 @@ NSTimer *scoreUpdate;
         SKTransition *gameOverTransition = [SKTransition fadeWithColor:fadeColor duration:.25];
         [gameOverView presentScene:gameOverScene transition:gameOverTransition];
     }
+    [[Ships alloc] rotateNodeUpwards:_player];
 }
 
 -(void)update:(NSTimeInterval)currentTime {
@@ -231,6 +232,11 @@ NSTimer *scoreUpdate;
     _lastUpdateTime = currentTime;
     
     blackHole.zRotation = blackHole.zRotation + .01;
+    
+    if (_player.physicsBody.velocity.dy < 0) {
+        [[Ships alloc] rotateNodeDownwards:_player];
+    }
+    
 }
 
 -(void)didBeginContact:(SKPhysicsContact *)contact {
@@ -241,6 +247,9 @@ NSTimer *scoreUpdate;
     
         levelComplete = YES;
     } else {
+        
+        [scoreUpdate invalidate];
+        [GameState sharedGameData].highScoreL1 = MAX([GameState sharedGameData].score, [GameState sharedGameData].highScoreL1);
         
         SKView *gameOverView = (SKView *)self.view;
     

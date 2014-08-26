@@ -11,5 +11,7 @@
 @interface Ships : SKNode
 
 -(SKSpriteNode *)createAnyShipFromParent: (SKNode *)parentNode withImageNamed: (NSString *) imageName;
+-(void)rotateNodeUpwards: (SKNode *)nodeRotate;
+-(void)rotateNodeDownwards: (SKNode *)nodeRotate;
 
 @end

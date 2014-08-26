@@ -42,4 +42,15 @@
     return parentNode;
 }
 
+-(void)rotateNodeUpwards: (SKNode *)nodeRotate {
+    SKAction *rotateUp = [SKAction rotateToAngle:M_PI_4 duration:.2 shortestUnitArc:YES];
+    rotateUp.timingMode = SKActionTimingEaseOut;
+    [nodeRotate runAction:rotateUp];
+}
+
+-(void)rotateNodeDownwards: (SKNode *)nodeRotate {
+    SKAction *rotateDown = [SKAction rotateToAngle:-M_PI_4 duration:.15 shortestUnitArc:YES];
+    rotateDown.timingMode = SKActionTimingEaseIn;
+    [nodeRotate runAction:rotateDown];
+}
 @end

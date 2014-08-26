@@ -82,8 +82,8 @@ static NSString* const SSGameDataHighScoreL2Key = @"highScoreL2";
 
 -(void)resetAll {
     self.score = 0;
-    self.highScoreL1 = 0;
-    self.highScoreL2 = 0;
+    //self.highScoreL1 = 0;
+    //self.highScoreL2 = 0;
 }
 
 @end
