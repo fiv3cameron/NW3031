@@ -63,6 +63,7 @@ NSTimer *scoreUpdate;
         [self createBlackHole];
         [self bottomCollide];
         [self addChild:_player];
+        [[Ships alloc] shipBobbing:_player];
         [self createScoreNode];
         if (storymodeL1 == YES) {
             [self intro];
@@ -172,6 +173,8 @@ NSTimer *scoreUpdate;
     [self addChild:tapPlay];
 }
 
+
+
 #pragma mark --Score
 
 -(void)createScoreNode {
@@ -217,6 +220,7 @@ NSTimer *scoreUpdate;
         SKTransition *gameOverTransition = [SKTransition fadeWithColor:fadeColor duration:.25];
         [gameOverView presentScene:gameOverScene transition:gameOverTransition];
     }
+    [_player removeActionForKey:@"bobbingAction"];
     [[Ships alloc] rotateNodeUpwards:_player];
 }
 

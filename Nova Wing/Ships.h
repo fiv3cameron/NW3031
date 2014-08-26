@@ -13,5 +13,6 @@
 -(SKSpriteNode *)createAnyShipFromParent: (SKNode *)parentNode withImageNamed: (NSString *) imageName;
 -(void)rotateNodeUpwards: (SKNode *)nodeRotate;
 -(void)rotateNodeDownwards: (SKNode *)nodeRotate;
+-(void)shipBobbing: (SKNode *)bobShip;
 
 @end

@@ -43,8 +43,8 @@
 }
 
 -(void)rotateNodeUpwards: (SKNode *)nodeRotate {
-    SKAction *rotateUp = [SKAction rotateToAngle:M_PI_4 duration:.2 shortestUnitArc:YES];
-    rotateUp.timingMode = SKActionTimingEaseOut;
+    SKAction *rotateUp = [SKAction rotateToAngle:0.45 duration:.25 shortestUnitArc:YES];
+    rotateUp.timingMode = SKActionTimingEaseInEaseOut;
     [nodeRotate runAction:rotateUp];
 }
 
@@ -53,4 +53,17 @@
     rotateDown.timingMode = SKActionTimingEaseIn;
     [nodeRotate runAction:rotateDown];
 }
+
+-(void)shipBobbing: (SKNode *)bobShip {
+    SKAction *bobUp = [SKAction moveToY:bobShip.position.y + 5 duration:.8];
+    bobUp.timingMode = SKActionTimingEaseInEaseOut;
+    SKAction *bobDown = [SKAction moveToY:bobShip.position.y - 5 duration:.8];
+    bobDown.timingMode = SKActionTimingEaseInEaseOut;
+    SKAction *bobSequence = [SKAction sequence:@[bobUp, bobDown]];
+    SKAction *repeatAction = [SKAction repeatActionForever:bobSequence];
+    
+    [bobShip runAction:repeatAction withKey:@"bobbingAction"];
+    
+}
+
 @end
