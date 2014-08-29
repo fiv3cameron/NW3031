@@ -59,6 +59,7 @@ NSTimer *scoreUpdate;
         
         _player = [self createPlayerNode];
         
+        [self createAudio];
         [self addChild:stars];
         [self createBlackHole];
         [self bottomCollide];
@@ -173,6 +174,16 @@ NSTimer *scoreUpdate;
     [self addChild:tapPlay];
 }
 
+#pragma mark --Create Audio
+-(void)createAudio
+{
+    NSString *soundFile = [[NSBundle mainBundle] pathForResource:@"Level-1-Music" ofType:@"m4a"];
+    NSURL *soundFileUrl = [NSURL fileURLWithPath:soundFile];
+    bgPlayer = [[AVAudioPlayer alloc] initWithContentsOfURL:soundFileUrl error:nil];
+    bgPlayer.numberOfLoops = -1;
+    
+    [bgPlayer play];
+}
 
 
 #pragma mark --Score

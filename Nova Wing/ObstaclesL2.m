@@ -64,7 +64,7 @@
 - (SKSpriteNode *)rockPillarCreate
 {
     SKSpriteNode *deliverPillar = [SKSpriteNode spriteNodeWithImageNamed: @"Pillar-1"];
-    deliverPillar.physicsBody = [SKPhysicsBody bodyWithRectangleOfSize: deliverPillar.size];
+    deliverPillar.physicsBody = [SKPhysicsBody bodyWithEdgeLoopFromRect:CGRectMake(0, 0, deliverPillar.size.width / 2, deliverPillar.size.height / 2)];
     deliverPillar.physicsBody.dynamic = NO;
     deliverPillar.name = @"pillar";
     return deliverPillar;
@@ -76,8 +76,8 @@
     SKSpriteNode *deliverPillar = [SKSpriteNode spriteNodeWithImageNamed:@"Pillar-2"];
     
     //Create Path for pillar PhysicsBody
-    CGFloat offsetX = deliverPillar.frame.size.width * deliverPillar.anchorPoint.x;
-    CGFloat offsetY = deliverPillar.frame.size.height * deliverPillar.anchorPoint.y;
+    CGFloat offsetX = (deliverPillar.frame.size.width * 1.2) * deliverPillar.anchorPoint.x;
+    CGFloat offsetY = (deliverPillar.frame.size.height * 1.2) * deliverPillar.anchorPoint.y;
     
     CGMutablePathRef thinPillarPath = CGPathCreateMutable();
     
@@ -97,7 +97,7 @@
 - (SKSpriteNode *) radioTowerCreate
 {
     SKSpriteNode *deliverPillar = [SKSpriteNode spriteNodeWithImageNamed:@"Pillar-4"];
-    deliverPillar.physicsBody = [SKPhysicsBody bodyWithRectangleOfSize: deliverPillar.size];
+    deliverPillar.physicsBody = [SKPhysicsBody bodyWithEdgeLoopFromRect:CGRectMake(0, 0, deliverPillar.size.width / 2, deliverPillar.size.height / 2)];
     deliverPillar.physicsBody.dynamic = NO;
     deliverPillar.name = @"pillar";
     return deliverPillar;
@@ -106,7 +106,7 @@
 - (SKSpriteNode *) lavaPillarCreate
 {
     SKSpriteNode *deliverPillar = [SKSpriteNode spriteNodeWithImageNamed:@"Pillar-3"];
-    deliverPillar.physicsBody = [SKPhysicsBody bodyWithRectangleOfSize: deliverPillar.size];
+    deliverPillar.physicsBody = [SKPhysicsBody bodyWithEdgeLoopFromRect:CGRectMake(0, 0, deliverPillar.size.width / 2.1, deliverPillar.size.height / 2.1)];
     deliverPillar.physicsBody.dynamic = NO;
     deliverPillar.name = @"pillar";
     return deliverPillar;
