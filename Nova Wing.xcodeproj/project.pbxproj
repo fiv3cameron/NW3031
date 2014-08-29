@@ -59,6 +59,8 @@
 		764BF9A319A19A11007DABF8 /* arrowR@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 764BF9A119A19A11007DABF8 /* arrowR@2x.png */; };
 		764BF9A619A2BC04007DABF8 /* Nova-L2@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 764BF9A419A2BC04007DABF8 /* Nova-L2@2x.png */; };
 		764BF9A719A2BC04007DABF8 /* Nova-L1@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 764BF9A519A2BC04007DABF8 /* Nova-L1@2x.png */; };
+		7651E8D519B0EC8900F7E9D0 /* Level-1-Music.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 7651E8D419B0EC8900F7E9D0 /* Level-1-Music.m4a */; };
+		7651E8D719B0FFA900F7E9D0 /* Level-2-Music.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 7651E8D619B0FFA900F7E9D0 /* Level-2-Music.m4a */; };
 		765DF28B19A928A700FBFB16 /* BlackHole@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 765DF28A19A928A700FBFB16 /* BlackHole@2x.png */; };
 		765DF28E19A9290F00FBFB16 /* LevelOne.m in Sources */ = {isa = PBXBuildFile; fileRef = 765DF28D19A9290F00FBFB16 /* LevelOne.m */; };
 		765DF29119A9293100FBFB16 /* spark.png in Resources */ = {isa = PBXBuildFile; fileRef = 765DF28F19A9293100FBFB16 /* spark.png */; };
@@ -150,6 +152,8 @@
 		764BF9A119A19A11007DABF8 /* arrowR@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "arrowR@2x.png"; sourceTree = "<group>"; };
 		764BF9A419A2BC04007DABF8 /* Nova-L2@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Nova-L2@2x.png"; sourceTree = "<group>"; };
 		764BF9A519A2BC04007DABF8 /* Nova-L1@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Nova-L1@2x.png"; sourceTree = "<group>"; };
+		7651E8D419B0EC8900F7E9D0 /* Level-1-Music.m4a */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Level-1-Music.m4a"; sourceTree = "<group>"; };
+		7651E8D619B0FFA900F7E9D0 /* Level-2-Music.m4a */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Level-2-Music.m4a"; sourceTree = "<group>"; };
 		765DF28A19A928A700FBFB16 /* BlackHole@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "BlackHole@2x.png"; sourceTree = "<group>"; };
 		765DF28C19A9290F00FBFB16 /* LevelOne.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LevelOne.h; sourceTree = "<group>"; };
 		765DF28D19A9290F00FBFB16 /* LevelOne.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LevelOne.m; sourceTree = "<group>"; };
@@ -401,6 +405,8 @@
 		2DB3529E19999516006BF15C /* Levels */ = {
 			isa = PBXGroup;
 			children = (
+				7651E8D619B0FFA900F7E9D0 /* Level-2-Music.m4a */,
+				7651E8D419B0EC8900F7E9D0 /* Level-1-Music.m4a */,
 			);
 			name = Levels;
 			sourceTree = "<group>";
@@ -531,6 +537,7 @@
 				764BF9A319A19A11007DABF8 /* arrowR@2x.png in Resources */,
 				2DB3528A19999445006BF15C /* Pillar-2@2x.png in Resources */,
 				2DB3527B1999940A006BF15C /* buttonStart.png in Resources */,
+				7651E8D719B0FFA900F7E9D0 /* Level-2-Music.m4a in Resources */,
 				2DB3522719996B83006BF15C /* InfoPlist.strings in Resources */,
 				764BF9A719A2BC04007DABF8 /* Nova-L1@2x.png in Resources */,
 				2DB3529419999485006BF15C /* Level-1-Sky@2x.png in Resources */,
@@ -541,6 +548,7 @@
 				2DB352AA19999D1B006BF15C /* Level-2@2x.png in Resources */,
 				2DB3529219999485006BF15C /* Level-1-Floor@2x.png in Resources */,
 				2DB352AE1999A0C4006BF15C /* GameOver-BG@2x.png in Resources */,
+				7651E8D519B0EC8900F7E9D0 /* Level-1-Music.m4a in Resources */,
 				76C6F15419A2CCB100B37331 /* Level-1@2x.png in Resources */,
 				2DB3529B199994C0006BF15C /* Title.png in Resources */,
 				76A1B8DA199D973B00EE1491 /* buttonPlay@2x.png in Resources */,

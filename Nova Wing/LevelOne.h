@@ -12,10 +12,14 @@
 #import "NORLabelNode.h"
 
 @interface LevelOne : SKScene
+{
+    AVAudioPlayer *bgPlayer;
+}
 
--(void)scoreAdd;
+    -(void)scoreAdd;
 
 @end
+
 
 SKSpriteNode *blackHole;
 SKLabelNode *tapPlay;

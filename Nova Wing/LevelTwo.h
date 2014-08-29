@@ -15,7 +15,7 @@
 
 @interface LevelTwo : SKScene
 {
-    
+    AVAudioPlayer *bgPlayer;
 }
 
 @property (nonatomic) PBParallaxBackgroundDirection direction;

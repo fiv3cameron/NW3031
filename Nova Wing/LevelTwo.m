@@ -66,7 +66,7 @@ NSTimer *scoreUpdate;
         [self addChild:parallax];
         
         _player = [self createPlayerNode];
-        
+        [self createAudio];
         [self createScoreNode];
         [self addChild:_player];
         [self createFloor];
@@ -203,6 +203,17 @@ NSTimer *scoreUpdate;
             pillar.position = CGPointAdd(pillar.position, pillarmovement);
         }
     }];
+}
+
+#pragma mark --Create Audio
+-(void)createAudio
+{
+    NSString *soundFile = [[NSBundle mainBundle] pathForResource:@"Level-2-Music" ofType:@"m4a"];
+    NSURL *soundFileUrl = [NSURL fileURLWithPath:soundFile];
+    bgPlayer = [[AVAudioPlayer alloc] initWithContentsOfURL:soundFileUrl error:nil];
+    bgPlayer.numberOfLoops = -1;
+    
+    [bgPlayer play];
 }
 
 #pragma mark --Score

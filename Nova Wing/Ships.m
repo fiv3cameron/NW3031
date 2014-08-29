@@ -13,21 +13,24 @@
 -(SKNode *)createAnyShipFromParent: (SKNode *)parentNode withImageNamed: (NSString *) imageName
 {
     SKSpriteNode *ship = [SKSpriteNode spriteNodeWithImageNamed:imageName];
+
     
     // Adds more accurate physics body for ship collisions
-    CGFloat offsetX = (ship.frame.size.width * 1.5) * ship.anchorPoint.x;
-    CGFloat offsetY = (ship.frame.size.height * 1.5) * ship.anchorPoint.y;
+    CGFloat offsetX = (ship.frame.size.width * 1.2) * ship.anchorPoint.x;
+    CGFloat offsetY = (ship.frame.size.height * 1.2) * ship.anchorPoint.y;
     
     CGMutablePathRef path = CGPathCreateMutable();
     
-    CGPathMoveToPoint(path, NULL, 0 - offsetX, 48 - offsetY);
-    CGPathAddLineToPoint(path, NULL, 0 - offsetX, 30 - offsetY);
-    CGPathAddLineToPoint(path, NULL, 76 - offsetX, 0 - offsetY);
-    CGPathAddLineToPoint(path, NULL, 99 - offsetX, 0 - offsetY);
-    CGPathAddLineToPoint(path, NULL, 99 - offsetX, 8 - offsetY);
-    CGPathAddLineToPoint(path, NULL, 27 - offsetX, 47 - offsetY);
+    CGPathMoveToPoint(path, NULL, 8 - offsetX, 30 - offsetY);
+    CGPathAddLineToPoint(path, NULL, 7 - offsetX, 22 - offsetY);
+    CGPathAddLineToPoint(path, NULL, 50 - offsetX, 2 - offsetY);
+    CGPathAddLineToPoint(path, NULL, 65 - offsetX, 7 - offsetY);
+    CGPathAddLineToPoint(path, NULL, 70 - offsetX, 8 - offsetY);
+    CGPathAddLineToPoint(path, NULL, 27 - offsetX, 31 - offsetY);
     
     CGPathCloseSubpath(path);
+    
+
     [parentNode addChild:ship];
     
     parentNode.physicsBody = [SKPhysicsBody bodyWithPolygonFromPath:path];
@@ -37,6 +40,7 @@
     parentNode.physicsBody.linearDamping = 1.0f;
     parentNode.physicsBody.allowsRotation = NO;
     parentNode.physicsBody.usesPreciseCollisionDetection = YES;
+    
 
     
     return parentNode;
