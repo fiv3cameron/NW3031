@@ -9,7 +9,6 @@
 #import <SpriteKit/SpriteKit.h>
 #import <AVFoundation/AVFoundation.h>
 #import "PBParallaxScrolling.h"
-#import "ObstaclesL2.h"
 #import "GameObjects.h"
 #import "Ships.h"
 

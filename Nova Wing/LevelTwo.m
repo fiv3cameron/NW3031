@@ -8,6 +8,7 @@
 
 #import "LevelTwo.h"
 #import "GameOver.h"
+#import "Obstacles.h"
 
 typedef NS_OPTIONS(uint32_t, CollisionCategory) {
     CollisionCategoryPlayer     = 0x1 << 0,
@@ -99,12 +100,16 @@ NSTimer *scoreUpdate;
 {
     // Add pillar.
     SKSpriteNode *pillar1 = [SKSpriteNode node];
-    pillar1 = [[ObstaclesL2 alloc] createAnyPillar];
+    int randPillarInt = arc4random_uniform(3) + 1;
+    pillar1 = [[Obstacles alloc] createObstacleWithNode:pillar1 withName:@"pillar" withImage: [NSString stringWithFormat:@"Pillar-%i",randPillarInt]];
+    pillar1 = [[Obstacles alloc] createPillarPhysicsBody:pillar1 withIdentifier:randPillarInt];
     pillar1.physicsBody.categoryBitMask = CollisionCategoryObject;
     
     // Do it again.
     SKSpriteNode *pillar2 = [SKSpriteNode node];
-    pillar2 = [[ObstaclesL2 alloc] createAnyPillar];
+    int randPillarInt2 = arc4random_uniform(3) + 1;
+    pillar2 = [[Obstacles alloc] createObstacleWithNode:pillar2 withName:@"pillar" withImage: [NSString stringWithFormat:@"Pillar-%i",randPillarInt2]];
+    pillar2 = [[Obstacles alloc] createPillarPhysicsBody:pillar2 withIdentifier:randPillarInt2];
     pillar2.physicsBody.categoryBitMask = CollisionCategoryObject;
     
     pillar1.position = CGPointMake(self.size.width*1.5, -pillar1.frame.size.height/4);
@@ -114,7 +119,7 @@ NSTimer *scoreUpdate;
     SKNode *testNode = [playerNode childNodeWithName:@"ship"];
     float ACOHeight1 = pillar1.position.y + pillar1.size.height/2 + testNode.frame.size.height*2;
     SKSpriteNode *aerialObject1 = [SKSpriteNode node];
-    aerialObject1 = [[ObstaclesL2 alloc] createAnyACO];
+    aerialObject1 = [[Obstacles alloc] createObstacleWithNode:aerialObject1 withName:@"aerial" withImage:[NSString stringWithFormat:@"AOb-%i", 1]];
     aerialObject1.position = CGPointMake(self.size.width/2, ACOHeight1);
     [aerialObject1 setScale:0.6];
     
@@ -174,24 +179,10 @@ NSTimer *scoreUpdate;
     [self enumerateChildNodesWithName:@"pillar" usingBlock:^(SKNode *node, BOOL *stop) {
         if (node.position.x < -node.frame.size.width) {
             [node removeFromParent];
-            int randNewPillar = ceil((arc4random_uniform(39) + 1)/10);
+            int randNewPillar = ceil((arc4random_uniform(3) + 1));
             SKSpriteNode *newPillar = (SKSpriteNode *)node;
-            switch (randNewPillar) {
-                case 1:
-                    newPillar = [[ObstaclesL2 alloc] rockPillarCreate];
-                    break;
-                case 2:
-                    newPillar = [[ObstaclesL2 alloc] thinRockPillarCreate];
-                    break;
-                case 3:
-                    newPillar = [[ObstaclesL2 alloc] radioTowerCreate];
-                    break;
-                case 4:
-                    newPillar = [[ObstaclesL2 alloc] lavaPillarCreate];
-                    break;
-                default:
-                    break;
-            }
+            newPillar = [[Obstacles alloc] createObstacleWithNode:newPillar withName:@"pillar" withImage:[NSString stringWithFormat:@"Pillar-%i",randNewPillar]];
+            newPillar = [[Obstacles alloc] createPillarPhysicsBody:newPillar withIdentifier:randNewPillar];
             int heightInt = ceil(newPillar.frame.size.height*3/4) - ceil(newPillar.frame.size.height/4);
             float randHeight = (arc4random()%heightInt) - newPillar.frame.size.height/4;
             newPillar.position = CGPointMake(self.size.width*1.5-node.frame.size.width, randHeight);

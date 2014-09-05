@@ -8,6 +8,7 @@
 
 #import "LevelOne.h"
 #import "GameOverL1.h"
+#import "Obstacles.h"
 
 typedef NS_OPTIONS(uint32_t, CollisionCategory) {
     CollisionCategoryPlayer     = 0x1 << 0,
@@ -21,6 +22,18 @@ typedef NS_OPTIONS(uint32_t, CollisionCategory) {
     SKNode *playerNode;
 }
 @end
+
+static const float FG_VELOCITY = -100.0;
+
+static inline CGPoint CGPointAdd(const CGPoint a, const CGPoint b)
+{
+    return CGPointMake(a.x + b.x, a.y + b.y);
+}
+
+static inline CGPoint CGPointMultiplyScalar(const CGPoint a, const CGFloat b)
+{
+    return CGPointMake(a.x * b, a.y * b);
+}
 
 @implementation LevelOne
 
@@ -101,6 +114,15 @@ NSTimer *scoreUpdate;
     playerNode.zPosition = 100.0f;
     
     return playerNode;
+}
+
+-(void)createObstacles {
+    SKSpriteNode *tempNode = [SKSpriteNode node];
+    SKSpriteNode *obstacle1 = [[Obstacles alloc] createObstacleWithNode:tempNode withName:@"aerial" withImage:@"AOb-1"];
+    obstacle1.position = CGPointMake(self.size.width, self.size.height/2);
+    obstacle1.name = @"aerial";
+    obstacle1.zPosition = 10;
+    [self addChild: obstacle1];
 }
 
 -(void)bottomCollide {
@@ -188,6 +210,29 @@ NSTimer *scoreUpdate;
     _score.text = [NSString stringWithFormat:@"Score: %li", [GameState sharedGameData].score];
 }
 
+#pragma mark --Animate Obstacles
+-(void) moveObstacles
+{
+    [self enumerateChildNodesWithName:@"aerial" usingBlock:^(SKNode *node, BOOL *stop) {
+        if (node.position.x < -node.frame.size.width) {
+            [node removeFromParent];
+            int randNew = 1;
+            SKSpriteNode *newACO = (SKSpriteNode *)node;
+            newACO = [[Obstacles alloc] createObstacleWithNode:newACO withName:@"aerial" withImage:[NSString stringWithFormat:@"AOb-%i",randNew]];
+            //int randHeight = self.size.height/2;
+            //float randHeight = (arc4random()%heightInt) - newPillar.frame.size.height/4;
+            //newACO.position = CGPointMake(self.size.width, randHeight);
+            //[self addChild:newACO];
+        } else {
+            SKSpriteNode *aerial = (SKSpriteNode *)node;
+            CGPoint aerialvelocity = CGPointMake(FG_VELOCITY, 0);
+            CGPoint aerialmovement = CGPointMultiplyScalar(aerialvelocity, _dt);
+            aerial.position = CGPointAdd(aerial.position, aerialmovement);
+        }
+    }];
+}
+
+
 -(void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event {
 
     if ([self.children containsObject:storyBadge] && [self.children containsObject:introduction] && [self.children containsObject:tapPlay]) {
@@ -198,6 +243,7 @@ NSTimer *scoreUpdate;
     if (playerNode.physicsBody.dynamic == NO) {
         playerNode.physicsBody.dynamic = YES;
         [self addChild:_score];
+        [self createObstacles];
         [tapPlay removeFromParent];
         scoreUpdate = [NSTimer scheduledTimerWithTimeInterval:0.1 target:self selector:@selector(scoreAdd) userInfo:nil repeats:YES];
     }
@@ -229,6 +275,7 @@ NSTimer *scoreUpdate;
         _dt = 0;
     }
     _lastUpdateTime = currentTime;
+    [self moveObstacles];
     
     blackHole.zRotation = blackHole.zRotation + .01;
 }

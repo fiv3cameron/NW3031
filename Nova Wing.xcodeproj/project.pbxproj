@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		2D4C0B9A19A6D29B00AD0717 /* Ships.m in Sources */ = {isa = PBXBuildFile; fileRef = 2D4C0B9919A6D29B00AD0717 /* Ships.m */; };
+		2D800FFA19AC14FC0067CAC1 /* Obstacles.m in Sources */ = {isa = PBXBuildFile; fileRef = 2D800FF919AC14FC0067CAC1 /* Obstacles.m */; };
 		2DB3521B19996B83006BF15C /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2DB3521A19996B83006BF15C /* Foundation.framework */; };
 		2DB3521D19996B83006BF15C /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2DB3521C19996B83006BF15C /* CoreGraphics.framework */; };
 		2DB3521F19996B83006BF15C /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2DB3521E19996B83006BF15C /* UIKit.framework */; };
@@ -27,7 +28,6 @@
 		2DB3525A19996CC1006BF15C /* LevelTwo.m in Sources */ = {isa = PBXBuildFile; fileRef = 2DB3525919996CC1006BF15C /* LevelTwo.m */; };
 		2DB3525E19996D6D006BF15C /* PBParallaxScrolling.m in Sources */ = {isa = PBXBuildFile; fileRef = 2DB3525D19996D6D006BF15C /* PBParallaxScrolling.m */; };
 		2DB35262199972CD006BF15C /* GameObjects.m in Sources */ = {isa = PBXBuildFile; fileRef = 2DB35261199972CD006BF15C /* GameObjects.m */; };
-		2DB352651999732A006BF15C /* ObstaclesL2.m in Sources */ = {isa = PBXBuildFile; fileRef = 2DB352641999732A006BF15C /* ObstaclesL2.m */; };
 		2DB3526819997A32006BF15C /* GameOver.m in Sources */ = {isa = PBXBuildFile; fileRef = 2DB3526719997A32006BF15C /* GameOver.m */; };
 		2DB3526B19997A98006BF15C /* GameState.m in Sources */ = {isa = PBXBuildFile; fileRef = 2DB3526A19997A98006BF15C /* GameState.m */; };
 		2DB352761999940A006BF15C /* buttonLeaderboard.png in Resources */ = {isa = PBXBuildFile; fileRef = 2DB352701999940A006BF15C /* buttonLeaderboard.png */; };
@@ -86,6 +86,8 @@
 /* Begin PBXFileReference section */
 		2D4C0B9819A6D29B00AD0717 /* Ships.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Ships.h; sourceTree = "<group>"; };
 		2D4C0B9919A6D29B00AD0717 /* Ships.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Ships.m; sourceTree = "<group>"; };
+		2D800FF819AC14FC0067CAC1 /* Obstacles.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Obstacles.h; sourceTree = "<group>"; };
+		2D800FF919AC14FC0067CAC1 /* Obstacles.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Obstacles.m; sourceTree = "<group>"; };
 		2DB3521719996B83006BF15C /* Nova Wing.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Nova Wing.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		2DB3521A19996B83006BF15C /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		2DB3521C19996B83006BF15C /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -114,8 +116,6 @@
 		2DB3525D19996D6D006BF15C /* PBParallaxScrolling.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PBParallaxScrolling.m; sourceTree = "<group>"; };
 		2DB35260199972CD006BF15C /* GameObjects.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GameObjects.h; sourceTree = "<group>"; };
 		2DB35261199972CD006BF15C /* GameObjects.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GameObjects.m; sourceTree = "<group>"; };
-		2DB352631999732A006BF15C /* ObstaclesL2.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ObstaclesL2.h; sourceTree = "<group>"; };
-		2DB352641999732A006BF15C /* ObstaclesL2.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ObstaclesL2.m; sourceTree = "<group>"; };
 		2DB3526619997A32006BF15C /* GameOver.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GameOver.h; sourceTree = "<group>"; };
 		2DB3526719997A32006BF15C /* GameOver.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GameOver.m; sourceTree = "<group>"; };
 		2DB3526919997A98006BF15C /* GameState.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GameState.h; sourceTree = "<group>"; };
@@ -290,8 +290,6 @@
 		2DB3525719996C9E006BF15C /* Level 2: The Whispers */ = {
 			isa = PBXGroup;
 			children = (
-				2DB352631999732A006BF15C /* ObstaclesL2.h */,
-				2DB352641999732A006BF15C /* ObstaclesL2.m */,
 				2DB3525819996CC1006BF15C /* LevelTwo.h */,
 				2DB3525919996CC1006BF15C /* LevelTwo.m */,
 				2DB3526619997A32006BF15C /* GameOver.h */,
@@ -322,6 +320,8 @@
 				2DB3526A19997A98006BF15C /* GameState.m */,
 				2D4C0B9819A6D29B00AD0717 /* Ships.h */,
 				2D4C0B9919A6D29B00AD0717 /* Ships.m */,
+				2D800FF819AC14FC0067CAC1 /* Obstacles.h */,
+				2D800FF919AC14FC0067CAC1 /* Obstacles.m */,
 			);
 			name = "Internal Classes";
 			sourceTree = "<group>";
@@ -582,11 +582,11 @@
 			buildActionMask = 2147483647;
 			files = (
 				2DB3525E19996D6D006BF15C /* PBParallaxScrolling.m in Sources */,
-				2DB352651999732A006BF15C /* ObstaclesL2.m in Sources */,
 				2DB3523619996B83006BF15C /* MainMenu.m in Sources */,
 				2DB3526819997A32006BF15C /* GameOver.m in Sources */,
 				2DB3523319996B83006BF15C /* ViewController.m in Sources */,
 				2DB35262199972CD006BF15C /* GameObjects.m in Sources */,
+				2D800FFA19AC14FC0067CAC1 /* Obstacles.m in Sources */,
 				765DF29C19A9295800FBFB16 /* GameOverL1.m in Sources */,
 				765DF29519A9293D00FBFB16 /* NORLabelNode.m in Sources */,
 				2DB3522D19996B83006BF15C /* AppDelegate.m in Sources */,
