@@ -5,19 +5,19 @@
 	<key>IDESourceControlProjectFavoriteDictionaryKey</key>
 	<false/>
 	<key>IDESourceControlProjectIdentifier</key>
-	<string>4CE1F04A-755B-4B82-87CD-8959A682462E</string>
+	<string>14FF6D07-1071-41CC-8C5F-AE97367532BB</string>
 	<key>IDESourceControlProjectName</key>
 	<string>Nova Wing</string>
 	<key>IDESourceControlProjectOriginsDictionary</key>
 	<dict>
-		<key>AD883D4E-99F2-4417-BB39-90C890A6429F</key>
+		<key>8B8A83EE-96A8-4AA1-A0D2-CFA5E8899C31</key>
 		<string>https://bitbucket.org/fiv3int/nova-wing-3031.git</string>
 	</dict>
 	<key>IDESourceControlProjectPath</key>
 	<string>Nova Wing.xcodeproj/project.xcworkspace</string>
 	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
 	<dict>
-		<key>AD883D4E-99F2-4417-BB39-90C890A6429F</key>
+		<key>8B8A83EE-96A8-4AA1-A0D2-CFA5E8899C31</key>
 		<string>../..</string>
 	</dict>
 	<key>IDESourceControlProjectURL</key>
@@ -25,16 +25,16 @@
 	<key>IDESourceControlProjectVersion</key>
 	<integer>110</integer>
 	<key>IDESourceControlProjectWCCIdentifier</key>
-	<string>AD883D4E-99F2-4417-BB39-90C890A6429F</string>
+	<string>8B8A83EE-96A8-4AA1-A0D2-CFA5E8899C31</string>
 	<key>IDESourceControlProjectWCConfigurations</key>
 	<array>
 		<dict>
 			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
 			<string>public.vcs.git</string>
 			<key>IDESourceControlWCCIdentifierKey</key>
-			<string>AD883D4E-99F2-4417-BB39-90C890A6429F</string>
+			<string>8B8A83EE-96A8-4AA1-A0D2-CFA5E8899C31</string>
 			<key>IDESourceControlWCCName</key>
-			<string>nova-wing-3031</string>
+			<string>NW3031</string>
 		</dict>
 	</array>
 </dict>

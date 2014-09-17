@@ -130,7 +130,7 @@ NSTimer *objectCreateTimer;
     obstacle1.zPosition = 10;
     
     int tempRand2 = arc4random()%100;
-    double randScale = (tempRand2-50)/1000.0;
+    double randScale = (tempRand2-50)/500.0;
     obstacle1.xScale = 0.5 + randScale;
     obstacle1.yScale = 0.5 + randScale;
     
