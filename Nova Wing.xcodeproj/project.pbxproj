@@ -70,6 +70,10 @@
 		765DF29919A9294B00FBFB16 /* GameOver-L1@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 765DF29719A9294B00FBFB16 /* GameOver-L1@2x.png */; };
 		765DF29C19A9295800FBFB16 /* GameOverL1.m in Sources */ = {isa = PBXBuildFile; fileRef = 765DF29B19A9295800FBFB16 /* GameOverL1.m */; };
 		765DF29E19A9298900FBFB16 /* menuMusic.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 765DF29D19A9298900FBFB16 /* menuMusic.m4a */; };
+		76876A3A19CC6FCB00F1C227 /* AppIcon-1024.png in Resources */ = {isa = PBXBuildFile; fileRef = 76876A3719CC6FCB00F1C227 /* AppIcon-1024.png */; };
+		76876A3B19CC6FCB00F1C227 /* NovaWingIcon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 76876A3819CC6FCB00F1C227 /* NovaWingIcon@2x.png */; };
+		76876A3C19CC6FCB00F1C227 /* NovaWingIcon@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 76876A3919CC6FCB00F1C227 /* NovaWingIcon@3x.png */; };
+		76876A3E19CC705E00F1C227 /* NovaWingIconSpotlight.png in Resources */ = {isa = PBXBuildFile; fileRef = 76876A3D19CC705E00F1C227 /* NovaWingIconSpotlight.png */; };
 		76A1B8DA199D973B00EE1491 /* buttonPlay@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 76A1B8D9199D973B00EE1491 /* buttonPlay@2x.png */; };
 		76A1B8DC199D974500EE1491 /* buttonPressPlay@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 76A1B8DB199D974500EE1491 /* buttonPressPlay@2x.png */; };
 		76C6F15419A2CCB100B37331 /* Level-1@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 76C6F15319A2CCB100B37331 /* Level-1@2x.png */; };
@@ -166,6 +170,10 @@
 		765DF29A19A9295800FBFB16 /* GameOverL1.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GameOverL1.h; sourceTree = "<group>"; };
 		765DF29B19A9295800FBFB16 /* GameOverL1.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GameOverL1.m; sourceTree = "<group>"; };
 		765DF29D19A9298900FBFB16 /* menuMusic.m4a */ = {isa = PBXFileReference; lastKnownFileType = file; path = menuMusic.m4a; sourceTree = "<group>"; };
+		76876A3719CC6FCB00F1C227 /* AppIcon-1024.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "AppIcon-1024.png"; sourceTree = "<group>"; };
+		76876A3819CC6FCB00F1C227 /* NovaWingIcon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "NovaWingIcon@2x.png"; sourceTree = "<group>"; };
+		76876A3919CC6FCB00F1C227 /* NovaWingIcon@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "NovaWingIcon@3x.png"; sourceTree = "<group>"; };
+		76876A3D19CC705E00F1C227 /* NovaWingIconSpotlight.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = NovaWingIconSpotlight.png; sourceTree = "<group>"; };
 		76A1B8D9199D973B00EE1491 /* buttonPlay@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "buttonPlay@2x.png"; sourceTree = "<group>"; };
 		76A1B8DB199D974500EE1491 /* buttonPressPlay@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "buttonPressPlay@2x.png"; sourceTree = "<group>"; };
 		76C6F15319A2CCB100B37331 /* Level-1@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Level-1@2x.png"; sourceTree = "<group>"; };
@@ -343,6 +351,10 @@
 		2DB3526D199993DA006BF15C /* Main */ = {
 			isa = PBXGroup;
 			children = (
+				76876A3D19CC705E00F1C227 /* NovaWingIconSpotlight.png */,
+				76876A3719CC6FCB00F1C227 /* AppIcon-1024.png */,
+				76876A3819CC6FCB00F1C227 /* NovaWingIcon@2x.png */,
+				76876A3919CC6FCB00F1C227 /* NovaWingIcon@3x.png */,
 				76C6F15319A2CCB100B37331 /* Level-1@2x.png */,
 				2DB352A919999D1B006BF15C /* Level-2@2x.png */,
 				764BF9A019A19A11007DABF8 /* arrowL@2x.png */,
@@ -502,6 +514,9 @@
 				LastUpgradeCheck = 0510;
 				ORGANIZATIONNAME = "FIV3 Interactive, LLC";
 				TargetAttributes = {
+					2DB3521619996B83006BF15C = {
+						DevelopmentTeam = 98NY7S79AL;
+					};
 					2DB3523E19996B83006BF15C = {
 						TestTargetID = 2DB3521619996B83006BF15C;
 					};
@@ -532,6 +547,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				2DB3528819999445006BF15C /* AOb-3.png in Resources */,
+				76876A3C19CC6FCB00F1C227 /* NovaWingIcon@3x.png in Resources */,
 				765DF29919A9294B00FBFB16 /* GameOver-L1@2x.png in Resources */,
 				2DB3528919999445006BF15C /* Pillar-1@2x.png in Resources */,
 				764BF9A319A19A11007DABF8 /* arrowR@2x.png in Resources */,
@@ -542,6 +558,7 @@
 				764BF9A719A2BC04007DABF8 /* Nova-L1@2x.png in Resources */,
 				2DB3529419999485006BF15C /* Level-1-Sky@2x.png in Resources */,
 				2DB3529319999485006BF15C /* Level-1-Mid@2x.png in Resources */,
+				76876A3E19CC705E00F1C227 /* NovaWingIconSpotlight.png in Resources */,
 				2DB35299199994B9006BF15C /* Stars-Seamless.jpg in Resources */,
 				2DB3528719999445006BF15C /* AOb-2.png in Resources */,
 				2DB352AC19999D5A006BF15C /* SF Movie Poster.ttf in Resources */,
@@ -551,11 +568,13 @@
 				7651E8D519B0EC8900F7E9D0 /* Level-1-Music.m4a in Resources */,
 				76C6F15419A2CCB100B37331 /* Level-1@2x.png in Resources */,
 				2DB3529B199994C0006BF15C /* Title.png in Resources */,
+				76876A3B19CC6FCB00F1C227 /* NovaWingIcon@2x.png in Resources */,
 				76A1B8DA199D973B00EE1491 /* buttonPlay@2x.png in Resources */,
 				765DF29E19A9298900FBFB16 /* menuMusic.m4a in Resources */,
 				765DF29219A9293100FBFB16 /* Stars-L1.sks in Resources */,
 				2DB3528B19999445006BF15C /* Pillar-3@2x.png in Resources */,
 				2DB352771999940A006BF15C /* buttonPressLeaderboard.png in Resources */,
+				76876A3A19CC6FCB00F1C227 /* AppIcon-1024.png in Resources */,
 				2DB3529119999485006BF15C /* Level-1-Far@2x.png in Resources */,
 				2DB352781999940A006BF15C /* buttonPressSettings.png in Resources */,
 				2DB3528619999445006BF15C /* AOb-1@2x.png in Resources */,
@@ -728,6 +747,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Nova Wing/Nova Wing-Prefix.pch";
 				INFOPLIST_FILE = "Nova Wing/Nova Wing-Info.plist";
@@ -742,6 +762,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Nova Wing/Nova Wing-Prefix.pch";
 				INFOPLIST_FILE = "Nova Wing/Nova Wing-Info.plist";
