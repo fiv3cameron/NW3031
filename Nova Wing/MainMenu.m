@@ -467,6 +467,7 @@ float volNum;
     
     if ([nodeLift.name isEqualToString:@"rightArrow"]) {
         
+        //Modular level select implementation.
         switch ([GameState sharedGameData].levelIndex) {
             case 1:
                 [self animateLeft:levelOneThumb withDelay:0.0];
