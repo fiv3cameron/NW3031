@@ -70,6 +70,7 @@ NSTimer *scoreUpdate;
         [self createAudio];
         [self createScoreNode];
         [self addChild:_player];
+        [[Ships alloc] shipBobbing:_player];
         [self createFloor];
         [self tapToPlay];
         
@@ -242,6 +243,9 @@ NSTimer *scoreUpdate;
     }
     else _player.physicsBody.velocity = CGVectorMake(0.0f, 400.0f);
     
+    [_player removeActionForKey:@"bobbingAction"];
+    [[Ships alloc] rotateNodeUpwards:_player];
+    
 }
 
 -(void)update:(CFTimeInterval)currentTime {
@@ -257,6 +261,10 @@ NSTimer *scoreUpdate;
     _lastUpdateTime = currentTime;
     [self.parallaxBackground update:currentTime];
     [self moveFloor];
+    
+    if (_player.physicsBody.velocity.dy < 0) {
+        [[Ships alloc] rotateNodeDownwards:_player];
+    }
     
 }
 
