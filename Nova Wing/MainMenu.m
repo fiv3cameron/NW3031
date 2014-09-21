@@ -437,7 +437,6 @@ float volNum;
         [self addChild:[self createRightArrowWithWait:0.5]];
         [self addChild:[self backToMainButton]];
         
-        
     }
     if (![nodeLift.name isEqualToString:@"_startButton"] && ![nodeLift.name isEqualToString:@"_leaderButton"] && ![nodeLift.name isEqualToString:@"_settingsButton"]) {
         startButton.texture = [SKTexture textureWithImageNamed:@"buttonStart.png"];
