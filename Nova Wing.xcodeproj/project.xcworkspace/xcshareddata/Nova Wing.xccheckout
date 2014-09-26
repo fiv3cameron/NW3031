@@ -5,7 +5,7 @@
 	<key>IDESourceControlProjectFavoriteDictionaryKey</key>
 	<false/>
 	<key>IDESourceControlProjectIdentifier</key>
-	<string>14FF6D07-1071-41CC-8C5F-AE97367532BB</string>
+	<string>B1A9DFEB-DC0E-4AB7-AD80-A2BF955A5D20</string>
 	<key>IDESourceControlProjectName</key>
 	<string>Nova Wing</string>
 	<key>IDESourceControlProjectOriginsDictionary</key>
@@ -14,7 +14,7 @@
 		<string>https://bitbucket.org/fiv3int/nova-wing-3031.git</string>
 	</dict>
 	<key>IDESourceControlProjectPath</key>
-	<string>Nova Wing.xcodeproj/project.xcworkspace</string>
+	<string>Nova Wing.xcodeproj</string>
 	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
 	<dict>
 		<key>924BF3EC4DEAB703F94890A5368C080F1EE8074A</key>
