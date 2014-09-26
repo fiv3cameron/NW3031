@@ -120,6 +120,37 @@ NSTimer *objectCreateTimer;
 }
 
 -(void)createObstacles {
+    
+    int tempObjectSelector = arc4random()%10;
+    switch (tempObjectSelector)
+    {
+        case 1:
+        case 2:
+        case 3:
+        case 4:
+            [self asteroid1];
+            break;
+        case 5:
+        case 6:
+        case 7:
+            [self asteroid2];
+            break;
+        case 8:
+        case 9:
+            break;
+        case 10:
+            //Red asteroid
+            break;
+
+        default:
+            break;
+    }
+    
+
+}
+
+-(void)asteroid1 {
+    
     SKSpriteNode *tempNode = [SKSpriteNode node];
     SKSpriteNode *obstacle1 = [[Obstacles alloc] createObstacleWithNode:tempNode withName:@"aerial" withImage:@"AOb-1"];
     
@@ -129,8 +160,8 @@ NSTimer *objectCreateTimer;
     //obstacle1.name = @"aerial";
     obstacle1.zPosition = 10;
     
-    int tempRand2 = arc4random()%100;
-    double randScale = (tempRand2-50)/500.0;
+    int tempRand2 = arc4random()%200;
+    double randScale = (tempRand2-100)/1000.0;
     obstacle1.xScale = 0.5 + randScale;
     obstacle1.yScale = 0.5 + randScale;
     
@@ -140,8 +171,33 @@ NSTimer *objectCreateTimer;
     obstacle1.physicsBody.collisionBitMask = 0;
     
     [self addChild: obstacle1];
-    
     [self moveAerialNode:obstacle1];
+}
+
+-(void)asteroid2 {
+    
+    SKSpriteNode *tempNode = [SKSpriteNode node];
+    SKSpriteNode *obstacle2 = [[Obstacles alloc] createObstacleWithNode:tempNode withName:@"aerial" withImage:@"AOb-2"];
+    
+    int tempRand = arc4random()%80;
+    double randYPosition = (tempRand+10)/100.0;
+    obstacle2.position = CGPointMake(self.size.width+obstacle2.size.width/2, self.size.height*randYPosition);
+    //obstacle1.name = @"aerial";
+    obstacle2.zPosition = 10;
+    
+    int tempRand2 = arc4random()%100;
+    double randScale = (tempRand2)/1000.0;
+    obstacle2.xScale = 0.3 + randScale;
+    obstacle2.yScale = 0.3 + randScale;
+    
+    obstacle2.physicsBody = [SKPhysicsBody bodyWithCircleOfRadius:obstacle2.size.height/2];
+    obstacle2.physicsBody.categoryBitMask = CollisionCategoryObject;
+    obstacle2.physicsBody.dynamic = NO;
+    obstacle2.physicsBody.collisionBitMask = 0;
+    
+    [self addChild: obstacle2];
+    [self moveAerialNode:obstacle2];
+    
 }
 
 -(void)bottomCollide {
@@ -264,8 +320,8 @@ NSTimer *objectCreateTimer;
     double randAngleDeg = randAngleRad*3.141592654/180;
     
     //Action Definitions.
-    SKAction *horzMove1 = [SKAction moveToX: self.size.width/2 duration:totalDuration];
-    SKAction *horzMove2 = [SKAction moveToX: -(incomingNode.size.width/2) duration:totalDuration];
+    SKAction *horzMove1 = [SKAction moveByX: -(self.size.width/2 + incomingNode.size.width/2) y: 0 duration:totalDuration];
+    SKAction *horzMove2 = [SKAction moveByX: -(self.size.width/2 + incomingNode.size.width/2) y: 0 duration:totalDuration];
     SKAction *vertMoveUp = [SKAction moveByX:0 y:deltaHeight duration:totalDuration];
     SKAction *vertMoveDwn = [SKAction moveByX:0 y:-deltaHeight duration:totalDuration];
     SKAction *rotate = [SKAction rotateByAngle:randAngleDeg duration:totalDuration];
