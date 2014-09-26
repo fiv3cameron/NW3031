@@ -77,6 +77,8 @@
 		76A1B8DA199D973B00EE1491 /* buttonPlay@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 76A1B8D9199D973B00EE1491 /* buttonPlay@2x.png */; };
 		76A1B8DC199D974500EE1491 /* buttonPressPlay@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 76A1B8DB199D974500EE1491 /* buttonPressPlay@2x.png */; };
 		76C6F15419A2CCB100B37331 /* Level-1@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 76C6F15319A2CCB100B37331 /* Level-1@2x.png */; };
+		76EC502419D4EAE100363C97 /* Rocket-1@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 76EC502219D4EAE100363C97 /* Rocket-1@2x.png */; };
+		76EC502519D4EAE100363C97 /* Ship-Chunk-1@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 76EC502319D4EAE100363C97 /* Ship-Chunk-1@2x.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -177,6 +179,8 @@
 		76A1B8D9199D973B00EE1491 /* buttonPlay@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "buttonPlay@2x.png"; sourceTree = "<group>"; };
 		76A1B8DB199D974500EE1491 /* buttonPressPlay@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "buttonPressPlay@2x.png"; sourceTree = "<group>"; };
 		76C6F15319A2CCB100B37331 /* Level-1@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Level-1@2x.png"; sourceTree = "<group>"; };
+		76EC502219D4EAE100363C97 /* Rocket-1@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Rocket-1@2x.png"; sourceTree = "<group>"; };
+		76EC502319D4EAE100363C97 /* Ship-Chunk-1@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Ship-Chunk-1@2x.png"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -447,6 +451,8 @@
 		765DF28819A9286700FBFB16 /* Level 1 */ = {
 			isa = PBXGroup;
 			children = (
+				76EC502219D4EAE100363C97 /* Rocket-1@2x.png */,
+				76EC502319D4EAE100363C97 /* Ship-Chunk-1@2x.png */,
 				765DF29619A9294B00FBFB16 /* CMDR-FletcherPop@2x.png */,
 				765DF29719A9294B00FBFB16 /* GameOver-L1@2x.png */,
 				765DF28A19A928A700FBFB16 /* BlackHole@2x.png */,
@@ -577,12 +583,14 @@
 				76876A3A19CC6FCB00F1C227 /* AppIcon-1024.png in Resources */,
 				2DB3529119999485006BF15C /* Level-1-Far@2x.png in Resources */,
 				2DB352781999940A006BF15C /* buttonPressSettings.png in Resources */,
+				76EC502519D4EAE100363C97 /* Ship-Chunk-1@2x.png in Resources */,
 				2DB3528619999445006BF15C /* AOb-1@2x.png in Resources */,
 				76A1B8DC199D974500EE1491 /* buttonPressPlay@2x.png in Resources */,
 				2DB3528C19999445006BF15C /* Pillar-4@2x.png in Resources */,
 				2DB3523A19996B83006BF15C /* Images.xcassets in Resources */,
 				2DB352761999940A006BF15C /* buttonLeaderboard.png in Resources */,
 				764BF9A219A19A11007DABF8 /* arrowL@2x.png in Resources */,
+				76EC502419D4EAE100363C97 /* Rocket-1@2x.png in Resources */,
 				764BF9A619A2BC04007DABF8 /* Nova-L2@2x.png in Resources */,
 				2DB3527A1999940A006BF15C /* buttonSettings.png in Resources */,
 				2DB352791999940A006BF15C /* buttonPressStart.png in Resources */,

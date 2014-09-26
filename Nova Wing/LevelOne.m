@@ -127,10 +127,14 @@ NSTimer *objectCreateTimer;
         case 1:
         case 2:
         case 3:
+            [self rocket];
+            break;
         case 4:
             [self asteroid1];
             break;
         case 5:
+            [self shipChunk];
+            break;
         case 6:
         case 7:
             [self asteroid2];
@@ -187,8 +191,8 @@ NSTimer *objectCreateTimer;
     
     int tempRand2 = arc4random()%100;
     double randScale = (tempRand2)/1000.0;
-    obstacle2.xScale = 0.3 + randScale;
-    obstacle2.yScale = 0.3 + randScale;
+    obstacle2.xScale = 0.4 + randScale;
+    obstacle2.yScale = 0.4 + randScale;
     
     obstacle2.physicsBody = [SKPhysicsBody bodyWithCircleOfRadius:obstacle2.size.height/2];
     obstacle2.physicsBody.categoryBitMask = CollisionCategoryObject;
@@ -198,6 +202,54 @@ NSTimer *objectCreateTimer;
     [self addChild: obstacle2];
     [self moveAerialNode:obstacle2];
     
+}
+
+-(void)rocket {
+    SKSpriteNode *tempNode = [SKSpriteNode node];
+    SKSpriteNode *obstacle2 = [[Obstacles alloc] createObstacleWithNode:tempNode withName:@"aerial" withImage:@"Rocket-1"];
+    
+    int tempRand = arc4random()%80;
+    double randYPosition = (tempRand+10)/100.0;
+    obstacle2.position = CGPointMake(self.size.width+obstacle2.size.width/2, self.size.height*randYPosition);
+    //obstacle1.name = @"aerial";
+    obstacle2.zPosition = 10;
+    
+    int tempRand2 = arc4random()%100;
+    double randScale = (tempRand2)/1000.0;
+    obstacle2.xScale = 0.4 + randScale;
+    obstacle2.yScale = 0.4 + randScale;
+    
+    obstacle2.physicsBody = [SKPhysicsBody bodyWithRectangleOfSize: obstacle2.size];
+    obstacle2.physicsBody.categoryBitMask = CollisionCategoryObject;
+    obstacle2.physicsBody.dynamic = NO;
+    obstacle2.physicsBody.collisionBitMask = 0;
+    
+    [self addChild: obstacle2];
+    [self moveAerialNode:obstacle2];
+}
+
+-(void)shipChunk {
+    SKSpriteNode *tempNode = [SKSpriteNode node];
+    SKSpriteNode *obstacle2 = [[Obstacles alloc] createObstacleWithNode:tempNode withName:@"aerial" withImage:@"Ship-Chunk-1"];
+    
+    int tempRand = arc4random()%80;
+    double randYPosition = (tempRand+10)/100.0;
+    obstacle2.position = CGPointMake(self.size.width+obstacle2.size.width/2, self.size.height*randYPosition);
+    //obstacle1.name = @"aerial";
+    obstacle2.zPosition = 10;
+    
+    int tempRand2 = arc4random()%100;
+    double randScale = (tempRand2)/1000.0;
+    obstacle2.xScale = 0.5 + randScale;
+    obstacle2.yScale = 0.5 + randScale;
+    
+    obstacle2.physicsBody = [SKPhysicsBody bodyWithRectangleOfSize: obstacle2.size];
+    obstacle2.physicsBody.categoryBitMask = CollisionCategoryObject;
+    obstacle2.physicsBody.dynamic = NO;
+    obstacle2.physicsBody.collisionBitMask = 0;
+    
+    [self addChild: obstacle2];
+    [self moveAerialNode:obstacle2];
 }
 
 -(void)bottomCollide {
@@ -352,7 +404,7 @@ NSTimer *objectCreateTimer;
         [self createObstacles];
         [tapPlay removeFromParent];
         scoreUpdate = [NSTimer scheduledTimerWithTimeInterval:0.1 target:self selector:@selector(scoreAdd) userInfo:nil repeats:YES];
-        objectCreateTimer = [NSTimer scheduledTimerWithTimeInterval:0.7 target:self selector:@selector(createObstacles) userInfo:nil repeats:YES];
+        objectCreateTimer = [NSTimer scheduledTimerWithTimeInterval:0.5 target:self selector:@selector(createObstacles) userInfo:nil repeats:YES];
     }
     
     if (_player.position.y > 500)
