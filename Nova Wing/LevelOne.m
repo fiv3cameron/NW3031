@@ -20,6 +20,7 @@ typedef NS_OPTIONS(uint32_t, CollisionCategory) {
 {
     SKNode *_player;
     SKNode *playerNode;
+    
 }
 @end
 
@@ -49,13 +50,14 @@ NSTimer *objectCreateTimer;
 -(id)initWithSize:(CGSize)size {
     if (self = [super initWithSize:size]) {
         
-        if ([GameState sharedGameData].highScoreL1 == 0) {
+        /*if ([GameState sharedGameData].highScoreL1 == 0) {
             storymodeL1 = YES;
         } else if ([GameState sharedGameData].highScoreL1 > 0) {
             storymodeL1 = NO;
-        }
+        }*/
         
         levelComplete = NO;
+        storymodeL1 = NO;
         
         self.backgroundColor = [SKColor colorWithRed:0 green:0 blue:0 alpha:1];
         
@@ -141,6 +143,7 @@ NSTimer *objectCreateTimer;
             break;
         case 8:
         case 9:
+            [self asteroid3];
             break;
         case 10:
             //Red asteroid
@@ -160,7 +163,7 @@ NSTimer *objectCreateTimer;
     
     int tempRand = arc4random()%80;
     double randYPosition = (tempRand+10)/100.0;
-    obstacle1.position = CGPointMake(self.size.width+obstacle1.size.width/2, self.size.height*randYPosition);
+    obstacle1.position = CGPointMake(self.size.width+obstacle1.size.width, self.size.height*randYPosition);
     //obstacle1.name = @"aerial";
     obstacle1.zPosition = 10;
     
@@ -185,7 +188,33 @@ NSTimer *objectCreateTimer;
     
     int tempRand = arc4random()%80;
     double randYPosition = (tempRand+10)/100.0;
-    obstacle2.position = CGPointMake(self.size.width+obstacle2.size.width/2, self.size.height*randYPosition);
+    obstacle2.position = CGPointMake(self.size.width+obstacle2.size.width, self.size.height*randYPosition);
+    //obstacle1.name = @"aerial";
+    obstacle2.zPosition = 10;
+    
+    int tempRand2 = arc4random()%100;
+    double randScale = (tempRand2)/1000.0;
+    obstacle2.xScale = 0.4 + randScale;
+    obstacle2.yScale = 0.4 + randScale;
+    
+    obstacle2.physicsBody = [SKPhysicsBody bodyWithCircleOfRadius:obstacle2.size.height/2];
+    obstacle2.physicsBody.categoryBitMask = CollisionCategoryObject;
+    obstacle2.physicsBody.dynamic = NO;
+    obstacle2.physicsBody.collisionBitMask = 0;
+    
+    [self addChild: obstacle2];
+    [self moveAerialNode:obstacle2];
+    
+}
+
+-(void)asteroid3 {
+    
+    SKSpriteNode *tempNode = [SKSpriteNode node];
+    SKSpriteNode *obstacle2 = [[Obstacles alloc] createObstacleWithNode:tempNode withName:@"aerial" withImage:@"AOb-3"];
+    
+    int tempRand = arc4random()%80;
+    double randYPosition = (tempRand+10)/100.0;
+    obstacle2.position = CGPointMake(self.size.width+obstacle2.size.width, self.size.height*randYPosition);
     //obstacle1.name = @"aerial";
     obstacle2.zPosition = 10;
     
@@ -210,7 +239,7 @@ NSTimer *objectCreateTimer;
     
     int tempRand = arc4random()%80;
     double randYPosition = (tempRand+10)/100.0;
-    obstacle2.position = CGPointMake(self.size.width+obstacle2.size.width/2, self.size.height*randYPosition);
+    obstacle2.position = CGPointMake(self.size.width+obstacle2.size.width, self.size.height*randYPosition);
     //obstacle1.name = @"aerial";
     obstacle2.zPosition = 10;
     
@@ -234,7 +263,7 @@ NSTimer *objectCreateTimer;
     
     int tempRand = arc4random()%80;
     double randYPosition = (tempRand+10)/100.0;
-    obstacle2.position = CGPointMake(self.size.width+obstacle2.size.width/2, self.size.height*randYPosition);
+    obstacle2.position = CGPointMake(self.size.width+obstacle2.size.width, self.size.height*randYPosition);
     //obstacle1.name = @"aerial";
     obstacle2.zPosition = 10;
     
@@ -350,7 +379,7 @@ NSTimer *objectCreateTimer;
 }
 
 #pragma mark --Animate Obstacles
--(void) moveAerialNode: (SKSpriteNode *)incomingNode
+/*-(void) moveAerialNode: (SKSpriteNode *)incomingNode
 {
     //Calculations.
     float startHeight = incomingNode.position.y;
@@ -373,7 +402,7 @@ NSTimer *objectCreateTimer;
     
     //Action Definitions.
     SKAction *horzMove1 = [SKAction moveByX: -(self.size.width/2 + incomingNode.size.width/2) y: 0 duration:totalDuration];
-    SKAction *horzMove2 = [SKAction moveByX: -(self.size.width/2 + incomingNode.size.width/2) y: 0 duration:totalDuration];
+    SKAction *horzMove2 = [SKAction moveToX: -incomingNode.size.width duration:totalDuration];
     SKAction *vertMoveUp = [SKAction moveByX:0 y:deltaHeight duration:totalDuration];
     SKAction *vertMoveDwn = [SKAction moveByX:0 y:-deltaHeight duration:totalDuration];
     SKAction *rotate = [SKAction rotateByAngle:randAngleDeg duration:totalDuration];
@@ -388,7 +417,46 @@ NSTimer *objectCreateTimer;
     
     //Run sequence
     [incomingNode runAction:aerialSqnce];
+} */
+
+-(void) moveAerialNode: (SKSpriteNode *)incomingNode
+{
+    //Calculations.
+    float startHeight = incomingNode.position.y;
+    float blackHoleRad = blackHole.size.width/2;
+    float distToCent = sqrt(blackHoleRad * blackHoleRad - self.size.width/2 * self.size.width/2);
+    float sumHeight = startHeight + distToCent;
+    float triangleWidth = self.size.width/2;
+    double square = (sumHeight * sumHeight + triangleWidth * triangleWidth);
+    float arcCenterHeight = sqrt(square);
+    float deltaHeight = arcCenterHeight - sumHeight;
+    
+    int tempRand = arc4random()%200;
+    double randDuration = (tempRand-100)/1000.0;
+    double totalDuration =0.6+randDuration;
+    
+    int tempRand2 = arc4random()%75 + 50;
+    double tempRandSigned = tempRand2-50.0;
+    double randAngleRad = (tempRandSigned)*180/100.0;
+    double randAngleDeg = randAngleRad*3.141592654/180;
+    
+    //Action Definitions.
+    SKAction *horzMove = [SKAction moveToX: -incomingNode.size.width duration:totalDuration*2];
+    SKAction *vertMoveUp = [SKAction moveByX:0 y:deltaHeight duration:totalDuration];
+    SKAction *vertMoveDwn = [SKAction moveByX:0 y:-deltaHeight duration:totalDuration];
+    SKAction *rotate = [SKAction rotateByAngle:randAngleDeg duration:totalDuration*2];
+    vertMoveUp.timingMode = SKActionTimingEaseOut;
+    vertMoveDwn.timingMode = SKActionTimingEaseIn;
+    
+    //Groups & Sequences
+    SKAction *vertMove = [SKAction sequence:@[vertMoveUp, vertMoveDwn]];
+    SKAction *remove = [SKAction removeFromParent];
+    SKAction *aerialGroup = [SKAction group:@[vertMove,horzMove,rotate]];
+    SKAction *aerialSqnce = [SKAction sequence:@[aerialGroup, remove]];
+    //Run sequence
+    [incomingNode runAction:aerialSqnce];
 }
+
 
 
 -(void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event {
