@@ -14,11 +14,13 @@ SKSpriteNode *startButton;
 SKSpriteNode *leaderButton;
 SKSpriteNode *settingsButton;
 SKSpriteNode *titleImage;
-SKSpriteNode *levelOneThumb;
+SKSpriteNode *levelThumb;
 SKSpriteNode *levelTwoThumb;
 SKSpriteNode *rightArrow;
 SKSpriteNode *leftArrow;
 SKLabelNode *GDReset;
+NSArray *levelTitles;
+
 
 @interface MainMenu : SKScene
 {

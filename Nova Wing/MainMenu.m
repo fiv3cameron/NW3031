@@ -42,6 +42,7 @@ float volNum;
         [self addChild: [self leaderButtonNode]];
         [self addChild: [self settingsButtonNode]];
         [self createAudio];
+        levelTitles = @[@"Event Horizon", @"The Whispers", @"TempLevel3"];
     }
     return self;
 }
@@ -196,54 +197,33 @@ float volNum;
     return leftArrow;
 }
 
--(SKSpriteNode *)levelOneButtonWithMultiplier: (double) PosMod
+-(SKSpriteNode *)levelThumbWithPositionModifier: (double) PosMod
 {
-    // Create Level 1 Thumbnail
-    levelOneThumb = [SKSpriteNode spriteNodeWithImageNamed:@"Level-1.png"];
-    levelOneThumb.position = CGPointMake(self.size.width * PosMod, self.size.height/2);
-    levelOneThumb.name = @"_levelOne";
-    
+    // Create Level %i Thumbnail
+    levelThumb = [SKSpriteNode spriteNodeWithImageNamed:[NSString stringWithFormat:@"Level-%li.png", [GameState sharedGameData].levelIndex]];
+    levelThumb.position = CGPointMake(self.size.width * PosMod, self.size.height/2);
+    levelThumb.name = [NSString stringWithFormat:@"_level%li", [GameState sharedGameData].levelIndex];
+        
     // Add level name.
-    SKLabelNode *levelOneName = [SKLabelNode labelNodeWithFontNamed:@"SF Movie Poster"];
-    levelOneName.fontSize = 40;
-    levelOneName.text = @"Event Horizon";
-    levelOneName.position = CGPointMake(0, 125);
-    [levelOneThumb addChild:levelOneName];
+    SKLabelNode *levelName = [SKLabelNode labelNodeWithFontNamed:@"SF Movie Poster"];
+    levelName.fontSize = 40;
+    levelName.text = [levelTitles objectAtIndex:[GameState sharedGameData].levelIndex-1];
+    levelName.position = CGPointMake(0, 125);
+    [levelThumb addChild:levelName];
     
+    //Add high score.
     SKLabelNode *highScore = [[SKLabelNode alloc] initWithFontNamed:@"SF Movie Poster"];
     highScore.position = CGPointMake(0, -150);
     highScore.fontColor = [SKColor whiteColor];
     highScore.fontSize = 35;
     highScore.horizontalAlignmentMode = SKLabelHorizontalAlignmentModeCenter;
     highScore.zPosition = 101;
-    highScore.text = [NSString stringWithFormat:@"High Score: %li", [GameState sharedGameData].highScoreL1];
-    [levelOneThumb addChild:highScore];
+    highScore.text = [NSString stringWithFormat:@"High Score: %@", [[GameState sharedGameData] valueForKey:[NSString stringWithFormat:@"highScoreL%li",[GameState sharedGameData].levelIndex]]];
+    [levelThumb addChild:highScore];
+        
+    return levelThumb;
     
-    return levelOneThumb;
-}
-
--(SKSpriteNode *)levelTwoButton
-{
-    levelTwoThumb = [SKSpriteNode spriteNodeWithImageNamed:@"Level-2"];
-    levelTwoThumb.position = CGPointMake(self.size.width * 1.5, self.size.height / 2);
-    levelTwoThumb.name = @"_levelTwo";
     
-    SKLabelNode *levelTwoName = [SKLabelNode labelNodeWithFontNamed:@"SF Movie Poster"];
-    levelTwoName.fontSize = 40;
-    levelTwoName.text = @"The Whispers";
-    levelTwoName.position = CGPointMake(0, 125);
-    [levelTwoThumb addChild:levelTwoName];
-    
-    SKLabelNode *highScore = [[SKLabelNode alloc] initWithFontNamed:@"SF Movie Poster"];
-    highScore.position = CGPointMake(0, -150);
-    highScore.fontColor = [SKColor whiteColor];
-    highScore.fontSize = 35;
-    highScore.horizontalAlignmentMode = SKLabelHorizontalAlignmentModeCenter;
-    highScore.zPosition = 101;
-    highScore.text = [NSString stringWithFormat:@"High Score: %li", [GameState sharedGameData].highScoreL2];
-    [levelTwoThumb addChild:highScore];
-    
-    return levelTwoThumb;
 }
 
 #pragma mark --Settings
@@ -432,8 +412,8 @@ float volNum;
         
         // Load level select area
         [GameState sharedGameData].levelIndex = 1;
-        [self addChild:[self levelOneButtonWithMultiplier:1.5]];
-        [self animateLeft:levelOneThumb withDelay:0.5];
+        [self addChild:[self levelThumbWithPositionModifier:1.5]];
+        [self animateLeft:levelThumb withDelay:0.5];
         [self addChild:[self createRightArrowWithWait:0.5]];
         [self addChild:[self backToMainButton]];
         
@@ -469,10 +449,11 @@ float volNum;
         //Modular level select implementation.
         switch ([GameState sharedGameData].levelIndex) {
             case 1:
-                [self animateLeft:levelOneThumb withDelay:0.0];
-                [self addChild:[self levelTwoButton]];
-                [self animateLeft:levelTwoThumb withDelay:0.0];
+                [self animateLeft:[self childNodeWithName:[NSString stringWithFormat:@"_level%li",[GameState sharedGameData].levelIndex]] withDelay:0.0];
                 [GameState sharedGameData].levelIndex = [GameState sharedGameData].levelIndex + 1;
+                [self addChild:[self levelThumbWithPositionModifier:1.5]];
+                [self animateLeft:[self childNodeWithName:[NSString stringWithFormat:@"_level%li",[GameState sharedGameData].levelIndex]] withDelay:0.0];
+                
                 break;
             case 2:
                 break;
@@ -483,25 +464,18 @@ float volNum;
     }
     
     if ([nodeLift.name isEqualToString:@"leftArrow"]) {
-        switch ([GameState sharedGameData].levelIndex) {
-            case 1:
-                break;
-            case 2:
-                [self animateRight:levelTwoThumb withDelay:0.0];
-                [self addChild:[self levelOneButtonWithMultiplier: -0.5]];
-                [self animateRight: levelOneThumb withDelay:0.0];
-                [GameState sharedGameData].levelIndex = [GameState sharedGameData].levelIndex - 1;
-                break;
-                
-            default:
-                break;
-        }
+
+        [self animateRight:[self childNodeWithName:[NSString stringWithFormat:@"_level%li",[GameState sharedGameData].levelIndex]] withDelay:0.0];
+        [GameState sharedGameData].levelIndex = [GameState sharedGameData].levelIndex - 1;
+        [self addChild:[self levelThumbWithPositionModifier: -0.5]];
+        [self animateRight:[self childNodeWithName: [NSString stringWithFormat: @"_level%li",[GameState sharedGameData].levelIndex]] withDelay:0.0];
+
     }
 #pragma mark --Level Button Actions
     
     
     //Level 1 Select
-    if ([nodeLift.name isEqualToString:@"_levelOne"]) {
+    if ([nodeLift.name isEqualToString:@"_level1"]) {
         // Transition to Level One Scene
         // Configure the developer view.
         SKView * levelOneView = (SKView *)self.view;
@@ -518,7 +492,7 @@ float volNum;
     }
     
     //Level 2 Select
-    if ([nodeLift.name isEqualToString:@"_levelTwo"]) {
+    if ([nodeLift.name isEqualToString:@"_level2"]) {
         // Transition to Level One Scene
         // Configure the developer view.
         SKView * levelTwoView = (SKView *)self.view;
