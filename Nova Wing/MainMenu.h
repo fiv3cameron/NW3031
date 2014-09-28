@@ -19,7 +19,6 @@ SKSpriteNode *levelTwoThumb;
 SKSpriteNode *rightArrow;
 SKSpriteNode *leftArrow;
 SKLabelNode *GDReset;
-SKLabelNode *backToMain;
 NSArray *levelTitles;
 
 

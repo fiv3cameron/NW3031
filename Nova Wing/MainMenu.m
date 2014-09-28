@@ -139,7 +139,7 @@ float volNum;
     SKNode *mainButtonHouse;
     mainButtonHouse.alpha = 0.0;
     
-    backToMain = [SKLabelNode labelNodeWithFontNamed:@"SF Movie Poster"];
+    SKLabelNode *backToMain = [SKLabelNode labelNodeWithFontNamed:@"SF Movie Poster"];
     backToMain.alpha = 0.0;
     backToMain.position = CGPointMake(60.0f, 520.0f);
     backToMain.fontColor = [SKColor whiteColor];
@@ -470,16 +470,6 @@ float volNum;
         [self addChild:[self levelThumbWithPositionModifier: -0.5]];
         [self animateRight:[self childNodeWithName: [NSString stringWithFormat: @"_level%li",[GameState sharedGameData].levelIndex]] withDelay:0.0];
 
-    }
-    
-    if ([nodeLift.name isEqualToString:@"backToMain"]) {
-        [self animateRight:[self childNodeWithName:[NSString stringWithFormat:@"_level%li",[GameState sharedGameData].levelIndex]] withDelay:0.0];
-        [self addChild: [self addTitleNode]];
-        [self fadeOutNode:rightArrow withWait:0.0 fadeAlphaTo:0 fadeAlphaWithDuration:0.5];
-        [self fadeOutNode:backToMain withWait:0.0 fadeAlphaTo:0 fadeAlphaWithDuration:0.5];
-        [self addChild: [self startButtonNode]];
-        [self addChild: [self leaderButtonNode]];
-        [self addChild: [self settingsButtonNode]];
     }
 #pragma mark --Level Button Actions
     
