@@ -47,14 +47,14 @@
 }
 
 -(void)rotateNodeUpwards: (SKNode *)nodeRotate {
-    SKAction *rotateUp = [SKAction rotateToAngle:0.45 duration:.25 shortestUnitArc:YES];
+    SKAction *rotateUp = [SKAction rotateToAngle:0.4 duration:.2 shortestUnitArc:YES];
     rotateUp.timingMode = SKActionTimingEaseInEaseOut;
     [nodeRotate runAction:rotateUp];
 }
 
 -(void)rotateNodeDownwards: (SKNode *)nodeRotate {
-    SKAction *rotateDown = [SKAction rotateToAngle:-M_PI_4 duration:.15 shortestUnitArc:YES];
-    rotateDown.timingMode = SKActionTimingEaseIn;
+    SKAction *rotateDown = [SKAction rotateToAngle:-M_PI_4 duration:.2 shortestUnitArc:YES];
+    rotateDown.timingMode = SKActionTimingEaseInEaseOut;
     [nodeRotate runAction:rotateDown];
 }
 

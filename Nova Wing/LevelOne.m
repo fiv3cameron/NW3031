@@ -479,7 +479,7 @@ NSTimer *objectCreateTimer;
     {
         _player.physicsBody.velocity = CGVectorMake(0.0f, 0.0f);
     }
-    else _player.physicsBody.velocity = CGVectorMake(0.0f, 400.0f);
+    else _player.physicsBody.velocity = CGVectorMake(0.0f, _player.position.y*.9);
     
     if (levelComplete == YES) {
         SKView *gameOverView = (SKView *)self.view;
