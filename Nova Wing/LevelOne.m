@@ -475,7 +475,7 @@ NSTimer *objectCreateTimer;
         objectCreateTimer = [NSTimer scheduledTimerWithTimeInterval:0.5 target:self selector:@selector(createObstacles) userInfo:nil repeats:YES];
     }
     
-    if (_player.position.y > 500)
+    if (_player.position.y > self.size.height - 50)
     {
         _player.physicsBody.velocity = CGVectorMake(0.0f, 0.0f);
     }

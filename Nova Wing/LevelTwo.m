@@ -237,11 +237,11 @@ NSTimer *scoreUpdate;
         scoreUpdate = [NSTimer scheduledTimerWithTimeInterval:0.1 target:self selector:@selector(scoreAdd) userInfo:nil repeats:YES];
     }
     
-    if (_player.position.y > 500)
+    if (_player.position.y > self.size.height - 50)
     {
         _player.physicsBody.velocity = CGVectorMake(0.0f, 0.0f);
     }
-    else _player.physicsBody.velocity = CGVectorMake(0.0f, 400.0f);
+    else _player.physicsBody.velocity = CGVectorMake(0.0f, 300.0f);
     
     [_player removeActionForKey:@"bobbingAction"];
     [[Ships alloc] rotateNodeUpwards:_player];

@@ -67,7 +67,7 @@
 -(SKLabelNode *) backToMenu
 {
     backToMain = [SKLabelNode labelNodeWithFontNamed:@"SF Movie Poster"];
-    backToMain.position = CGPointMake(60.0f, 520.0f);
+    backToMain.position = CGPointMake(60.0f, self.size.height - 40);
     backToMain.fontColor = [SKColor whiteColor];
     backToMain.fontSize = 30;
     backToMain.name = @"backToMain";
