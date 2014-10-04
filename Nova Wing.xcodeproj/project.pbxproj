@@ -57,6 +57,9 @@
 		760C23C419DC832C00D34429 /* L1-AOb-1@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 760C23C319DC832C00D34429 /* L1-AOb-1@2x.png */; };
 		760C23C719DC856000D34429 /* L1-AOb-2@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 760C23C519DC856000D34429 /* L1-AOb-2@2x.png */; };
 		760C23C819DC856000D34429 /* L1-AOb-3@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 760C23C619DC856000D34429 /* L1-AOb-3@2x.png */; };
+		7640AFB819E06F9A00EFD3C5 /* 2xMulti@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 7640AFB619E06F9A00EFD3C5 /* 2xMulti@2x.png */; };
+		7640AFB919E06F9A00EFD3C5 /* 3xMulti@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 7640AFB719E06F9A00EFD3C5 /* 3xMulti@2x.png */; };
+		7640AFBB19E0836900EFD3C5 /* ShipTrail.sks in Resources */ = {isa = PBXBuildFile; fileRef = 7640AFBA19E0836900EFD3C5 /* ShipTrail.sks */; };
 		764BF94D199EBC3F007DABF8 /* KeychainWrapper.m in Sources */ = {isa = PBXBuildFile; fileRef = 764BF94C199EBC3F007DABF8 /* KeychainWrapper.m */; };
 		764BF9A219A19A11007DABF8 /* arrowL@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 764BF9A019A19A11007DABF8 /* arrowL@2x.png */; };
 		764BF9A319A19A11007DABF8 /* arrowR@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 764BF9A119A19A11007DABF8 /* arrowR@2x.png */; };
@@ -158,6 +161,9 @@
 		760C23C319DC832C00D34429 /* L1-AOb-1@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "L1-AOb-1@2x.png"; sourceTree = "<group>"; };
 		760C23C519DC856000D34429 /* L1-AOb-2@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "L1-AOb-2@2x.png"; sourceTree = "<group>"; };
 		760C23C619DC856000D34429 /* L1-AOb-3@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "L1-AOb-3@2x.png"; sourceTree = "<group>"; };
+		7640AFB619E06F9A00EFD3C5 /* 2xMulti@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "2xMulti@2x.png"; sourceTree = "<group>"; };
+		7640AFB719E06F9A00EFD3C5 /* 3xMulti@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "3xMulti@2x.png"; sourceTree = "<group>"; };
+		7640AFBA19E0836900EFD3C5 /* ShipTrail.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = ShipTrail.sks; sourceTree = "<group>"; };
 		764BF94B199EBC3F007DABF8 /* KeychainWrapper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KeychainWrapper.h; sourceTree = "<group>"; };
 		764BF94C199EBC3F007DABF8 /* KeychainWrapper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KeychainWrapper.m; sourceTree = "<group>"; };
 		764BF9A019A19A11007DABF8 /* arrowL@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "arrowL@2x.png"; sourceTree = "<group>"; };
@@ -361,6 +367,8 @@
 		2DB3526D199993DA006BF15C /* Main */ = {
 			isa = PBXGroup;
 			children = (
+				7640AFB619E06F9A00EFD3C5 /* 2xMulti@2x.png */,
+				7640AFB719E06F9A00EFD3C5 /* 3xMulti@2x.png */,
 				76876A3D19CC705E00F1C227 /* NovaWingIconSpotlight.png */,
 				76876A3719CC6FCB00F1C227 /* AppIcon-1024.png */,
 				76876A3819CC6FCB00F1C227 /* NovaWingIcon@2x.png */,
@@ -476,6 +484,7 @@
 				765DF29019A9293100FBFB16 /* Stars-L1.sks */,
 				765DF28C19A9290F00FBFB16 /* LevelOne.h */,
 				765DF28D19A9290F00FBFB16 /* LevelOne.m */,
+				7640AFBA19E0836900EFD3C5 /* ShipTrail.sks */,
 				765DF29A19A9295800FBFB16 /* GameOverL1.h */,
 				765DF29B19A9295800FBFB16 /* GameOverL1.m */,
 			);
@@ -567,7 +576,9 @@
 				2DB3528919999445006BF15C /* Pillar-1@2x.png in Resources */,
 				764BF9A319A19A11007DABF8 /* arrowR@2x.png in Resources */,
 				2DB3528A19999445006BF15C /* Pillar-2@2x.png in Resources */,
+				7640AFB919E06F9A00EFD3C5 /* 3xMulti@2x.png in Resources */,
 				2DB3527B1999940A006BF15C /* buttonStart.png in Resources */,
+				7640AFBB19E0836900EFD3C5 /* ShipTrail.sks in Resources */,
 				7651E8D719B0FFA900F7E9D0 /* Level-2-Music.m4a in Resources */,
 				2DB3522719996B83006BF15C /* InfoPlist.strings in Resources */,
 				764BF9A719A2BC04007DABF8 /* Nova-L1@2x.png in Resources */,
@@ -599,6 +610,7 @@
 				76A1B8DC199D974500EE1491 /* buttonPressPlay@2x.png in Resources */,
 				2DB3528C19999445006BF15C /* Pillar-4@2x.png in Resources */,
 				2DB3523A19996B83006BF15C /* Images.xcassets in Resources */,
+				7640AFB819E06F9A00EFD3C5 /* 2xMulti@2x.png in Resources */,
 				760C23C819DC856000D34429 /* L1-AOb-3@2x.png in Resources */,
 				2DB352761999940A006BF15C /* buttonLeaderboard.png in Resources */,
 				764BF9A219A19A11007DABF8 /* arrowL@2x.png in Resources */,

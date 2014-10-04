@@ -32,6 +32,7 @@ NSTimeInterval _dt;
 SKLabelNode* _score;
 NSTimer *scoreUpdate;
 NSTimer *objectCreateTimer;
+NSTimer *pupTimer;
 
 
 #pragma mark --CreateBackground
@@ -47,6 +48,8 @@ NSTimer *objectCreateTimer;
         
         levelComplete = NO;
         storymodeL1 = NO;
+        _scoreMultiplier = 1;
+        
         
         self.backgroundColor = [SKColor colorWithRed:0 green:0 blue:0 alpha:1];
         
@@ -55,7 +58,6 @@ NSTimer *objectCreateTimer;
         self.scaleMode = SKSceneScaleModeAspectFit;
         
         NSString *starsPath = [[NSBundle mainBundle] pathForResource:@"Stars-L1" ofType:@"sks"];
-        
         SKEmitterNode *stars = [NSKeyedUnarchiver unarchiveObjectWithFile:starsPath];
         stars.position = CGPointMake(self.size.width, self.size.height / 2);
         
@@ -103,7 +105,7 @@ NSTimer *objectCreateTimer;
     playerNode = [[Ships alloc] createAnyShipFromParent:tempPlayerNode withImageNamed:@"Nova-L1"];
     playerNode.physicsBody.categoryBitMask = CollisionCategoryPlayer;
     playerNode.physicsBody.collisionBitMask = 0;
-    playerNode.physicsBody.contactTestBitMask = CollisionCategoryBottom | CollisionCategoryObject;
+    playerNode.physicsBody.contactTestBitMask = CollisionCategoryBottom | CollisionCategoryObject | CollisionCategoryScore;
     
     // Keeps player ship on top of all other objects(unless other objects are assigned greater z position
     playerNode.zPosition = 100.0f;
@@ -271,6 +273,81 @@ NSTimer *objectCreateTimer;
     [self moveAerialNode:obstacle2];
 }
 
+#pragma mark --Multiplier Stuff
+
+-(void)multi2x {
+    SKSpriteNode *multi = [SKSpriteNode spriteNodeWithImageNamed:@"2xMulti"];
+    
+    int tempRand = arc4random()%80;
+    double randYPosition = (tempRand+10)/100.0;
+    multi.position = CGPointMake(self.size.width + multi.size.width, self.size.height * randYPosition);
+    multi.name = @"multiplier";
+    multi.zPosition = 11;
+    multi.xScale = 0.5;
+    multi.yScale = 0.5;
+    
+    multi.physicsBody = [SKPhysicsBody bodyWithRectangleOfSize: multi.size];
+    multi.physicsBody.categoryBitMask = CollisionCategoryScore;
+    multi.physicsBody.dynamic = NO;
+    multi.physicsBody.collisionBitMask = 0;
+    
+    [self addChild:multi];
+    [self moveAerialNode:multi];
+}
+
+-(void)multi3x {
+    SKSpriteNode *multi = [SKSpriteNode spriteNodeWithImageNamed:@"3xMulti"];
+    
+    int tempRand = arc4random()%80;
+    double randYPosition = (tempRand+10)/100.0;
+    multi.position = CGPointMake(self.size.width + multi.size.width, self.size.height * randYPosition);
+    multi.name = @"multiplier";
+    multi.zPosition = 11;
+    multi.xScale = 0.5;
+    multi.yScale = 0.5;
+    
+    multi.physicsBody = [SKPhysicsBody bodyWithRectangleOfSize: multi.size];
+    multi.physicsBody.categoryBitMask = CollisionCategoryScore;
+    multi.physicsBody.dynamic = NO;
+    multi.physicsBody.collisionBitMask = 0;
+    
+    [self addChild:multi];
+    [self moveAerialNode:multi];
+}
+
+-(void)bluePop {
+    SKShapeNode *blueShape = [SKShapeNode node];
+    blueShape.path = [UIBezierPath bezierPathWithRect: CGRectMake(0, 0, self.size.width, self.size.height)].CGPath;
+    blueShape.position = CGPointMake(0, 0);
+    blueShape.fillColor = [SKColor colorWithRed:0.5 green:0.8 blue:1 alpha:1];
+    blueShape.alpha = 0;
+    blueShape.zPosition = 103;
+    
+    [self addChild:blueShape];
+    [self popActionWithNode:blueShape];
+}
+
+-(void)greenPop {
+    SKShapeNode *greenShape = [SKShapeNode node];
+    greenShape.path = [UIBezierPath bezierPathWithRect: CGRectMake(0, 0, self.size.width, self.size.height)].CGPath;
+    greenShape.position = CGPointMake(0, 0);
+    greenShape.fillColor = [SKColor colorWithRed:0.1 green:1 blue:0.7 alpha:1];
+    greenShape.alpha = 0;
+    greenShape.zPosition = 103;
+    
+    [self addChild:greenShape];
+    [self popActionWithNode:greenShape];
+}
+
+-(void)popActionWithNode: (SKNode *)node {
+    SKAction *fadeIn = [SKAction fadeAlphaTo:1 duration:.05];
+    SKAction *fadeOut = [SKAction fadeAlphaTo:0 duration:.15];
+    SKAction *remove = [SKAction removeFromParent];
+    SKAction *seq = [SKAction sequence:@[fadeIn,fadeOut, remove]];
+    
+    [node runAction:seq];
+}
+
 -(void)bottomCollide {
     bottom = [SKSpriteNode node];
     bottom.position = CGPointMake(0, -4);
@@ -283,21 +360,6 @@ NSTimer *objectCreateTimer;
     [self addChild:bottom];
     
 }
-
-/*-(void)scoreTrack {
-    
-    SKSpriteNode *scoreBound = [SKSpriteNode node];
-    scoreBound.position = CGPointMake(10, 0);
-    scoreBound.size = CGSizeMake(10, self.size.height);
-    scoreBound.physicsBody = [SKPhysicsBody bodyWithRectangleOfSize: scoreBound.size];
-    scoreBound.physicsBody.dynamic = NO;
-    scoreBound.physicsBody.categoryBitMask = CollisionCategoryScore;
-    scoreBound.physicsBody.collisionBitMask = 10;
-    scoreBound.physicsBody.contactTestBitMask = CollisionCategoryObject;
-    
-    [self addChild:scoreBound];
-    
-}*/
 
 -(void)tapToPlay {
     tapPlay = [SKLabelNode labelNodeWithFontNamed:@"SF Movie Poster"];
@@ -329,31 +391,14 @@ NSTimer *objectCreateTimer;
     [self addChild:introduction];
 }
 
--(void)outro {
-    NORLabelNode *outroText = [NORLabelNode labelNodeWithFontNamed:@"SF Movie Poster"];
-    outroText.fontColor = [SKColor whiteColor];
-    outroText.fontSize = 30;
-    outroText.lineSpacing = 1;
-    outroText.position = CGPointMake(self.size.width / 2, self.size.height / 2 - 50);
-    outroText.zPosition = 102;
-    outroText.horizontalAlignmentMode = SKLabelHorizontalAlignmentModeCenter;
-    outroText.verticalAlignmentMode = SKLabelVerticalAlignmentModeCenter;
-    outroText.text = @"I can't... I'm sorry \nDart... I wish I could have told you... \nAgh... too much...no engines... ";
+/*-(void)createShipTrail {
+    NSString *trailPath = [[NSBundle mainBundle] pathForResource:@"ShipTrail" ofType:@"sks"];
     
-    storyBadge = [SKSpriteNode spriteNodeWithImageNamed:@"CMDR-FletcherPop"];
-    storyBadge.position = CGPointMake(self.size.width / 2, self.size.height / 2);
-    storyBadge.zPosition = 101;
+    SKEmitterNode *trail = [NSKeyedUnarchiver unarchiveObjectWithFile:trailPath];
+    trail.position = _player.position;
     
-    tapPlay = [SKLabelNode labelNodeWithFontNamed:@"SF Movie Poster"];
-    tapPlay.fontSize = 35;
-    tapPlay.fontColor = [SKColor whiteColor];
-    tapPlay.position = CGPointMake(self.size.width/2, self.size.height / 5);
-    tapPlay.text = @"Tap the screen to continue.";
-    
-    [self addChild:storyBadge];
-    [self addChild:outroText];
-    [self addChild:tapPlay];
-}
+    [self addChild:trail];
+}*/
 
 #pragma mark --Create Audio
 -(void)createAudio
@@ -379,7 +424,7 @@ NSTimer *objectCreateTimer;
 }
 
 -(void)scoreAdd {
-    [GameState sharedGameData].score = [GameState sharedGameData].score + 1;
+    [GameState sharedGameData].score = [GameState sharedGameData].score + _scoreMultiplier;
     _score.text = [NSString stringWithFormat:@"Score: %li", [GameState sharedGameData].score];
 }
 
@@ -389,7 +434,7 @@ NSTimer *objectCreateTimer;
     plusOne.fontColor = [SKColor whiteColor];
     plusOne.fontSize = 30;
     plusOne.zPosition = 101;
-    plusOne.text = @"+1";
+    plusOne.text = [NSString stringWithFormat:@"+%i", _scoreMultiplier];
     
     [self addChild:plusOne];
     
@@ -415,10 +460,11 @@ NSTimer *objectCreateTimer;
     double square = (sumHeight * sumHeight + triangleWidth * triangleWidth);
     float arcCenterHeight = sqrt(square);
     float deltaHeight = arcCenterHeight - sumHeight;
+    double aerialSpeed = .7 - (_scoreMultiplier/10);
     
-    int tempRand = arc4random()%200;
+    int tempRand = arc4random()%150;
     double randDuration = (tempRand-100)/1000.0;
-    double totalDuration =0.6+randDuration;
+    double totalDuration = aerialSpeed + randDuration;
     
     int tempRand2 = arc4random()%75 + 50;
     double tempRandSigned = tempRand2-50.0;
@@ -442,7 +488,19 @@ NSTimer *objectCreateTimer;
     [incomingNode runAction:aerialSqnce];
 }
 
+-(void)createMultiplier {
+    int randomInt = arc4random()%5;
+    if (randomInt == 3) {
+            if (_scoreMultiplier == 1) {
+                [self multi2x];
+            } else if (_scoreMultiplier == 2) {
+                [self multi3x];
+            }
+    }
+}
 
+
+#pragma mark --User Interface
 
 -(void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event {
 
@@ -458,6 +516,7 @@ NSTimer *objectCreateTimer;
         [tapPlay removeFromParent];
         //scoreUpdate = [NSTimer scheduledTimerWithTimeInterval:0.1 target:self selector:@selector(scoreAdd) userInfo:nil repeats:YES];
         objectCreateTimer = [NSTimer scheduledTimerWithTimeInterval:0.5 target:self selector:@selector(createObstacles) userInfo:nil repeats:YES];
+        pupTimer = [NSTimer scheduledTimerWithTimeInterval:1.5 target:self selector:@selector(createMultiplier) userInfo:nil repeats:YES];
     }
     
     if (_player.position.y > self.size.height - 50)
@@ -506,14 +565,9 @@ NSTimer *objectCreateTimer;
 }
 
 -(void)didBeginContact:(SKPhysicsContact *)contact {
-    if (storymodeL1 == YES) {
-        [self outro];
-        [scoreUpdate invalidate];
-        [GameState sharedGameData].highScoreL1 = MAX([GameState sharedGameData].score, [GameState sharedGameData].highScoreL1);
-    
-        levelComplete = YES;
-    } else {
-        
+
+    if (contact.bodyA.categoryBitMask == CollisionCategoryPlayer && contact.bodyB.categoryBitMask == CollisionCategoryObject) {
+
         [scoreUpdate invalidate];
         [GameState sharedGameData].highScoreL1 = MAX([GameState sharedGameData].score, [GameState sharedGameData].highScoreL1);
         
@@ -524,8 +578,40 @@ NSTimer *objectCreateTimer;
         SKColor *fadeColor = [SKColor colorWithRed:1 green:1 blue:1 alpha:1];
         SKTransition *gameOverTransition = [SKTransition fadeWithColor:fadeColor duration:.25];
         [gameOverView presentScene:gameOverScene transition:gameOverTransition];
+    
+        [objectCreateTimer invalidate];
     }
-    [objectCreateTimer invalidate];
+    
+    if (contact.bodyB.categoryBitMask == CollisionCategoryPlayer && contact.bodyA.categoryBitMask == CollisionCategoryBottom) {
+        [scoreUpdate invalidate];
+        [GameState sharedGameData].highScoreL1 = MAX([GameState sharedGameData].score, [GameState sharedGameData].highScoreL1);
+        
+        SKView *gameOverView = (SKView *)self.view;
+        
+        SKScene *gameOverScene = [[GameOverL1 alloc] initWithSize:gameOverView.bounds.size];
+        
+        SKColor *fadeColor = [SKColor colorWithRed:1 green:1 blue:1 alpha:1];
+        SKTransition *gameOverTransition = [SKTransition fadeWithColor:fadeColor duration:.25];
+        [gameOverView presentScene:gameOverScene transition:gameOverTransition];
+        
+        [objectCreateTimer invalidate];
+    }
+    
+    if (contact.bodyA.categoryBitMask == CollisionCategoryPlayer && contact.bodyB.categoryBitMask == CollisionCategoryScore) {
+        if (_scoreMultiplier == 1) {
+            [[self childNodeWithName:@"multiplier"] removeFromParent];
+            [self bluePop];
+            _scoreMultiplier = 2;
+            [objectCreateTimer invalidate];
+            objectCreateTimer = [NSTimer scheduledTimerWithTimeInterval:0.4 target:self selector:@selector(createObstacles) userInfo:nil repeats:YES];
+        }   else if (_scoreMultiplier == 2) {
+            [[self childNodeWithName:@"multiplier"] removeFromParent];
+            [self greenPop];
+            _scoreMultiplier = 3;
+            [objectCreateTimer invalidate];
+            objectCreateTimer = [NSTimer scheduledTimerWithTimeInterval:0.3 target:self selector:@selector(createObstacles) userInfo:nil repeats:YES];
+            }
+        }
     
     /*if (contact.bodyA.collisionBitMask + contact.bodyB.collisionBitMask == 10) {
         [self scoreAdd];
