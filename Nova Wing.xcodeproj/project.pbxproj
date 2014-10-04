@@ -54,6 +54,9 @@
 		2DB352AA19999D1B006BF15C /* Level-2@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 2DB352A919999D1B006BF15C /* Level-2@2x.png */; };
 		2DB352AC19999D5A006BF15C /* SF Movie Poster.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 2DB352AB19999D5A006BF15C /* SF Movie Poster.ttf */; };
 		2DB352AE1999A0C4006BF15C /* GameOver-BG@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 2DB352AD1999A0C4006BF15C /* GameOver-BG@2x.png */; };
+		760C23C419DC832C00D34429 /* L1-AOb-1@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 760C23C319DC832C00D34429 /* L1-AOb-1@2x.png */; };
+		760C23C719DC856000D34429 /* L1-AOb-2@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 760C23C519DC856000D34429 /* L1-AOb-2@2x.png */; };
+		760C23C819DC856000D34429 /* L1-AOb-3@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 760C23C619DC856000D34429 /* L1-AOb-3@2x.png */; };
 		764BF94D199EBC3F007DABF8 /* KeychainWrapper.m in Sources */ = {isa = PBXBuildFile; fileRef = 764BF94C199EBC3F007DABF8 /* KeychainWrapper.m */; };
 		764BF9A219A19A11007DABF8 /* arrowL@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 764BF9A019A19A11007DABF8 /* arrowL@2x.png */; };
 		764BF9A319A19A11007DABF8 /* arrowR@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 764BF9A119A19A11007DABF8 /* arrowR@2x.png */; };
@@ -152,6 +155,9 @@
 		2DB352A919999D1B006BF15C /* Level-2@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Level-2@2x.png"; sourceTree = "<group>"; };
 		2DB352AB19999D5A006BF15C /* SF Movie Poster.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SF Movie Poster.ttf"; sourceTree = "<group>"; };
 		2DB352AD1999A0C4006BF15C /* GameOver-BG@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "GameOver-BG@2x.png"; sourceTree = "<group>"; };
+		760C23C319DC832C00D34429 /* L1-AOb-1@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "L1-AOb-1@2x.png"; sourceTree = "<group>"; };
+		760C23C519DC856000D34429 /* L1-AOb-2@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "L1-AOb-2@2x.png"; sourceTree = "<group>"; };
+		760C23C619DC856000D34429 /* L1-AOb-3@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "L1-AOb-3@2x.png"; sourceTree = "<group>"; };
 		764BF94B199EBC3F007DABF8 /* KeychainWrapper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KeychainWrapper.h; sourceTree = "<group>"; };
 		764BF94C199EBC3F007DABF8 /* KeychainWrapper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KeychainWrapper.m; sourceTree = "<group>"; };
 		764BF9A019A19A11007DABF8 /* arrowL@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "arrowL@2x.png"; sourceTree = "<group>"; };
@@ -451,6 +457,9 @@
 		765DF28819A9286700FBFB16 /* Level 1 */ = {
 			isa = PBXGroup;
 			children = (
+				760C23C519DC856000D34429 /* L1-AOb-2@2x.png */,
+				760C23C619DC856000D34429 /* L1-AOb-3@2x.png */,
+				760C23C319DC832C00D34429 /* L1-AOb-1@2x.png */,
 				76EC502219D4EAE100363C97 /* Rocket-1@2x.png */,
 				76EC502319D4EAE100363C97 /* Ship-Chunk-1@2x.png */,
 				765DF29619A9294B00FBFB16 /* CMDR-FletcherPop@2x.png */,
@@ -575,9 +584,11 @@
 				76C6F15419A2CCB100B37331 /* Level-1@2x.png in Resources */,
 				2DB3529B199994C0006BF15C /* Title.png in Resources */,
 				76876A3B19CC6FCB00F1C227 /* NovaWingIcon@2x.png in Resources */,
+				760C23C719DC856000D34429 /* L1-AOb-2@2x.png in Resources */,
 				76A1B8DA199D973B00EE1491 /* buttonPlay@2x.png in Resources */,
 				765DF29E19A9298900FBFB16 /* menuMusic.m4a in Resources */,
 				765DF29219A9293100FBFB16 /* Stars-L1.sks in Resources */,
+				760C23C419DC832C00D34429 /* L1-AOb-1@2x.png in Resources */,
 				2DB3528B19999445006BF15C /* Pillar-3@2x.png in Resources */,
 				2DB352771999940A006BF15C /* buttonPressLeaderboard.png in Resources */,
 				76876A3A19CC6FCB00F1C227 /* AppIcon-1024.png in Resources */,
@@ -588,6 +599,7 @@
 				76A1B8DC199D974500EE1491 /* buttonPressPlay@2x.png in Resources */,
 				2DB3528C19999445006BF15C /* Pillar-4@2x.png in Resources */,
 				2DB3523A19996B83006BF15C /* Images.xcassets in Resources */,
+				760C23C819DC856000D34429 /* L1-AOb-3@2x.png in Resources */,
 				2DB352761999940A006BF15C /* buttonLeaderboard.png in Resources */,
 				764BF9A219A19A11007DABF8 /* arrowL@2x.png in Resources */,
 				76EC502419D4EAE100363C97 /* Rocket-1@2x.png in Resources */,

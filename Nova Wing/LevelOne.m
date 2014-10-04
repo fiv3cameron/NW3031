@@ -14,6 +14,7 @@ typedef NS_OPTIONS(uint32_t, CollisionCategory) {
     CollisionCategoryPlayer     = 0x1 << 0,
     CollisionCategoryObject     = 0x1 << 1,
     CollisionCategoryBottom     = 0x1 << 2,
+    CollisionCategoryScore      = 0x1 << 3,
 };
 
 @interface LevelOne() <SKPhysicsContactDelegate>
@@ -23,18 +24,6 @@ typedef NS_OPTIONS(uint32_t, CollisionCategory) {
     
 }
 @end
-
-/*static const float FG_VELOCITY = -100.0;*/
-
-/*static inline CGPoint CGPointAdd(const CGPoint a, const CGPoint b)
-{
-    return CGPointMake(a.x + b.x, a.y + b.y);
-}*/
-
-/*static inline CGPoint CGPointMultiplyScalar(const CGPoint a, const CGFloat b)
-{
-    return CGPointMake(a.x * b, a.y * b);
-}*/
 
 @implementation LevelOne
 
@@ -82,12 +71,13 @@ NSTimer *objectCreateTimer;
         [self addChild:_player];
         [[Ships alloc] shipBobbing:_player];
         [self createScoreNode];
+        //[self scoreTrack];
         if (storymodeL1 == YES) {
             [self intro];
             [self tapToPlay];
         } else if (storymodeL1 == NO)
             [self tapToPlay];
-        _score.text = @"0";
+        _score.text = @"Score: 0";
         
     }
     
@@ -159,7 +149,7 @@ NSTimer *objectCreateTimer;
 -(void)asteroid1 {
     
     SKSpriteNode *tempNode = [SKSpriteNode node];
-    SKSpriteNode *obstacle1 = [[Obstacles alloc] createObstacleWithNode:tempNode withName:@"aerial" withImage:@"AOb-1"];
+    SKSpriteNode *obstacle1 = [[Obstacles alloc] createObstacleWithNode:tempNode withName:@"aerial" withImage:@"L1-AOb-1"];
     
     int tempRand = arc4random()%80;
     double randYPosition = (tempRand+10)/100.0;
@@ -184,7 +174,7 @@ NSTimer *objectCreateTimer;
 -(void)asteroid2 {
     
     SKSpriteNode *tempNode = [SKSpriteNode node];
-    SKSpriteNode *obstacle2 = [[Obstacles alloc] createObstacleWithNode:tempNode withName:@"aerial" withImage:@"AOb-2"];
+    SKSpriteNode *obstacle2 = [[Obstacles alloc] createObstacleWithNode:tempNode withName:@"aerial" withImage:@"L1-AOb-2"];
     
     int tempRand = arc4random()%80;
     double randYPosition = (tempRand+10)/100.0;
@@ -210,7 +200,7 @@ NSTimer *objectCreateTimer;
 -(void)asteroid3 {
     
     SKSpriteNode *tempNode = [SKSpriteNode node];
-    SKSpriteNode *obstacle2 = [[Obstacles alloc] createObstacleWithNode:tempNode withName:@"aerial" withImage:@"AOb-3"];
+    SKSpriteNode *obstacle2 = [[Obstacles alloc] createObstacleWithNode:tempNode withName:@"aerial" withImage:@"L1-AOb-3"];
     
     int tempRand = arc4random()%80;
     double randYPosition = (tempRand+10)/100.0;
@@ -293,6 +283,21 @@ NSTimer *objectCreateTimer;
     [self addChild:bottom];
     
 }
+
+/*-(void)scoreTrack {
+    
+    SKSpriteNode *scoreBound = [SKSpriteNode node];
+    scoreBound.position = CGPointMake(10, 0);
+    scoreBound.size = CGSizeMake(10, self.size.height);
+    scoreBound.physicsBody = [SKPhysicsBody bodyWithRectangleOfSize: scoreBound.size];
+    scoreBound.physicsBody.dynamic = NO;
+    scoreBound.physicsBody.categoryBitMask = CollisionCategoryScore;
+    scoreBound.physicsBody.collisionBitMask = 10;
+    scoreBound.physicsBody.contactTestBitMask = CollisionCategoryObject;
+    
+    [self addChild:scoreBound];
+    
+}*/
 
 -(void)tapToPlay {
     tapPlay = [SKLabelNode labelNodeWithFontNamed:@"SF Movie Poster"];
@@ -378,46 +383,26 @@ NSTimer *objectCreateTimer;
     _score.text = [NSString stringWithFormat:@"Score: %li", [GameState sharedGameData].score];
 }
 
+-(void)scorePlus {
+    SKLabelNode *plusOne = [SKLabelNode labelNodeWithFontNamed:@"SF Movie Poster"];
+    plusOne.position = CGPointMake(25, [self childNodeWithName:@"aerial"].position.y);
+    plusOne.fontColor = [SKColor whiteColor];
+    plusOne.fontSize = 30;
+    plusOne.zPosition = 101;
+    plusOne.text = @"+1";
+    
+    [self addChild:plusOne];
+    
+    SKAction *scale = [SKAction scaleBy:2 duration:1];
+    SKAction *moveUp = [SKAction moveBy:CGVectorMake(0,50) duration:1];
+    SKAction *fade = [SKAction fadeAlphaTo:0 duration:1];
+    
+    SKAction *group = [SKAction group:@[scale,moveUp,fade]];
+    [plusOne runAction:group];
+
+}
+
 #pragma mark --Animate Obstacles
-/*-(void) moveAerialNode: (SKSpriteNode *)incomingNode
-{
-    //Calculations.
-    float startHeight = incomingNode.position.y;
-    float blackHoleRad = blackHole.size.width/2;
-    float distToCent = sqrt(blackHoleRad * blackHoleRad - self.size.width/2 * self.size.width/2);
-    float sumHeight = startHeight + distToCent;
-    float triangleWidth = self.size.width/2;
-    double square = (sumHeight * sumHeight + triangleWidth * triangleWidth);
-    float arcCenterHeight = sqrt(square);
-    float deltaHeight = arcCenterHeight - sumHeight;
-    
-    int tempRand = arc4random()%200;
-    double randDuration = (tempRand-100)/1000.0;
-    double totalDuration =0.6+randDuration;
-    
-    int tempRand2 = arc4random()%100;
-    double tempRandSigned = tempRand2-50.0;
-    double randAngleRad = (tempRandSigned)*180/100.0;
-    double randAngleDeg = randAngleRad*3.141592654/180;
-    
-    //Action Definitions.
-    SKAction *horzMove1 = [SKAction moveByX: -(self.size.width/2 + incomingNode.size.width/2) y: 0 duration:totalDuration];
-    SKAction *horzMove2 = [SKAction moveToX: -incomingNode.size.width duration:totalDuration];
-    SKAction *vertMoveUp = [SKAction moveByX:0 y:deltaHeight duration:totalDuration];
-    SKAction *vertMoveDwn = [SKAction moveByX:0 y:-deltaHeight duration:totalDuration];
-    SKAction *rotate = [SKAction rotateByAngle:randAngleDeg duration:totalDuration];
-    vertMoveUp.timingMode = SKActionTimingEaseOut;
-    vertMoveDwn.timingMode = SKActionTimingEaseIn;
-    
-    //Groups & Sequences
-    SKAction *groupUp = [SKAction group:@[horzMove1,vertMoveUp,rotate]];
-    SKAction *groupDwn = [SKAction group:@[horzMove2, vertMoveDwn,rotate]];
-    SKAction *remove = [SKAction removeFromParent];
-    SKAction *aerialSqnce = [SKAction sequence:@[groupUp, groupDwn,remove]];
-    
-    //Run sequence
-    [incomingNode runAction:aerialSqnce];
-} */
 
 -(void) moveAerialNode: (SKSpriteNode *)incomingNode
 {
@@ -471,7 +456,7 @@ NSTimer *objectCreateTimer;
         [self addChild:_score];
         [self createObstacles];
         [tapPlay removeFromParent];
-        scoreUpdate = [NSTimer scheduledTimerWithTimeInterval:0.1 target:self selector:@selector(scoreAdd) userInfo:nil repeats:YES];
+        //scoreUpdate = [NSTimer scheduledTimerWithTimeInterval:0.1 target:self selector:@selector(scoreAdd) userInfo:nil repeats:YES];
         objectCreateTimer = [NSTimer scheduledTimerWithTimeInterval:0.5 target:self selector:@selector(createObstacles) userInfo:nil repeats:YES];
     }
     
@@ -511,6 +496,13 @@ NSTimer *objectCreateTimer;
         [[Ships alloc] rotateNodeDownwards:_player];
     }
     
+    if ([self childNodeWithName:@"aerial"].position.x < _player.position.x && [self childNodeWithName:@"aerial"].position.x > 1)
+    {
+        [self scoreAdd];
+        [self scorePlus];
+        [self childNodeWithName:@"aerial"].name = @"aerialClose";
+    }
+    
 }
 
 -(void)didBeginContact:(SKPhysicsContact *)contact {
@@ -535,6 +527,9 @@ NSTimer *objectCreateTimer;
     }
     [objectCreateTimer invalidate];
     
+    /*if (contact.bodyA.collisionBitMask + contact.bodyB.collisionBitMask == 10) {
+        [self scoreAdd];
+    }*/
 }
 
 @end
