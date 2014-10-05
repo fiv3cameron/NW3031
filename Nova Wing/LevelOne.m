@@ -39,12 +39,6 @@ NSTimer *pupTimer;
 -(id)initWithSize:(CGSize)size {
     if (self = [super initWithSize:size]) {
         
-        /*if ([GameState sharedGameData].highScoreL1 == 0) {
-            storymodeL1 = YES;
-        } else if ([GameState sharedGameData].highScoreL1 > 0) {
-            storymodeL1 = NO;
-        }*/
-        
         levelComplete = NO;
         storymodeL1 = NO;
         _scoreMultiplier = 1;
@@ -180,15 +174,22 @@ NSTimer *pupTimer;
     int tempRand = arc4random()%80;
     double randYPosition = (tempRand+10)/100.0;
     obstacle2.position = CGPointMake(self.size.width+obstacle2.size.width, self.size.height*randYPosition);
-    //obstacle1.name = @"aerial";
+    obstacle2.anchorPoint = CGPointZero;
     obstacle2.zPosition = 10;
+    obstacle2.xScale = 0.4;
+    obstacle2.yScale = 0.4;
     
-    int tempRand2 = arc4random()%100;
-    double randScale = (tempRand2)/1000.0;
-    obstacle2.xScale = 0.4 + randScale;
-    obstacle2.yScale = 0.4 + randScale;
+    CGMutablePathRef path = CGPathCreateMutable();
     
-    obstacle2.physicsBody = [SKPhysicsBody bodyWithCircleOfRadius:obstacle2.size.height/2];
+    CGPathMoveToPoint(path, NULL, 5, 5);
+    CGPathAddLineToPoint(path, NULL, 50, 5);
+    CGPathAddLineToPoint(path, NULL, 55, 15);
+    CGPathAddLineToPoint(path, NULL, 50, 25);
+    CGPathAddLineToPoint(path, NULL, 10, 25);
+    
+    CGPathCloseSubpath(path);
+    
+    obstacle2.physicsBody = [SKPhysicsBody bodyWithPolygonFromPath:path];
     obstacle2.physicsBody.categoryBitMask = CollisionCategoryObject;
     obstacle2.physicsBody.dynamic = NO;
     obstacle2.physicsBody.collisionBitMask = 0;
@@ -231,15 +232,24 @@ NSTimer *pupTimer;
     int tempRand = arc4random()%80;
     double randYPosition = (tempRand+10)/100.0;
     obstacle2.position = CGPointMake(self.size.width+obstacle2.size.width, self.size.height*randYPosition);
+    obstacle2.anchorPoint = CGPointZero;
     //obstacle1.name = @"aerial";
     obstacle2.zPosition = 10;
+
+    obstacle2.xScale = 0.4;
+    obstacle2.yScale = 0.4;
     
-    int tempRand2 = arc4random()%100;
-    double randScale = (tempRand2)/1000.0;
-    obstacle2.xScale = 0.4 + randScale;
-    obstacle2.yScale = 0.4 + randScale;
+    CGMutablePathRef path = CGPathCreateMutable();
     
-    obstacle2.physicsBody = [SKPhysicsBody bodyWithRectangleOfSize: obstacle2.size];
+    CGPathMoveToPoint(path, NULL, 0, 0);
+    CGPathAddLineToPoint(path, NULL, 50, 0);
+    CGPathAddLineToPoint(path, NULL, 80, 10);
+    CGPathAddLineToPoint(path, NULL, 50, 20);
+    CGPathAddLineToPoint(path, NULL, 0, 20);
+    
+    CGPathCloseSubpath(path);
+    
+    obstacle2.physicsBody = [SKPhysicsBody bodyWithPolygonFromPath:path];
     obstacle2.physicsBody.categoryBitMask = CollisionCategoryObject;
     obstacle2.physicsBody.dynamic = NO;
     obstacle2.physicsBody.collisionBitMask = 0;
@@ -255,15 +265,22 @@ NSTimer *pupTimer;
     int tempRand = arc4random()%80;
     double randYPosition = (tempRand+10)/100.0;
     obstacle2.position = CGPointMake(self.size.width+obstacle2.size.width, self.size.height*randYPosition);
-    //obstacle1.name = @"aerial";
+    obstacle2.anchorPoint = CGPointZero;
     obstacle2.zPosition = 10;
+    obstacle2.xScale = 0.5;
+    obstacle2.yScale = 0.5;
     
-    int tempRand2 = arc4random()%100;
-    double randScale = (tempRand2)/1000.0;
-    obstacle2.xScale = 0.5 + randScale;
-    obstacle2.yScale = 0.5 + randScale;
+    CGMutablePathRef path = CGPathCreateMutable();
     
-    obstacle2.physicsBody = [SKPhysicsBody bodyWithRectangleOfSize: obstacle2.size];
+    CGPathMoveToPoint(path, NULL, 10, 0);
+    CGPathAddLineToPoint(path, NULL, 50, 20);
+    CGPathAddLineToPoint(path, NULL, 60, 60);
+    CGPathAddLineToPoint(path, NULL, 50, 60);
+    CGPathAddLineToPoint(path, NULL, 10, 20);
+    
+    CGPathCloseSubpath(path);
+    
+    obstacle2.physicsBody = [SKPhysicsBody bodyWithPolygonFromPath:path];
     obstacle2.physicsBody.categoryBitMask = CollisionCategoryObject;
     obstacle2.physicsBody.dynamic = NO;
     obstacle2.physicsBody.collisionBitMask = 0;
@@ -459,7 +476,7 @@ NSTimer *pupTimer;
     double square = (sumHeight * sumHeight + triangleWidth * triangleWidth);
     float arcCenterHeight = sqrt(square);
     float deltaHeight = arcCenterHeight - sumHeight;
-    double aerialSpeed = .7 - (_scoreMultiplier/10);
+    double aerialSpeed = .8 - (_scoreMultiplier/10);
     
     int tempRand = arc4random()%150;
     double randDuration = (tempRand-100)/1000.0;
@@ -515,7 +532,7 @@ NSTimer *pupTimer;
         [tapPlay removeFromParent];
         //scoreUpdate = [NSTimer scheduledTimerWithTimeInterval:0.1 target:self selector:@selector(scoreAdd) userInfo:nil repeats:YES];
         objectCreateTimer = [NSTimer scheduledTimerWithTimeInterval:0.5 target:self selector:@selector(createObstacles) userInfo:nil repeats:YES];
-        pupTimer = [NSTimer scheduledTimerWithTimeInterval:1.5 target:self selector:@selector(createMultiplier) userInfo:nil repeats:YES];
+        pupTimer = [NSTimer scheduledTimerWithTimeInterval:2 target:self selector:@selector(createMultiplier) userInfo:nil repeats:YES];
     }
     
     if (_player.position.y > self.size.height - 50)
