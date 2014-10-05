@@ -76,6 +76,8 @@
 		765DF29919A9294B00FBFB16 /* GameOver-L1@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 765DF29719A9294B00FBFB16 /* GameOver-L1@2x.png */; };
 		765DF29C19A9295800FBFB16 /* GameOverL1.m in Sources */ = {isa = PBXBuildFile; fileRef = 765DF29B19A9295800FBFB16 /* GameOverL1.m */; };
 		765DF29E19A9298900FBFB16 /* menuMusic.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 765DF29D19A9298900FBFB16 /* menuMusic.m4a */; };
+		7678881A19E1C43E009714A1 /* 4xMulti@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 7678881819E1C43E009714A1 /* 4xMulti@2x.png */; };
+		7678881B19E1C43E009714A1 /* 5xMulti@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 7678881919E1C43E009714A1 /* 5xMulti@2x.png */; };
 		76876A3A19CC6FCB00F1C227 /* AppIcon-1024.png in Resources */ = {isa = PBXBuildFile; fileRef = 76876A3719CC6FCB00F1C227 /* AppIcon-1024.png */; };
 		76876A3B19CC6FCB00F1C227 /* NovaWingIcon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 76876A3819CC6FCB00F1C227 /* NovaWingIcon@2x.png */; };
 		76876A3C19CC6FCB00F1C227 /* NovaWingIcon@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 76876A3919CC6FCB00F1C227 /* NovaWingIcon@3x.png */; };
@@ -184,6 +186,8 @@
 		765DF29A19A9295800FBFB16 /* GameOverL1.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GameOverL1.h; sourceTree = "<group>"; };
 		765DF29B19A9295800FBFB16 /* GameOverL1.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GameOverL1.m; sourceTree = "<group>"; };
 		765DF29D19A9298900FBFB16 /* menuMusic.m4a */ = {isa = PBXFileReference; lastKnownFileType = file; path = menuMusic.m4a; sourceTree = "<group>"; };
+		7678881819E1C43E009714A1 /* 4xMulti@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "4xMulti@2x.png"; sourceTree = "<group>"; };
+		7678881919E1C43E009714A1 /* 5xMulti@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "5xMulti@2x.png"; sourceTree = "<group>"; };
 		76876A3719CC6FCB00F1C227 /* AppIcon-1024.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "AppIcon-1024.png"; sourceTree = "<group>"; };
 		76876A3819CC6FCB00F1C227 /* NovaWingIcon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "NovaWingIcon@2x.png"; sourceTree = "<group>"; };
 		76876A3919CC6FCB00F1C227 /* NovaWingIcon@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "NovaWingIcon@3x.png"; sourceTree = "<group>"; };
@@ -367,6 +371,8 @@
 		2DB3526D199993DA006BF15C /* Main */ = {
 			isa = PBXGroup;
 			children = (
+				7678881819E1C43E009714A1 /* 4xMulti@2x.png */,
+				7678881919E1C43E009714A1 /* 5xMulti@2x.png */,
 				7640AFB619E06F9A00EFD3C5 /* 2xMulti@2x.png */,
 				7640AFB719E06F9A00EFD3C5 /* 3xMulti@2x.png */,
 				76876A3D19CC705E00F1C227 /* NovaWingIconSpotlight.png */,
@@ -581,6 +587,7 @@
 				7640AFBB19E0836900EFD3C5 /* ShipTrail.sks in Resources */,
 				7651E8D719B0FFA900F7E9D0 /* Level-2-Music.m4a in Resources */,
 				2DB3522719996B83006BF15C /* InfoPlist.strings in Resources */,
+				7678881A19E1C43E009714A1 /* 4xMulti@2x.png in Resources */,
 				764BF9A719A2BC04007DABF8 /* Nova-L1@2x.png in Resources */,
 				2DB3529419999485006BF15C /* Level-1-Sky@2x.png in Resources */,
 				2DB3529319999485006BF15C /* Level-1-Mid@2x.png in Resources */,
@@ -598,6 +605,7 @@
 				760C23C719DC856000D34429 /* L1-AOb-2@2x.png in Resources */,
 				76A1B8DA199D973B00EE1491 /* buttonPlay@2x.png in Resources */,
 				765DF29E19A9298900FBFB16 /* menuMusic.m4a in Resources */,
+				7678881B19E1C43E009714A1 /* 5xMulti@2x.png in Resources */,
 				765DF29219A9293100FBFB16 /* Stars-L1.sks in Resources */,
 				760C23C419DC832C00D34429 /* L1-AOb-1@2x.png in Resources */,
 				2DB3528B19999445006BF15C /* Pillar-3@2x.png in Resources */,
