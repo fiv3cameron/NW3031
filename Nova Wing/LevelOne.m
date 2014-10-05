@@ -30,7 +30,6 @@ typedef NS_OPTIONS(uint32_t, CollisionCategory) {
 NSTimeInterval _lastUpdateTime;
 NSTimeInterval _dt;
 SKLabelNode* _score;
-NSTimer *scoreUpdate;
 NSTimer *objectCreateTimer;
 NSTimer *pupTimer;
 
@@ -564,11 +563,15 @@ NSTimer *pupTimer;
     
 }
 
+-(void)timersInvalidate {
+    [objectCreateTimer invalidate];
+    [pupTimer invalidate];
+}
+
 -(void)didBeginContact:(SKPhysicsContact *)contact {
 
     if (contact.bodyA.categoryBitMask == CollisionCategoryPlayer && contact.bodyB.categoryBitMask == CollisionCategoryObject) {
 
-        [scoreUpdate invalidate];
         [GameState sharedGameData].highScoreL1 = MAX([GameState sharedGameData].score, [GameState sharedGameData].highScoreL1);
         
         SKView *gameOverView = (SKView *)self.view;
@@ -579,11 +582,10 @@ NSTimer *pupTimer;
         SKTransition *gameOverTransition = [SKTransition fadeWithColor:fadeColor duration:.25];
         [gameOverView presentScene:gameOverScene transition:gameOverTransition];
     
-        [objectCreateTimer invalidate];
+        [self timersInvalidate];
     }
     
     if (contact.bodyB.categoryBitMask == CollisionCategoryPlayer && contact.bodyA.categoryBitMask == CollisionCategoryBottom) {
-        [scoreUpdate invalidate];
         [GameState sharedGameData].highScoreL1 = MAX([GameState sharedGameData].score, [GameState sharedGameData].highScoreL1);
         
         SKView *gameOverView = (SKView *)self.view;
@@ -594,7 +596,7 @@ NSTimer *pupTimer;
         SKTransition *gameOverTransition = [SKTransition fadeWithColor:fadeColor duration:.25];
         [gameOverView presentScene:gameOverScene transition:gameOverTransition];
         
-        [objectCreateTimer invalidate];
+        [self timersInvalidate];
     }
     
     if (contact.bodyA.categoryBitMask == CollisionCategoryPlayer && contact.bodyB.categoryBitMask == CollisionCategoryScore) {
