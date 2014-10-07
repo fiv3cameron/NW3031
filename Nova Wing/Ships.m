@@ -53,7 +53,7 @@
 }
 
 -(void)rotateNodeDownwards: (SKNode *)nodeRotate {
-    SKAction *rotateDown = [SKAction rotateToAngle:-M_PI_4 duration:.2 shortestUnitArc:YES];
+    SKAction *rotateDown = [SKAction rotateToAngle:-M_PI_4 duration:.15 shortestUnitArc:YES];
     rotateDown.timingMode = SKActionTimingEaseInEaseOut;
     [nodeRotate runAction:rotateDown];
 }

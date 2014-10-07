@@ -46,7 +46,7 @@ NSTimer *pupTimer;
         
         self.backgroundColor = [SKColor colorWithRed:0 green:0 blue:0 alpha:1];
         
-        self.physicsWorld.gravity = CGVectorMake(0.0f, -5.0f);
+        self.physicsWorld.gravity = CGVectorMake(0.0f, -8.0f);
         self.physicsWorld.contactDelegate = self;
         self.scaleMode = SKSceneScaleModeAspectFit;
         
@@ -163,7 +163,7 @@ NSTimer *pupTimer;
     obstacle1.physicsBody.collisionBitMask = 0;
     
     [self addChild: obstacle1];
-    [self moveAerialNode:obstacle1];
+    [self moveAerialNode:obstacle1 allowsRotation:YES];
 }
 
 -(void)asteroid2 {
@@ -195,7 +195,7 @@ NSTimer *pupTimer;
     obstacle2.physicsBody.collisionBitMask = 0;
     
     [self addChild: obstacle2];
-    [self moveAerialNode:obstacle2];
+    [self moveAerialNode:obstacle2 allowsRotation:YES];
     
 }
 
@@ -221,7 +221,7 @@ NSTimer *pupTimer;
     obstacle2.physicsBody.collisionBitMask = 0;
     
     [self addChild: obstacle2];
-    [self moveAerialNode:obstacle2];
+    [self moveAerialNode:obstacle2 allowsRotation:YES];
     
 }
 
@@ -255,7 +255,7 @@ NSTimer *pupTimer;
     obstacle2.physicsBody.collisionBitMask = 0;
     
     [self addChild: obstacle2];
-    [self moveAerialNode:obstacle2];
+    [self moveAerialNode:obstacle2 allowsRotation:YES];
 }
 
 -(void)shipChunk {
@@ -286,7 +286,7 @@ NSTimer *pupTimer;
     obstacle2.physicsBody.collisionBitMask = 0;
     
     [self addChild: obstacle2];
-    [self moveAerialNode:obstacle2];
+    [self moveAerialNode:obstacle2 allowsRotation: YES];
 }
 
 #pragma mark --Multiplier Stuff
@@ -329,7 +329,7 @@ NSTimer *pupTimer;
     multi.physicsBody.collisionBitMask = 0;
     
     [self addChild:multi];
-    [self moveAerialNode:multi];
+    [self moveAerialNode:multi allowsRotation: NO];
 }
 
 -(void)bluePop {
@@ -372,7 +372,7 @@ NSTimer *pupTimer;
     SKShapeNode *greenShape = [SKShapeNode node];
     greenShape.path = [UIBezierPath bezierPathWithRect: CGRectMake(0, 0, self.size.width, self.size.height)].CGPath;
     greenShape.position = CGPointMake(0, 0);
-    greenShape.fillColor = [SKColor colorWithRed:0 green:1 blue:1 alpha:1];
+    greenShape.fillColor = [SKColor colorWithRed:1 green:1 blue:0 alpha:1];
     greenShape.alpha = 0;
     greenShape.zPosition = 103;
     
@@ -502,21 +502,21 @@ NSTimer *pupTimer;
             [self greenPop];
             _scoreMultiplier ++;
             [objectCreateTimer invalidate];
-            objectCreateTimer = [NSTimer scheduledTimerWithTimeInterval:0.3 target:self selector:@selector(createObstacles) userInfo:nil repeats:YES];
+            objectCreateTimer = [NSTimer scheduledTimerWithTimeInterval:0.35 target:self selector:@selector(createObstacles) userInfo:nil repeats:YES];
             break;
         case 3:
             [[self childNodeWithName:@"multiplier"] removeFromParent];
             [self purplePop];
             _scoreMultiplier ++;
             [objectCreateTimer invalidate];
-            objectCreateTimer = [NSTimer scheduledTimerWithTimeInterval:0.29 target:self selector:@selector(createObstacles) userInfo:nil repeats:YES];
+            objectCreateTimer = [NSTimer scheduledTimerWithTimeInterval:0.3 target:self selector:@selector(createObstacles) userInfo:nil repeats:YES];
             break;
         case 4:
             [[self childNodeWithName:@"multiplier"] removeFromParent];
             [self yellowPop];
             _scoreMultiplier ++;
             [objectCreateTimer invalidate];
-            objectCreateTimer = [NSTimer scheduledTimerWithTimeInterval:0.25 target:self selector:@selector(createObstacles) userInfo:nil repeats:YES];
+            objectCreateTimer = [NSTimer scheduledTimerWithTimeInterval:0.29 target:self selector:@selector(createObstacles) userInfo:nil repeats:YES];
             [pupTimer invalidate];
             break;
         default:
@@ -526,7 +526,7 @@ NSTimer *pupTimer;
 
 #pragma mark --Animate Obstacles
 
--(void) moveAerialNode: (SKSpriteNode *)incomingNode
+-(void) moveAerialNode: (SKSpriteNode *)incomingNode allowsRotation: (BOOL)allowsRotate
 {
     //Calculations.
     float startHeight = incomingNode.position.y;
@@ -557,12 +557,21 @@ NSTimer *pupTimer;
     vertMoveDwn.timingMode = SKActionTimingEaseIn;
     
     //Groups & Sequences
-    SKAction *vertMove = [SKAction sequence:@[vertMoveUp, vertMoveDwn]];
-    SKAction *remove = [SKAction removeFromParent];
-    SKAction *aerialGroup = [SKAction group:@[vertMove,horzMove,rotate]];
-    SKAction *aerialSqnce = [SKAction sequence:@[aerialGroup, remove]];
+    if (allowsRotate == YES) {
+        SKAction *vertMove = [SKAction sequence:@[vertMoveUp, vertMoveDwn]];
+        SKAction *remove = [SKAction removeFromParent];
+        SKAction *aerialGroup = [SKAction group:@[vertMove,horzMove,rotate]];
+        SKAction *aerialSqnce = [SKAction sequence:@[aerialGroup, remove]];
+        //Run sequence
+        [incomingNode runAction:aerialSqnce];
+    } else {
+        SKAction *vertMove = [SKAction sequence:@[vertMoveUp, vertMoveDwn]];
+        SKAction *remove = [SKAction removeFromParent];
+        SKAction *aerialGroup = [SKAction group:@[vertMove,horzMove]];
+        SKAction *aerialSqnce = [SKAction sequence:@[aerialGroup, remove]];
     //Run sequence
-    [incomingNode runAction:aerialSqnce];
+        [incomingNode runAction:aerialSqnce];
+    }
 }
 
 -(void)createMultiplier {
@@ -610,7 +619,7 @@ NSTimer *pupTimer;
     {
         _player.physicsBody.velocity = CGVectorMake(0.0f, 0.0f);
     }
-    else _player.physicsBody.velocity = CGVectorMake(0.0f, _player.position.y*.9);
+    else _player.physicsBody.velocity = CGVectorMake(0.0f, _player.position.y*1.3);
     
     if (levelComplete == YES) {
         SKView *gameOverView = (SKView *)self.view;
