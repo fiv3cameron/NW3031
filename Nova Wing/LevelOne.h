@@ -18,7 +18,7 @@
 
     -(void)scoreAdd;
 
-@property (nonatomic) int scoreMultiplier;
+
 
 @end
 

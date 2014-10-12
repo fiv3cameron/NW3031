@@ -9,6 +9,7 @@
 #import "LevelOne.h"
 #import "GameOverL1.h"
 #import "Obstacles.h"
+#import "PowerUps.h"
 
 typedef NS_OPTIONS(uint32_t, CollisionCategory) {
     CollisionCategoryPlayer     = 0x1 << 0,
@@ -41,7 +42,7 @@ NSTimer *pupTimer;
         
         levelComplete = NO;
         storymodeL1 = NO;
-        _scoreMultiplier = 1;
+        [GameState sharedGameData].scoreMultiplier = 1;
         
         
         self.backgroundColor = [SKColor colorWithRed:0 green:0 blue:0 alpha:1];
@@ -465,7 +466,7 @@ NSTimer *pupTimer;
 }
 
 -(void)scoreAdd {
-    [GameState sharedGameData].score = [GameState sharedGameData].score + _scoreMultiplier;
+    [GameState sharedGameData].score = [GameState sharedGameData].score + [GameState sharedGameData].scoreMultiplier;
     _score.text = [NSString stringWithFormat:@"Score: %li", [GameState sharedGameData].score];
 }
 
@@ -475,7 +476,7 @@ NSTimer *pupTimer;
     plusOne.fontColor = [SKColor whiteColor];
     plusOne.fontSize = 30;
     plusOne.zPosition = 101;
-    plusOne.text = [NSString stringWithFormat:@"+%i", _scoreMultiplier];
+    plusOne.text = [NSString stringWithFormat:@"+%i", [GameState sharedGameData].scoreMultiplier];
     
     [self addChild:plusOne];
     
@@ -489,32 +490,32 @@ NSTimer *pupTimer;
 }
 
 -(void)scoreMulti {
-    switch (_scoreMultiplier) {
+    switch ([GameState sharedGameData].scoreMultiplier) {
         case 1:
             [[self childNodeWithName:@"multiplier"] removeFromParent];
             [self bluePop];
-            _scoreMultiplier ++;
+            [GameState sharedGameData].scoreMultiplier ++;
             [objectCreateTimer invalidate];
             objectCreateTimer = [NSTimer scheduledTimerWithTimeInterval:0.4 target:self selector:@selector(createObstacles) userInfo:nil repeats:YES];
             break;
         case 2:
             [[self childNodeWithName:@"multiplier"] removeFromParent];
             [self greenPop];
-            _scoreMultiplier ++;
+            [GameState sharedGameData].scoreMultiplier ++;
             [objectCreateTimer invalidate];
             objectCreateTimer = [NSTimer scheduledTimerWithTimeInterval:0.35 target:self selector:@selector(createObstacles) userInfo:nil repeats:YES];
             break;
         case 3:
             [[self childNodeWithName:@"multiplier"] removeFromParent];
             [self purplePop];
-            _scoreMultiplier ++;
+            [GameState sharedGameData].scoreMultiplier ++;
             [objectCreateTimer invalidate];
             objectCreateTimer = [NSTimer scheduledTimerWithTimeInterval:0.3 target:self selector:@selector(createObstacles) userInfo:nil repeats:YES];
             break;
         case 4:
             [[self childNodeWithName:@"multiplier"] removeFromParent];
             [self yellowPop];
-            _scoreMultiplier ++;
+            [GameState sharedGameData].scoreMultiplier ++;
             [objectCreateTimer invalidate];
             objectCreateTimer = [NSTimer scheduledTimerWithTimeInterval:0.29 target:self selector:@selector(createObstacles) userInfo:nil repeats:YES];
             [pupTimer invalidate];
@@ -537,7 +538,7 @@ NSTimer *pupTimer;
     double square = (sumHeight * sumHeight + triangleWidth * triangleWidth);
     float arcCenterHeight = sqrt(square);
     float deltaHeight = arcCenterHeight - sumHeight;
-    double aerialSpeed = .8 - (_scoreMultiplier/10);
+    double aerialSpeed = .8 - ([GameState sharedGameData].scoreMultiplier/10);
     
     int tempRand = arc4random()%150;
     double randDuration = (tempRand-100)/1000.0;
@@ -575,24 +576,25 @@ NSTimer *pupTimer;
 }
 
 -(void)createMultiplier {
+    int tempRand = arc4random()%80;
+    double randYPosition = (tempRand+10)/100.0;
+    
+    SKSpriteNode *multiplier = [[PowerUps alloc] createMultiplier];
+    multiplier.position = CGPointMake(self.size.width + multiplier.size.width, self.size.height * randYPosition);
+    multiplier.physicsBody = [SKPhysicsBody bodyWithRectangleOfSize: multiplier.size];
+    multiplier.physicsBody.categoryBitMask = CollisionCategoryScore;
+    multiplier.physicsBody.dynamic = NO;
+    multiplier.physicsBody.collisionBitMask = 0;
+    multiplier.name = @"multiplier";
+    multiplier.xScale = 0.6;
+    multiplier.yScale = 0.6;
+    multiplier.zPosition = 11;
+    
     int randomInt = arc4random()%2;
     if (randomInt == 1) {
-        switch (_scoreMultiplier) {
-            case 1:
-                [self multi2x];
-                break;
-            case 2:
-                [self multi3x];
-                break;
-            case 3:
-                [self multi4x];
-                break;
-            case 4:
-                [self multi5x];
-                break;
-            default:
-                break;
-        }    }
+        [self addChild:multiplier];
+        [self moveAerialNode:multiplier allowsRotation: NO];
+    }
 }
 
 

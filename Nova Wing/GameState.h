@@ -15,6 +15,7 @@
     @property (assign, nonatomic) long highScoreL2;
     @property (nonatomic) long levelIndex;
     @property (nonatomic) long lvlIndexMax;
+    @property (nonatomic) int scoreMultiplier;
 
 +(instancetype)sharedGameData;
 -(void)reset;
