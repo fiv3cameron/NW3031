@@ -45,6 +45,7 @@ NSTimeInterval _lastUpdateTime;
 NSTimeInterval _dt;
 SKLabelNode* _score;
 NSTimer *scoreUpdate;
+NSTimer *pillarCreateTimer;
 
 #pragma mark --Create Background
 
@@ -97,37 +98,94 @@ NSTimer *scoreUpdate;
     return playerNode;
 }
 
--(void) createObstacles
+-(void) anyPillarCreate
 {
-    // Add pillar.
-    SKSpriteNode *pillar1 = [SKSpriteNode node];
-    int randPillarInt = arc4random_uniform(3) + 1;
-    pillar1 = [[Obstacles alloc] createObstacleWithNode:pillar1 withName:@"pillar" withImage: [NSString stringWithFormat:@"Pillar-%i",randPillarInt]];
-    pillar1 = [[Obstacles alloc] createPillarPhysicsBody:pillar1 withIdentifier:randPillarInt];
-    pillar1.physicsBody.categoryBitMask = CollisionCategoryObject;
+    int tempObjectSelector = arc4random()%12;
+    switch (tempObjectSelector)
+    {
+        case 1:
+            break;
+        case 2:
+        case 3:
+            [self rockPillar1];
+            break;
+        case 4:
+            break;
+        case 5:
+        case 6:
+            [self rockPillar2];
+            break;
+        case 7:
+        case 8:
+            break;
+        case 9:
+            [self geyserPillar];
+            break;
+        case 10:
+            break;
+        case 11:
+        case 12:
+            [self radioPillar];
+            break;
+        default:
+            break;
+    }
     
-    // Do it again.
-    SKSpriteNode *pillar2 = [SKSpriteNode node];
-    int randPillarInt2 = arc4random_uniform(3) + 1;
-    pillar2 = [[Obstacles alloc] createObstacleWithNode:pillar2 withName:@"pillar" withImage: [NSString stringWithFormat:@"Pillar-%i",randPillarInt2]];
-    pillar2 = [[Obstacles alloc] createPillarPhysicsBody:pillar2 withIdentifier:randPillarInt2];
-    pillar2.physicsBody.categoryBitMask = CollisionCategoryObject;
+}
+
+-(void)rockPillar1 {
+    SKSpriteNode *pillar = [SKSpriteNode spriteNodeWithImageNamed:@"Pillar-1"];
+    pillar.name = @"pillar";
+    pillar.physicsBody = [SKPhysicsBody bodyWithRectangleOfSize: pillar.size];
     
-    pillar1.position = CGPointMake(self.size.width*1.5, -pillar1.frame.size.height/4);
-    pillar2.position = CGPointMake(self.size.width*2.25, -pillar2.frame.size.height/4);
+    [self createPillarWith: pillar];
+    [self addChild:pillar];
+    [self movePillar:pillar];
+}
+
+-(void)rockPillar2 {
+    SKSpriteNode *pillar = [SKSpriteNode spriteNodeWithImageNamed:@"Pillar-2"];
+    pillar.name = @"pillar";
+    pillar.physicsBody = [SKPhysicsBody bodyWithRectangleOfSize: pillar.size];
     
-    // Available space calculation for minimum "window" to position aerial object.
-    SKNode *testNode = [playerNode childNodeWithName:@"ship"];
-    float ACOHeight1 = pillar1.position.y + pillar1.size.height/2 + testNode.frame.size.height*2;
-    SKSpriteNode *aerialObject1 = [SKSpriteNode node];
-    aerialObject1 = [[Obstacles alloc] createObstacleWithNode:aerialObject1 withName:@"aerial" withImage:[NSString stringWithFormat:@"AOb-%i", 1]];
-    aerialObject1.position = CGPointMake(self.size.width/2, ACOHeight1);
-    [aerialObject1 setScale:0.6];
+    [self createPillarWith: pillar];
+    [self addChild:pillar];
+    [self movePillar:pillar];
+}
+
+-(void)geyserPillar {
+    SKSpriteNode *pillar = [SKSpriteNode spriteNodeWithImageNamed:@"Pillar-3"];
+    pillar.anchorPoint = CGPointZero;
+    pillar.position = CGPointMake(1.5 * self.size.width, 10);
+    pillar.name = @"pillar";
+    pillar.physicsBody = [SKPhysicsBody bodyWithRectangleOfSize: pillar.size center:CGPointMake(pillar.size.width / 2, pillar.size.height / 2)];
+    pillar.physicsBody.dynamic = NO;
+    pillar.physicsBody.allowsRotation = NO;
+    pillar.physicsBody.collisionBitMask = CollisionCategoryObject;
+    pillar.physicsBody.contactTestBitMask = 0;
     
-    //Add as children to floor.
-    [self addChild:pillar1];
-    [self addChild:pillar2];
-    [self addChild:aerialObject1];
+    [self addChild:pillar];
+    [self movePillar:pillar];
+}
+
+-(void)radioPillar {
+    SKSpriteNode *pillar = [SKSpriteNode spriteNodeWithImageNamed:@"Pillar-4"];
+    pillar.name = @"pillar";
+    pillar.physicsBody = [SKPhysicsBody bodyWithRectangleOfSize: pillar.size];
+    
+    [self createPillarWith: pillar];
+    [self addChild:pillar];
+    [self movePillar:pillar];
+}
+
+-(void)createPillarWith: (SKSpriteNode *)pillar {
+    int pillarPosMod = arc4random()%200;
+    pillar.position = CGPointMake(1.5 * self.size.width, (-pillar.size.height / 5) + pillarPosMod);
+    
+    pillar.physicsBody.dynamic = NO;
+    pillar.physicsBody.allowsRotation = NO;
+    pillar.physicsBody.collisionBitMask = CollisionCategoryObject;
+    pillar.physicsBody.contactTestBitMask = 0;
 }
 
 -(void) createFloor
@@ -177,7 +235,7 @@ NSTimer *scoreUpdate;
         }
     }];
     
-    [self enumerateChildNodesWithName:@"pillar" usingBlock:^(SKNode *node, BOOL *stop) {
+    /*[self enumerateChildNodesWithName:@"pillar" usingBlock:^(SKNode *node, BOOL *stop) {
         if (node.position.x < -node.frame.size.width) {
             [node removeFromParent];
             int randNewPillar = ceil((arc4random_uniform(3) + 1));
@@ -194,7 +252,17 @@ NSTimer *scoreUpdate;
             CGPoint pillarmovement = CGPointMultiplyScalar(pillarvelocity, _dt);
             pillar.position = CGPointAdd(pillar.position, pillarmovement);
         }
-    }];
+    }];*/
+}
+
+-(void) movePillar: (SKSpriteNode *)pillarNode
+{
+    //Time calculation to move pillar across screen.  Time = distance/velocity.
+    SKAction *animateLeft = [SKAction moveToX:-0.5*self.size.width duration:3];
+    SKAction *remove = [SKAction removeFromParent];
+    SKAction *moveSqnce = [SKAction sequence:@[animateLeft, remove]];
+    
+    [pillarNode runAction:moveSqnce];
 }
 
 #pragma mark --Create Audio
@@ -232,9 +300,9 @@ NSTimer *scoreUpdate;
     
     if (playerNode.physicsBody.dynamic == NO) {
         playerNode.physicsBody.dynamic = YES;
-        [self createObstacles];
         [self addChild:_score];
         scoreUpdate = [NSTimer scheduledTimerWithTimeInterval:0.1 target:self selector:@selector(scoreAdd) userInfo:nil repeats:YES];
+        pillarCreateTimer = [NSTimer scheduledTimerWithTimeInterval:0.8 target:self selector:@selector(anyPillarCreate) userInfo:nil repeats:YES];
     }
     
     if (_player.position.y > self.size.height - 50)
@@ -271,6 +339,7 @@ NSTimer *scoreUpdate;
 -(void)didBeginContact:(SKPhysicsContact *)contact
 {
     [scoreUpdate invalidate];
+    [pillarCreateTimer invalidate];
     [GameState sharedGameData].highScoreL2 = MAX([GameState sharedGameData].score, [GameState sharedGameData].highScoreL2);
     
     SKView *gameOverView = (SKView *)self.view;

@@ -499,6 +499,7 @@ float volNum;
         SKView * levelTwoView = (SKView *)self.view;
         levelTwoView.showsFPS = YES;
         levelTwoView.showsNodeCount = YES;
+        levelTwoView.showsPhysics = YES;
         
         // Create and configure the scene.
         SKScene * levelTwoScene = [[LevelTwo alloc] initWithSize:levelTwoView.bounds.size andDirection:self.direction];

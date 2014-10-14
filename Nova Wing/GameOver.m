@@ -117,6 +117,7 @@
         SKScene * levelTwoScene = [[LevelTwo alloc] initWithSize:levelTwoView.bounds.size andDirection:self.direction];
         levelTwoScene.scaleMode = SKSceneScaleModeAspectFill;
         SKTransition *levelTwoTrans = [SKTransition fadeWithColor:fadeColor duration:0.5];
+        levelTwoView.showsPhysics = NO;
         
         // Present the scene.
         [levelTwoView presentScene:levelTwoScene transition:levelTwoTrans];
