@@ -12,7 +12,8 @@
 @interface PowerUps : NSObject
 
 -(SKSpriteNode *)createMultiplier;
--(void)createFlash;
+-(SKShapeNode *)createFlash;
 -(SKSpriteNode *)createPup;
+-(void)popActionWithNode: (SKNode *)node;
 
 @end

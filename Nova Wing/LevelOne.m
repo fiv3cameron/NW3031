@@ -32,7 +32,7 @@ NSTimeInterval _lastUpdateTime;
 NSTimeInterval _dt;
 SKLabelNode* _score;
 NSTimer *objectCreateTimer;
-NSTimer *pupTimer;
+NSTimer *multiTimer;
 
 
 #pragma mark --CreateBackground
@@ -290,106 +290,6 @@ NSTimer *pupTimer;
     [self moveAerialNode:obstacle2 allowsRotation: YES];
 }
 
-#pragma mark --Multiplier Stuff
-
--(void)multi2x {
-    SKSpriteNode *multi2 = [SKSpriteNode spriteNodeWithImageNamed:@"2xMulti"];
-    [self createMultiWith:multi2];
-}
-
--(void)multi3x {
-    SKSpriteNode *multi3 = [SKSpriteNode spriteNodeWithImageNamed:@"3xMulti"];
-    [self createMultiWith:multi3];
-
-}
-
--(void)multi4x {
-    SKSpriteNode *multi4 = [SKSpriteNode spriteNodeWithImageNamed:@"4xMulti"];
-    [self createMultiWith:multi4];
-    
-}
-
--(void)multi5x {
-    SKSpriteNode *multi5 = [SKSpriteNode spriteNodeWithImageNamed:@"5xMulti"];
-    [self createMultiWith:multi5];
-    
-}
-
--(void)createMultiWith: (SKSpriteNode *)multi {
-    int tempRand = arc4random()%80;
-    double randYPosition = (tempRand+10)/100.0;
-    multi.position = CGPointMake(self.size.width + multi.size.width, self.size.height * randYPosition);
-    multi.name = @"multiplier";
-    multi.zPosition = 11;
-    multi.xScale = 0.5;
-    multi.yScale = 0.5;
-    
-    multi.physicsBody = [SKPhysicsBody bodyWithRectangleOfSize: multi.size];
-    multi.physicsBody.categoryBitMask = CollisionCategoryScore;
-    multi.physicsBody.dynamic = NO;
-    multi.physicsBody.collisionBitMask = 0;
-    
-    [self addChild:multi];
-    [self moveAerialNode:multi allowsRotation: NO];
-}
-
--(void)bluePop {
-    SKShapeNode *blueShape = [SKShapeNode node];
-    blueShape.path = [UIBezierPath bezierPathWithRect: CGRectMake(0, 0, self.size.width, self.size.height)].CGPath;
-    blueShape.position = CGPointMake(0, 0);
-    blueShape.fillColor = [SKColor colorWithRed:0.5 green:0.8 blue:1 alpha:1];
-    blueShape.alpha = 0;
-    blueShape.zPosition = 103;
-    
-    [self addChild:blueShape];
-    [self popActionWithNode:blueShape];
-}
-
--(void)greenPop {
-    SKShapeNode *greenShape = [SKShapeNode node];
-    greenShape.path = [UIBezierPath bezierPathWithRect: CGRectMake(0, 0, self.size.width, self.size.height)].CGPath;
-    greenShape.position = CGPointMake(0, 0);
-    greenShape.fillColor = [SKColor colorWithRed:0.1 green:1 blue:0.7 alpha:1];
-    greenShape.alpha = 0;
-    greenShape.zPosition = 103;
-    
-    [self addChild:greenShape];
-    [self popActionWithNode:greenShape];
-}
-
--(void)purplePop {
-    SKShapeNode *greenShape = [SKShapeNode node];
-    greenShape.path = [UIBezierPath bezierPathWithRect: CGRectMake(0, 0, self.size.width, self.size.height)].CGPath;
-    greenShape.position = CGPointMake(0, 0);
-    greenShape.fillColor = [SKColor colorWithRed:1 green:0 blue:0.7 alpha:1];
-    greenShape.alpha = 0;
-    greenShape.zPosition = 103;
-    
-    [self addChild:greenShape];
-    [self popActionWithNode:greenShape];
-}
-
--(void)yellowPop {
-    SKShapeNode *greenShape = [SKShapeNode node];
-    greenShape.path = [UIBezierPath bezierPathWithRect: CGRectMake(0, 0, self.size.width, self.size.height)].CGPath;
-    greenShape.position = CGPointMake(0, 0);
-    greenShape.fillColor = [SKColor colorWithRed:1 green:1 blue:0 alpha:1];
-    greenShape.alpha = 0;
-    greenShape.zPosition = 103;
-    
-    [self addChild:greenShape];
-    [self popActionWithNode:greenShape];
-}
-
--(void)popActionWithNode: (SKNode *)node {
-    SKAction *fadeIn = [SKAction fadeAlphaTo:1 duration:.05];
-    SKAction *fadeOut = [SKAction fadeAlphaTo:0 duration:.15];
-    SKAction *remove = [SKAction removeFromParent];
-    SKAction *seq = [SKAction sequence:@[fadeIn,fadeOut, remove]];
-    
-    [node runAction:seq];
-}
-
 -(void)bottomCollide {
     bottom = [SKSpriteNode node];
     bottom.position = CGPointMake(0, -4);
@@ -490,35 +390,38 @@ NSTimer *pupTimer;
 }
 
 -(void)scoreMulti {
+    
+    SKShapeNode *flash = [[PowerUps alloc] createFlash];
+    flash.path = [UIBezierPath bezierPathWithRect: CGRectMake(0, 0, self.size.width, self.size.height)].CGPath;
+    flash.position = CGPointMake(0, 0);
+    [self addChild:flash];
+    [[PowerUps alloc] popActionWithNode:flash];
+    
     switch ([GameState sharedGameData].scoreMultiplier) {
         case 1:
             [[self childNodeWithName:@"multiplier"] removeFromParent];
-            [self bluePop];
             [GameState sharedGameData].scoreMultiplier ++;
             [objectCreateTimer invalidate];
             objectCreateTimer = [NSTimer scheduledTimerWithTimeInterval:0.4 target:self selector:@selector(createObstacles) userInfo:nil repeats:YES];
             break;
         case 2:
             [[self childNodeWithName:@"multiplier"] removeFromParent];
-            [self greenPop];
             [GameState sharedGameData].scoreMultiplier ++;
             [objectCreateTimer invalidate];
             objectCreateTimer = [NSTimer scheduledTimerWithTimeInterval:0.35 target:self selector:@selector(createObstacles) userInfo:nil repeats:YES];
             break;
         case 3:
             [[self childNodeWithName:@"multiplier"] removeFromParent];
-            [self purplePop];
             [GameState sharedGameData].scoreMultiplier ++;
             [objectCreateTimer invalidate];
             objectCreateTimer = [NSTimer scheduledTimerWithTimeInterval:0.3 target:self selector:@selector(createObstacles) userInfo:nil repeats:YES];
             break;
         case 4:
             [[self childNodeWithName:@"multiplier"] removeFromParent];
-            [self yellowPop];
             [GameState sharedGameData].scoreMultiplier ++;
             [objectCreateTimer invalidate];
             objectCreateTimer = [NSTimer scheduledTimerWithTimeInterval:0.29 target:self selector:@selector(createObstacles) userInfo:nil repeats:YES];
-            [pupTimer invalidate];
+            [multiTimer invalidate];
             break;
         default:
             break;
@@ -614,7 +517,7 @@ NSTimer *pupTimer;
         [tapPlay removeFromParent];
         //scoreUpdate = [NSTimer scheduledTimerWithTimeInterval:0.1 target:self selector:@selector(scoreAdd) userInfo:nil repeats:YES];
         objectCreateTimer = [NSTimer scheduledTimerWithTimeInterval:0.5 target:self selector:@selector(createObstacles) userInfo:nil repeats:YES];
-        pupTimer = [NSTimer scheduledTimerWithTimeInterval:2.5 target:self selector:@selector(createMultiplier) userInfo:nil repeats:YES];
+        multiTimer = [NSTimer scheduledTimerWithTimeInterval:2.5 target:self selector:@selector(createMultiplier) userInfo:nil repeats:YES];
     }
     
     if (_player.position.y > self.size.height - 50)
@@ -664,7 +567,7 @@ NSTimer *pupTimer;
 
 -(void)timersInvalidate {
     [objectCreateTimer invalidate];
-    [pupTimer invalidate];
+    [multiTimer invalidate];
 }
 
 -(void)didBeginContact:(SKPhysicsContact *)contact {
@@ -702,9 +605,6 @@ NSTimer *pupTimer;
         [self scoreMulti];
         }
     
-    /*if (contact.bodyA.collisionBitMask + contact.bodyB.collisionBitMask == 10) {
-        [self scoreAdd];
-    }*/
 }
 
 @end
