@@ -113,6 +113,7 @@ NSTimer *pupTimer;
     {
         case 1:
         case 2:
+            break;
         case 3:
             [self rocket];
             break;
@@ -123,10 +124,12 @@ NSTimer *pupTimer;
             [self shipChunk];
             break;
         case 6:
+            break;
         case 7:
             [self asteroid2];
             break;
         case 8:
+            break;
         case 9:
             [self asteroid3];
             break;
