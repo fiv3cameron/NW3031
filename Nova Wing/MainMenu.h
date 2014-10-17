@@ -7,7 +7,6 @@
 //
 
 #import <SpriteKit/SpriteKit.h>
-#import <AVFoundation/AVFoundation.h>
 #import "LevelTwo.h"
 
 SKSpriteNode *startButton;
@@ -22,11 +21,12 @@ SKLabelNode *GDReset;
 NSArray *levelTitles;
 
 
+
 @interface MainMenu : SKScene
 {
-    AVAudioPlayer *bgPlayer;
 }
 
 @property (nonatomic) PBParallaxBackgroundDirection direction;
+@property (nonatomic) AVAudioPlayer* bgPlayer;
 
 @end

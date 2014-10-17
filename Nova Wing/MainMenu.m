@@ -158,11 +158,21 @@ float volNum;
     volNum = 1.0;
     NSString *soundFile = [[NSBundle mainBundle] pathForResource:@"menuMusic" ofType:@"m4a"];
     NSURL *soundFileUrl = [NSURL fileURLWithPath:soundFile];
-    bgPlayer = [[AVAudioPlayer alloc] initWithContentsOfURL:soundFileUrl error:nil];
-    bgPlayer.numberOfLoops = -1;
-    bgPlayer.volume = volNum;
+    _bgPlayer = [[AVAudioPlayer alloc] initWithContentsOfURL:soundFileUrl error:nil];
+    _bgPlayer.numberOfLoops = -1;
+    _bgPlayer.volume = volNum;
     
-    [bgPlayer play];
+    [_bgPlayer play];
+}
+
+-(void)toggleAudio {
+    if ([self.bgPlayer isPlaying]) {
+        [self.bgPlayer stop];
+        [GameState sharedGameData].audioWillPlay = NO;
+    } else {
+        [self.bgPlayer play];
+        [GameState sharedGameData].audioWillPlay = YES;
+    }
 }
 
 #pragma mark --Level Select
@@ -364,10 +374,7 @@ float volNum;
     [fadingNode runAction: fadeSequence];
 }
 
--(void)backToMainAction
-{
-    
-}
+
 
 #pragma mark --Touch Events
 -(void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event {
@@ -436,6 +443,7 @@ float volNum;
         [self musicVolumeLabel];
         [self sfxVolumeLabel];
         [self resetGameData];
+        [self addChild:[self backToMainButton]];
     }
     
     if ([nodeLift.name isEqualToString:@"GameReset"]) {
@@ -443,6 +451,13 @@ float volNum;
         [[GameState sharedGameData] save];
         [self resetSuccessPop];
     }
+    
+    if ([nodeLift.name isEqualToString:@"backToMain"]) {        
+        SKView *mainMenuView = (SKView *)self.view;
+        SKScene *mainMenuScene = [[MainMenu alloc] initWithSize:mainMenuView.bounds.size];
+        SKTransition *menuTransition = [SKTransition fadeWithDuration:.5];
+        [mainMenuView presentScene:mainMenuScene transition:menuTransition];
+    };
     
     if ([nodeLift.name isEqualToString:@"rightArrow"]) {
         

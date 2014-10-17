@@ -60,7 +60,9 @@ NSTimer *multiTimer;
         
         _player = [self createPlayerNode];
         
-        [self createAudio];
+        if ([[GameState sharedGameData] audioWillPlay ] == YES) {
+            [self createAudio];
+        }
         [self addChild:stars];
         [self createBlackHole];
         [self bottomCollide];
