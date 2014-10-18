@@ -60,7 +60,9 @@ NSTimer *multiTimer;
         
         _player = [self createPlayerNode];
         
-        [self createAudio];
+        if ([[GameState sharedGameData] audioWillPlay ] == YES) {
+            [self createAudio];
+        }
         [self addChild:stars];
         [self createBlackHole];
         [self bottomCollide];
@@ -348,12 +350,8 @@ NSTimer *multiTimer;
 #pragma mark --Create Audio
 -(void)createAudio
 {
-    NSString *soundFile = [[NSBundle mainBundle] pathForResource:@"Level-1-Music" ofType:@"m4a"];
-    NSURL *soundFileUrl = [NSURL fileURLWithPath:soundFile];
-    bgPlayer = [[AVAudioPlayer alloc] initWithContentsOfURL:soundFileUrl error:nil];
-    bgPlayer.numberOfLoops = -1;
-    
-    [bgPlayer play];
+    [[NWAudioPlayer sharedAudioPlayer] createAllMusicWithAudio:Level_1];
+    [NWAudioPlayer sharedAudioPlayer].songName = Level_1;
 }
 
 

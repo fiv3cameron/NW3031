@@ -68,7 +68,10 @@ NSTimer *pillarCreateTimer;
         [self addChild:parallax];
         
         _player = [self createPlayerNode];
-        [self createAudio];
+        
+        if ([[GameState sharedGameData] audioWillPlay] == YES) {
+            [self createAudio];
+        }
         [self createScoreNode];
         [self addChild:_player];
         [[Ships alloc] shipBobbing:_player];
@@ -268,12 +271,8 @@ NSTimer *pillarCreateTimer;
 #pragma mark --Create Audio
 -(void)createAudio
 {
-    NSString *soundFile = [[NSBundle mainBundle] pathForResource:@"Level-2-Music" ofType:@"m4a"];
-    NSURL *soundFileUrl = [NSURL fileURLWithPath:soundFile];
-    bgPlayer = [[AVAudioPlayer alloc] initWithContentsOfURL:soundFileUrl error:nil];
-    bgPlayer.numberOfLoops = -1;
-    
-    [bgPlayer play];
+    [[NWAudioPlayer sharedAudioPlayer] createAllMusicWithAudio:Level_2];
+    [NWAudioPlayer sharedAudioPlayer].songName = Level_2;
 }
 
 #pragma mark --Score

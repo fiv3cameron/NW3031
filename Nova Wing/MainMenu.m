@@ -27,13 +27,13 @@ static inline CGPoint CGPointMultiplyScalar(const CGPoint a, const CGFloat b)
 
 NSTimeInterval _lastUpdateTime;
 NSTimeInterval _dt;
-float volNum;
 
 -(id)initWithSize:(CGSize)size {
     if (self = [super initWithSize:size]) {
         /* Setup your scene here */
         [GameState sharedGameData].levelIndex = 0;
         [GameState sharedGameData].lvlIndexMax = 2;
+        [GameState sharedGameData].audioWillPlay = YES;
         
         [self initializeScrollingBackground];
         
@@ -155,14 +155,8 @@ float volNum;
 #pragma mark --Create Audio
 -(void)createAudio
 {
-    volNum = 1.0;
-    NSString *soundFile = [[NSBundle mainBundle] pathForResource:@"menuMusic" ofType:@"m4a"];
-    NSURL *soundFileUrl = [NSURL fileURLWithPath:soundFile];
-    bgPlayer = [[AVAudioPlayer alloc] initWithContentsOfURL:soundFileUrl error:nil];
-    bgPlayer.numberOfLoops = -1;
-    bgPlayer.volume = volNum;
-    
-    [bgPlayer play];
+    [[NWAudioPlayer sharedAudioPlayer] createAllMusicWithAudio:Menu_Music];
+    [NWAudioPlayer sharedAudioPlayer].songName = Menu_Music;
 }
 
 #pragma mark --Level Select
@@ -364,10 +358,7 @@ float volNum;
     [fadingNode runAction: fadeSequence];
 }
 
--(void)backToMainAction
-{
-    
-}
+
 
 #pragma mark --Touch Events
 -(void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event {
@@ -436,6 +427,7 @@ float volNum;
         [self musicVolumeLabel];
         [self sfxVolumeLabel];
         [self resetGameData];
+        [self addChild:[self backToMainButton]];
     }
     
     if ([nodeLift.name isEqualToString:@"GameReset"]) {
@@ -443,6 +435,13 @@ float volNum;
         [[GameState sharedGameData] save];
         [self resetSuccessPop];
     }
+    
+    if ([nodeLift.name isEqualToString:@"backToMain"]) {        
+        SKView *mainMenuView = (SKView *)self.view;
+        SKScene *mainMenuScene = [[MainMenu alloc] initWithSize:mainMenuView.bounds.size];
+        SKTransition *menuTransition = [SKTransition fadeWithDuration:.5];
+        [mainMenuView presentScene:mainMenuScene transition:menuTransition];
+    };
     
     if ([nodeLift.name isEqualToString:@"rightArrow"]) {
         
