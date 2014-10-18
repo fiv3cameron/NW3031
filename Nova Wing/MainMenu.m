@@ -27,13 +27,13 @@ static inline CGPoint CGPointMultiplyScalar(const CGPoint a, const CGFloat b)
 
 NSTimeInterval _lastUpdateTime;
 NSTimeInterval _dt;
-float volNum;
 
 -(id)initWithSize:(CGSize)size {
     if (self = [super initWithSize:size]) {
         /* Setup your scene here */
         [GameState sharedGameData].levelIndex = 0;
         [GameState sharedGameData].lvlIndexMax = 2;
+        [GameState sharedGameData].audioWillPlay = YES;
         
         [self initializeScrollingBackground];
         
@@ -155,24 +155,8 @@ float volNum;
 #pragma mark --Create Audio
 -(void)createAudio
 {
-    volNum = 1.0;
-    NSString *soundFile = [[NSBundle mainBundle] pathForResource:@"menuMusic" ofType:@"m4a"];
-    NSURL *soundFileUrl = [NSURL fileURLWithPath:soundFile];
-    _bgPlayer = [[AVAudioPlayer alloc] initWithContentsOfURL:soundFileUrl error:nil];
-    _bgPlayer.numberOfLoops = -1;
-    _bgPlayer.volume = volNum;
-    
-    [_bgPlayer play];
-}
-
--(void)toggleAudio {
-    if ([self.bgPlayer isPlaying]) {
-        [self.bgPlayer stop];
-        [GameState sharedGameData].audioWillPlay = NO;
-    } else {
-        [self.bgPlayer play];
-        [GameState sharedGameData].audioWillPlay = YES;
-    }
+    [[NWAudioPlayer sharedAudioPlayer] createAllMusicWithAudio:Menu_Music];
+    [NWAudioPlayer sharedAudioPlayer].songName = Menu_Music;
 }
 
 #pragma mark --Level Select

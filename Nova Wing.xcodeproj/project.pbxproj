@@ -58,6 +58,7 @@
 		760C23C719DC856000D34429 /* L1-AOb-2@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 760C23C519DC856000D34429 /* L1-AOb-2@2x.png */; };
 		760C23C819DC856000D34429 /* L1-AOb-3@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 760C23C619DC856000D34429 /* L1-AOb-3@2x.png */; };
 		76105BD119E5B3D400A3F242 /* PowerUps.m in Sources */ = {isa = PBXBuildFile; fileRef = 76105BD019E5B3D400A3F242 /* PowerUps.m */; };
+		76105BD719F1DB1300A3F242 /* NWAudioPlayer.m in Sources */ = {isa = PBXBuildFile; fileRef = 76105BD619F1DB1300A3F242 /* NWAudioPlayer.m */; };
 		7640AFB819E06F9A00EFD3C5 /* 2xMulti@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 7640AFB619E06F9A00EFD3C5 /* 2xMulti@2x.png */; };
 		7640AFB919E06F9A00EFD3C5 /* 3xMulti@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 7640AFB719E06F9A00EFD3C5 /* 3xMulti@2x.png */; };
 		7640AFBB19E0836900EFD3C5 /* ShipTrail.sks in Resources */ = {isa = PBXBuildFile; fileRef = 7640AFBA19E0836900EFD3C5 /* ShipTrail.sks */; };
@@ -166,6 +167,8 @@
 		760C23C619DC856000D34429 /* L1-AOb-3@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "L1-AOb-3@2x.png"; sourceTree = "<group>"; };
 		76105BCF19E5B3D400A3F242 /* PowerUps.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PowerUps.h; sourceTree = "<group>"; };
 		76105BD019E5B3D400A3F242 /* PowerUps.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PowerUps.m; sourceTree = "<group>"; };
+		76105BD519F1DB1300A3F242 /* NWAudioPlayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NWAudioPlayer.h; sourceTree = "<group>"; };
+		76105BD619F1DB1300A3F242 /* NWAudioPlayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NWAudioPlayer.m; sourceTree = "<group>"; };
 		7640AFB619E06F9A00EFD3C5 /* 2xMulti@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "2xMulti@2x.png"; sourceTree = "<group>"; };
 		7640AFB719E06F9A00EFD3C5 /* 3xMulti@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "3xMulti@2x.png"; sourceTree = "<group>"; };
 		7640AFBA19E0836900EFD3C5 /* ShipTrail.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = ShipTrail.sks; sourceTree = "<group>"; };
@@ -349,6 +352,8 @@
 		2DB3525F19997295006BF15C /* Internal Classes */ = {
 			isa = PBXGroup;
 			children = (
+				76105BD519F1DB1300A3F242 /* NWAudioPlayer.h */,
+				76105BD619F1DB1300A3F242 /* NWAudioPlayer.m */,
 				76105BCF19E5B3D400A3F242 /* PowerUps.h */,
 				76105BD019E5B3D400A3F242 /* PowerUps.m */,
 				2DB35260199972CD006BF15C /* GameObjects.h */,
@@ -659,6 +664,7 @@
 				2DB3523319996B83006BF15C /* ViewController.m in Sources */,
 				2DB35262199972CD006BF15C /* GameObjects.m in Sources */,
 				2D800FFA19AC14FC0067CAC1 /* Obstacles.m in Sources */,
+				76105BD719F1DB1300A3F242 /* NWAudioPlayer.m in Sources */,
 				765DF29C19A9295800FBFB16 /* GameOverL1.m in Sources */,
 				765DF29519A9293D00FBFB16 /* NORLabelNode.m in Sources */,
 				2DB3522D19996B83006BF15C /* AppDelegate.m in Sources */,
