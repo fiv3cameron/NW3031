@@ -12,6 +12,8 @@
 SKSpriteNode *startButton;
 SKSpriteNode *leaderButton;
 SKSpriteNode *settingsButton;
+SKSpriteNode *musicToggle;
+SKSpriteNode *sfxToggle;
 SKSpriteNode *titleImage;
 SKSpriteNode *levelThumb;
 SKSpriteNode *levelTwoThumb;

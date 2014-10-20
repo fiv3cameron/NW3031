@@ -69,9 +69,8 @@ NSTimer *pillarCreateTimer;
         
         _player = [self createPlayerNode];
         
-        if ([[GameState sharedGameData] audioWillPlay] == YES) {
-            [self createAudio];
-        }
+        [self createAudio];
+        
         [self createScoreNode];
         [self addChild:_player];
         [[Ships alloc] shipBobbing:_player];

@@ -16,7 +16,7 @@
     @property (nonatomic) long levelIndex;
     @property (nonatomic) long lvlIndexMax;
     @property (nonatomic) int scoreMultiplier;
-    @property (nonatomic) BOOL audioWillPlay;
+    @property (nonatomic, assign) long audioVolume;
 
 +(instancetype)sharedGameData;
 -(void)reset;

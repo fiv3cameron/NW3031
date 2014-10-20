@@ -59,6 +59,10 @@
 		760C23C819DC856000D34429 /* L1-AOb-3@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 760C23C619DC856000D34429 /* L1-AOb-3@2x.png */; };
 		76105BD119E5B3D400A3F242 /* PowerUps.m in Sources */ = {isa = PBXBuildFile; fileRef = 76105BD019E5B3D400A3F242 /* PowerUps.m */; };
 		76105BD719F1DB1300A3F242 /* NWAudioPlayer.m in Sources */ = {isa = PBXBuildFile; fileRef = 76105BD619F1DB1300A3F242 /* NWAudioPlayer.m */; };
+		76105BDB19F33EE600A3F242 /* Audio_off@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 76105BD819F33EE600A3F242 /* Audio_off@2x.png */; };
+		76105BDC19F33EE600A3F242 /* Audio_press@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 76105BD919F33EE600A3F242 /* Audio_press@2x.png */; };
+		76105BDD19F33EE600A3F242 /* Audio@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 76105BDA19F33EE600A3F242 /* Audio@2x.png */; };
+		76105BDF19F5C65400A3F242 /* L1-AOb-4@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 76105BDE19F5C65400A3F242 /* L1-AOb-4@2x.png */; };
 		7640AFB819E06F9A00EFD3C5 /* 2xMulti@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 7640AFB619E06F9A00EFD3C5 /* 2xMulti@2x.png */; };
 		7640AFB919E06F9A00EFD3C5 /* 3xMulti@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 7640AFB719E06F9A00EFD3C5 /* 3xMulti@2x.png */; };
 		7640AFBB19E0836900EFD3C5 /* ShipTrail.sks in Resources */ = {isa = PBXBuildFile; fileRef = 7640AFBA19E0836900EFD3C5 /* ShipTrail.sks */; };
@@ -169,6 +173,10 @@
 		76105BD019E5B3D400A3F242 /* PowerUps.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PowerUps.m; sourceTree = "<group>"; };
 		76105BD519F1DB1300A3F242 /* NWAudioPlayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NWAudioPlayer.h; sourceTree = "<group>"; };
 		76105BD619F1DB1300A3F242 /* NWAudioPlayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NWAudioPlayer.m; sourceTree = "<group>"; };
+		76105BD819F33EE600A3F242 /* Audio_off@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Audio_off@2x.png"; sourceTree = "<group>"; };
+		76105BD919F33EE600A3F242 /* Audio_press@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Audio_press@2x.png"; sourceTree = "<group>"; };
+		76105BDA19F33EE600A3F242 /* Audio@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Audio@2x.png"; sourceTree = "<group>"; };
+		76105BDE19F5C65400A3F242 /* L1-AOb-4@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "L1-AOb-4@2x.png"; sourceTree = "<group>"; };
 		7640AFB619E06F9A00EFD3C5 /* 2xMulti@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "2xMulti@2x.png"; sourceTree = "<group>"; };
 		7640AFB719E06F9A00EFD3C5 /* 3xMulti@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "3xMulti@2x.png"; sourceTree = "<group>"; };
 		7640AFBA19E0836900EFD3C5 /* ShipTrail.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = ShipTrail.sks; sourceTree = "<group>"; };
@@ -381,6 +389,9 @@
 		2DB3526D199993DA006BF15C /* Main */ = {
 			isa = PBXGroup;
 			children = (
+				76105BD819F33EE600A3F242 /* Audio_off@2x.png */,
+				76105BD919F33EE600A3F242 /* Audio_press@2x.png */,
+				76105BDA19F33EE600A3F242 /* Audio@2x.png */,
 				7678881819E1C43E009714A1 /* 4xMulti@2x.png */,
 				7678881919E1C43E009714A1 /* 5xMulti@2x.png */,
 				7640AFB619E06F9A00EFD3C5 /* 2xMulti@2x.png */,
@@ -481,6 +492,7 @@
 		765DF28819A9286700FBFB16 /* Level 1 */ = {
 			isa = PBXGroup;
 			children = (
+				76105BDE19F5C65400A3F242 /* L1-AOb-4@2x.png */,
 				760C23C519DC856000D34429 /* L1-AOb-2@2x.png */,
 				760C23C619DC856000D34429 /* L1-AOb-3@2x.png */,
 				760C23C319DC832C00D34429 /* L1-AOb-1@2x.png */,
@@ -586,10 +598,13 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				76105BDC19F33EE600A3F242 /* Audio_press@2x.png in Resources */,
 				2DB3528819999445006BF15C /* AOb-3@2x.png in Resources */,
 				76876A3C19CC6FCB00F1C227 /* NovaWingIcon@3x.png in Resources */,
 				765DF29919A9294B00FBFB16 /* GameOver-L1@2x.png in Resources */,
 				2DB3528919999445006BF15C /* Pillar-1@2x.png in Resources */,
+				76105BDD19F33EE600A3F242 /* Audio@2x.png in Resources */,
+				76105BDB19F33EE600A3F242 /* Audio_off@2x.png in Resources */,
 				764BF9A319A19A11007DABF8 /* arrowR@2x.png in Resources */,
 				2DB3528A19999445006BF15C /* Pillar-2@2x.png in Resources */,
 				7640AFB919E06F9A00EFD3C5 /* 3xMulti@2x.png in Resources */,
@@ -616,6 +631,7 @@
 				76A1B8DA199D973B00EE1491 /* buttonPlay@2x.png in Resources */,
 				765DF29E19A9298900FBFB16 /* menuMusic.m4a in Resources */,
 				7678881B19E1C43E009714A1 /* 5xMulti@2x.png in Resources */,
+				76105BDF19F5C65400A3F242 /* L1-AOb-4@2x.png in Resources */,
 				765DF29219A9293100FBFB16 /* Stars-L1.sks in Resources */,
 				760C23C419DC832C00D34429 /* L1-AOb-1@2x.png in Resources */,
 				2DB3528B19999445006BF15C /* Pillar-3@2x.png in Resources */,

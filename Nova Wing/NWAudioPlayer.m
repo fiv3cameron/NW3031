@@ -27,22 +27,20 @@
 
 -(void)createAllMusicWithAudio: (songTitle)audio {
     
-    if ([[GameState sharedGameData] audioWillPlay] == YES) {
-        switch (audio) {
-            case Menu_Music:
-                [self playMusicWithString:@"menuMusic" ofTitle:audio];
-                break;
-            case Level_1:
-                [self playMusicWithString:@"Level-1-Music" ofTitle:audio];
-                break;
-            case Level_2:
-                [self playMusicWithString:@"Level-2-Music" ofTitle:audio];
-                break;
-            case Game_Over:
-                break;
-            default:
-                break;
-        }
+    switch (audio) {
+        case Menu_Music:
+            [self playMusicWithString:@"menuMusic" ofTitle:audio];
+            break;
+        case Level_1:
+            [self playMusicWithString:@"Level-1-Music" ofTitle:audio];
+            break;
+        case Level_2:
+            [self playMusicWithString:@"Level-2-Music" ofTitle:audio];
+            break;
+        case Game_Over:
+            break;
+        default:
+            break;
     }
 }
 
@@ -53,6 +51,7 @@
         NSError *Error = nil;
         _bgPlayer = [[AVAudioPlayer alloc] initWithContentsOfURL:soundFileUrl error:&Error];
         _bgPlayer.numberOfLoops = -1;
+        _bgPlayer.volume = [GameState sharedGameData].audioVolume;
     
         [_bgPlayer prepareToPlay];
         [_bgPlayer play];

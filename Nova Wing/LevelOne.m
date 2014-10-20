@@ -60,9 +60,8 @@ NSTimer *multiTimer;
         
         _player = [self createPlayerNode];
         
-        if ([[GameState sharedGameData] audioWillPlay ] == YES) {
-            [self createAudio];
-        }
+        [self createAudio];
+        
         [self addChild:stars];
         [self createBlackHole];
         [self bottomCollide];
@@ -111,7 +110,7 @@ NSTimer *multiTimer;
 
 -(void)createObstacles {
     
-    int tempObjectSelector = arc4random()%10;
+    int tempObjectSelector = arc4random()%11;
     switch (tempObjectSelector)
     {
         case 1:
@@ -137,7 +136,7 @@ NSTimer *multiTimer;
             [self asteroid3];
             break;
         case 10:
-            //Red asteroid
+            [self asteroid4];
             break;
 
         default:
@@ -209,6 +208,32 @@ NSTimer *multiTimer;
     
     SKSpriteNode *tempNode = [SKSpriteNode node];
     SKSpriteNode *obstacle2 = [[Obstacles alloc] createObstacleWithNode:tempNode withName:@"aerial" withImage:@"L1-AOb-3"];
+    
+    int tempRand = arc4random()%80;
+    double randYPosition = (tempRand+10)/100.0;
+    obstacle2.position = CGPointMake(self.size.width+obstacle2.size.width, self.size.height*randYPosition);
+    //obstacle1.name = @"aerial";
+    obstacle2.zPosition = 10;
+    
+    int tempRand2 = arc4random()%100;
+    double randScale = (tempRand2)/1000.0;
+    obstacle2.xScale = 0.4 + randScale;
+    obstacle2.yScale = 0.4 + randScale;
+    
+    obstacle2.physicsBody = [SKPhysicsBody bodyWithCircleOfRadius:obstacle2.size.height/2];
+    obstacle2.physicsBody.categoryBitMask = CollisionCategoryObject;
+    obstacle2.physicsBody.dynamic = NO;
+    obstacle2.physicsBody.collisionBitMask = 0;
+    
+    [self addChild: obstacle2];
+    [self moveAerialNode:obstacle2 allowsRotation:YES];
+    
+}
+
+-(void)asteroid4 {
+    
+    SKSpriteNode *tempNode = [SKSpriteNode node];
+    SKSpriteNode *obstacle2 = [[Obstacles alloc] createObstacleWithNode:tempNode withName:@"aerial" withImage:@"L1-AOb-4"];
     
     int tempRand = arc4random()%80;
     double randYPosition = (tempRand+10)/100.0;
@@ -403,25 +428,25 @@ NSTimer *multiTimer;
             [[self childNodeWithName:@"multiplier"] removeFromParent];
             [GameState sharedGameData].scoreMultiplier ++;
             [objectCreateTimer invalidate];
-            objectCreateTimer = [NSTimer scheduledTimerWithTimeInterval:0.4 target:self selector:@selector(createObstacles) userInfo:nil repeats:YES];
+            objectCreateTimer = [NSTimer scheduledTimerWithTimeInterval:0.35 target:self selector:@selector(createObstacles) userInfo:nil repeats:YES];
             break;
         case 2:
             [[self childNodeWithName:@"multiplier"] removeFromParent];
             [GameState sharedGameData].scoreMultiplier ++;
             [objectCreateTimer invalidate];
-            objectCreateTimer = [NSTimer scheduledTimerWithTimeInterval:0.35 target:self selector:@selector(createObstacles) userInfo:nil repeats:YES];
+            objectCreateTimer = [NSTimer scheduledTimerWithTimeInterval:0.3 target:self selector:@selector(createObstacles) userInfo:nil repeats:YES];
             break;
         case 3:
             [[self childNodeWithName:@"multiplier"] removeFromParent];
             [GameState sharedGameData].scoreMultiplier ++;
             [objectCreateTimer invalidate];
-            objectCreateTimer = [NSTimer scheduledTimerWithTimeInterval:0.3 target:self selector:@selector(createObstacles) userInfo:nil repeats:YES];
+            objectCreateTimer = [NSTimer scheduledTimerWithTimeInterval:0.28 target:self selector:@selector(createObstacles) userInfo:nil repeats:YES];
             break;
         case 4:
             [[self childNodeWithName:@"multiplier"] removeFromParent];
             [GameState sharedGameData].scoreMultiplier ++;
             [objectCreateTimer invalidate];
-            objectCreateTimer = [NSTimer scheduledTimerWithTimeInterval:0.29 target:self selector:@selector(createObstacles) userInfo:nil repeats:YES];
+            objectCreateTimer = [NSTimer scheduledTimerWithTimeInterval:0.27 target:self selector:@selector(createObstacles) userInfo:nil repeats:YES];
             [multiTimer invalidate];
             break;
         default:
@@ -516,8 +541,7 @@ NSTimer *multiTimer;
         [self addChild:_score];
         [self createObstacles];
         [tapPlay removeFromParent];
-        //scoreUpdate = [NSTimer scheduledTimerWithTimeInterval:0.1 target:self selector:@selector(scoreAdd) userInfo:nil repeats:YES];
-        objectCreateTimer = [NSTimer scheduledTimerWithTimeInterval:0.5 target:self selector:@selector(createObstacles) userInfo:nil repeats:YES];
+        objectCreateTimer = [NSTimer scheduledTimerWithTimeInterval:0.45 target:self selector:@selector(createObstacles) userInfo:nil repeats:YES];
         multiTimer = [NSTimer scheduledTimerWithTimeInterval:2.5 target:self selector:@selector(createMultiplier) userInfo:nil repeats:YES];
     }
     

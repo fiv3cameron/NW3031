@@ -14,10 +14,12 @@
 static NSString* const SSGameDataChecksumKey = @"SSGameDataChecksumKey";
 static NSString* const SSGameDataHighScoreL1Key = @"highScoreL1";
 static NSString* const SSGameDataHighScoreL2Key = @"highScoreL2";
+static NSString* const SSGameDataAudioVolume = @"audioVolume";
 
 -(void)encodeWithCoder:(NSCoder *)encoder {
     [encoder encodeDouble:self.highScoreL1 forKey:SSGameDataHighScoreL1Key];
     [encoder encodeDouble:self.highScoreL2 forKey:SSGameDataHighScoreL2Key];
+    [encoder encodeDouble:self.audioVolume forKey:SSGameDataAudioVolume];
 }
 
 -(instancetype)initWithCoder:(NSCoder *)decoder {
@@ -25,15 +27,38 @@ static NSString* const SSGameDataHighScoreL2Key = @"highScoreL2";
     if (self) {
         _highScoreL1 = [decoder decodeDoubleForKey:SSGameDataHighScoreL1Key];
         _highScoreL2 = [decoder decodeDoubleForKey:SSGameDataHighScoreL2Key];
+        _audioVolume = [decoder decodeDoubleForKey:SSGameDataAudioVolume];
     }
     
     return self;
+
+}
+
++(instancetype)sharedGameData {
+    static id sharedInstance = nil;
+    
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        sharedInstance = [self loadInstance];
+    });
+    
+    return sharedInstance;
+}
+
+-(void)reset {
+    self.score = 0;
+}
+
+-(void)resetAll {
+    self.score = 0;
+    self.highScoreL1 = 0;
+    self.highScoreL2 = 0;
 }
 
 +(NSString*)filePath {
     static NSString* filePath = nil;
     if (!filePath) {
-        filePath = [[NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) firstObject]stringByAppendingString:@"gamedata"];
+        filePath = [[NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) firstObject]stringByAppendingPathComponent:@"gamedata"];
     }
     
     return filePath;
@@ -65,25 +90,8 @@ static NSString* const SSGameDataHighScoreL2Key = @"highScoreL2";
     }
 }
 
-+(instancetype)sharedGameData {
-    static id sharedInstance = nil;
-    
-    static dispatch_once_t onceToken;
-    dispatch_once(&onceToken, ^{
-        sharedInstance = [self loadInstance];
-    });
-    
-    return sharedInstance;
-}
 
--(void)reset {
-    self.score = 0;
-}
 
--(void)resetAll {
-    self.score = 0;
-    //self.highScoreL1 = 0;
-    //self.highScoreL2 = 0;
-}
+
 
 @end

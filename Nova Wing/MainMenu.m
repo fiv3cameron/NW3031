@@ -33,7 +33,10 @@ NSTimeInterval _dt;
         /* Setup your scene here */
         [GameState sharedGameData].levelIndex = 0;
         [GameState sharedGameData].lvlIndexMax = 2;
-        [GameState sharedGameData].audioWillPlay = YES;
+        
+        if ([GameState sharedGameData].highScoreL1 < 1) {
+            [GameState sharedGameData].audioVolume = 1.0;
+        }
         
         [self initializeScrollingBackground];
         
@@ -159,6 +162,20 @@ NSTimeInterval _dt;
     [NWAudioPlayer sharedAudioPlayer].songName = Menu_Music;
 }
 
+-(void)toggleAudio {
+    if ([GameState sharedGameData].audioVolume == 1.0) {
+        musicToggle.texture = [SKTexture textureWithImageNamed:@"Audio_off"];
+        [GameState sharedGameData].audioVolume = 0.0;
+        [[NWAudioPlayer sharedAudioPlayer] bgPlayer].volume = [GameState sharedGameData].audioVolume;
+        [[GameState sharedGameData] save];
+    } else if ([GameState sharedGameData].audioVolume == 0.0) {
+        musicToggle.texture = [SKTexture textureWithImageNamed:@"Audio"];
+        [GameState sharedGameData].audioVolume = 1.0;
+        [[NWAudioPlayer sharedAudioPlayer] bgPlayer].volume = [GameState sharedGameData].audioVolume;
+        [[GameState sharedGameData] save];
+    }
+}
+
 #pragma mark --Level Select
 
 -(SKSpriteNode *)createRightArrowWithWait: (double)waitTime
@@ -234,16 +251,20 @@ NSTimeInterval _dt;
     [self animateLeft:musicVolume withDelay:1];
 }
 
--(void)sfxVolumeLabel {
-    SKLabelNode *sfxVolume = [SKLabelNode labelNodeWithFontNamed:@"SF Movie Poster"];
-    sfxVolume.fontColor = [SKColor whiteColor];
-    sfxVolume.fontSize = 50;
-    sfxVolume.position = CGPointMake(self.size.width * 1.5, (self.size.height / 8) * 4);
-    sfxVolume.horizontalAlignmentMode = SKLabelHorizontalAlignmentModeCenter;
-    sfxVolume.text = @"SFX Volume";
+-(void)musicToggleButton {
+    if ([[GameState sharedGameData] audioVolume] == 1.0) {
+    musicToggle = [SKSpriteNode spriteNodeWithTexture: [SKTexture textureWithImageNamed:@"Audio"]];
+    }
+    if ([[GameState sharedGameData] audioVolume] == 0.0) {
+        musicToggle = [SKSpriteNode spriteNodeWithTexture: [SKTexture textureWithImageNamed:@"Audio_off"]];
+    }
+    musicToggle.position = CGPointMake(self.size.width * 1.5, (self.size.height / 8) * 5);
+    musicToggle.xScale = 0.3;
+    musicToggle.yScale = 0.3;
+    musicToggle.name = @"musicToggle";
     
-    [self addChild:sfxVolume];
-    [self animateLeft:sfxVolume withDelay:1];
+    [self addChild:musicToggle];
+    [self animateLeft:musicToggle withDelay:1];
 }
 
 -(void)resetGameData {
@@ -368,20 +389,24 @@ NSTimeInterval _dt;
     CGPoint location = [touch locationInNode:self];
     SKNode *node = [self nodeAtPoint:location];
     
-    
-    //Start Button
     if ([node.name isEqualToString:@"_startButton"]) {
         startButton.texture = [SKTexture textureWithImageNamed:@"buttonPressStart.png"];
     }
     
-    //Leaderboard Button
     if ([node.name isEqualToString:@"_leaderButton"]) {
         leaderButton.texture = [SKTexture textureWithImageNamed:@"buttonPressLeaderboard.png"];
     }
-    
-    //Settings Button
+
     if ([node.name isEqualToString:@"_settingsButton"]) {
         settingsButton.texture = [SKTexture textureWithImageNamed:@"buttonPressSettings.png"];
+    }
+    
+    if ([node.name isEqualToString:@"musicToggle"]) {
+        musicToggle.texture = [SKTexture textureWithImageNamed:@"Audio_press"];
+    }
+    
+    if ([node.name isEqualToString:@"sfxToggle"]) {
+        sfxToggle.texture = [SKTexture textureWithImageNamed:@"Audio_press"];
     }
 }
 
@@ -420,12 +445,12 @@ NSTimeInterval _dt;
         //SKTransition
     }
     
-    //Settings Button
+#pragma mark -- Settings Action Buttons
     if ([nodeLift.name isEqualToString:@"_settingsButton"]) {
         //SKTransition
         [self mainMenuAnimateOut];
         [self musicVolumeLabel];
-        [self sfxVolumeLabel];
+        [self musicToggleButton];
         [self resetGameData];
         [self addChild:[self backToMainButton]];
     }
@@ -443,6 +468,11 @@ NSTimeInterval _dt;
         [mainMenuView presentScene:mainMenuScene transition:menuTransition];
     };
     
+    if ([nodeLift.name isEqualToString:@"musicToggle"]) {
+        [self toggleAudio];
+    }
+    
+#pragma mark --Level Button Actions
     if ([nodeLift.name isEqualToString:@"rightArrow"]) {
         
         //Modular level select implementation.
@@ -470,9 +500,7 @@ NSTimeInterval _dt;
         [self animateRight:[self childNodeWithName: [NSString stringWithFormat: @"_level%li",[GameState sharedGameData].levelIndex]] withDelay:0.0];
 
     }
-#pragma mark --Level Button Actions
-    
-    
+
     //Level 1 Select
     if ([nodeLift.name isEqualToString:@"_level1"]) {
         // Transition to Level One Scene
