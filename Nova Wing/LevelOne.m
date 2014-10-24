@@ -61,6 +61,7 @@ NSTimer *multiTimer;
         _player = [self createPlayerNode];
         
         [self createAudio];
+        [self createShipAudio];
         
         [self addChild:stars];
         [self createBlackHole];
@@ -379,6 +380,27 @@ NSTimer *multiTimer;
     [NWAudioPlayer sharedAudioPlayer].songName = Level_1;
 }
 
+-(void)createShipAudio {
+    NSString *soundFile = [[NSBundle mainBundle] pathForResource:@"Engine-Audio" ofType:@"wav"];
+    NSURL *soundFileUrl = [NSURL fileURLWithPath:soundFile];
+    NSError *Error = nil;
+    Engine = [[AVAudioPlayer alloc] initWithContentsOfURL:soundFileUrl error:&Error];
+    Engine.numberOfLoops = -1;
+    Engine.volume = 0.8 * [[GameState sharedGameData] audioVolume];
+    [Engine prepareToPlay];
+    [Engine play];
+}
+
+-(void)explosionAudio {
+    NSString *soundFile = [[NSBundle mainBundle] pathForResource:@"Explosion" ofType:@"wav"];
+    NSURL *soundFileUrl = [NSURL fileURLWithPath:soundFile];
+    NSError *Error = nil;
+    Explosion = [[AVAudioPlayer alloc] initWithContentsOfURL:soundFileUrl error:&Error];
+    Explosion.numberOfLoops = 1;
+    Explosion.volume = [[GameState sharedGameData] audioVolume];
+    [Explosion prepareToPlay];
+    [Explosion play];
+}
 
 #pragma mark --Score
 
@@ -595,35 +617,29 @@ NSTimer *multiTimer;
     [multiTimer invalidate];
 }
 
+-(void)gameOver {
+    [GameState sharedGameData].highScoreL1 = MAX([GameState sharedGameData].score, [GameState sharedGameData].highScoreL1);
+    
+    SKView *gameOverView = (SKView *)self.view;
+    
+    SKScene *gameOverScene = [[GameOverL1 alloc] initWithSize:gameOverView.bounds.size];
+    
+    SKColor *fadeColor = [SKColor colorWithRed:1 green:1 blue:1 alpha:1];
+    SKTransition *gameOverTransition = [SKTransition fadeWithColor:fadeColor duration:.25];
+    [gameOverView presentScene:gameOverScene transition:gameOverTransition];
+    
+    [self timersInvalidate];
+    [Engine stop];
+}
+
 -(void)didBeginContact:(SKPhysicsContact *)contact {
 
     if (contact.bodyA.categoryBitMask == CollisionCategoryPlayer && contact.bodyB.categoryBitMask == CollisionCategoryObject) {
-
-        [GameState sharedGameData].highScoreL1 = MAX([GameState sharedGameData].score, [GameState sharedGameData].highScoreL1);
-        
-        SKView *gameOverView = (SKView *)self.view;
-    
-        SKScene *gameOverScene = [[GameOverL1 alloc] initWithSize:gameOverView.bounds.size];
-    
-        SKColor *fadeColor = [SKColor colorWithRed:1 green:1 blue:1 alpha:1];
-        SKTransition *gameOverTransition = [SKTransition fadeWithColor:fadeColor duration:.25];
-        [gameOverView presentScene:gameOverScene transition:gameOverTransition];
-    
-        [self timersInvalidate];
+        [self gameOver];
     }
     
     if (contact.bodyB.categoryBitMask == CollisionCategoryPlayer && contact.bodyA.categoryBitMask == CollisionCategoryBottom) {
-        [GameState sharedGameData].highScoreL1 = MAX([GameState sharedGameData].score, [GameState sharedGameData].highScoreL1);
-        
-        SKView *gameOverView = (SKView *)self.view;
-        
-        SKScene *gameOverScene = [[GameOverL1 alloc] initWithSize:gameOverView.bounds.size];
-        
-        SKColor *fadeColor = [SKColor colorWithRed:1 green:1 blue:1 alpha:1];
-        SKTransition *gameOverTransition = [SKTransition fadeWithColor:fadeColor duration:.25];
-        [gameOverView presentScene:gameOverScene transition:gameOverTransition];
-        
-        [self timersInvalidate];
+        [self gameOver];
     }
     
     if (contact.bodyA.categoryBitMask == CollisionCategoryPlayer && contact.bodyB.categoryBitMask == CollisionCategoryScore) {
