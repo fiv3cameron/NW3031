@@ -118,8 +118,8 @@ NSTimer *pillarCreateTimer;
             [self rockPillar2];
             break;
         case 7:
-        case 8:
             break;
+        case 8:
         case 9:
             [self geyserPillar];
             break;
@@ -188,6 +188,57 @@ NSTimer *pillarCreateTimer;
     pillar.physicsBody.allowsRotation = NO;
     pillar.physicsBody.collisionBitMask = CollisionCategoryObject;
     pillar.physicsBody.contactTestBitMask = 0;
+}
+
+-(void) createAerial{
+    int tempObjectSelector = arc4random()%12;
+    switch (tempObjectSelector)
+    {
+        case 1:
+            break;
+        case 2:
+        case 3:
+            [self createAObj1];
+            break;
+        case 4:
+        case 5:
+        case 6:
+            [self createAObj1];
+            break;
+        case 7:
+        case 8:
+        case 9:
+            [self createAObj1];
+            break;
+        case 10:
+            break;
+        case 11:
+        case 12:
+            [self createAObj1];
+            break;
+        default:
+            break;
+    }
+}
+
+-(void) createAObj1 {
+    SKSpriteNode *aerial = [SKSpriteNode spriteNodeWithImageNamed:@"AOb-1"];
+    aerial.name = @"aerial";
+    aerial.physicsBody = [SKPhysicsBody bodyWithCircleOfRadius:(aerial.size.width+aerial.size.height)/4];
+    aerial.physicsBody.dynamic = NO;
+    aerial.physicsBody.allowsRotation = YES;
+    aerial.position = CGPointMake(0.5*self.size.width, 0.85*self.size.height);
+    [self addChild:aerial];
+    
+    [self moveAerial: aerial];
+}
+
+-(void) createAObj2 {
+    
+}
+
+-(void) createAObj3 {
+    
 }
 
 -(void) createFloor
@@ -267,6 +318,18 @@ NSTimer *pillarCreateTimer;
     [pillarNode runAction:moveSqnce];
 }
 
+-(void) moveAerial: (SKSpriteNode *)aerialNode {
+    SKAction *animateLeft = [SKAction moveToX:-0.2*self.size.width duration:2.7];
+    SKAction *remove = [SKAction removeFromParent];
+    SKAction *nextAerial = [SKAction runBlock:^{
+        [self createAerial];
+    }];
+    SKAction *aerialSqnce = [SKAction sequence:@[animateLeft, remove, nextAerial]];
+    
+    [aerialNode runAction:aerialSqnce];
+    
+}
+
 #pragma mark --Create Audio
 -(void)createAudio
 {
@@ -301,6 +364,7 @@ NSTimer *pillarCreateTimer;
         [self addChild:_score];
         scoreUpdate = [NSTimer scheduledTimerWithTimeInterval:0.1 target:self selector:@selector(scoreAdd) userInfo:nil repeats:YES];
         pillarCreateTimer = [NSTimer scheduledTimerWithTimeInterval:0.8 target:self selector:@selector(anyPillarCreate) userInfo:nil repeats:YES];
+        [self createAerial];
     }
     
     if (_player.position.y > self.size.height - 50)
