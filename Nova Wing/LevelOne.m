@@ -9,6 +9,7 @@
 #import "LevelOne.h"
 #import "GameOverL1.h"
 #import "Obstacles.h"
+#import "Multipliers.h"
 #import "PowerUps.h"
 
 typedef NS_OPTIONS(uint32_t, CollisionCategory) {
@@ -16,6 +17,7 @@ typedef NS_OPTIONS(uint32_t, CollisionCategory) {
     CollisionCategoryObject     = 0x1 << 1,
     CollisionCategoryBottom     = 0x1 << 2,
     CollisionCategoryScore      = 0x1 << 3,
+    CollisionCategoryPup        = 0x1 << 4,
 };
 
 @interface LevelOne() <SKPhysicsContactDelegate>
@@ -33,6 +35,7 @@ NSTimeInterval _dt;
 SKLabelNode* _score;
 NSTimer *objectCreateTimer;
 NSTimer *multiTimer;
+NSTimer *pupTimer;
 
 
 #pragma mark --CreateBackground
@@ -228,7 +231,6 @@ NSTimer *multiTimer;
     
     [self addChild: obstacle2];
     [self moveAerialNode:obstacle2 allowsRotation:YES];
-    
 }
 
 -(void)asteroid4 {
@@ -440,13 +442,13 @@ NSTimer *multiTimer;
 -(void)scoreMulti {
     [trail removeFromParent];
     
-    SKShapeNode *flash = [[PowerUps alloc] createFlash];
+    SKShapeNode *flash = [[Multipliers alloc] createFlash];
     flash.path = [UIBezierPath bezierPathWithRect: CGRectMake(0, 0, self.size.width, self.size.height)].CGPath;
     flash.position = CGPointMake(0, 0);
     [self addChild:flash];
-    [[PowerUps alloc] popActionWithNode:flash];
+    [[Multipliers alloc] popActionWithNode:flash];
     
-    trail = [[PowerUps alloc] createShipTrail];
+    trail = [[Multipliers alloc] createShipTrail];
     trail.position = CGPointMake(-30, 8);
     trail.zPosition = 1;
     trail.targetNode = self.scene;
@@ -538,7 +540,7 @@ NSTimer *multiTimer;
     int tempRand = arc4random()%80;
     double randYPosition = (tempRand+10)/100.0;
     
-    SKSpriteNode *multiplier = [[PowerUps alloc] createMultiplier];
+    SKSpriteNode *multiplier = [[Multipliers alloc] createMultiplier];
     multiplier.position = CGPointMake(self.size.width + multiplier.size.width, self.size.height * randYPosition);
     multiplier.physicsBody = [SKPhysicsBody bodyWithRectangleOfSize: multiplier.size];
     multiplier.physicsBody.categoryBitMask = CollisionCategoryScore;
@@ -554,6 +556,23 @@ NSTimer *multiTimer;
         [self addChild:multiplier];
         [self moveAerialNode:multiplier allowsRotation: NO];
     }
+}
+
+-(void)createPowerUp {
+    int tempRand = arc4random()%80;
+    double randYPos = (tempRand + 10) / 100.0;
+    
+    SKSpriteNode *Pup = [[PowerUps alloc] createPups];
+    Pup.position = CGPointMake(self.size.width + Pup.size.width, self.size.height * randYPos);
+    Pup.physicsBody = [SKPhysicsBody bodyWithCircleOfRadius: Pup.size.width];
+    Pup.physicsBody.categoryBitMask = CollisionCategoryPup;
+    Pup.physicsBody.dynamic = NO;
+    Pup.physicsBody.collisionBitMask = 0;
+    Pup.name = @"PowerUp";
+    Pup.zPosition = 11;
+    
+    [self addChild:Pup];
+    [self moveAerialNode:Pup allowsRotation:NO];
 }
 
 
@@ -573,6 +592,7 @@ NSTimer *multiTimer;
         [tapPlay removeFromParent];
         objectCreateTimer = [NSTimer scheduledTimerWithTimeInterval:0.45 target:self selector:@selector(createObstacles) userInfo:nil repeats:YES];
         multiTimer = [NSTimer scheduledTimerWithTimeInterval:2.5 target:self selector:@selector(createMultiplier) userInfo:nil repeats:YES];
+        pupTimer = [NSTimer scheduledTimerWithTimeInterval:5 target:self selector:@selector(createPowerUp) userInfo:nil repeats:YES];
     }
     
     if (_player.position.y > self.size.height - 50)
@@ -623,6 +643,7 @@ NSTimer *multiTimer;
 -(void)timersInvalidate {
     [objectCreateTimer invalidate];
     [multiTimer invalidate];
+    [pupTimer invalidate];
 }
 
 -(void)gameOver {

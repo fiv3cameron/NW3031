@@ -57,7 +57,7 @@
 		760C23C419DC832C00D34429 /* L1-AOb-1@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 760C23C319DC832C00D34429 /* L1-AOb-1@2x.png */; };
 		760C23C719DC856000D34429 /* L1-AOb-2@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 760C23C519DC856000D34429 /* L1-AOb-2@2x.png */; };
 		760C23C819DC856000D34429 /* L1-AOb-3@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 760C23C619DC856000D34429 /* L1-AOb-3@2x.png */; };
-		76105BD119E5B3D400A3F242 /* PowerUps.m in Sources */ = {isa = PBXBuildFile; fileRef = 76105BD019E5B3D400A3F242 /* PowerUps.m */; };
+		76105BD119E5B3D400A3F242 /* Multipliers.m in Sources */ = {isa = PBXBuildFile; fileRef = 76105BD019E5B3D400A3F242 /* Multipliers.m */; };
 		76105BD719F1DB1300A3F242 /* NWAudioPlayer.m in Sources */ = {isa = PBXBuildFile; fileRef = 76105BD619F1DB1300A3F242 /* NWAudioPlayer.m */; };
 		76105BDB19F33EE600A3F242 /* Audio_off@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 76105BD819F33EE600A3F242 /* Audio_off@2x.png */; };
 		76105BDC19F33EE600A3F242 /* Audio_press@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 76105BD919F33EE600A3F242 /* Audio_press@2x.png */; };
@@ -90,6 +90,9 @@
 		76A1B8DA199D973B00EE1491 /* buttonPlay@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 76A1B8D9199D973B00EE1491 /* buttonPlay@2x.png */; };
 		76A1B8DC199D974500EE1491 /* buttonPressPlay@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 76A1B8DB199D974500EE1491 /* buttonPressPlay@2x.png */; };
 		76B9E91719FB1BE8000EF044 /* ShipTrail.sks in Resources */ = {isa = PBXBuildFile; fileRef = 76B9E91619FB1BE8000EF044 /* ShipTrail.sks */; };
+		76B9E91B19FBF04D000EF044 /* PowerUps.m in Sources */ = {isa = PBXBuildFile; fileRef = 76B9E91A19FBF04D000EF044 /* PowerUps.m */; };
+		76B9E92019FC18E8000EF044 /* Autocannon.png in Resources */ = {isa = PBXBuildFile; fileRef = 76B9E91E19FC18E8000EF044 /* Autocannon.png */; };
+		76B9E92119FC18E8000EF044 /* Wingman@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 76B9E91F19FC18E8000EF044 /* Wingman@2x.png */; };
 		76C1929F19FAA628004646D2 /* Explosion.wav in Resources */ = {isa = PBXBuildFile; fileRef = 76C1929E19FAA628004646D2 /* Explosion.wav */; };
 		76C192A119FAA63C004646D2 /* Engine-Audio.wav in Resources */ = {isa = PBXBuildFile; fileRef = 76C192A019FAA63C004646D2 /* Engine-Audio.wav */; };
 		76C6F15419A2CCB100B37331 /* Level-1@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 76C6F15319A2CCB100B37331 /* Level-1@2x.png */; };
@@ -171,8 +174,8 @@
 		760C23C319DC832C00D34429 /* L1-AOb-1@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "L1-AOb-1@2x.png"; sourceTree = "<group>"; };
 		760C23C519DC856000D34429 /* L1-AOb-2@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "L1-AOb-2@2x.png"; sourceTree = "<group>"; };
 		760C23C619DC856000D34429 /* L1-AOb-3@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "L1-AOb-3@2x.png"; sourceTree = "<group>"; };
-		76105BCF19E5B3D400A3F242 /* PowerUps.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PowerUps.h; sourceTree = "<group>"; };
-		76105BD019E5B3D400A3F242 /* PowerUps.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PowerUps.m; sourceTree = "<group>"; };
+		76105BCF19E5B3D400A3F242 /* Multipliers.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Multipliers.h; sourceTree = "<group>"; };
+		76105BD019E5B3D400A3F242 /* Multipliers.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Multipliers.m; sourceTree = "<group>"; };
 		76105BD519F1DB1300A3F242 /* NWAudioPlayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NWAudioPlayer.h; sourceTree = "<group>"; };
 		76105BD619F1DB1300A3F242 /* NWAudioPlayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NWAudioPlayer.m; sourceTree = "<group>"; };
 		76105BD819F33EE600A3F242 /* Audio_off@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Audio_off@2x.png"; sourceTree = "<group>"; };
@@ -210,6 +213,10 @@
 		76A1B8D9199D973B00EE1491 /* buttonPlay@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "buttonPlay@2x.png"; sourceTree = "<group>"; };
 		76A1B8DB199D974500EE1491 /* buttonPressPlay@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "buttonPressPlay@2x.png"; sourceTree = "<group>"; };
 		76B9E91619FB1BE8000EF044 /* ShipTrail.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = ShipTrail.sks; sourceTree = "<group>"; };
+		76B9E91919FBF04D000EF044 /* PowerUps.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PowerUps.h; sourceTree = "<group>"; };
+		76B9E91A19FBF04D000EF044 /* PowerUps.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PowerUps.m; sourceTree = "<group>"; };
+		76B9E91E19FC18E8000EF044 /* Autocannon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Autocannon.png; sourceTree = "<group>"; };
+		76B9E91F19FC18E8000EF044 /* Wingman@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Wingman@2x.png"; sourceTree = "<group>"; };
 		76C1929E19FAA628004646D2 /* Explosion.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = Explosion.wav; sourceTree = "<group>"; };
 		76C192A019FAA63C004646D2 /* Engine-Audio.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = "Engine-Audio.wav"; sourceTree = "<group>"; };
 		76C6F15319A2CCB100B37331 /* Level-1@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Level-1@2x.png"; sourceTree = "<group>"; };
@@ -364,10 +371,9 @@
 		2DB3525F19997295006BF15C /* Internal Classes */ = {
 			isa = PBXGroup;
 			children = (
+				76B9E91819FBF011000EF044 /* Game Objects */,
 				76105BD519F1DB1300A3F242 /* NWAudioPlayer.h */,
 				76105BD619F1DB1300A3F242 /* NWAudioPlayer.m */,
-				76105BCF19E5B3D400A3F242 /* PowerUps.h */,
-				76105BD019E5B3D400A3F242 /* PowerUps.m */,
 				2DB35260199972CD006BF15C /* GameObjects.h */,
 				2DB35261199972CD006BF15C /* GameObjects.m */,
 				2DB3526919997A98006BF15C /* GameState.h */,
@@ -393,32 +399,15 @@
 		2DB3526D199993DA006BF15C /* Main */ = {
 			isa = PBXGroup;
 			children = (
-				76105BD819F33EE600A3F242 /* Audio_off@2x.png */,
-				76105BD919F33EE600A3F242 /* Audio_press@2x.png */,
-				76105BDA19F33EE600A3F242 /* Audio@2x.png */,
-				7678881819E1C43E009714A1 /* 4xMulti@2x.png */,
-				7678881919E1C43E009714A1 /* 5xMulti@2x.png */,
-				7640AFB619E06F9A00EFD3C5 /* 2xMulti@2x.png */,
-				7640AFB719E06F9A00EFD3C5 /* 3xMulti@2x.png */,
+				76B9E91C19FC1891000EF044 /* Game Objects */,
+				76B9E91D19FC18A8000EF044 /* Buttons */,
 				76876A3D19CC705E00F1C227 /* NovaWingIconSpotlight.png */,
 				76876A3719CC6FCB00F1C227 /* AppIcon-1024.png */,
 				76876A3819CC6FCB00F1C227 /* NovaWingIcon@2x.png */,
 				76876A3919CC6FCB00F1C227 /* NovaWingIcon@3x.png */,
-				76C6F15319A2CCB100B37331 /* Level-1@2x.png */,
-				2DB352A919999D1B006BF15C /* Level-2@2x.png */,
-				764BF9A019A19A11007DABF8 /* arrowL@2x.png */,
-				764BF9A119A19A11007DABF8 /* arrowR@2x.png */,
-				76A1B8DB199D974500EE1491 /* buttonPressPlay@2x.png */,
-				76A1B8D9199D973B00EE1491 /* buttonPlay@2x.png */,
 				2DB352AD1999A0C4006BF15C /* GameOver-BG@2x.png */,
 				2DB3529A199994C0006BF15C /* Title.png */,
 				2DB35298199994B9006BF15C /* Stars-Seamless.jpg */,
-				2DB352701999940A006BF15C /* buttonLeaderboard.png */,
-				2DB352711999940A006BF15C /* buttonPressLeaderboard.png */,
-				2DB352721999940A006BF15C /* buttonPressSettings.png */,
-				2DB352731999940A006BF15C /* buttonPressStart.png */,
-				2DB352741999940A006BF15C /* buttonSettings.png */,
-				2DB352751999940A006BF15C /* buttonStart.png */,
 			);
 			name = Main;
 			sourceTree = "<group>";
@@ -525,6 +514,52 @@
 			name = "Level 1: Event Horizon";
 			sourceTree = "<group>";
 		};
+		76B9E91819FBF011000EF044 /* Game Objects */ = {
+			isa = PBXGroup;
+			children = (
+				76105BCF19E5B3D400A3F242 /* Multipliers.h */,
+				76105BD019E5B3D400A3F242 /* Multipliers.m */,
+				76B9E91919FBF04D000EF044 /* PowerUps.h */,
+				76B9E91A19FBF04D000EF044 /* PowerUps.m */,
+			);
+			name = "Game Objects";
+			sourceTree = "<group>";
+		};
+		76B9E91C19FC1891000EF044 /* Game Objects */ = {
+			isa = PBXGroup;
+			children = (
+				76B9E91E19FC18E8000EF044 /* Autocannon.png */,
+				76B9E91F19FC18E8000EF044 /* Wingman@2x.png */,
+				7678881819E1C43E009714A1 /* 4xMulti@2x.png */,
+				7678881919E1C43E009714A1 /* 5xMulti@2x.png */,
+				7640AFB619E06F9A00EFD3C5 /* 2xMulti@2x.png */,
+				7640AFB719E06F9A00EFD3C5 /* 3xMulti@2x.png */,
+			);
+			name = "Game Objects";
+			sourceTree = "<group>";
+		};
+		76B9E91D19FC18A8000EF044 /* Buttons */ = {
+			isa = PBXGroup;
+			children = (
+				76C6F15319A2CCB100B37331 /* Level-1@2x.png */,
+				2DB352A919999D1B006BF15C /* Level-2@2x.png */,
+				764BF9A019A19A11007DABF8 /* arrowL@2x.png */,
+				764BF9A119A19A11007DABF8 /* arrowR@2x.png */,
+				76A1B8DB199D974500EE1491 /* buttonPressPlay@2x.png */,
+				76A1B8D9199D973B00EE1491 /* buttonPlay@2x.png */,
+				76105BDA19F33EE600A3F242 /* Audio@2x.png */,
+				76105BD919F33EE600A3F242 /* Audio_press@2x.png */,
+				76105BD819F33EE600A3F242 /* Audio_off@2x.png */,
+				2DB352701999940A006BF15C /* buttonLeaderboard.png */,
+				2DB352711999940A006BF15C /* buttonPressLeaderboard.png */,
+				2DB352721999940A006BF15C /* buttonPressSettings.png */,
+				2DB352731999940A006BF15C /* buttonPressStart.png */,
+				2DB352741999940A006BF15C /* buttonSettings.png */,
+				2DB352751999940A006BF15C /* buttonStart.png */,
+			);
+			name = Buttons;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -604,6 +639,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				76B9E92019FC18E8000EF044 /* Autocannon.png in Resources */,
 				76B9E91719FB1BE8000EF044 /* ShipTrail.sks in Resources */,
 				76105BDC19F33EE600A3F242 /* Audio_press@2x.png in Resources */,
 				2DB3528819999445006BF15C /* AOb-3@2x.png in Resources */,
@@ -620,6 +656,7 @@
 				2DB3522719996B83006BF15C /* InfoPlist.strings in Resources */,
 				7678881A19E1C43E009714A1 /* 4xMulti@2x.png in Resources */,
 				764BF9A719A2BC04007DABF8 /* Nova-L1@2x.png in Resources */,
+				76B9E92119FC18E8000EF044 /* Wingman@2x.png in Resources */,
 				2DB3529419999485006BF15C /* Level-1-Sky@2x.png in Resources */,
 				2DB3529319999485006BF15C /* Level-1-Mid@2x.png in Resources */,
 				76876A3E19CC705E00F1C227 /* NovaWingIconSpotlight.png in Resources */,
@@ -684,6 +721,7 @@
 			files = (
 				2DB3525E19996D6D006BF15C /* PBParallaxScrolling.m in Sources */,
 				2DB3523619996B83006BF15C /* MainMenu.m in Sources */,
+				76B9E91B19FBF04D000EF044 /* PowerUps.m in Sources */,
 				2DB3526819997A32006BF15C /* GameOver.m in Sources */,
 				2DB3523319996B83006BF15C /* ViewController.m in Sources */,
 				2DB35262199972CD006BF15C /* GameObjects.m in Sources */,
@@ -693,7 +731,7 @@
 				765DF29519A9293D00FBFB16 /* NORLabelNode.m in Sources */,
 				2DB3522D19996B83006BF15C /* AppDelegate.m in Sources */,
 				764BF94D199EBC3F007DABF8 /* KeychainWrapper.m in Sources */,
-				76105BD119E5B3D400A3F242 /* PowerUps.m in Sources */,
+				76105BD119E5B3D400A3F242 /* Multipliers.m in Sources */,
 				2DB3522919996B83006BF15C /* main.m in Sources */,
 				2D4C0B9A19A6D29B00AD0717 /* Ships.m in Sources */,
 				2DB3525A19996CC1006BF15C /* LevelTwo.m in Sources */,
