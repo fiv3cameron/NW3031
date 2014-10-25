@@ -30,3 +30,6 @@ SKSpriteNode *storyBadge;
 bool storymodeL1;
 bool levelComplete;
 SKSpriteNode *bottom;
+AVAudioPlayer *Engine;
+AVAudioPlayer *Explosion;
+SKEmitterNode *trail;
