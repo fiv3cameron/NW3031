@@ -40,10 +40,7 @@
 }
 
 -(SKShapeNode *)createFlash {
-    SKColor *blueFlash = [SKColor colorWithRed:0.5 green:0.8 blue:1 alpha:1];
-    SKColor *greenFlash = [SKColor colorWithRed:0.1 green:1 blue:0.7 alpha:1];
-    SKColor *purpleFlash = [SKColor colorWithRed:1 green:0 blue:0.7 alpha:1];
-    SKColor *yellowFlash = [SKColor colorWithRed:1 green:1 blue:0 alpha:1];
+    [self initColors];
     
     SKShapeNode *flash = [SKShapeNode node];
     flash.alpha = 0;
@@ -51,22 +48,79 @@
     
     switch ([GameState sharedGameData].scoreMultiplier) {
         case 1:
-            flash.fillColor = blueFlash;
+            flash.fillColor = NWBlue;
             break;
         case 2:
-            flash.fillColor = greenFlash;
+            flash.fillColor = NWGreen;
             break;
         case 3:
-            flash.fillColor = purpleFlash;
+            flash.fillColor = NWPurple;
             break;
         case 4:
-            flash.fillColor = yellowFlash;
+            flash.fillColor = NWYellow;
             break;            
         default:
             break;
     }
 
     return flash;
+}
+
+-(void)initColors {
+    NWBlue = [SKColor colorWithRed:0.5 green:0.8 blue:1 alpha:1];
+    NWGreen = [SKColor colorWithRed:0.1 green:1 blue:0.7 alpha:1];
+    NWPurple = [SKColor colorWithRed:1 green:0 blue:0.7 alpha:1];
+    NWYellow = [SKColor colorWithRed:1 green:1 blue:0 alpha:1];
+}
+
+-(SKEmitterNode *)createShipTrail {
+    [self initColors];
+    
+    SKEmitterNode *shipTrail = [[SKEmitterNode alloc] init];
+    [shipTrail setParticleTexture: [SKTexture textureWithImageNamed:@"spark.png"]];
+    [shipTrail setNumParticlesToEmit:0];
+    [shipTrail setParticleBirthRate:80];
+    [shipTrail setParticleLifetime:2.5];
+    [shipTrail setParticlePositionRange:CGVectorMake(0.0, 8.0)];
+    [shipTrail setEmissionAngle:185];
+    [shipTrail setEmissionAngleRange:0];
+    [shipTrail setParticleSpeed:100];
+    [shipTrail setParticleSpeedRange:50];
+    [shipTrail setXAcceleration:-500];
+    [shipTrail setYAcceleration:0];
+    [shipTrail setParticleAlpha:0.8];
+    [shipTrail setParticleAlphaRange:0.2];
+    [shipTrail setParticleAlphaSpeed:-0.5];
+    [shipTrail setParticleScale:0.3];
+    [shipTrail setParticleScaleRange:0.4];
+    [shipTrail setParticleScaleSpeed:-0.2];
+    [shipTrail setParticleRotation:0];
+    [shipTrail setParticleRotationRange:0];
+    [shipTrail setParticleRotationSpeed:0];
+    
+    switch ([GameState sharedGameData].scoreMultiplier) {
+        case 1:
+            [shipTrail setParticleColor: NWBlue];
+            break;
+        case 2:
+            [shipTrail setParticleColor: NWGreen];
+            break;
+        case 3:
+            [shipTrail setParticleColor: NWPurple];
+            break;
+        case 4:
+            [shipTrail setParticleColor: NWYellow];
+            break;
+        default:
+            break;
+    }
+    
+    [shipTrail setParticleColorBlendFactor:1];
+    [shipTrail setParticleColorBlendFactorRange:0];
+    [shipTrail setParticleColorBlendFactorSpeed:0];
+    [shipTrail setParticleBlendMode:SKBlendModeAdd];
+    
+    return shipTrail;
 }
 
 -(void)popActionWithNode: (SKNode *)node {

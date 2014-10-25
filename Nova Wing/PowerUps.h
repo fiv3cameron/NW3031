@@ -14,6 +14,13 @@
 -(SKSpriteNode *)createMultiplier;
 -(SKShapeNode *)createFlash;
 -(SKSpriteNode *)createPup;
+-(SKEmitterNode *)createShipTrail;
 -(void)popActionWithNode: (SKNode *)node;
 
+
 @end
+
+SKColor *NWBlue;
+SKColor *NWGreen;
+SKColor *NWPurple;
+SKColor *NWYellow;

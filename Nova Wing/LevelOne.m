@@ -438,12 +438,20 @@ NSTimer *multiTimer;
 }
 
 -(void)scoreMulti {
+    [trail removeFromParent];
     
     SKShapeNode *flash = [[PowerUps alloc] createFlash];
     flash.path = [UIBezierPath bezierPathWithRect: CGRectMake(0, 0, self.size.width, self.size.height)].CGPath;
     flash.position = CGPointMake(0, 0);
     [self addChild:flash];
     [[PowerUps alloc] popActionWithNode:flash];
+    
+    trail = [[PowerUps alloc] createShipTrail];
+    trail.position = CGPointMake(-30, 8);
+    trail.zPosition = 1;
+    trail.targetNode = self.scene;
+    trail.name = @"particleTrail";
+    [_player addChild:trail];
     
     switch ([GameState sharedGameData].scoreMultiplier) {
         case 1:
@@ -619,7 +627,7 @@ NSTimer *multiTimer;
 
 -(void)gameOver {
     [GameState sharedGameData].highScoreL1 = MAX([GameState sharedGameData].score, [GameState sharedGameData].highScoreL1);
-    
+    [_player removeAllChildren];
     SKView *gameOverView = (SKView *)self.view;
     
     SKScene *gameOverScene = [[GameOverL1 alloc] initWithSize:gameOverView.bounds.size];
