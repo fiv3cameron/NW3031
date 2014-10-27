@@ -501,14 +501,14 @@ NSTimeInterval _dt;
 
     }
 
-    //Level 1 Select
+#pragma mark --Level 1
     if ([nodeLift.name isEqualToString:@"_level1"]) {
         // Transition to Level One Scene
         // Configure the developer view.
         SKView * levelOneView = (SKView *)self.view;
         levelOneView.showsFPS = YES;
         levelOneView.showsNodeCount = YES;
-        //levelOneView.showsPhysics = YES;
+        levelOneView.showsPhysics = YES;
         
         // Create and configure the scene.
         SKScene * levelOneScene = [[LevelOne alloc] initWithSize:levelOneView.bounds.size];
@@ -519,7 +519,7 @@ NSTimeInterval _dt;
         [levelOneView presentScene:levelOneScene transition:levelOneTrans];
     }
     
-    //Level 2 Select
+#pragma mark --Level 2
     if ([nodeLift.name isEqualToString:@"_level2"]) {
         // Transition to Level One Scene
         // Configure the developer view.
