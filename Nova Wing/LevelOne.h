@@ -18,9 +18,8 @@
 
     -(void)scoreAdd;
 
-
-
 @end
+
 
 
 SKSpriteNode *blackHole;

@@ -24,6 +24,7 @@ typedef NS_OPTIONS(uint32_t, CollisionCategory) {
 {
     SKNode *_player;
     SKNode *playerNode;
+    pupType powerUp;
     
 }
 @end
@@ -104,7 +105,7 @@ NSTimer *pupTimer;
     playerNode = [[Ships alloc] createAnyShipFromParent:tempPlayerNode withImageNamed:@"Nova-L1"];
     playerNode.physicsBody.categoryBitMask = CollisionCategoryPlayer;
     playerNode.physicsBody.collisionBitMask = 0;
-    playerNode.physicsBody.contactTestBitMask = CollisionCategoryBottom | CollisionCategoryObject | CollisionCategoryScore;
+    playerNode.physicsBody.contactTestBitMask = CollisionCategoryBottom | CollisionCategoryObject | CollisionCategoryScore | CollisionCategoryPup;
     
     // Keeps player ship on top of all other objects(unless other objects are assigned greater z position
     playerNode.zPosition = 100.0f;
@@ -536,6 +537,8 @@ NSTimer *pupTimer;
     }
 }
 
+#pragma mark --Power Ups
+
 -(void)createMultiplier {
     int tempRand = arc4random()%80;
     double randYPosition = (tempRand+10)/100.0;
@@ -562,9 +565,10 @@ NSTimer *pupTimer;
     int tempRand = arc4random()%80;
     double randYPos = (tempRand + 10) / 100.0;
     
-    SKSpriteNode *Pup = [[PowerUps alloc] createPups];
+    powerUp = [[PowerUps alloc] powerUpTypes];
+    SKSpriteNode *Pup = [[PowerUps alloc] createPupsWithType:powerUp];
     Pup.position = CGPointMake(self.size.width + Pup.size.width, self.size.height * randYPos);
-    Pup.physicsBody = [SKPhysicsBody bodyWithCircleOfRadius: Pup.size.width];
+    Pup.physicsBody = [SKPhysicsBody bodyWithCircleOfRadius: Pup.size.width * .3];
     Pup.physicsBody.categoryBitMask = CollisionCategoryPup;
     Pup.physicsBody.dynamic = NO;
     Pup.physicsBody.collisionBitMask = 0;
@@ -573,6 +577,42 @@ NSTimer *pupTimer;
     
     [self addChild:Pup];
     [self moveAerialNode:Pup allowsRotation:NO];
+}
+
+-(void)checkPup {
+    
+    switch (powerUp) {
+        case Wing_man:
+            [self createPupTitleWithText:@"Wingman!"];
+            break;
+        case Over_shield:
+            [self createPupTitleWithText:@"Overshield!"];
+            break;
+        case Auto_Cannon:
+            [self createPupTitleWithText:@"Auto Cannon!"];
+            break;
+        default:
+            break;
+    }
+    [[self childNodeWithName:@"PowerUp"] removeFromParent];
+}
+
+-(void)createPupTitleWithText: (NSString *)title {
+    SKLabelNode *pupText = [SKLabelNode labelNodeWithFontNamed:@"SF Movie Poster"];
+    pupText.position = CGPointMake(self.size.width / 2, self.size.height * 0.75);
+    pupText.fontColor = [SKColor whiteColor];
+    pupText.fontSize = 45;
+    pupText.zPosition = 101;
+    pupText.text = title;
+    
+    [self addChild:pupText];
+    
+    SKAction *scale = [SKAction scaleBy:2 duration:1];
+    SKAction *moveUp = [SKAction moveBy:CGVectorMake(0,50) duration:1];
+    SKAction *fade = [SKAction fadeAlphaTo:0 duration:1];
+    
+    SKAction *group = [SKAction group:@[scale,moveUp,fade]];
+    [pupText runAction:group];
 }
 
 
@@ -591,15 +631,11 @@ NSTimer *pupTimer;
         [self createObstacles];
         [tapPlay removeFromParent];
         objectCreateTimer = [NSTimer scheduledTimerWithTimeInterval:0.45 target:self selector:@selector(createObstacles) userInfo:nil repeats:YES];
-        multiTimer = [NSTimer scheduledTimerWithTimeInterval:2.5 target:self selector:@selector(createMultiplier) userInfo:nil repeats:YES];
+        multiTimer = [NSTimer scheduledTimerWithTimeInterval:2.7 target:self selector:@selector(createMultiplier) userInfo:nil repeats:YES];
         pupTimer = [NSTimer scheduledTimerWithTimeInterval:5 target:self selector:@selector(createPowerUp) userInfo:nil repeats:YES];
     }
     
-    if (_player.position.y > self.size.height - 50)
-    {
-        _player.physicsBody.velocity = CGVectorMake(0.0f, 0.0f);
-    }
-    else _player.physicsBody.velocity = CGVectorMake(0.0f, _player.position.y*1.3);
+    [[Ships alloc] thrustPlayer:_player withHeight:self.size.height];
     
     if (levelComplete == YES) {
         SKView *gameOverView = (SKView *)self.view;
@@ -674,6 +710,10 @@ NSTimer *pupTimer;
     if (contact.bodyA.categoryBitMask == CollisionCategoryPlayer && contact.bodyB.categoryBitMask == CollisionCategoryScore) {
         [self scoreMulti];
         }
+    
+    if (contact.bodyA.categoryBitMask == CollisionCategoryPlayer && contact.bodyB.categoryBitMask == CollisionCategoryPup) {
+        [self checkPup];
+    }
     
 }
 

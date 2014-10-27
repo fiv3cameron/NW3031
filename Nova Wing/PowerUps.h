@@ -9,13 +9,18 @@
 #import <SpriteKit/SpriteKit.h>
 
 typedef NS_ENUM(int, pupType) {
-    Wing_man = 1,
+    null_pup,
+    Wing_man,
     Over_shield,
     Auto_Cannon,
 };
 
 @interface PowerUps : NSObject
 
--(SKSpriteNode *)createPups;
+@property (nonatomic, assign) pupType powerUp;
+
+-(SKSpriteNode *)createPupsWithType: (pupType)type;
+-(pupType)powerUpTypes;
+
 
 @end

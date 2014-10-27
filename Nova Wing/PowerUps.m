@@ -10,17 +10,20 @@
 
 @implementation PowerUps
 
--(SKSpriteNode *)createPups {
+
+
+-(SKSpriteNode *)createPupsWithType: (pupType)type {
     SKSpriteNode  *pupTemp = [SKSpriteNode node];
     
-    int randPup = 1;
-    
-    switch (randPup) {
+    switch (type) {
         case Wing_man:
             pupTemp = [SKSpriteNode spriteNodeWithImageNamed:@"Wingman"];
-            pupType = Wing_man;
             break;
-            
+        case Over_shield:
+            pupTemp = [SKSpriteNode spriteNodeWithImageNamed:@"Overshield"];
+            break;
+        case Auto_Cannon:
+            pupTemp = [SKSpriteNode spriteNodeWithImageNamed:@"Autocannon"];
         default:
             break;
     }
@@ -30,5 +33,23 @@
     
 }
 
+-(pupType)powerUpTypes {
+    int randPup = (arc4random()% 3) + 1;
+
+    switch (randPup) {
+        case Wing_man:
+            _powerUp = Wing_man;
+            break;
+        case Over_shield:
+            _powerUp = Over_shield;
+            break;
+        case Auto_Cannon:
+            _powerUp = Auto_Cannon;
+        default:
+            break;
+    }
+    
+    return _powerUp;
+}
 
 @end
