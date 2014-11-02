@@ -2,7 +2,7 @@
 //  levelTwo.m
 //  Nova Wing
 //
-//  Created by Bryan Todd on 8/11/14.
+//  Created by Bryan Frank on 8/11/14.
 //  Copyright (c) 2014 FIV3 Interactive, LLC. All rights reserved.
 //
 
@@ -46,6 +46,7 @@ NSTimeInterval _dt;
 SKLabelNode* _score;
 NSTimer *scoreUpdate;
 NSTimer *pillarCreateTimer;
+NSTimer *aerialCreateTimer;
 
 #pragma mark --Create Background
 
@@ -139,7 +140,7 @@ NSTimer *pillarCreateTimer;
     SKSpriteNode *pillar = [SKSpriteNode spriteNodeWithImageNamed:@"Pillar-1"];
     pillar.name = @"pillar";
     pillar.physicsBody = [SKPhysicsBody bodyWithRectangleOfSize: pillar.size];
-    
+
     [self createPillarWith: pillar];
     [self addChild:pillar];
     [self movePillar:pillar];
@@ -149,7 +150,7 @@ NSTimer *pillarCreateTimer;
     SKSpriteNode *pillar = [SKSpriteNode spriteNodeWithImageNamed:@"Pillar-2"];
     pillar.name = @"pillar";
     pillar.physicsBody = [SKPhysicsBody bodyWithRectangleOfSize: pillar.size];
-    
+
     [self createPillarWith: pillar];
     [self addChild:pillar];
     [self movePillar:pillar];
@@ -157,15 +158,14 @@ NSTimer *pillarCreateTimer;
 
 -(void)geyserPillar {
     SKSpriteNode *pillar = [SKSpriteNode spriteNodeWithImageNamed:@"Pillar-3"];
-    pillar.anchorPoint = CGPointZero;
-    pillar.position = CGPointMake(1.5 * self.size.width, 10);
+    //pillar.anchorPoint = CGPointZero;
+    //pillar.position = CGPointMake(1.5 * self.size.width, 10);
     pillar.name = @"pillar";
-    pillar.physicsBody = [SKPhysicsBody bodyWithRectangleOfSize: pillar.size center:CGPointMake(pillar.size.width / 2, pillar.size.height / 2)];
-    pillar.physicsBody.dynamic = NO;
-    pillar.physicsBody.allowsRotation = NO;
-    pillar.physicsBody.collisionBitMask = CollisionCategoryObject;
-    pillar.physicsBody.contactTestBitMask = 0;
+    pillar.physicsBody = [SKPhysicsBody bodyWithRectangleOfSize: pillar.size /*center:CGPointMake(pillar.size.width / 2, pillar.size.height / 2)*/];
+    //pillar.physicsBody.dynamic = NO;
+    //pillar.physicsBody.allowsRotation = NO;
     
+    [self createPillarWith:pillar];
     [self addChild:pillar];
     [self movePillar:pillar];
 }
@@ -181,13 +181,13 @@ NSTimer *pillarCreateTimer;
 }
 
 -(void)createPillarWith: (SKSpriteNode *)pillar {
-    int pillarPosMod = arc4random()%200;
+    int pillarPosMod = arc4random()%150;
     pillar.position = CGPointMake(1.5 * self.size.width, (-pillar.size.height / 5) + pillarPosMod);
     
     pillar.physicsBody.dynamic = NO;
     pillar.physicsBody.allowsRotation = NO;
-    pillar.physicsBody.collisionBitMask = CollisionCategoryObject;
-    pillar.physicsBody.contactTestBitMask = 0;
+    pillar.physicsBody.categoryBitMask = CollisionCategoryObject;
+    pillar.physicsBody.collisionBitMask = 0;
 }
 
 -(void) createAerial{
@@ -201,18 +201,21 @@ NSTimer *pillarCreateTimer;
             [self createAObj1];
             break;
         case 4:
+            break;
         case 5:
         case 6:
-            [self createAObj1];
+            [self createAObj2];
             break;
         case 7:
+            break;
         case 8:
         case 9:
-            [self createAObj1];
+            [self createAObj3];
             break;
         case 10:
             break;
         case 11:
+            break;
         case 12:
             [self createAObj1];
             break;
@@ -223,22 +226,54 @@ NSTimer *pillarCreateTimer;
 
 -(void) createAObj1 {
     SKSpriteNode *aerial = [SKSpriteNode spriteNodeWithImageNamed:@"AOb-1"];
-    aerial.name = @"aerial";
-    aerial.physicsBody = [SKPhysicsBody bodyWithCircleOfRadius:(aerial.size.width+aerial.size.height)/4];
-    aerial.physicsBody.dynamic = NO;
-    aerial.physicsBody.allowsRotation = YES;
-    aerial.position = CGPointMake(0.5*self.size.width, 0.85*self.size.height);
-    [self addChild:aerial];
+    aerial.physicsBody = [SKPhysicsBody bodyWithCircleOfRadius: (aerial.size.width + aerial.size.height) / 4];
+    aerial.xScale = 0.5;
+    aerial.yScale = 0.5;
     
+    [self aerialProperties: aerial];
+    [self addChild: aerial];
     [self moveAerial: aerial];
 }
 
 -(void) createAObj2 {
+    SKSpriteNode *aerial = [SKSpriteNode spriteNodeWithImageNamed:@"AOb-2"];
+    aerial.physicsBody = [SKPhysicsBody bodyWithCircleOfRadius: (aerial.size.width + aerial.size.height) / 4];
+    aerial.xScale = 0.5;
+    aerial.yScale = 0.5;
     
+    [self aerialProperties: aerial];
+    [self addChild: aerial];
+    [self moveAerial: aerial];
 }
 
 -(void) createAObj3 {
+    SKSpriteNode *aerial = [SKSpriteNode spriteNodeWithImageNamed:@"AOb-3"];
+    aerial.physicsBody = [SKPhysicsBody bodyWithCircleOfRadius: (aerial.size.width + aerial.size.height) / 4];
+    aerial.xScale = 0.5;
+    aerial.yScale = 0.5;
     
+    [self aerialProperties: aerial];
+    [self addChild: aerial];
+    [self moveAerial: aerial];
+}
+
+-(void)aerialProperties: (SKSpriteNode *)aerial {
+    //Common
+    aerial.name = @"aerial";
+    aerial.physicsBody.dynamic = NO;
+    aerial.physicsBody.allowsRotation = YES;
+    int tempRotate = arc4random()%100;
+    double angularPosInit = tempRotate*3.14159*2.0/100.0;
+    aerial.zRotation = angularPosInit;
+    
+    //Collision Properties
+    aerial.physicsBody.categoryBitMask = CollisionCategoryObject;
+    aerial.physicsBody.collisionBitMask = 0;
+    
+    //Random height.
+    int tempRandHeight = arc4random() % 100;
+    double RandHeight = (tempRandHeight - 50.0) / 100.0 * 0.2 * self.size.height;
+    aerial.position = CGPointMake(self.size.width * 1.5, 0.85 * self.size.height + RandHeight);
 }
 
 -(void) createFloor
@@ -268,7 +303,6 @@ NSTimer *pillarCreateTimer;
     tapPlay.fontColor = [SKColor whiteColor];
     tapPlay.position = CGPointMake(self.size.width/2, self.size.height / 3);
     tapPlay.text = @"Tap the screen to play!";
-    
     [self addChild:tapPlay];
 }
 
@@ -287,25 +321,6 @@ NSTimer *pillarCreateTimer;
             floorNode.position = CGPointMake(floorNode.position.x + floorNode.size.width*2, floorNode.position.y);
         }
     }];
-    
-    /*[self enumerateChildNodesWithName:@"pillar" usingBlock:^(SKNode *node, BOOL *stop) {
-        if (node.position.x < -node.frame.size.width) {
-            [node removeFromParent];
-            int randNewPillar = ceil((arc4random_uniform(3) + 1));
-            SKSpriteNode *newPillar = (SKSpriteNode *)node;
-            newPillar = [[Obstacles alloc] createObstacleWithNode:newPillar withName:@"pillar" withImage:[NSString stringWithFormat:@"Pillar-%i",randNewPillar]];
-            newPillar = [[Obstacles alloc] createPillarPhysicsBody:newPillar withIdentifier:randNewPillar];
-            int heightInt = ceil(newPillar.frame.size.height*3/4) - ceil(newPillar.frame.size.height/4);
-            float randHeight = (arc4random()%heightInt) - newPillar.frame.size.height/4;
-            newPillar.position = CGPointMake(self.size.width*1.5-node.frame.size.width, randHeight);
-            [self addChild:newPillar];
-        } else {
-            SKSpriteNode *pillar = (SKSpriteNode *)node;
-            CGPoint pillarvelocity = CGPointMake(FG_VELOCITY, 0);
-            CGPoint pillarmovement = CGPointMultiplyScalar(pillarvelocity, _dt);
-            pillar.position = CGPointAdd(pillar.position, pillarmovement);
-        }
-    }];*/
 }
 
 -(void) movePillar: (SKSpriteNode *)pillarNode
@@ -319,15 +334,19 @@ NSTimer *pillarCreateTimer;
 }
 
 -(void) moveAerial: (SKSpriteNode *)aerialNode {
-    SKAction *animateLeft = [SKAction moveToX:-0.2*self.size.width duration:2.7];
+    SKAction *animateLeft = [SKAction moveToX:-0.5*self.size.width duration:1.5];
     SKAction *remove = [SKAction removeFromParent];
-    SKAction *nextAerial = [SKAction runBlock:^{
-        [self createAerial];
-    }];
-    SKAction *aerialSqnce = [SKAction sequence:@[animateLeft, remove, nextAerial]];
+    
+    //Random rotate calcs.
+    int tempRotate = arc4random()%100;
+    double angularRotation = tempRotate*3.14159*2.0/100.0;
+    
+    SKAction *rotate = [SKAction rotateByAngle:angularRotation duration:1.5];
+    
+    SKAction *aerialGroup = [SKAction group: @[animateLeft, rotate]];
+    SKAction *aerialSqnce = [SKAction sequence: @[aerialGroup,remove]];
     
     [aerialNode runAction:aerialSqnce];
-    
 }
 
 #pragma mark --Create Audio
@@ -353,6 +372,12 @@ NSTimer *pillarCreateTimer;
     _score.text = [NSString stringWithFormat:@"Score: %li", [GameState sharedGameData].score];
 }
 
+-(void)timerInvalidate {
+    [scoreUpdate invalidate];
+    [pillarCreateTimer invalidate];
+    [aerialCreateTimer invalidate];
+}
+
 #pragma mark --User Interface
 
 -(void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
@@ -364,7 +389,7 @@ NSTimer *pillarCreateTimer;
         [self addChild:_score];
         scoreUpdate = [NSTimer scheduledTimerWithTimeInterval:0.1 target:self selector:@selector(scoreAdd) userInfo:nil repeats:YES];
         pillarCreateTimer = [NSTimer scheduledTimerWithTimeInterval:0.8 target:self selector:@selector(anyPillarCreate) userInfo:nil repeats:YES];
-        [self createAerial];
+        aerialCreateTimer = [NSTimer scheduledTimerWithTimeInterval:0.75 target:self selector:@selector(createAerial) userInfo:nil repeats:YES];
     }
     
     if (_player.position.y > self.size.height - 50)
@@ -398,20 +423,24 @@ NSTimer *pillarCreateTimer;
     
 }
 
+-(void)gameOver {
+    
+}
+
 -(void)didBeginContact:(SKPhysicsContact *)contact
 {
-    [scoreUpdate invalidate];
-    [pillarCreateTimer invalidate];
-    [GameState sharedGameData].highScoreL2 = MAX([GameState sharedGameData].score, [GameState sharedGameData].highScoreL2);
-    
-    SKView *gameOverView = (SKView *)self.view;
-    
-    SKScene *gameOverScene = [[GameOver alloc] initWithSize:gameOverView.bounds.size];
-    
-    SKColor *fadeColor = [SKColor colorWithRed:1 green:1 blue:1 alpha:1];
-    SKTransition *gameOverTransition = [SKTransition fadeWithColor:fadeColor duration:.25];
-    [gameOverView presentScene:gameOverScene transition:gameOverTransition];
-    
+    if (contact.bodyA.categoryBitMask == CollisionCategoryPlayer && contact.bodyB.categoryBitMask == CollisionCategoryObject) {
+        [self timerInvalidate];
+        [GameState sharedGameData].highScoreL2 = MAX([GameState sharedGameData].score, [GameState sharedGameData].highScoreL2);
+        
+        SKView *gameOverView = (SKView *)self.view;
+        
+        SKScene *gameOverScene = [[GameOver alloc] initWithSize:gameOverView.bounds.size];
+        
+        SKColor *fadeColor = [SKColor colorWithRed:1 green:1 blue:1 alpha:1];
+        SKTransition *gameOverTransition = [SKTransition fadeWithColor:fadeColor duration:.25];
+        [gameOverView presentScene:gameOverScene transition:gameOverTransition];
+    }
 }
 
 
