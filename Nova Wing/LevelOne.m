@@ -60,7 +60,7 @@ NSTimer *pupTimer;
         stars.position = CGPointMake(self.size.width, self.size.height / 2);
         
         //Pre emits particles so layer is populated when scene begins
-        [stars advanceSimulationTime:1.1];
+        [stars advanceSimulationTime:1.5];
         
         _player = [self createPlayerNode];
         
