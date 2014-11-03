@@ -10,14 +10,13 @@
 
 @implementation Ships
 
--(SKNode *)createAnyShipFromParent: (SKNode *)parentNode withImageNamed: (NSString *) imageName
+-(Ships *)initWithImageNamed: (NSString *)imageName
 {
-    SKSpriteNode *ship = [SKSpriteNode spriteNodeWithImageNamed:imageName];
+    self = [super initWithImageNamed:imageName];
 
-    
     // Adds more accurate physics body for ship collisions
-    CGFloat offsetX = (ship.frame.size.width * 1.2) * ship.anchorPoint.x;
-    CGFloat offsetY = (ship.frame.size.height * 1.2) * ship.anchorPoint.y;
+    CGFloat offsetX = (self.frame.size.width * 1.2) * self.anchorPoint.x;
+    CGFloat offsetY = (self.frame.size.height * 1.2) * self.anchorPoint.y;
     
     CGMutablePathRef path = CGPathCreateMutable();
     
@@ -30,20 +29,21 @@
     
     CGPathCloseSubpath(path);
     
+    self.physicsBody = [SKPhysicsBody bodyWithPolygonFromPath:path];
+    
+    CGPathRelease(path);
+    
+    self.physicsBody.dynamic = NO;
+    self.physicsBody.restitution = 0.0f;
+    self.physicsBody.friction = 0.0f;
+    self.physicsBody.linearDamping = 1.0f;
+    self.physicsBody.allowsRotation = NO;
+    self.physicsBody.usesPreciseCollisionDetection = YES;
+    
+    // Keeps player ship on top of all other objects(unless other objects are assigned greater z position
+    self.zPosition = 100.0f;
 
-    [parentNode addChild:ship];
-    
-    parentNode.physicsBody = [SKPhysicsBody bodyWithPolygonFromPath:path];
-    parentNode.physicsBody.dynamic = NO;
-    parentNode.physicsBody.restitution = 0.0f;
-    parentNode.physicsBody.friction = 0.0f;
-    parentNode.physicsBody.linearDamping = 1.0f;
-    parentNode.physicsBody.allowsRotation = NO;
-    parentNode.physicsBody.usesPreciseCollisionDetection = YES;
-    
-
-    
-    return parentNode;
+    return self;
 }
 
 -(void)rotateNodeUpwards: (SKNode *)nodeRotate {
@@ -71,11 +71,11 @@
 }
 
 -(void)thrustPlayer:(SKNode *)player withHeight:(float)levelHeight {
-    if (player.position.y > levelHeight - 50)
+    if (self.position.y > levelHeight - 50)
     {
-        player.physicsBody.velocity = CGVectorMake(0.0f, 0.0f);
+        self.physicsBody.velocity = CGVectorMake(0.0f, 0.0f);
     }
-    else player.physicsBody.velocity = CGVectorMake(0.0f, player.position.y*1.3);
+    else self.physicsBody.velocity = CGVectorMake(0.0f, self.position.y*1.3);
     
 }
 

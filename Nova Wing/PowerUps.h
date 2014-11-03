@@ -13,6 +13,7 @@ typedef NS_ENUM(int, pupType) {
     Wing_man,
     Over_shield,
     Auto_Cannon,
+    Tiny_Nova,
 };
 
 @interface PowerUps : NSObject

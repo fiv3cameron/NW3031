@@ -22,8 +22,8 @@ typedef NS_OPTIONS(uint32_t, CollisionCategory) {
 
 @interface LevelOne() <SKPhysicsContactDelegate>
 {
-    SKNode *_player;
-    SKNode *playerNode;
+    Ships *_player;
+    Ships *playerNode;
     pupType powerUp;
     
 }
@@ -71,7 +71,7 @@ NSTimer *pupTimer;
         [self createBlackHole];
         [self bottomCollide];
         [self addChild:_player];
-        [[Ships alloc] shipBobbing:_player];
+        [playerNode shipBobbing:_player];
         [self createScoreNode];
         //[self scoreTrack];
         if (storymodeL1 == YES) {
@@ -97,18 +97,13 @@ NSTimer *pupTimer;
 
 #pragma mark --Create Elements
 
--(SKNode *) createPlayerNode
+-(Ships *) createPlayerNode
 {
-    SKNode *tempPlayerNode = [SKNode node];
-    [tempPlayerNode setPosition:CGPointMake(self.frame.size.width/5, self.frame.size.height/2)];
-    
-    playerNode = [[Ships alloc] createAnyShipFromParent:tempPlayerNode withImageNamed:@"Nova-L1"];
+    playerNode = [[Ships alloc] initWithImageNamed:@"Nova-L1"];
+    playerNode.position = CGPointMake(self.frame.size.width/5, self.frame.size.height/2);
     playerNode.physicsBody.categoryBitMask = CollisionCategoryPlayer;
     playerNode.physicsBody.collisionBitMask = 0;
     playerNode.physicsBody.contactTestBitMask = CollisionCategoryBottom | CollisionCategoryObject | CollisionCategoryScore | CollisionCategoryPup;
-    
-    // Keeps player ship on top of all other objects(unless other objects are assigned greater z position
-    playerNode.zPosition = 100.0f;
     
     return playerNode;
 }
@@ -635,7 +630,7 @@ NSTimer *pupTimer;
         pupTimer = [NSTimer scheduledTimerWithTimeInterval:5 target:self selector:@selector(createPowerUp) userInfo:nil repeats:YES];
     }
     
-    [[Ships alloc] thrustPlayer:_player withHeight:self.size.height];
+    [playerNode thrustPlayer:_player withHeight:self.size.height];
     
     if (levelComplete == YES) {
         SKView *gameOverView = (SKView *)self.view;
@@ -647,7 +642,7 @@ NSTimer *pupTimer;
         [gameOverView presentScene:gameOverScene transition:gameOverTransition];
     }
     [_player removeActionForKey:@"bobbingAction"];
-    [[Ships alloc] rotateNodeUpwards:_player];
+    [playerNode rotateNodeUpwards:_player];
 }
 
 -(void)update:(NSTimeInterval)currentTime {
@@ -664,7 +659,7 @@ NSTimer *pupTimer;
     blackHole.zRotation = blackHole.zRotation + .01;
     
     if (_player.physicsBody.velocity.dy < 0) {
-        [[Ships alloc] rotateNodeDownwards:_player];
+        [playerNode rotateNodeDownwards:_player];
     }
     
     if ([self childNodeWithName:@"aerial"].position.x < _player.position.x && [self childNodeWithName:@"aerial"].position.x > 1)

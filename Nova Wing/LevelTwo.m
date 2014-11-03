@@ -88,7 +88,7 @@ NSTimer *pillarCreateTimer;
     SKNode *tempPlayerNode = [SKNode node];
     [tempPlayerNode setPosition:CGPointMake(self.frame.size.width/5, self.frame.size.height/2)];
     
-    playerNode = [[Ships alloc] createAnyShipFromParent:tempPlayerNode withImageNamed:@"Nova-L2"];
+    //playerNode = [[Ships alloc] createAnyShipFromParent:tempPlayerNode withImageNamed:@"Nova-L2"];
 
     playerNode.physicsBody.categoryBitMask = CollisionCategoryPlayer;
     playerNode.physicsBody.collisionBitMask = CollisionCategoryObject;
