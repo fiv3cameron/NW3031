@@ -8,9 +8,9 @@
 
 #import <SpriteKit/SpriteKit.h>
 
-@interface Ships : SKNode
+@interface Ships : SKSpriteNode
 
--(SKSpriteNode *)createAnyShipFromParent: (SKNode *)parentNode withImageNamed: (NSString *) imageName;
+-(Ships *)initWithImageNamed: (NSString *)imageName;
 -(void)rotateNodeUpwards: (SKNode *)nodeRotate;
 -(void)rotateNodeDownwards: (SKNode *)nodeRotate;
 -(void)shipBobbing: (SKNode *)bobShip;
