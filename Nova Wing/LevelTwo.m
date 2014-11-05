@@ -17,8 +17,8 @@ typedef NS_OPTIONS(uint32_t, CollisionCategory) {
 
 @interface LevelTwo() <SKPhysicsContactDelegate>
 {
-    SKNode *_player;
-    SKNode *playerNode;
+    Ships *_player;
+    Ships *playerNode;
 }
 
 @property (nonatomic, strong) PBParallaxScrolling * parallaxBackground;
@@ -53,6 +53,7 @@ NSTimer *aerialCreateTimer;
 -(id)initWithSize:(CGSize)size andDirection:(PBParallaxBackgroundDirection)direction {
     if (self = [super initWithSize:size]) {
         
+        [GameState sharedGameData].scoreMultiplier = 1;
         self.physicsWorld.gravity = CGVectorMake(0.0f, -5.0f);
         self.physicsWorld.contactDelegate = self;
         self.scaleMode = SKSceneScaleModeAspectFit;
@@ -74,7 +75,7 @@ NSTimer *aerialCreateTimer;
         
         [self createScoreNode];
         [self addChild:_player];
-        [[Ships alloc] shipBobbing:_player];
+        [playerNode shipBobbing:_player];
         [self createFloor];
         [self tapToPlay];
         
@@ -84,19 +85,13 @@ NSTimer *aerialCreateTimer;
 }
 
 
--(SKNode *) createPlayerNode
+-(Ships *) createPlayerNode
 {
-    SKNode *tempPlayerNode = [SKNode node];
-    [tempPlayerNode setPosition:CGPointMake(self.frame.size.width/5, self.frame.size.height/2)];
-    
-    //playerNode = [[Ships alloc] createAnyShipFromParent:tempPlayerNode withImageNamed:@"Nova-L2"];
-
+    playerNode = [[Ships alloc] initWithImageNamed:@"Nova-L1"];
+    playerNode.position = CGPointMake(self.frame.size.width/5, self.frame.size.height/2);
     playerNode.physicsBody.categoryBitMask = CollisionCategoryPlayer;
-    playerNode.physicsBody.collisionBitMask = CollisionCategoryObject;
-    playerNode.physicsBody.contactTestBitMask = CollisionCategoryPlayer | CollisionCategoryObject;
-    
-    // Keeps player ship on top of all other objects(unless other objects are assigned greater z position
-    playerNode.zPosition = 100.0f;
+    playerNode.physicsBody.collisionBitMask = 0;
+    playerNode.physicsBody.contactTestBitMask = CollisionCategoryObject;
     
     return playerNode;
 }
@@ -368,12 +363,30 @@ NSTimer *aerialCreateTimer;
 }
 
 -(void)scoreAdd {
-    [GameState sharedGameData].score = [GameState sharedGameData].score + 1;
+    [GameState sharedGameData].score = [GameState sharedGameData].score + [GameState sharedGameData].scoreMultiplier;
     _score.text = [NSString stringWithFormat:@"Score: %li", [GameState sharedGameData].score];
 }
 
+-(void)scorePlus {
+    SKLabelNode *plusOne = [SKLabelNode labelNodeWithFontNamed:@"SF Movie Poster"];
+    plusOne.position = CGPointMake(25, [self childNodeWithName:@"aerial"].position.y);
+    plusOne.fontColor = [SKColor whiteColor];
+    plusOne.fontSize = 30;
+    plusOne.zPosition = 101;
+    plusOne.text = [NSString stringWithFormat:@"+%i", [GameState sharedGameData].scoreMultiplier];
+    
+    [self addChild:plusOne];
+    
+    SKAction *scale = [SKAction scaleBy:2 duration:1];
+    SKAction *moveUp = [SKAction moveBy:CGVectorMake(0,50) duration:1];
+    SKAction *fade = [SKAction fadeAlphaTo:0 duration:1];
+    
+    SKAction *group = [SKAction group:@[scale,moveUp,fade]];
+    [plusOne runAction:group];
+    
+}
+
 -(void)timerInvalidate {
-    [scoreUpdate invalidate];
     [pillarCreateTimer invalidate];
     [aerialCreateTimer invalidate];
 }
@@ -387,7 +400,6 @@ NSTimer *aerialCreateTimer;
     if (playerNode.physicsBody.dynamic == NO) {
         playerNode.physicsBody.dynamic = YES;
         [self addChild:_score];
-        scoreUpdate = [NSTimer scheduledTimerWithTimeInterval:0.1 target:self selector:@selector(scoreAdd) userInfo:nil repeats:YES];
         pillarCreateTimer = [NSTimer scheduledTimerWithTimeInterval:0.8 target:self selector:@selector(anyPillarCreate) userInfo:nil repeats:YES];
         aerialCreateTimer = [NSTimer scheduledTimerWithTimeInterval:0.75 target:self selector:@selector(createAerial) userInfo:nil repeats:YES];
     }
@@ -418,9 +430,22 @@ NSTimer *aerialCreateTimer;
     [self moveFloor];
     
     if (_player.physicsBody.velocity.dy < 0) {
-        [[Ships alloc] rotateNodeDownwards:_player];
+        [playerNode rotateNodeDownwards:_player];
     }
     
+    if ([self childNodeWithName:@"aerial"].position.x < _player.position.x && [self childNodeWithName:@"aerial"].position.x > 1)
+    {
+        [self scoreAdd];
+        [self scorePlus];
+        [self childNodeWithName:@"aerial"].name = @"aerialClose";
+    }
+    
+    if ([self childNodeWithName:@"pillar"].position.x < _player.position.x && [self childNodeWithName:@"pillar"].position.x > 1)
+    {
+        [self scoreAdd];
+        [self scorePlus];
+        [self childNodeWithName:@"pillar"].name = @"pillarClose";
+    }
 }
 
 -(void)gameOver {
