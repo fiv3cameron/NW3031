@@ -25,6 +25,7 @@ typedef NS_OPTIONS(uint32_t, CollisionCategory) {
     Ships *_player;
     Ships *playerNode;
     pupType powerUp;
+    BOOL activePup;
     
 }
 @end
@@ -37,6 +38,7 @@ SKLabelNode* _score;
 NSTimer *objectCreateTimer;
 NSTimer *multiTimer;
 NSTimer *pupTimer;
+NSTimer *tenSeconds;
 
 
 #pragma mark --CreateBackground
@@ -47,7 +49,7 @@ NSTimer *pupTimer;
         levelComplete = NO;
         storymodeL1 = NO;
         [GameState sharedGameData].scoreMultiplier = 1;
-        
+        activePup = NO;
         
         self.backgroundColor = [SKColor colorWithRed:0 green:0 blue:0 alpha:1];
         
@@ -557,21 +559,24 @@ NSTimer *pupTimer;
 }
 
 -(void)createPowerUp {
-    int tempRand = arc4random()%80;
-    double randYPos = (tempRand + 10) / 100.0;
     
-    powerUp = [[PowerUps alloc] powerUpTypes];
-    SKSpriteNode *Pup = [[PowerUps alloc] createPupsWithType:powerUp];
-    Pup.position = CGPointMake(self.size.width + Pup.size.width, self.size.height * randYPos);
-    Pup.physicsBody = [SKPhysicsBody bodyWithCircleOfRadius: Pup.size.width * .3];
-    Pup.physicsBody.categoryBitMask = CollisionCategoryPup;
-    Pup.physicsBody.dynamic = NO;
-    Pup.physicsBody.collisionBitMask = 0;
-    Pup.name = @"PowerUp";
-    Pup.zPosition = 11;
-    
-    [self addChild:Pup];
-    [self moveAerialNode:Pup allowsRotation:NO];
+    if (!activePup) {
+        int tempRand = arc4random()%80;
+        double randYPos = (tempRand + 10) / 100.0;
+        
+        powerUp = [[PowerUps alloc] powerUpTypes];
+        SKSpriteNode *Pup = [[PowerUps alloc] createPupsWithType:powerUp];
+        Pup.position = CGPointMake(self.size.width + Pup.size.width, self.size.height * randYPos);
+        Pup.physicsBody = [SKPhysicsBody bodyWithCircleOfRadius: Pup.size.width * .3];
+        Pup.physicsBody.categoryBitMask = CollisionCategoryPup;
+        Pup.physicsBody.dynamic = NO;
+        Pup.physicsBody.collisionBitMask = 0;
+        Pup.name = @"PowerUp";
+        Pup.zPosition = 11;
+        
+        [self addChild:Pup];
+        [self moveAerialNode:Pup allowsRotation:NO];
+    }
 }
 
 -(void)checkPup {
@@ -579,12 +584,19 @@ NSTimer *pupTimer;
     switch (powerUp) {
         case Wing_man:
             [self createPupTitleWithText:@"Wingman!"];
+            [self tinyNova];
             break;
         case Over_shield:
             [self createPupTitleWithText:@"Overshield!"];
+            [self tinyNova];
             break;
         case Auto_Cannon:
             [self createPupTitleWithText:@"Auto Cannon!"];
+            [self tinyNova];
+            break;
+        case Tiny_Nova:
+            [self createPupTitleWithText:@"Tiny Nova!"];
+            [self tinyNova];
             break;
         default:
             break;
@@ -610,6 +622,17 @@ NSTimer *pupTimer;
     [pupText runAction:group];
 }
 
+-(void)tinyNova {
+    [[PowerUps alloc] logicTinyNova:_player];
+    tenSeconds = [NSTimer scheduledTimerWithTimeInterval:10 target:self selector:@selector(tinyNovaClose) userInfo:nil repeats:NO];
+    activePup = YES;
+}
+
+-(void)tinyNovaClose {
+    [[PowerUps alloc] closeTinyNova:_player];
+    activePup = NO;
+    [tenSeconds invalidate];
+}
 
 #pragma mark --User Interface
 

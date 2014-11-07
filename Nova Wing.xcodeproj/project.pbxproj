@@ -83,6 +83,7 @@
 		765DF29E19A9298900FBFB16 /* menuMusic.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 765DF29D19A9298900FBFB16 /* menuMusic.m4a */; };
 		7678881A19E1C43E009714A1 /* 4xMulti@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 7678881819E1C43E009714A1 /* 4xMulti@2x.png */; };
 		7678881B19E1C43E009714A1 /* 5xMulti@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 7678881919E1C43E009714A1 /* 5xMulti@2x.png */; };
+		767DE0051A0C72FF00E098DF /* TinyNova@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 767DE0041A0C72FF00E098DF /* TinyNova@2x.png */; };
 		76876A3A19CC6FCB00F1C227 /* AppIcon-1024.png in Resources */ = {isa = PBXBuildFile; fileRef = 76876A3719CC6FCB00F1C227 /* AppIcon-1024.png */; };
 		76876A3B19CC6FCB00F1C227 /* NovaWingIcon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 76876A3819CC6FCB00F1C227 /* NovaWingIcon@2x.png */; };
 		76876A3C19CC6FCB00F1C227 /* NovaWingIcon@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 76876A3919CC6FCB00F1C227 /* NovaWingIcon@3x.png */; };
@@ -207,6 +208,7 @@
 		765DF29D19A9298900FBFB16 /* menuMusic.m4a */ = {isa = PBXFileReference; lastKnownFileType = file; path = menuMusic.m4a; sourceTree = "<group>"; };
 		7678881819E1C43E009714A1 /* 4xMulti@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "4xMulti@2x.png"; sourceTree = "<group>"; };
 		7678881919E1C43E009714A1 /* 5xMulti@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "5xMulti@2x.png"; sourceTree = "<group>"; };
+		767DE0041A0C72FF00E098DF /* TinyNova@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "TinyNova@2x.png"; sourceTree = "<group>"; };
 		76876A3719CC6FCB00F1C227 /* AppIcon-1024.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "AppIcon-1024.png"; sourceTree = "<group>"; };
 		76876A3819CC6FCB00F1C227 /* NovaWingIcon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "NovaWingIcon@2x.png"; sourceTree = "<group>"; };
 		76876A3919CC6FCB00F1C227 /* NovaWingIcon@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "NovaWingIcon@3x.png"; sourceTree = "<group>"; };
@@ -527,6 +529,7 @@
 		76B9E91C19FC1891000EF044 /* Game Objects */ = {
 			isa = PBXGroup;
 			children = (
+				767DE0041A0C72FF00E098DF /* TinyNova@2x.png */,
 				76B9821119FC7A4E00F7E606 /* Autocannon@2x.png */,
 				76B9821219FC7A4E00F7E606 /* Overshield@2x.png */,
 				76B9821319FC7A4E00F7E606 /* Wingman@2x.png */,
@@ -686,6 +689,7 @@
 				765DF29E19A9298900FBFB16 /* menuMusic.m4a in Resources */,
 				7678881B19E1C43E009714A1 /* 5xMulti@2x.png in Resources */,
 				76C192A119FAA63C004646D2 /* Engine-Audio.wav in Resources */,
+				767DE0051A0C72FF00E098DF /* TinyNova@2x.png in Resources */,
 				76B9821519FC7A4E00F7E606 /* Overshield@2x.png in Resources */,
 				76105BDF19F5C65400A3F242 /* L1-AOb-4@2x.png in Resources */,
 				765DF29219A9293100FBFB16 /* Stars-L1.sks in Resources */,
@@ -880,7 +884,7 @@
 				GCC_PREFIX_HEADER = "Nova Wing/Nova Wing-Prefix.pch";
 				INFOPLIST_FILE = "Nova Wing/Nova Wing-Info.plist";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "8f446e39-f7e2-4455-ab7d-291808e916db";
+				PROVISIONING_PROFILE = "caebdb30-8003-4d5f-88f1-9bb57a6cc772";
 				SPRITEKIT_TEXTURE_ATLAS_OUTPUT = YES;
 				WRAPPER_EXTENSION = app;
 			};
@@ -896,7 +900,7 @@
 				GCC_PREFIX_HEADER = "Nova Wing/Nova Wing-Prefix.pch";
 				INFOPLIST_FILE = "Nova Wing/Nova Wing-Info.plist";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "8f446e39-f7e2-4455-ab7d-291808e916db";
+				PROVISIONING_PROFILE = "caebdb30-8003-4d5f-88f1-9bb57a6cc772";
 				SPRITEKIT_TEXTURE_ATLAS_OUTPUT = YES;
 				WRAPPER_EXTENSION = app;
 			};

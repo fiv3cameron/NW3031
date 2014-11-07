@@ -22,6 +22,8 @@ typedef NS_ENUM(int, pupType) {
 
 -(SKSpriteNode *)createPupsWithType: (pupType)type;
 -(pupType)powerUpTypes;
+-(void)logicTinyNova: (SKSpriteNode *)player;
+-(void)closeTinyNova: (SKSpriteNode *)player;
 
 
 @end

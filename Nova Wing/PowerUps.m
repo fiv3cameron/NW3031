@@ -24,6 +24,9 @@
             break;
         case Auto_Cannon:
             pupTemp = [SKSpriteNode spriteNodeWithImageNamed:@"Autocannon"];
+            break;
+        case Tiny_Nova:
+            pupTemp = [SKSpriteNode spriteNodeWithImageNamed:@"TinyNova"];
         default:
             break;
     }
@@ -34,7 +37,7 @@
 }
 
 -(pupType)powerUpTypes {
-    int randPup = (arc4random()% 3) + 1;
+    int randPup = (arc4random()% 4) + 1;
 
     switch (randPup) {
         case Wing_man:
@@ -45,11 +48,27 @@
             break;
         case Auto_Cannon:
             _powerUp = Auto_Cannon;
+            break;
+        case Tiny_Nova:
+            _powerUp = Tiny_Nova;
+            break;
         default:
             break;
     }
     
     return _powerUp;
+}
+
+-(void)logicTinyNova: (SKSpriteNode *)player {
+    player.xScale = 0.5;
+    player.yScale = 0.5;
+    player.physicsBody.linearDamping = 0.0;
+}
+
+-(void)closeTinyNova: (SKSpriteNode *)player {
+    player.xScale = 1;
+    player.yScale = 1;
+    player.physicsBody.linearDamping = 1.0;
 }
 
 @end
