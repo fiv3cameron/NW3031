@@ -44,6 +44,7 @@ NSTimeInterval _dt;
         [self addChild: [self startButtonNode]];
         [self addChild: [self leaderButtonNode]];
         [self addChild: [self settingsButtonNode]];
+        [self addChild: [self highScoreLabel]];
         [self createAudio];
         levelTitles = @[@"Event Horizon", @"The Whispers", @"TempLevel3"];
     }
@@ -134,6 +135,24 @@ NSTimeInterval _dt;
     SKAction *buttonSequence = [SKAction sequence:@[buttonWait,buttonShift]];
     [settingsButton runAction: buttonSequence];
     return settingsButton;
+}
+
+-(SKLabelNode *)highScoreLabel {
+    SKLabelNode *highScore = [[SKLabelNode alloc] initWithFontNamed:@"SF Movie Poster"];
+    highScore.position = CGPointMake(self.size.width, self.size.height - 30);
+    highScore.fontColor = [SKColor whiteColor];
+    highScore.fontSize = 30;
+    highScore.horizontalAlignmentMode = SKLabelHorizontalAlignmentModeLeft;
+    highScore.zPosition = 101;
+    highScore.text = [NSString stringWithFormat:@"HIGH SCORE: %li  ", [GameState sharedGameData].highScoreL1];
+    
+    SKAction *wait = [SKAction waitForDuration:.75];
+    SKAction *move = [SKAction moveByX:-(highScore.frame.size.width + 10) y:0 duration:0.5];
+    move.timingMode = SKActionTimingEaseIn;
+    SKAction *sequence = [SKAction sequence:@[wait, move]];
+    [highScore runAction: sequence];
+                                     
+    return highScore;
 }
 
 -(SKLabelNode *)backToMainButton
@@ -426,12 +445,27 @@ NSTimeInterval _dt;
         
         [self mainMenuAnimateOut];
         
+        // Transition to Level One Scene
+        // Configure the developer view.
+        SKView * levelOneView = (SKView *)self.view;
+        levelOneView.showsFPS = YES;
+        levelOneView.showsNodeCount = YES;
+        //levelOneView.showsPhysics = YES;
+        
+        // Create and configure the scene.
+        SKScene * levelOneScene = [[LevelOne alloc] initWithSize:levelOneView.bounds.size];
+        levelOneScene.scaleMode = SKSceneScaleModeAspectFill;
+        SKTransition *levelOneTrans = [SKTransition fadeWithColor:fadeColor duration:levelFadeDuration];
+        
+        // Present the scene.
+        [levelOneView presentScene:levelOneScene transition:levelOneTrans];
+        
         // Load level select area
-        [GameState sharedGameData].levelIndex = 1;
+        /*[GameState sharedGameData].levelIndex = 1;
         [self addChild:[self levelThumbWithPositionModifier:1.5]];
         [self animateLeft:levelThumb withDelay:0.5];
         [self addChild:[self createRightArrowWithWait:0.5]];
-        [self addChild:[self backToMainButton]];
+        [self addChild:[self backToMainButton]];*/
         
     }
     if (![nodeLift.name isEqualToString:@"_startButton"] && ![nodeLift.name isEqualToString:@"_leaderButton"] && ![nodeLift.name isEqualToString:@"_settingsButton"]) {
