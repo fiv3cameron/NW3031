@@ -46,19 +46,19 @@
     return self;
 }
 
--(void)rotateNodeUpwards: (SKNode *)nodeRotate {
+-(void)rotateNodeUpwards: (Ships *)nodeRotate {
     SKAction *rotateUp = [SKAction rotateToAngle:0.4 duration:.2 shortestUnitArc:YES];
     rotateUp.timingMode = SKActionTimingEaseInEaseOut;
     [nodeRotate runAction:rotateUp];
 }
 
--(void)rotateNodeDownwards: (SKNode *)nodeRotate {
+-(void)rotateNodeDownwards: (Ships *)nodeRotate {
     SKAction *rotateDown = [SKAction rotateToAngle:-M_PI_4 duration:.15 shortestUnitArc:YES];
     rotateDown.timingMode = SKActionTimingEaseInEaseOut;
     [nodeRotate runAction:rotateDown];
 }
 
--(void)shipBobbing: (SKNode *)bobShip {
+-(void)shipBobbing: (Ships *)bobShip {
     SKAction *bobUp = [SKAction moveToY:bobShip.position.y + 5 duration:.8];
     bobUp.timingMode = SKActionTimingEaseInEaseOut;
     SKAction *bobDown = [SKAction moveToY:bobShip.position.y - 5 duration:.8];
@@ -70,12 +70,12 @@
     
 }
 
--(void)thrustPlayer:(SKNode *)player withHeight:(float)levelHeight {
-    if (self.position.y > levelHeight - 50)
+-(void)thrustPlayer:(Ships *)player withHeight:(float)levelHeight {
+    if (player.position.y > levelHeight - 50)
     {
-        self.physicsBody.velocity = CGVectorMake(0.0f, 0.0f);
+        player.physicsBody.velocity = CGVectorMake(0.0f, 0.0f);
     }
-    else self.physicsBody.velocity = CGVectorMake(0.0f, self.position.y*1.3);
+    else player.physicsBody.velocity = CGVectorMake(0.0f, player.position.y*1.3);
     
 }
 
