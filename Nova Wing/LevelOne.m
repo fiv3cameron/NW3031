@@ -67,12 +67,13 @@ NSTimer *tenSeconds;
         
         //Create playerParent
         playerParent = [Ships node];
-        playerParent.position = CGPointMake(self.frame.size.width/5, self.frame.size.height/2);
         playerParent.physicsBody = [SKPhysicsBody bodyWithCircleOfRadius:50];
+        playerParent.position = CGPointMake(self.frame.size.width/5, self.frame.size.height/2);
         playerParent.physicsBody.dynamic = NO;
+        playerParent.physicsBody.allowsRotation = YES;
         playerParent.physicsBody.contactTestBitMask = 0;
         playerParent.physicsBody.collisionBitMask = 0;
-        playerNode = [self createPlayerNode: playerNode];
+        [self createPlayerNode: playerNode];
         
         [self createAudio];
         [self createShipAudio];
@@ -83,8 +84,12 @@ NSTimer *tenSeconds;
         [self addChild:playerParent];
         [playerParent addChild:playerNode];
         
+        //Physics Joint
+        SKPhysicsJointFixed *test = [SKPhysicsJointFixed jointWithBodyA:playerParent.physicsBody bodyB:playerNode.physicsBody anchor:CGPointMake(playerParent.position.x+50, playerParent.position.y+50)];
+        [self.physicsWorld addJoint:test];
+        
         //shipBobbing is factory method within playerNode.
-        [playerNode shipBobbing:playerParent];
+        [playerParent shipBobbing:playerParent];
         [self createScoreNode];
         //[self scoreTrack];
         if (storymodeL1 == YES) {
@@ -112,11 +117,12 @@ NSTimer *tenSeconds;
 
 -(Ships *) createPlayerNode: (Ships *)tempPlayer
 {
-    tempPlayer = [[Ships alloc] initWithImageNamed:@"Nova-L1"];
-    tempPlayer.position = CGPointMake(0, 0);
-    tempPlayer.physicsBody.categoryBitMask = CollisionCategoryPlayer;
-    tempPlayer.physicsBody.collisionBitMask = 0;
-    tempPlayer.physicsBody.contactTestBitMask = CollisionCategoryBottom | CollisionCategoryObject | CollisionCategoryScore | CollisionCategoryPup;
+    playerNode = [[Ships alloc] initWithImageNamed:@"Nova-L1"];
+    playerNode.position = CGPointMake(0, 0);
+    playerNode.physicsBody.categoryBitMask = CollisionCategoryPlayer;
+    playerNode.physicsBody.collisionBitMask = 0;
+    playerNode.physicsBody.contactTestBitMask = CollisionCategoryBottom | CollisionCategoryObject | CollisionCategoryScore | CollisionCategoryPup;
+    
     
     return tempPlayer;
 }
@@ -462,7 +468,7 @@ NSTimer *tenSeconds;
     trail.zPosition = 1;
     trail.targetNode = self.scene;
     trail.name = @"particleTrail";
-    [_player addChild:trail];
+    [playerNode addChild:trail];
     
     switch ([GameState sharedGameData].scoreMultiplier) {
         case 1:
@@ -656,6 +662,8 @@ NSTimer *tenSeconds;
     }
     if (playerParent.physicsBody.dynamic == NO) {
         playerParent.physicsBody.dynamic = YES;
+        playerNode.physicsBody.dynamic = YES;
+        //playerParent.physicsBody.allowsRotation = YES;
         [self addChild:_score];
         [self createObstacles];
         [tapPlay removeFromParent];
@@ -665,7 +673,7 @@ NSTimer *tenSeconds;
         [playerParent removeActionForKey:@"bobbingAction"];
     }
     
-    [playerNode thrustPlayer:playerParent withHeight:self.size.height];
+    [playerParent thrustPlayer:playerParent withHeight:self.size.height];
     
     if (levelComplete == YES) {
         SKView *gameOverView = (SKView *)self.view;
@@ -677,7 +685,7 @@ NSTimer *tenSeconds;
         [gameOverView presentScene:gameOverScene transition:gameOverTransition];
     }
     
-    [playerNode rotateNodeUpwards:playerParent];
+    [playerParent rotateNodeUpwards:playerParent];
 }
 
 -(void)update:(NSTimeInterval)currentTime {
@@ -694,7 +702,7 @@ NSTimer *tenSeconds;
     blackHole.zRotation = blackHole.zRotation + .01;
     
     if (playerParent.physicsBody.velocity.dy < 0) {
-        [playerNode rotateNodeDownwards:playerParent];
+        [playerParent rotateNodeDownwards:playerParent];
     }
     
     if ([self childNodeWithName:@"aerial"].position.x < playerParent.position.x && [self childNodeWithName:@"aerial"].position.x > 1)
