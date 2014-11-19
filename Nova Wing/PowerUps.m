@@ -60,14 +60,25 @@
 }
 
 -(void)logicTinyNova: (SKSpriteNode *)player {
-    player.xScale = 0.5;
-    player.yScale = 0.5;
+    SKAction *shrink = [SKAction scaleTo:0.3 duration:0.25];
+    SKAction *pop = [SKAction scaleTo:0.5 duration:.1];
+    SKAction *hold = [SKAction waitForDuration:7.75];
+    SKAction *big1 = [SKAction scaleTo:0.8 duration:.1];
+    SKAction *waitB1 = [SKAction waitForDuration:0.25];
+    SKAction *small1 = [SKAction scaleTo:0.6 duration:.1];
+    SKAction *waitS1 = [SKAction waitForDuration:0.5];
+    SKAction *big2 = [SKAction scaleTo:0.9 duration:.1];
+    SKAction *waitB2 = [SKAction waitForDuration:0.25];
+    SKAction *small2 = [SKAction scaleTo:0.7 duration:0.1];
+    SKAction *waitS2 = [SKAction waitForDuration:0.25];
+    SKAction *bigFinal = [SKAction scaleTo:1.0 duration:0.25];
+    
+    SKAction *tiny = [SKAction sequence:@[shrink, pop, hold, big1, waitB1, small1, waitS1, big2, waitB2, small2, waitS2, bigFinal]];
+    [player runAction:tiny];
     player.physicsBody.linearDamping = 0.0;
 }
 
 -(void)closeTinyNova: (SKSpriteNode *)player {
-    player.xScale = 1;
-    player.yScale = 1;
     player.physicsBody.linearDamping = 1.0;
 }
 
