@@ -22,7 +22,6 @@ typedef NS_OPTIONS(uint32_t, CollisionCategory) {
 
 @interface LevelOne() <SKPhysicsContactDelegate>
 {
-    Ships *_player;
     Ships *playerNode;
     Ships *playerParent;
     pupType powerUp;
@@ -65,14 +64,7 @@ NSTimer *tenSeconds;
         //Pre emits particles so layer is populated when scene begins
         [stars advanceSimulationTime:1.5];
         
-        //Create playerParent
-        playerParent = [Ships node];
-        playerParent.physicsBody = [SKPhysicsBody bodyWithCircleOfRadius:50];
-        playerParent.position = CGPointMake(self.frame.size.width/5, self.frame.size.height/2);
-        playerParent.physicsBody.dynamic = NO;
-        playerParent.physicsBody.allowsRotation = YES;
-        playerParent.physicsBody.contactTestBitMask = 0;
-        playerParent.physicsBody.collisionBitMask = 0;
+        playerParent = [self createPlayerParent];
         [self createPlayerNode: playerNode];
         
         [self createAudio];
@@ -102,6 +94,18 @@ NSTimer *tenSeconds;
     }
     
     return self;
+}
+
+-(Ships *)createPlayerParent {
+    playerParent = [Ships node];
+    playerParent.physicsBody = [SKPhysicsBody bodyWithCircleOfRadius:50];
+    playerParent.position = CGPointMake(self.frame.size.width/5, self.frame.size.height/2);
+    playerParent.physicsBody.dynamic = NO;
+    playerParent.physicsBody.allowsRotation = YES;
+    playerParent.physicsBody.contactTestBitMask = 0;
+    playerParent.physicsBody.collisionBitMask = 0;
+    
+    return playerParent;
 }
 
 -(void)createBlackHole {
@@ -381,15 +385,6 @@ NSTimer *tenSeconds;
     [self addChild:introduction];
 }
 
-/*-(void)createShipTrail {
-    NSString *trailPath = [[NSBundle mainBundle] pathForResource:@"ShipTrail" ofType:@"sks"];
-    
-    SKEmitterNode *trail = [NSKeyedUnarchiver unarchiveObjectWithFile:trailPath];
-    trail.position = _player.position;
-    
-    [self addChild:trail];
-}*/
-
 #pragma mark --Create Audio
 -(void)createAudio
 {
@@ -640,13 +635,13 @@ NSTimer *tenSeconds;
 }
 
 -(void)tinyNova {
-    [[PowerUps alloc] logicTinyNova:_player];
+    [[PowerUps alloc] logicTinyNova:playerNode];
     tenSeconds = [NSTimer scheduledTimerWithTimeInterval:10 target:self selector:@selector(tinyNovaClose) userInfo:nil repeats:NO];
     activePup = YES;
 }
 
 -(void)tinyNovaClose {
-    [[PowerUps alloc] closeTinyNova:_player];
+    [[PowerUps alloc] closeTinyNova:playerNode];
     activePup = NO;
     [tenSeconds invalidate];
 }
@@ -722,7 +717,7 @@ NSTimer *tenSeconds;
 
 -(void)gameOver {
     [GameState sharedGameData].highScoreL1 = MAX([GameState sharedGameData].score, [GameState sharedGameData].highScoreL1);
-    [_player removeAllChildren];
+    [playerNode removeAllChildren];
     SKView *gameOverView = (SKView *)self.view;
     
     SKScene *gameOverScene = [[GameOverL1 alloc] initWithSize:gameOverView.bounds.size];
