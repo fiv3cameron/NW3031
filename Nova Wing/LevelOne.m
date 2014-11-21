@@ -18,6 +18,7 @@ typedef NS_OPTIONS(uint32_t, CollisionCategory) {
     CollisionCategoryBottom     = 0x1 << 2,
     CollisionCategoryScore      = 0x1 << 3,
     CollisionCategoryPup        = 0x1 << 4,
+    CollisionCategoryLaser      = 0x1 << 5,
 };
 
 @interface LevelOne() <SKPhysicsContactDelegate>
@@ -40,6 +41,7 @@ NSTimer *objectCreateTimer;
 NSTimer *multiTimer;
 NSTimer *pupTimer;
 NSTimer *tenSeconds;
+NSTimer *oneSecond;
 
 
 #pragma mark --CreateBackground
@@ -601,15 +603,15 @@ NSTimer *tenSeconds;
     switch (powerUp) {
         case Wing_man:
             [self createPupTitleWithText:@"Wingman!"];
-            [self tinyNova];
+            [self autoCannonRun];
             break;
         case Over_shield:
             [self createPupTitleWithText:@"Overshield!"];
-            [self tinyNova];
+            [self autoCannonRun];
             break;
         case Auto_Cannon:
             [self createPupTitleWithText:@"Auto Cannon!"];
-            [self tinyNova];
+            [self autoCannonRun];
             break;
         case Tiny_Nova:
             [self createPupTitleWithText:@"Tiny Nova!"];
@@ -648,6 +650,30 @@ NSTimer *tenSeconds;
 -(void)tinyNovaClose {
     [[PowerUps alloc] closeTinyNova:_player];
     activePup = NO;
+    [tenSeconds invalidate];
+}
+
+-(void)autoCannonRun {
+    tenSeconds = [NSTimer scheduledTimerWithTimeInterval:10.1 target:self selector:@selector(autoCannonFinish) userInfo:nil repeats:NO];
+    oneSecond = [NSTimer scheduledTimerWithTimeInterval:0.5 target:self selector:@selector(autoCannonFire) userInfo:nil repeats:YES];
+    activePup = YES;
+}
+
+-(void)autoCannonFire {
+    SKSpriteNode *laser = [[PowerUps alloc] autoCannonFire:playerNode];
+    laser.position = CGPointMake(playerParent.position.x, playerParent.position.y);
+    laser.zRotation = playerParent.zRotation;
+    laser.physicsBody.categoryBitMask = CollisionCategoryLaser;
+    laser.physicsBody.collisionBitMask = 0;
+    laser.physicsBody.contactTestBitMask = CollisionCategoryObject;
+    [self addChild:laser];
+    
+    [[PowerUps alloc] animateLaser:laser withWidth: self.size.width];
+}
+
+-(void)autoCannonFinish {
+    activePup = NO;
+    [oneSecond invalidate];
     [tenSeconds invalidate];
 }
 
@@ -751,6 +777,11 @@ NSTimer *tenSeconds;
     
     if (contact.bodyA.categoryBitMask == CollisionCategoryPlayer && contact.bodyB.categoryBitMask == CollisionCategoryPup) {
         [self checkPup];
+    }
+    
+    if (contact.bodyA.categoryBitMask == CollisionCategoryLaser && contact.bodyB.categoryBitMask == CollisionCategoryObject) {
+        //screen flash
+        //remove objects.
     }
     
 }

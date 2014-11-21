@@ -24,6 +24,7 @@ typedef NS_ENUM(int, pupType) {
 -(pupType)powerUpTypes;
 -(void)logicTinyNova: (SKSpriteNode *)player;
 -(void)closeTinyNova: (SKSpriteNode *)player;
-
+-(SKSpriteNode *)autoCannonFire: (SKSpriteNode *)player;
+-(void)animateLaser: (SKSpriteNode *)laserToMove withWidth: (float)incomingWidth;
 
 @end
