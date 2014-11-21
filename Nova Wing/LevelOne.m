@@ -82,6 +82,9 @@ NSTimer *tenSeconds;
         
         //shipBobbing is factory method within playerNode.
         [playerParent shipBobbing:playerParent];
+        
+        [self overShield];
+        
         [self createScoreNode];
         //[self scoreTrack];
         if (storymodeL1 == YES) {
@@ -644,6 +647,11 @@ NSTimer *tenSeconds;
     [[PowerUps alloc] closeTinyNova:playerNode];
     activePup = NO;
     [tenSeconds invalidate];
+}
+
+-(void)overShield {
+    SKSpriteNode *shield = [SKSpriteNode spriteNodeWithImageNamed:@"Overshield"];
+    [playerParent addChild:shield];
 }
 
 #pragma mark --User Interface

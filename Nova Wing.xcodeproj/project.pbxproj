@@ -72,6 +72,7 @@
 		764BF9A719A2BC04007DABF8 /* Nova-L1@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 764BF9A519A2BC04007DABF8 /* Nova-L1@2x.png */; };
 		7651E8D519B0EC8900F7E9D0 /* Level-1-Music.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 7651E8D419B0EC8900F7E9D0 /* Level-1-Music.m4a */; };
 		7651E8D719B0FFA900F7E9D0 /* Level-2-Music.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 7651E8D619B0FFA900F7E9D0 /* Level-2-Music.m4a */; };
+		765C9B951A1CDE9B0050C847 /* Shield@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 765C9B941A1CDE9A0050C847 /* Shield@2x.png */; };
 		765DF28B19A928A700FBFB16 /* BlackHole@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 765DF28A19A928A700FBFB16 /* BlackHole@2x.png */; };
 		765DF28E19A9290F00FBFB16 /* LevelOne.m in Sources */ = {isa = PBXBuildFile; fileRef = 765DF28D19A9290F00FBFB16 /* LevelOne.m */; };
 		765DF29119A9293100FBFB16 /* spark.png in Resources */ = {isa = PBXBuildFile; fileRef = 765DF28F19A9293100FBFB16 /* spark.png */; };
@@ -194,6 +195,7 @@
 		764BF9A519A2BC04007DABF8 /* Nova-L1@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Nova-L1@2x.png"; sourceTree = "<group>"; };
 		7651E8D419B0EC8900F7E9D0 /* Level-1-Music.m4a */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Level-1-Music.m4a"; sourceTree = "<group>"; };
 		7651E8D619B0FFA900F7E9D0 /* Level-2-Music.m4a */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Level-2-Music.m4a"; sourceTree = "<group>"; };
+		765C9B941A1CDE9A0050C847 /* Shield@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Shield@2x.png"; sourceTree = "<group>"; };
 		765DF28A19A928A700FBFB16 /* BlackHole@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "BlackHole@2x.png"; sourceTree = "<group>"; };
 		765DF28C19A9290F00FBFB16 /* LevelOne.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LevelOne.h; sourceTree = "<group>"; };
 		765DF28D19A9290F00FBFB16 /* LevelOne.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LevelOne.m; sourceTree = "<group>"; };
@@ -529,6 +531,7 @@
 		76B9E91C19FC1891000EF044 /* Game Objects */ = {
 			isa = PBXGroup;
 			children = (
+				765C9B941A1CDE9A0050C847 /* Shield@2x.png */,
 				767DE0041A0C72FF00E098DF /* TinyNova@2x.png */,
 				76B9821119FC7A4E00F7E606 /* Autocannon@2x.png */,
 				76B9821219FC7A4E00F7E606 /* Overshield@2x.png */,
@@ -710,6 +713,7 @@
 				764BF9A219A19A11007DABF8 /* arrowL@2x.png in Resources */,
 				76C1929F19FAA628004646D2 /* Explosion.wav in Resources */,
 				76EC502419D4EAE100363C97 /* Rocket-1@2x.png in Resources */,
+				765C9B951A1CDE9B0050C847 /* Shield@2x.png in Resources */,
 				764BF9A619A2BC04007DABF8 /* Nova-L2@2x.png in Resources */,
 				2DB3527A1999940A006BF15C /* buttonSettings.png in Resources */,
 				2DB352791999940A006BF15C /* buttonPressStart.png in Resources */,
