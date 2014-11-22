@@ -75,8 +75,7 @@
     SKSpriteNode *laser = [SKSpriteNode spriteNodeWithImageNamed:@"Laser"];
     laser.xScale = 0.25;
     laser.yScale = 0.8;
-    laser.physicsBody = [SKPhysicsBody bodyWithCircleOfRadius:laser.size.width/2];
-    //bodyWithRectangleOfSize:CGSizeMake(laser.size.width, laser.size.height)
+    laser.physicsBody = [SKPhysicsBody bodyWithRectangleOfSize:CGSizeMake(laser.size.width, laser.size.height)];
     laser.physicsBody.dynamic = YES;
     laser.physicsBody.affectedByGravity = NO;
     

@@ -41,7 +41,7 @@ NSTimer *objectCreateTimer;
 NSTimer *multiTimer;
 NSTimer *pupTimer;
 NSTimer *tenSeconds;
-NSTimer *oneSecond;
+NSTimer *halfSecond;
 
 
 #pragma mark --CreateBackground
@@ -52,6 +52,7 @@ NSTimer *oneSecond;
         levelComplete = NO;
         storymodeL1 = NO;
         [GameState sharedGameData].scoreMultiplier = 1;
+        [GameState sharedGameData].maxLaserHits = 0;
         activePup = NO;
         
         self.backgroundColor = [SKColor colorWithRed:0 green:0 blue:0 alpha:1];
@@ -660,28 +661,53 @@ NSTimer *oneSecond;
 }
 
 -(void)autoCannonRun {
-    tenSeconds = [NSTimer scheduledTimerWithTimeInterval:10.1 target:self selector:@selector(autoCannonFinish) userInfo:nil repeats:NO];
-    oneSecond = [NSTimer scheduledTimerWithTimeInterval:0.5 target:self selector:@selector(autoCannonFire) userInfo:nil repeats:YES];
+    //tenSeconds = [NSTimer scheduledTimerWithTimeInterval:10.1 target:self selector:@selector(autoCannonFinish) userInfo:nil repeats:NO];
+    lasersFired = 0;
+    localLaserHits = 0;
+    halfSecond = [NSTimer scheduledTimerWithTimeInterval:0.45 target:self selector:@selector(autoCannonFire) userInfo:nil repeats:YES];
     activePup = YES;
 }
 
 -(void)autoCannonFire {
-    SKSpriteNode *laser = [[PowerUps alloc] autoCannonFire:playerNode];
-    laser.position = CGPointMake(playerParent.position.x, playerParent.position.y);
-    laser.zRotation = playerParent.zRotation;
-    laser.physicsBody.categoryBitMask = CollisionCategoryLaser;
-    laser.physicsBody.collisionBitMask = 0;
-    laser.physicsBody.contactTestBitMask = CollisionCategoryObject;
-    laser.name = @"laser";
-    [self addChild:laser];
     
-    [[PowerUps alloc] animateLaser:laser withWidth: self.size.width];
+    if (lasersFired == 20) {
+        [self autoCannonFinish];
+    } else {
+        SKSpriteNode *laser = [[PowerUps alloc] autoCannonFire:playerNode];
+        laser.position = CGPointMake(playerParent.position.x, playerParent.position.y);
+        laser.zRotation = playerParent.zRotation;
+        laser.physicsBody.categoryBitMask = CollisionCategoryLaser;
+        laser.physicsBody.collisionBitMask = 0;
+        laser.physicsBody.contactTestBitMask = CollisionCategoryObject;
+        laser.name = @"laser";
+        [self addChild:laser];
+        lasersFired = lasersFired + 1;
+        [[PowerUps alloc] animateLaser:laser withWidth: self.size.width];
+    }
+}
+
+-(void)laserContactRemove {
+    SKShapeNode *flash = [SKShapeNode node];
+    flash.fillColor = [SKColor colorWithRed:0.33 green:0.33 blue:0.34 alpha:1];
+    flash.alpha = 0;
+    flash.zPosition = 103;
+    flash.path = [UIBezierPath bezierPathWithRect: CGRectMake(0, 0, self.size.width, self.size.height)].CGPath;
+    flash.position = CGPointMake(0, 0);
+    [self addChild:flash];
+    SKAction *fadeIn = [SKAction fadeAlphaTo:1 duration:.05];
+    SKAction *fadeOut = [SKAction fadeAlphaTo:0 duration:.15];
+    SKAction *remove = [SKAction removeFromParent];
+    SKAction *seq = [SKAction sequence:@[fadeIn,fadeOut, remove]];
+    [flash runAction:seq];
+    [[self childNodeWithName:@"aerial"] removeFromParent];
+    [[self childNodeWithName:@"laser"] removeFromParent];
+    localLaserHits = localLaserHits + 1;
 }
 
 -(void)autoCannonFinish {
     activePup = NO;
-    [oneSecond invalidate];
-    [tenSeconds invalidate];
+    [halfSecond invalidate];
+    [GameState sharedGameData].maxLaserHits = MAX([GameState sharedGameData].maxLaserHits, localLaserHits);
 }
 
 #pragma mark --User Interface
@@ -798,19 +824,7 @@ NSTimer *oneSecond;
     }
     
     if (firstBody.categoryBitMask == CollisionCategoryLaser && secondBody.categoryBitMask == CollisionCategoryObject) {
-        SKShapeNode *flash = [SKShapeNode node];
-        flash.alpha = 0;
-        flash.zPosition = 103;
-        flash.path = [UIBezierPath bezierPathWithRect: CGRectMake(0, 0, self.size.width, self.size.height)].CGPath;
-        flash.position = CGPointMake(0, 0);
-        [self addChild:flash];
-        SKAction *fadeIn = [SKAction fadeAlphaTo:1 duration:.05];
-        SKAction *fadeOut = [SKAction fadeAlphaTo:0 duration:.15];
-        SKAction *remove = [SKAction removeFromParent];
-        SKAction *seq = [SKAction sequence:@[fadeIn,fadeOut, remove]];
-        [flash runAction:seq];
-        [[self childNodeWithName:@"aerial"] removeFromParent];
-        [[playerNode childNodeWithName:@"laser"] removeFromParent];
+        [self laserContactRemove];
         
     }
     
