@@ -17,6 +17,7 @@
     @property (nonatomic) long lvlIndexMax;
     @property (nonatomic) int scoreMultiplier;
     @property (nonatomic, assign) long audioVolume;
+    @property (assign, nonatomic) int maxLaserHits;
 
 +(instancetype)sharedGameData;
 -(void)reset;

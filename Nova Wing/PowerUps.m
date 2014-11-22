@@ -82,4 +82,30 @@
     player.physicsBody.linearDamping = 1.0;
 }
 
+-(SKSpriteNode *)autoCannonFire: (SKSpriteNode *)player {
+    SKSpriteNode *laser = [SKSpriteNode spriteNodeWithImageNamed:@"Laser"];
+    laser.xScale = 0.25;
+    laser.yScale = 0.8;
+    laser.physicsBody = [SKPhysicsBody bodyWithRectangleOfSize:CGSizeMake(laser.size.width, laser.size.height)];
+    laser.physicsBody.dynamic = YES;
+    laser.physicsBody.affectedByGravity = NO;
+    
+    return laser;
+}
+
+-(void)animateLaser: (SKSpriteNode *)laserToMove withWidth: (float)incomingWidth {
+    //Calcs
+    float xvector = incomingWidth + laserToMove.size.width-laserToMove.position.x;
+    float yvector = xvector*tan(laserToMove.zRotation);
+    float hypotenuse = sqrtf(xvector*xvector+yvector*yvector);
+    float arbitraryVelocity = 350.0;
+    float tempDuration = hypotenuse/arbitraryVelocity;
+
+    //Movements
+    SKAction *laserMovement = [SKAction moveBy:CGVectorMake(xvector, yvector) duration:tempDuration];
+    SKAction *remove = [SKAction removeFromParent];
+    SKAction *laserSqnce = [SKAction sequence:@[laserMovement,remove]];
+    [laserToMove runAction:laserSqnce];
+}
+
 @end

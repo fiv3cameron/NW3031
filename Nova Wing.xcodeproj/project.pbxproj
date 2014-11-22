@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		2D4C0B9A19A6D29B00AD0717 /* Ships.m in Sources */ = {isa = PBXBuildFile; fileRef = 2D4C0B9919A6D29B00AD0717 /* Ships.m */; };
 		2D800FFA19AC14FC0067CAC1 /* Obstacles.m in Sources */ = {isa = PBXBuildFile; fileRef = 2D800FF919AC14FC0067CAC1 /* Obstacles.m */; };
+		2D99094A1A1EC09D00D9CDE8 /* Laser.png in Resources */ = {isa = PBXBuildFile; fileRef = 2D9909491A1EC09D00D9CDE8 /* Laser.png */; };
 		2DB3521B19996B83006BF15C /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2DB3521A19996B83006BF15C /* Foundation.framework */; };
 		2DB3521D19996B83006BF15C /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2DB3521C19996B83006BF15C /* CoreGraphics.framework */; };
 		2DB3521F19996B83006BF15C /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2DB3521E19996B83006BF15C /* UIKit.framework */; };
@@ -117,6 +118,7 @@
 		2D4C0B9919A6D29B00AD0717 /* Ships.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Ships.m; sourceTree = "<group>"; };
 		2D800FF819AC14FC0067CAC1 /* Obstacles.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Obstacles.h; sourceTree = "<group>"; };
 		2D800FF919AC14FC0067CAC1 /* Obstacles.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Obstacles.m; sourceTree = "<group>"; };
+		2D9909491A1EC09D00D9CDE8 /* Laser.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Laser.png; sourceTree = "<group>"; };
 		2DB3521719996B83006BF15C /* Nova Wing.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Nova Wing.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		2DB3521A19996B83006BF15C /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		2DB3521C19996B83006BF15C /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -507,6 +509,7 @@
 				76B9E91619FB1BE8000EF044 /* ShipTrail.sks */,
 				765DF28F19A9293100FBFB16 /* spark.png */,
 				765DF29019A9293100FBFB16 /* Stars-L1.sks */,
+				2D9909491A1EC09D00D9CDE8 /* Laser.png */,
 				765DF28C19A9290F00FBFB16 /* LevelOne.h */,
 				765DF28D19A9290F00FBFB16 /* LevelOne.m */,
 				765DF29A19A9295800FBFB16 /* GameOverL1.h */,
@@ -689,6 +692,7 @@
 				765DF29E19A9298900FBFB16 /* menuMusic.m4a in Resources */,
 				7678881B19E1C43E009714A1 /* 5xMulti@2x.png in Resources */,
 				76C192A119FAA63C004646D2 /* Engine-Audio.wav in Resources */,
+				2D99094A1A1EC09D00D9CDE8 /* Laser.png in Resources */,
 				767DE0051A0C72FF00E098DF /* TinyNova@2x.png in Resources */,
 				76B9821519FC7A4E00F7E606 /* Overshield@2x.png in Resources */,
 				76105BDF19F5C65400A3F242 /* L1-AOb-4@2x.png in Resources */,

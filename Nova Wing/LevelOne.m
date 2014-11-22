@@ -14,10 +14,11 @@
 
 typedef NS_OPTIONS(uint32_t, CollisionCategory) {
     CollisionCategoryPlayer     = 0x1 << 0,
-    CollisionCategoryObject     = 0x1 << 1,
-    CollisionCategoryBottom     = 0x1 << 2,
-    CollisionCategoryScore      = 0x1 << 3,
-    CollisionCategoryPup        = 0x1 << 4,
+    CollisionCategoryLaser      = 0x1 << 2,
+    CollisionCategoryObject     = 0x1 << 4,
+    CollisionCategoryBottom     = 0x1 << 5,
+    CollisionCategoryScore      = 0x1 << 6,
+    CollisionCategoryPup        = 0x1 << 7,
 };
 
 @interface LevelOne() <SKPhysicsContactDelegate>
@@ -39,6 +40,7 @@ NSTimer *objectCreateTimer;
 NSTimer *multiTimer;
 NSTimer *pupTimer;
 NSTimer *tenSeconds;
+NSTimer *halfSecond;
 
 
 #pragma mark --CreateBackground
@@ -49,6 +51,7 @@ NSTimer *tenSeconds;
         levelComplete = NO;
         storymodeL1 = NO;
         [GameState sharedGameData].scoreMultiplier = 1;
+        [GameState sharedGameData].maxLaserHits = 0;
         activePup = NO;
         
         self.backgroundColor = [SKColor colorWithRed:0 green:0 blue:0 alpha:1];
@@ -189,6 +192,7 @@ NSTimer *tenSeconds;
     obstacle1.physicsBody.categoryBitMask = CollisionCategoryObject;
     obstacle1.physicsBody.dynamic = NO;
     obstacle1.physicsBody.collisionBitMask = 0;
+    obstacle1.physicsBody.contactTestBitMask = CollisionCategoryLaser || CollisionCategoryPlayer;
     
     [self addChild: obstacle1];
     [self moveAerialNode:obstacle1 allowsRotation:YES];
@@ -221,6 +225,7 @@ NSTimer *tenSeconds;
     obstacle2.physicsBody.categoryBitMask = CollisionCategoryObject;
     obstacle2.physicsBody.dynamic = NO;
     obstacle2.physicsBody.collisionBitMask = 0;
+    obstacle2.physicsBody.contactTestBitMask = CollisionCategoryLaser || CollisionCategoryPlayer;
     
     [self addChild: obstacle2];
     [self moveAerialNode:obstacle2 allowsRotation:YES];
@@ -247,6 +252,7 @@ NSTimer *tenSeconds;
     obstacle2.physicsBody.categoryBitMask = CollisionCategoryObject;
     obstacle2.physicsBody.dynamic = NO;
     obstacle2.physicsBody.collisionBitMask = 0;
+    obstacle2.physicsBody.contactTestBitMask = CollisionCategoryLaser || CollisionCategoryPlayer;
     
     [self addChild: obstacle2];
     [self moveAerialNode:obstacle2 allowsRotation:YES];
@@ -272,6 +278,7 @@ NSTimer *tenSeconds;
     obstacle2.physicsBody.categoryBitMask = CollisionCategoryObject;
     obstacle2.physicsBody.dynamic = NO;
     obstacle2.physicsBody.collisionBitMask = 0;
+    obstacle2.physicsBody.contactTestBitMask = CollisionCategoryLaser || CollisionCategoryPlayer;
     
     [self addChild: obstacle2];
     [self moveAerialNode:obstacle2 allowsRotation:YES];
@@ -306,6 +313,7 @@ NSTimer *tenSeconds;
     obstacle2.physicsBody.categoryBitMask = CollisionCategoryObject;
     obstacle2.physicsBody.dynamic = NO;
     obstacle2.physicsBody.collisionBitMask = 0;
+    obstacle2.physicsBody.contactTestBitMask = CollisionCategoryLaser || CollisionCategoryPlayer;
     
     [self addChild: obstacle2];
     [self moveAerialNode:obstacle2 allowsRotation:YES];
@@ -337,6 +345,7 @@ NSTimer *tenSeconds;
     obstacle2.physicsBody.categoryBitMask = CollisionCategoryObject;
     obstacle2.physicsBody.dynamic = NO;
     obstacle2.physicsBody.collisionBitMask = 0;
+    obstacle2.physicsBody.contactTestBitMask = CollisionCategoryLaser || CollisionCategoryPlayer;
     
     [self addChild: obstacle2];
     [self moveAerialNode:obstacle2 allowsRotation: YES];
@@ -596,15 +605,15 @@ NSTimer *tenSeconds;
     switch (powerUp) {
         case Wing_man:
             [self createPupTitleWithText:@"Wingman!"];
-            [self tinyNova];
+            [self autoCannonRun];
             break;
         case Over_shield:
             [self createPupTitleWithText:@"Overshield!"];
-            [self tinyNova];
+            [self autoCannonRun];
             break;
         case Auto_Cannon:
             [self createPupTitleWithText:@"Auto Cannon!"];
-            [self tinyNova];
+            [self autoCannonRun];
             break;
         case Tiny_Nova:
             [self createPupTitleWithText:@"Tiny Nova!"];
@@ -644,6 +653,56 @@ NSTimer *tenSeconds;
     [[PowerUps alloc] closeTinyNova:playerNode];
     activePup = NO;
     [tenSeconds invalidate];
+}
+
+-(void)autoCannonRun {
+    //tenSeconds = [NSTimer scheduledTimerWithTimeInterval:10.1 target:self selector:@selector(autoCannonFinish) userInfo:nil repeats:NO];
+    lasersFired = 0;
+    localLaserHits = 0;
+    halfSecond = [NSTimer scheduledTimerWithTimeInterval:0.45 target:self selector:@selector(autoCannonFire) userInfo:nil repeats:YES];
+    activePup = YES;
+}
+
+-(void)autoCannonFire {
+    
+    if (lasersFired == 20) {
+        [self autoCannonFinish];
+    } else {
+        SKSpriteNode *laser = [[PowerUps alloc] autoCannonFire:playerNode];
+        laser.position = CGPointMake(playerParent.position.x, playerParent.position.y);
+        laser.zRotation = playerParent.zRotation;
+        laser.physicsBody.categoryBitMask = CollisionCategoryLaser;
+        laser.physicsBody.collisionBitMask = 0;
+        laser.physicsBody.contactTestBitMask = CollisionCategoryObject;
+        laser.name = @"laser";
+        [self addChild:laser];
+        lasersFired = lasersFired + 1;
+        [[PowerUps alloc] animateLaser:laser withWidth: self.size.width];
+    }
+}
+
+-(void)laserContactRemove: (SKSpriteNode *)firstNodeToRemove andRemove: (SKSpriteNode *)secondNodeToRemove {
+    SKShapeNode *flash = [SKShapeNode node];
+    flash.fillColor = [SKColor colorWithRed:0.33 green:0.33 blue:0.34 alpha:1];
+    flash.alpha = 0;
+    flash.zPosition = 103;
+    flash.path = [UIBezierPath bezierPathWithRect: CGRectMake(0, 0, self.size.width, self.size.height)].CGPath;
+    flash.position = CGPointMake(0, 0);
+    [self addChild:flash];
+    SKAction *fadeIn = [SKAction fadeAlphaTo:1 duration:.05];
+    SKAction *fadeOut = [SKAction fadeAlphaTo:0 duration:.15];
+    SKAction *remove = [SKAction removeFromParent];
+    SKAction *seq = [SKAction sequence:@[fadeIn,fadeOut, remove]];
+    [flash runAction:seq];
+    [firstNodeToRemove removeFromParent];
+    [secondNodeToRemove removeFromParent];
+    localLaserHits = localLaserHits + 1;
+}
+
+-(void)autoCannonFinish {
+    activePup = NO;
+    [halfSecond invalidate];
+    [GameState sharedGameData].maxLaserHits = MAX([GameState sharedGameData].maxLaserHits, localLaserHits);
 }
 
 #pragma mark --User Interface
@@ -731,21 +790,40 @@ NSTimer *tenSeconds;
 }
 
 -(void)didBeginContact:(SKPhysicsContact *)contact {
+    
+    SKPhysicsBody *firstBody;
+    SKPhysicsBody *secondBody;
+    
+    if (contact.bodyA.categoryBitMask < contact.bodyB.categoryBitMask) {
+        firstBody = contact.bodyA;
+        secondBody = contact.bodyB;
+    } else {
+        firstBody = contact.bodyB;
+        secondBody = contact.bodyA;
+    }
+    
+    SKSpriteNode *firstNode = (SKSpriteNode *)firstBody.node;
+    SKSpriteNode *secondNode = (SKSpriteNode *)secondBody.node;
 
-    if (contact.bodyA.categoryBitMask == CollisionCategoryPlayer && contact.bodyB.categoryBitMask == CollisionCategoryObject) {
+    if (firstBody.categoryBitMask == CollisionCategoryPlayer && secondBody.categoryBitMask == CollisionCategoryObject) {
         [self gameOver];
     }
     
-    if (contact.bodyB.categoryBitMask == CollisionCategoryPlayer && contact.bodyA.categoryBitMask == CollisionCategoryBottom) {
+    if (firstBody.categoryBitMask == CollisionCategoryPlayer && secondBody.categoryBitMask == CollisionCategoryBottom) {
         [self gameOver];
     }
     
-    if (contact.bodyA.categoryBitMask == CollisionCategoryPlayer && contact.bodyB.categoryBitMask == CollisionCategoryScore) {
+    if (firstBody.categoryBitMask == CollisionCategoryPlayer && secondBody.categoryBitMask == CollisionCategoryScore) {
         [self scoreMulti];
         }
     
-    if (contact.bodyA.categoryBitMask == CollisionCategoryPlayer && contact.bodyB.categoryBitMask == CollisionCategoryPup) {
+    if (firstBody.categoryBitMask == CollisionCategoryPlayer && secondBody.categoryBitMask == CollisionCategoryPup) {
         [self checkPup];
+    }
+    
+    if (firstBody.categoryBitMask == CollisionCategoryLaser && secondBody.categoryBitMask == CollisionCategoryObject) {
+        [self laserContactRemove:firstNode andRemove:secondNode];
+        
     }
     
 }
