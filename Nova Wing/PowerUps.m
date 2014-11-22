@@ -77,7 +77,8 @@
     laser.yScale = 0.8;
     laser.physicsBody = [SKPhysicsBody bodyWithCircleOfRadius:laser.size.width/2];
     //bodyWithRectangleOfSize:CGSizeMake(laser.size.width, laser.size.height)
-    laser.physicsBody.dynamic = NO;
+    laser.physicsBody.dynamic = YES;
+    laser.physicsBody.affectedByGravity = NO;
     
     return laser;
 }

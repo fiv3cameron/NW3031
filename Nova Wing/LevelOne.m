@@ -14,11 +14,11 @@
 
 typedef NS_OPTIONS(uint32_t, CollisionCategory) {
     CollisionCategoryPlayer     = 0x1 << 0,
-    CollisionCategoryObject     = 0x1 << 1,
-    CollisionCategoryBottom     = 0x1 << 2,
-    CollisionCategoryScore      = 0x1 << 3,
-    CollisionCategoryPup        = 0x1 << 4,
-    CollisionCategoryLaser      = 0x1 << 5,
+    CollisionCategoryLaser      = 0x1 << 2,
+    CollisionCategoryObject     = 0x1 << 4,
+    CollisionCategoryBottom     = 0x1 << 5,
+    CollisionCategoryScore      = 0x1 << 6,
+    CollisionCategoryPup        = 0x1 << 7,
 };
 
 @interface LevelOne() <SKPhysicsContactDelegate>
@@ -797,7 +797,7 @@ NSTimer *oneSecond;
         [self checkPup];
     }
     
-    if (firstBody.categoryBitMask == CollisionCategoryObject && secondBody.categoryBitMask == CollisionCategoryLaser) {
+    if (firstBody.categoryBitMask == CollisionCategoryLaser && secondBody.categoryBitMask == CollisionCategoryObject) {
         SKShapeNode *flash = [SKShapeNode node];
         flash.alpha = 0;
         flash.zPosition = 103;
@@ -809,8 +809,8 @@ NSTimer *oneSecond;
         SKAction *remove = [SKAction removeFromParent];
         SKAction *seq = [SKAction sequence:@[fadeIn,fadeOut, remove]];
         [flash runAction:seq];
-        /*[[self childNodeWithName:@"aerial"] removeFromParent];
-        */
+        [[self childNodeWithName:@"aerial"] removeFromParent];
+        [[playerNode childNodeWithName:@"laser"] removeFromParent];
         
     }
     
