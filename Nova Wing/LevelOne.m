@@ -686,7 +686,7 @@ NSTimer *halfSecond;
     }
 }
 
--(void)laserContactRemove {
+-(void)laserContactRemove: (SKSpriteNode *)firstNodeToRemove andRemove: (SKSpriteNode *)secondNodeToRemove {
     SKShapeNode *flash = [SKShapeNode node];
     flash.fillColor = [SKColor colorWithRed:0.33 green:0.33 blue:0.34 alpha:1];
     flash.alpha = 0;
@@ -699,8 +699,8 @@ NSTimer *halfSecond;
     SKAction *remove = [SKAction removeFromParent];
     SKAction *seq = [SKAction sequence:@[fadeIn,fadeOut, remove]];
     [flash runAction:seq];
-    [[self childNodeWithName:@"aerial"] removeFromParent];
-    [[self childNodeWithName:@"laser"] removeFromParent];
+    [firstNodeToRemove removeFromParent];
+    [secondNodeToRemove removeFromParent];
     localLaserHits = localLaserHits + 1;
 }
 
@@ -806,6 +806,9 @@ NSTimer *halfSecond;
         firstBody = contact.bodyB;
         secondBody = contact.bodyA;
     }
+    
+    SKSpriteNode *firstNode = (SKSpriteNode *)firstBody.node;
+    SKSpriteNode *secondNode = (SKSpriteNode *)secondBody.node;
 
     if (firstBody.categoryBitMask == CollisionCategoryPlayer && secondBody.categoryBitMask == CollisionCategoryObject) {
         [self gameOver];
@@ -824,7 +827,7 @@ NSTimer *halfSecond;
     }
     
     if (firstBody.categoryBitMask == CollisionCategoryLaser && secondBody.categoryBitMask == CollisionCategoryObject) {
-        [self laserContactRemove];
+        [self laserContactRemove:firstNode andRemove:secondNode];
         
     }
     

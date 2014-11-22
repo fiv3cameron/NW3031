@@ -47,7 +47,7 @@
 }
 
 -(void)rotateNodeUpwards: (Ships *)nodeRotate {
-    SKAction *rotateUp = [SKAction rotateToAngle:0.4 duration:.2 shortestUnitArc:YES];
+    SKAction *rotateUp = [SKAction rotateToAngle:0.42 duration:.2 shortestUnitArc:YES];
     rotateUp.timingMode = SKActionTimingEaseInEaseOut;
     [nodeRotate runAction:rotateUp];
 }
