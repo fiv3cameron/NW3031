@@ -342,7 +342,7 @@ int shieldIndex;
     object.physicsBody.usesPreciseCollisionDetection = YES;
     object.physicsBody.friction = 0.2f;
     object.physicsBody.restitution = 0.0f;
-    object.physicsBody.linearDamping = 0.0f;
+    object.physicsBody.linearDamping = 0.0;
 }
 
 -(void)bottomCollide {
@@ -490,7 +490,7 @@ int shieldIndex;
 
 #pragma mark --Animate Obstacles
 
--(void) moveAerialNode: (SKSpriteNode *)incomingNode allowsRotation: (BOOL)allowsRotate
+ -(void) movePupNode: (SKSpriteNode *)incomingNode allowsRotation: (BOOL)allowsRotate
 {
     //Calculations.
     float startHeight = incomingNode.position.y;
@@ -538,6 +538,10 @@ int shieldIndex;
     }
 }
 
+-(void) moveAerialNode: (SKSpriteNode *)incomingNode allowsRotation: (BOOL)allowsRotate {
+    [incomingNode.physicsBody applyImpulse:CGVectorMake(-20, 0)];
+}
+
 #pragma mark --Power Ups
 
 -(void)createMultiplier {
@@ -558,7 +562,7 @@ int shieldIndex;
     int randomInt = arc4random()%2;
     if (randomInt == 1) {
         [self addChild:multiplier];
-        [self moveAerialNode:multiplier allowsRotation: NO];
+        [self movePupNode:multiplier allowsRotation: NO];
     }
 }
 
@@ -579,7 +583,7 @@ int shieldIndex;
         Pup.zPosition = 11;
         
         [self addChild:Pup];
-        [self moveAerialNode:Pup allowsRotation:NO];
+        [self movePupNode:Pup allowsRotation:NO];
     }
 }
 
@@ -749,11 +753,19 @@ int shieldIndex;
         [playerParent rotateNodeDownwards:playerParent];
     }
     
+    if ([self childNodeWithName:@"aerial"].position.x < self.size.width / 2) {
+        [[self childNodeWithName:@"aerial"].physicsBody applyImpulse:CGVectorMake(0, -0.2)];
+    }
+    
     if ([self childNodeWithName:@"aerial"].position.x < playerParent.position.x - playerParent.size.width && [self childNodeWithName:@"aerial"].position.x > 1)
     {
         [self scoreAdd];
         [self scorePlus];
         [self childNodeWithName:@"aerial"].name = @"aerialClose";
+    }
+    
+    if ([self childNodeWithName:@"aerialClose"].position.x < -self.size.width / 2) {
+        [[self childNodeWithName:@"aerialClose"] removeFromParent];
     }
     
 }
