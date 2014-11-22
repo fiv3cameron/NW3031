@@ -15,10 +15,6 @@
 typedef NS_OPTIONS(uint32_t, CollisionCategory) {
     CollisionCategoryPlayer     = 0x1 << 0,
     CollisionCategoryShield     = 0x1 << 1,
-    CollisionCategoryObject     = 0x1 << 4,
-    CollisionCategoryBottom     = 0x1 << 5,
-    CollisionCategoryScore      = 0x1 << 6,
-    CollisionCategoryPup        = 0x1 << 7,
     CollisionCategoryLaser      = 0x1 << 2,
     CollisionCategoryObject     = 0x1 << 4,
     CollisionCategoryBottom     = 0x1 << 5,
@@ -721,7 +717,7 @@ int shieldIndex;
     
     shield.physicsBody.dynamic = YES;
     shield.physicsBody.restitution = 0.0f;
-    shield.physicsBody.friction = 0.3f;
+    shield.physicsBody.friction = 0.1f;
     shield.physicsBody.linearDamping = 1.0f;
     shield.physicsBody.allowsRotation = NO;
     shield.physicsBody.affectedByGravity = NO;
@@ -816,9 +812,9 @@ int shieldIndex;
         [playerParent rotateNodeDownwards:playerParent];
     }
     
-    if ([self childNodeWithName:@"aerial"].position.x < self.size.width / 2) {
+    /*if ([self childNodeWithName:@"aerial"].position.x < self.size.width / 2) {
         [[self childNodeWithName:@"aerial"].physicsBody applyImpulse:CGVectorMake(0, -0.2)];
-    }
+    }*/
     
     if ([self childNodeWithName:@"aerial"].position.x < playerParent.position.x - playerParent.size.width && [self childNodeWithName:@"aerial"].position.x > 1)
     {
