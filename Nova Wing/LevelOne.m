@@ -14,6 +14,11 @@
 
 typedef NS_OPTIONS(uint32_t, CollisionCategory) {
     CollisionCategoryPlayer     = 0x1 << 0,
+    CollisionCategoryShield     = 0x1 << 1,
+    CollisionCategoryObject     = 0x1 << 4,
+    CollisionCategoryBottom     = 0x1 << 5,
+    CollisionCategoryScore      = 0x1 << 6,
+    CollisionCategoryPup        = 0x1 << 7,
     CollisionCategoryLaser      = 0x1 << 2,
     CollisionCategoryObject     = 0x1 << 4,
     CollisionCategoryBottom     = 0x1 << 5,
@@ -26,6 +31,7 @@ typedef NS_OPTIONS(uint32_t, CollisionCategory) {
     Ships *playerNode;
     Ships *playerParent;
     pupType powerUp;
+    SKSpriteNode *shield;
     BOOL activePup;
     
 }
@@ -41,6 +47,7 @@ NSTimer *multiTimer;
 NSTimer *pupTimer;
 NSTimer *tenSeconds;
 NSTimer *halfSecond;
+int shieldIndex;
 
 
 #pragma mark --CreateBackground
@@ -71,7 +78,6 @@ NSTimer *halfSecond;
         [self createPlayerNode: playerNode];
         
         [self createAudio];
-        [self createShipAudio];
         
         [self addChild:stars];
         [self createBlackHole];
@@ -85,6 +91,7 @@ NSTimer *halfSecond;
         
         //shipBobbing is factory method within playerNode.
         [playerParent shipBobbing:playerParent];
+        
         [self createScoreNode];
         //[self scoreTrack];
         if (storymodeL1 == YES) {
@@ -105,6 +112,7 @@ NSTimer *halfSecond;
     playerParent.position = CGPointMake(self.frame.size.width/5, self.frame.size.height/2);
     playerParent.physicsBody.dynamic = NO;
     playerParent.physicsBody.allowsRotation = YES;
+    playerParent.physicsBody.categoryBitMask = 0;
     playerParent.physicsBody.contactTestBitMask = 0;
     playerParent.physicsBody.collisionBitMask = 0;
     
@@ -189,10 +197,7 @@ NSTimer *halfSecond;
     obstacle1.yScale = 0.5 + randScale;
     
     obstacle1.physicsBody = [SKPhysicsBody bodyWithCircleOfRadius:obstacle1.size.height/2];
-    obstacle1.physicsBody.categoryBitMask = CollisionCategoryObject;
-    obstacle1.physicsBody.dynamic = NO;
-    obstacle1.physicsBody.collisionBitMask = 0;
-    obstacle1.physicsBody.contactTestBitMask = CollisionCategoryLaser || CollisionCategoryPlayer;
+    [self objectPhysicsStandards: obstacle1];
     
     [self addChild: obstacle1];
     [self moveAerialNode:obstacle1 allowsRotation:YES];
@@ -222,10 +227,7 @@ NSTimer *halfSecond;
     CGPathCloseSubpath(path);
     
     obstacle2.physicsBody = [SKPhysicsBody bodyWithPolygonFromPath:path];
-    obstacle2.physicsBody.categoryBitMask = CollisionCategoryObject;
-    obstacle2.physicsBody.dynamic = NO;
-    obstacle2.physicsBody.collisionBitMask = 0;
-    obstacle2.physicsBody.contactTestBitMask = CollisionCategoryLaser || CollisionCategoryPlayer;
+    [self objectPhysicsStandards: obstacle2];
     
     [self addChild: obstacle2];
     [self moveAerialNode:obstacle2 allowsRotation:YES];
@@ -249,10 +251,7 @@ NSTimer *halfSecond;
     obstacle2.yScale = 0.4 + randScale;
     
     obstacle2.physicsBody = [SKPhysicsBody bodyWithCircleOfRadius:obstacle2.size.height/2];
-    obstacle2.physicsBody.categoryBitMask = CollisionCategoryObject;
-    obstacle2.physicsBody.dynamic = NO;
-    obstacle2.physicsBody.collisionBitMask = 0;
-    obstacle2.physicsBody.contactTestBitMask = CollisionCategoryLaser || CollisionCategoryPlayer;
+    [self objectPhysicsStandards: obstacle2];
     
     [self addChild: obstacle2];
     [self moveAerialNode:obstacle2 allowsRotation:YES];
@@ -275,10 +274,7 @@ NSTimer *halfSecond;
     obstacle2.yScale = 0.4 + randScale;
     
     obstacle2.physicsBody = [SKPhysicsBody bodyWithCircleOfRadius:obstacle2.size.height/2];
-    obstacle2.physicsBody.categoryBitMask = CollisionCategoryObject;
-    obstacle2.physicsBody.dynamic = NO;
-    obstacle2.physicsBody.collisionBitMask = 0;
-    obstacle2.physicsBody.contactTestBitMask = CollisionCategoryLaser || CollisionCategoryPlayer;
+    [self objectPhysicsStandards: obstacle2];
     
     [self addChild: obstacle2];
     [self moveAerialNode:obstacle2 allowsRotation:YES];
@@ -310,10 +306,7 @@ NSTimer *halfSecond;
     CGPathCloseSubpath(path);
     
     obstacle2.physicsBody = [SKPhysicsBody bodyWithPolygonFromPath:path];
-    obstacle2.physicsBody.categoryBitMask = CollisionCategoryObject;
-    obstacle2.physicsBody.dynamic = NO;
-    obstacle2.physicsBody.collisionBitMask = 0;
-    obstacle2.physicsBody.contactTestBitMask = CollisionCategoryLaser || CollisionCategoryPlayer;
+    [self objectPhysicsStandards: obstacle2];
     
     [self addChild: obstacle2];
     [self moveAerialNode:obstacle2 allowsRotation:YES];
@@ -342,13 +335,21 @@ NSTimer *halfSecond;
     CGPathCloseSubpath(path);
     
     obstacle2.physicsBody = [SKPhysicsBody bodyWithPolygonFromPath:path];
-    obstacle2.physicsBody.categoryBitMask = CollisionCategoryObject;
-    obstacle2.physicsBody.dynamic = NO;
-    obstacle2.physicsBody.collisionBitMask = 0;
-    obstacle2.physicsBody.contactTestBitMask = CollisionCategoryLaser || CollisionCategoryPlayer;
+    [self objectPhysicsStandards: obstacle2];
     
     [self addChild: obstacle2];
     [self moveAerialNode:obstacle2 allowsRotation: YES];
+}
+
+-(void)objectPhysicsStandards: (SKSpriteNode *)object {
+    object.physicsBody.categoryBitMask = CollisionCategoryObject;
+    object.physicsBody.dynamic = YES;
+    object.physicsBody.affectedByGravity = NO;
+    object.physicsBody.collisionBitMask = CollisionCategoryObject;
+    object.physicsBody.usesPreciseCollisionDetection = YES;
+    object.physicsBody.friction = 0.2f;
+    object.physicsBody.restitution = 0.0f;
+    object.physicsBody.linearDamping = 0.0;
 }
 
 -(void)bottomCollide {
@@ -399,17 +400,6 @@ NSTimer *halfSecond;
 {
     [[NWAudioPlayer sharedAudioPlayer] createAllMusicWithAudio:Level_1];
     [NWAudioPlayer sharedAudioPlayer].songName = Level_1;
-}
-
--(void)createShipAudio {
-    NSString *soundFile = [[NSBundle mainBundle] pathForResource:@"Engine-Audio" ofType:@"wav"];
-    NSURL *soundFileUrl = [NSURL fileURLWithPath:soundFile];
-    NSError *Error = nil;
-    Engine = [[AVAudioPlayer alloc] initWithContentsOfURL:soundFileUrl error:&Error];
-    Engine.numberOfLoops = -1;
-    Engine.volume = 0.8 * [[GameState sharedGameData] audioVolume];
-    [Engine prepareToPlay];
-    [Engine play];
 }
 
 -(void)explosionAudio {
@@ -605,11 +595,11 @@ NSTimer *halfSecond;
     switch (powerUp) {
         case Wing_man:
             [self createPupTitleWithText:@"Wingman!"];
-            [self autoCannonRun];
+            [self overShield];
             break;
         case Over_shield:
             [self createPupTitleWithText:@"Overshield!"];
-            [self autoCannonRun];
+            [self overShield];
             break;
         case Auto_Cannon:
             [self createPupTitleWithText:@"Auto Cannon!"];
@@ -705,6 +695,73 @@ NSTimer *halfSecond;
     [GameState sharedGameData].maxLaserHits = MAX([GameState sharedGameData].maxLaserHits, localLaserHits);
 }
 
+-(void)overShield {
+    shield = [SKSpriteNode spriteNodeWithImageNamed:@"Shield"];
+    shield.xScale = 1.2;
+    shield.yScale = 1.2;
+    shield.zPosition = 111;
+    shield.alpha = 1.0;
+    
+    CGFloat offsetX = (shield.frame.size.width * 1.2) * shield.anchorPoint.x;
+    CGFloat offsetY = (shield.frame.size.height * 1.2) * shield.anchorPoint.y;
+    CGMutablePathRef path = CGPathCreateMutable();
+    
+    CGPathMoveToPoint(path, NULL, 5 - offsetX, 45 - offsetY);
+    CGPathAddLineToPoint(path, NULL, 22 - offsetX, 13 - offsetY);
+    CGPathAddLineToPoint(path, NULL, 64 - offsetX, 3 - offsetY);
+    CGPathAddLineToPoint(path, NULL, 100 - offsetX, 23 - offsetY);
+    CGPathAddLineToPoint(path, NULL, 79 - offsetX, 61 - offsetY);
+    CGPathAddLineToPoint(path, NULL, 35 - offsetX, 70 - offsetY);
+    
+    CGPathCloseSubpath(path);
+    
+    shield.physicsBody = [SKPhysicsBody bodyWithPolygonFromPath:path];
+    
+    CGPathRelease(path);
+    
+    shield.physicsBody.dynamic = YES;
+    shield.physicsBody.restitution = 0.0f;
+    shield.physicsBody.friction = 0.3f;
+    shield.physicsBody.linearDamping = 1.0f;
+    shield.physicsBody.allowsRotation = NO;
+    shield.physicsBody.affectedByGravity = NO;
+    shield.physicsBody.usesPreciseCollisionDetection = YES;
+    shield.physicsBody.categoryBitMask = CollisionCategoryShield;
+    shield.physicsBody.collisionBitMask = 0;
+    shield.physicsBody.contactTestBitMask = CollisionCategoryObject;
+    shield.name = @"shield";
+    
+    [playerParent addChild:shield];
+    SKPhysicsJointFixed *shieldJoint = [SKPhysicsJointFixed jointWithBodyA:playerParent.physicsBody bodyB:shield.physicsBody anchor:CGPointMake(playerParent.position.x, playerParent.position.y)];
+    [self.physicsWorld addJoint:shieldJoint];
+    
+    playerNode.physicsBody.contactTestBitMask = CollisionCategoryBottom  | CollisionCategoryScore;
+    shieldIndex = 0;
+    activePup = YES;
+}
+
+-(void)collideOvershieldandRemove: (SKSpriteNode *)object {
+    if (shieldIndex < 3 ) {
+        SKShapeNode *flash = [SKShapeNode node];
+        flash.path = [UIBezierPath bezierPathWithRect: CGRectMake(0, 0, self.size.width, self.size.height)].CGPath;
+        flash.position = CGPointMake(0, 0);
+        flash.zPosition = 111;
+        flash.fillColor = [NWColor NWShieldHit];
+        [self addChild:flash];
+        [[Multipliers alloc] popActionWithNode:flash];
+        
+        [object removeFromParent];
+        shield.alpha = shield.alpha - 0.3;
+        shieldIndex ++;
+        if(shieldIndex == 3) {
+            [shield removeFromParent];
+            playerNode.physicsBody.contactTestBitMask = CollisionCategoryBottom | CollisionCategoryObject | CollisionCategoryScore | CollisionCategoryPup;
+            activePup = NO;
+        }
+    }
+    
+}
+
 #pragma mark --User Interface
 
 -(void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event {
@@ -759,11 +816,19 @@ NSTimer *halfSecond;
         [playerParent rotateNodeDownwards:playerParent];
     }
     
-    if ([self childNodeWithName:@"aerial"].position.x < playerParent.position.x && [self childNodeWithName:@"aerial"].position.x > 1)
+    if ([self childNodeWithName:@"aerial"].position.x < self.size.width / 2) {
+        [[self childNodeWithName:@"aerial"].physicsBody applyImpulse:CGVectorMake(0, -0.2)];
+    }
+    
+    if ([self childNodeWithName:@"aerial"].position.x < playerParent.position.x - playerParent.size.width && [self childNodeWithName:@"aerial"].position.x > 1)
     {
         [self scoreAdd];
         [self scorePlus];
         [self childNodeWithName:@"aerial"].name = @"aerialClose";
+    }
+    
+    if ([self childNodeWithName:@"aerialClose"].position.x < -self.size.width / 2) {
+        [[self childNodeWithName:@"aerialClose"] removeFromParent];
     }
     
 }
@@ -824,6 +889,12 @@ NSTimer *halfSecond;
     if (firstBody.categoryBitMask == CollisionCategoryLaser && secondBody.categoryBitMask == CollisionCategoryObject) {
         [self laserContactRemove:firstNode andRemove:secondNode];
         
+    }
+    
+    if (firstBody.categoryBitMask == CollisionCategoryShield && secondBody.categoryBitMask == CollisionCategoryObject) {
+        [self collideOvershieldandRemove: secondNode];
+        [self scoreAdd];
+        [self scorePlus];
     }
     
 }

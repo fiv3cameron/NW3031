@@ -18,8 +18,3 @@
 
 
 @end
-
-SKColor *NWBlue;
-SKColor *NWGreen;
-SKColor *NWPurple;
-SKColor *NWYellow;

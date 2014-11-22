@@ -34,7 +34,6 @@
 }
 
 -(SKShapeNode *)createFlash {
-    [self initColors];
     
     SKShapeNode *flash = [SKShapeNode node];
     flash.alpha = 0;
@@ -42,16 +41,16 @@
     
     switch ([GameState sharedGameData].scoreMultiplier) {
         case 1:
-            flash.fillColor = NWBlue;
+            flash.fillColor = [NWColor NWBlue];
             break;
         case 2:
-            flash.fillColor = NWGreen;
+            flash.fillColor = [NWColor NWGreen];
             break;
         case 3:
-            flash.fillColor = NWPurple;
+            flash.fillColor = [NWColor NWPurple];
             break;
         case 4:
-            flash.fillColor = NWYellow;
+            flash.fillColor = [NWColor NWYellow];
             break;            
         default:
             break;
@@ -60,15 +59,7 @@
     return flash;
 }
 
--(void)initColors {
-    NWBlue = [SKColor colorWithRed:0.5 green:0.8 blue:1 alpha:1];
-    NWGreen = [SKColor colorWithRed:0.1 green:1 blue:0.7 alpha:1];
-    NWPurple = [SKColor colorWithRed:1 green:0 blue:0.7 alpha:1];
-    NWYellow = [SKColor colorWithRed:1 green:1 blue:0 alpha:1];
-}
-
 -(SKEmitterNode *)createShipTrail {
-    [self initColors];
     
     SKEmitterNode *shipTrail = [[SKEmitterNode alloc] init];
     [shipTrail setParticleTexture: [SKTexture textureWithImageNamed:@"spark.png"]];
@@ -94,16 +85,16 @@
     
     switch ([GameState sharedGameData].scoreMultiplier) {
         case 1:
-            [shipTrail setParticleColor: NWBlue];
+            [shipTrail setParticleColor: [NWColor NWBlue]];
             break;
         case 2:
-            [shipTrail setParticleColor: NWGreen];
+            [shipTrail setParticleColor: [NWColor NWGreen]];
             break;
         case 3:
-            [shipTrail setParticleColor: NWPurple];
+            [shipTrail setParticleColor: [NWColor NWPurple]];
             break;
         case 4:
-            [shipTrail setParticleColor: NWYellow];
+            [shipTrail setParticleColor: [NWColor NWYellow]];
             break;
         default:
             break;
