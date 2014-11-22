@@ -338,7 +338,7 @@ int shieldIndex;
     object.physicsBody.categoryBitMask = CollisionCategoryObject;
     object.physicsBody.dynamic = YES;
     object.physicsBody.affectedByGravity = NO;
-    object.physicsBody.collisionBitMask = CollisionCategoryObject | CollisionCategoryShield;
+    object.physicsBody.collisionBitMask = CollisionCategoryObject;
     object.physicsBody.usesPreciseCollisionDetection = YES;
     object.physicsBody.friction = 0.2f;
     object.physicsBody.restitution = 0.0f;
@@ -490,7 +490,7 @@ int shieldIndex;
 
 #pragma mark --Animate Obstacles
 
- -(void) movePupNode: (SKSpriteNode *)incomingNode allowsRotation: (BOOL)allowsRotate
+ -(void) moveAerialNode: (SKSpriteNode *)incomingNode allowsRotation: (BOOL)allowsRotate
 {
     //Calculations.
     float startHeight = incomingNode.position.y;
@@ -538,10 +538,6 @@ int shieldIndex;
     }
 }
 
--(void) moveAerialNode: (SKSpriteNode *)incomingNode allowsRotation: (BOOL)allowsRotate {
-    [incomingNode.physicsBody applyImpulse:CGVectorMake(-20, 0)];
-}
-
 #pragma mark --Power Ups
 
 -(void)createMultiplier {
@@ -562,7 +558,7 @@ int shieldIndex;
     int randomInt = arc4random()%2;
     if (randomInt == 1) {
         [self addChild:multiplier];
-        [self movePupNode:multiplier allowsRotation: NO];
+        [self moveAerialNode:multiplier allowsRotation: NO];
     }
 }
 
@@ -583,7 +579,7 @@ int shieldIndex;
         Pup.zPosition = 11;
         
         [self addChild:Pup];
-        [self movePupNode:Pup allowsRotation:NO];
+        [self moveAerialNode:Pup allowsRotation:NO];
     }
 }
 
@@ -683,18 +679,28 @@ int shieldIndex;
     [self.physicsWorld addJoint:shieldJoint];
     
     playerNode.physicsBody.contactTestBitMask = CollisionCategoryBottom  | CollisionCategoryScore;
-    shieldIndex = 3;
+    shieldIndex = 0;
     activePup = YES;
 }
 
--(void)collideOvershield {
-    if (shieldIndex > 1) {
+-(void)collideOvershieldandRemove: (SKSpriteNode *)object {
+    if (shieldIndex < 3 ) {
+        SKShapeNode *flash = [SKShapeNode node];
+        flash.path = [UIBezierPath bezierPathWithRect: CGRectMake(0, 0, self.size.width, self.size.height)].CGPath;
+        flash.position = CGPointMake(0, 0);
+        flash.zPosition = 111;
+        flash.fillColor = [NWColor NWShieldHit];
+        [self addChild:flash];
+        [[Multipliers alloc] popActionWithNode:flash];
+        
+        [object removeFromParent];
         shield.alpha = shield.alpha - 0.3;
-        shieldIndex --;
-    } else if(shieldIndex == 1) {
-        [shield removeFromParent];
-        playerNode.physicsBody.contactTestBitMask = CollisionCategoryBottom | CollisionCategoryObject | CollisionCategoryScore | CollisionCategoryPup;
-        activePup = NO;
+        shieldIndex ++;
+        if(shieldIndex == 3) {
+            [shield removeFromParent];
+            playerNode.physicsBody.contactTestBitMask = CollisionCategoryBottom | CollisionCategoryObject | CollisionCategoryScore | CollisionCategoryPup;
+            activePup = NO;
+        }
     }
     
 }
@@ -803,6 +809,9 @@ int shieldIndex;
         firstBody = contact.bodyB;
         secondBody = contact.bodyA;
     }
+    
+    SKSpriteNode *firstNode = (SKSpriteNode *)firstBody.node;
+    SKSpriteNode *secondNode = (SKSpriteNode *)secondBody.node;
 
     if (firstBody.categoryBitMask == CollisionCategoryPlayer && secondBody.categoryBitMask == CollisionCategoryObject) {
         [self gameOver];
@@ -821,11 +830,9 @@ int shieldIndex;
     }
     
     if (firstBody.categoryBitMask == CollisionCategoryShield && secondBody.categoryBitMask == CollisionCategoryObject) {
-        //[[self childNodeWithName:@"aerial"] removeFromParent];
-        [self collideOvershield];
+        [self collideOvershieldandRemove: secondNode];
         [self scoreAdd];
         [self scorePlus];
-        //[[playerParent childNodeWithName:@"shield"] removeFromParent];
     }
     
 }

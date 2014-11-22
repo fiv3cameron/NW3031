@@ -73,6 +73,7 @@
 		7651E8D519B0EC8900F7E9D0 /* Level-1-Music.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 7651E8D419B0EC8900F7E9D0 /* Level-1-Music.m4a */; };
 		7651E8D719B0FFA900F7E9D0 /* Level-2-Music.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 7651E8D619B0FFA900F7E9D0 /* Level-2-Music.m4a */; };
 		765C9B951A1CDE9B0050C847 /* Shield@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 765C9B941A1CDE9A0050C847 /* Shield@2x.png */; };
+		765C9BE11A2109860050C847 /* NWColor.m in Sources */ = {isa = PBXBuildFile; fileRef = 765C9BE01A2109860050C847 /* NWColor.m */; };
 		765DF28B19A928A700FBFB16 /* BlackHole@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 765DF28A19A928A700FBFB16 /* BlackHole@2x.png */; };
 		765DF28E19A9290F00FBFB16 /* LevelOne.m in Sources */ = {isa = PBXBuildFile; fileRef = 765DF28D19A9290F00FBFB16 /* LevelOne.m */; };
 		765DF29119A9293100FBFB16 /* spark.png in Resources */ = {isa = PBXBuildFile; fileRef = 765DF28F19A9293100FBFB16 /* spark.png */; };
@@ -196,6 +197,8 @@
 		7651E8D419B0EC8900F7E9D0 /* Level-1-Music.m4a */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Level-1-Music.m4a"; sourceTree = "<group>"; };
 		7651E8D619B0FFA900F7E9D0 /* Level-2-Music.m4a */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Level-2-Music.m4a"; sourceTree = "<group>"; };
 		765C9B941A1CDE9A0050C847 /* Shield@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Shield@2x.png"; sourceTree = "<group>"; };
+		765C9BDF1A2109860050C847 /* NWColor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NWColor.h; sourceTree = "<group>"; };
+		765C9BE01A2109860050C847 /* NWColor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NWColor.m; sourceTree = "<group>"; };
 		765DF28A19A928A700FBFB16 /* BlackHole@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "BlackHole@2x.png"; sourceTree = "<group>"; };
 		765DF28C19A9290F00FBFB16 /* LevelOne.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LevelOne.h; sourceTree = "<group>"; };
 		765DF28D19A9290F00FBFB16 /* LevelOne.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LevelOne.m; sourceTree = "<group>"; };
@@ -378,6 +381,8 @@
 			isa = PBXGroup;
 			children = (
 				76B9E91819FBF011000EF044 /* Game Objects */,
+				765C9BDF1A2109860050C847 /* NWColor.h */,
+				765C9BE01A2109860050C847 /* NWColor.m */,
 				76105BD519F1DB1300A3F242 /* NWAudioPlayer.h */,
 				76105BD619F1DB1300A3F242 /* NWAudioPlayer.m */,
 				2DB35260199972CD006BF15C /* GameObjects.h */,
@@ -745,6 +750,7 @@
 				2DB3526819997A32006BF15C /* GameOver.m in Sources */,
 				2DB3523319996B83006BF15C /* ViewController.m in Sources */,
 				2DB35262199972CD006BF15C /* GameObjects.m in Sources */,
+				765C9BE11A2109860050C847 /* NWColor.m in Sources */,
 				2D800FFA19AC14FC0067CAC1 /* Obstacles.m in Sources */,
 				76105BD719F1DB1300A3F242 /* NWAudioPlayer.m in Sources */,
 				765DF29C19A9295800FBFB16 /* GameOverL1.m in Sources */,
