@@ -187,6 +187,7 @@ NSTimer *oneSecond;
     obstacle1.physicsBody.categoryBitMask = CollisionCategoryObject;
     obstacle1.physicsBody.dynamic = NO;
     obstacle1.physicsBody.collisionBitMask = 0;
+    obstacle1.physicsBody.contactTestBitMask = CollisionCategoryLaser || CollisionCategoryPlayer;
     
     [self addChild: obstacle1];
     [self moveAerialNode:obstacle1 allowsRotation:YES];
@@ -219,6 +220,7 @@ NSTimer *oneSecond;
     obstacle2.physicsBody.categoryBitMask = CollisionCategoryObject;
     obstacle2.physicsBody.dynamic = NO;
     obstacle2.physicsBody.collisionBitMask = 0;
+    obstacle2.physicsBody.contactTestBitMask = CollisionCategoryLaser || CollisionCategoryPlayer;
     
     [self addChild: obstacle2];
     [self moveAerialNode:obstacle2 allowsRotation:YES];
@@ -245,6 +247,7 @@ NSTimer *oneSecond;
     obstacle2.physicsBody.categoryBitMask = CollisionCategoryObject;
     obstacle2.physicsBody.dynamic = NO;
     obstacle2.physicsBody.collisionBitMask = 0;
+    obstacle2.physicsBody.contactTestBitMask = CollisionCategoryLaser || CollisionCategoryPlayer;
     
     [self addChild: obstacle2];
     [self moveAerialNode:obstacle2 allowsRotation:YES];
@@ -270,6 +273,7 @@ NSTimer *oneSecond;
     obstacle2.physicsBody.categoryBitMask = CollisionCategoryObject;
     obstacle2.physicsBody.dynamic = NO;
     obstacle2.physicsBody.collisionBitMask = 0;
+    obstacle2.physicsBody.contactTestBitMask = CollisionCategoryLaser || CollisionCategoryPlayer;
     
     [self addChild: obstacle2];
     [self moveAerialNode:obstacle2 allowsRotation:YES];
@@ -304,6 +308,7 @@ NSTimer *oneSecond;
     obstacle2.physicsBody.categoryBitMask = CollisionCategoryObject;
     obstacle2.physicsBody.dynamic = NO;
     obstacle2.physicsBody.collisionBitMask = 0;
+    obstacle2.physicsBody.contactTestBitMask = CollisionCategoryLaser || CollisionCategoryPlayer;
     
     [self addChild: obstacle2];
     [self moveAerialNode:obstacle2 allowsRotation:YES];
@@ -335,6 +340,7 @@ NSTimer *oneSecond;
     obstacle2.physicsBody.categoryBitMask = CollisionCategoryObject;
     obstacle2.physicsBody.dynamic = NO;
     obstacle2.physicsBody.collisionBitMask = 0;
+    obstacle2.physicsBody.contactTestBitMask = CollisionCategoryLaser || CollisionCategoryPlayer;
     
     [self addChild: obstacle2];
     [self moveAerialNode:obstacle2 allowsRotation: YES];
@@ -666,6 +672,7 @@ NSTimer *oneSecond;
     laser.physicsBody.categoryBitMask = CollisionCategoryLaser;
     laser.physicsBody.collisionBitMask = 0;
     laser.physicsBody.contactTestBitMask = CollisionCategoryObject;
+    laser.name = @"laser";
     [self addChild:laser];
     
     [[PowerUps alloc] animateLaser:laser withWidth: self.size.width];
@@ -762,26 +769,49 @@ NSTimer *oneSecond;
 }
 
 -(void)didBeginContact:(SKPhysicsContact *)contact {
+    
+    SKPhysicsBody *firstBody;
+    SKPhysicsBody *secondBody;
+    
+    if (contact.bodyA.categoryBitMask < contact.bodyB.categoryBitMask) {
+        firstBody = contact.bodyA;
+        secondBody = contact.bodyB;
+    } else {
+        firstBody = contact.bodyB;
+        secondBody = contact.bodyA;
+    }
 
-    if (contact.bodyA.categoryBitMask == CollisionCategoryPlayer && contact.bodyB.categoryBitMask == CollisionCategoryObject) {
+    if (firstBody.categoryBitMask == CollisionCategoryPlayer && secondBody.categoryBitMask == CollisionCategoryObject) {
         [self gameOver];
     }
     
-    if (contact.bodyB.categoryBitMask == CollisionCategoryPlayer && contact.bodyA.categoryBitMask == CollisionCategoryBottom) {
+    if (firstBody.categoryBitMask == CollisionCategoryPlayer && secondBody.categoryBitMask == CollisionCategoryBottom) {
         [self gameOver];
     }
     
-    if (contact.bodyA.categoryBitMask == CollisionCategoryPlayer && contact.bodyB.categoryBitMask == CollisionCategoryScore) {
+    if (firstBody.categoryBitMask == CollisionCategoryPlayer && secondBody.categoryBitMask == CollisionCategoryScore) {
         [self scoreMulti];
         }
     
-    if (contact.bodyA.categoryBitMask == CollisionCategoryPlayer && contact.bodyB.categoryBitMask == CollisionCategoryPup) {
+    if (firstBody.categoryBitMask == CollisionCategoryPlayer && secondBody.categoryBitMask == CollisionCategoryPup) {
         [self checkPup];
     }
     
-    if (contact.bodyA.categoryBitMask == CollisionCategoryLaser && contact.bodyB.categoryBitMask == CollisionCategoryObject) {
-        //screen flash
-        //remove objects.
+    if (firstBody.categoryBitMask == CollisionCategoryObject && secondBody.categoryBitMask == CollisionCategoryLaser) {
+        SKShapeNode *flash = [SKShapeNode node];
+        flash.alpha = 0;
+        flash.zPosition = 103;
+        flash.path = [UIBezierPath bezierPathWithRect: CGRectMake(0, 0, self.size.width, self.size.height)].CGPath;
+        flash.position = CGPointMake(0, 0);
+        [self addChild:flash];
+        SKAction *fadeIn = [SKAction fadeAlphaTo:1 duration:.05];
+        SKAction *fadeOut = [SKAction fadeAlphaTo:0 duration:.15];
+        SKAction *remove = [SKAction removeFromParent];
+        SKAction *seq = [SKAction sequence:@[fadeIn,fadeOut, remove]];
+        [flash runAction:seq];
+        /*[[self childNodeWithName:@"aerial"] removeFromParent];
+        */
+        
     }
     
 }

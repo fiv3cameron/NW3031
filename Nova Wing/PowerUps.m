@@ -75,7 +75,8 @@
     SKSpriteNode *laser = [SKSpriteNode spriteNodeWithImageNamed:@"Laser"];
     laser.xScale = 0.25;
     laser.yScale = 0.8;
-    laser.physicsBody = [SKPhysicsBody bodyWithRectangleOfSize:CGSizeMake(laser.size.width, laser.size.height)];
+    laser.physicsBody = [SKPhysicsBody bodyWithCircleOfRadius:laser.size.width/2];
+    //bodyWithRectangleOfSize:CGSizeMake(laser.size.width, laser.size.height)
     laser.physicsBody.dynamic = NO;
     
     return laser;
@@ -86,7 +87,7 @@
     float xvector = incomingWidth + laserToMove.size.width-laserToMove.position.x;
     float yvector = xvector*tan(laserToMove.zRotation);
     float hypotenuse = sqrtf(xvector*xvector+yvector*yvector);
-    float arbitraryVelocity = 300.0;
+    float arbitraryVelocity = 350.0;
     float tempDuration = hypotenuse/arbitraryVelocity;
 
     //Movements
