@@ -55,6 +55,7 @@
 		2DB352AA19999D1B006BF15C /* Level-2@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 2DB352A919999D1B006BF15C /* Level-2@2x.png */; };
 		2DB352AC19999D5A006BF15C /* SF Movie Poster.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 2DB352AB19999D5A006BF15C /* SF Movie Poster.ttf */; };
 		2DB352AE1999A0C4006BF15C /* GameOver-BG@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 2DB352AD1999A0C4006BF15C /* GameOver-BG@2x.png */; };
+		760897AF1A24FBEA002C28EB /* Tutorial.m in Sources */ = {isa = PBXBuildFile; fileRef = 760897AE1A24FBEA002C28EB /* Tutorial.m */; };
 		760C23C419DC832C00D34429 /* L1-AOb-1@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 760C23C319DC832C00D34429 /* L1-AOb-1@2x.png */; };
 		760C23C719DC856000D34429 /* L1-AOb-2@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 760C23C519DC856000D34429 /* L1-AOb-2@2x.png */; };
 		760C23C819DC856000D34429 /* L1-AOb-3@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 760C23C619DC856000D34429 /* L1-AOb-3@2x.png */; };
@@ -177,6 +178,8 @@
 		2DB352A919999D1B006BF15C /* Level-2@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Level-2@2x.png"; sourceTree = "<group>"; };
 		2DB352AB19999D5A006BF15C /* SF Movie Poster.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SF Movie Poster.ttf"; sourceTree = "<group>"; };
 		2DB352AD1999A0C4006BF15C /* GameOver-BG@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "GameOver-BG@2x.png"; sourceTree = "<group>"; };
+		760897AD1A24FBEA002C28EB /* Tutorial.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Tutorial.h; sourceTree = "<group>"; };
+		760897AE1A24FBEA002C28EB /* Tutorial.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Tutorial.m; sourceTree = "<group>"; };
 		760C23C319DC832C00D34429 /* L1-AOb-1@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "L1-AOb-1@2x.png"; sourceTree = "<group>"; };
 		760C23C519DC856000D34429 /* L1-AOb-2@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "L1-AOb-2@2x.png"; sourceTree = "<group>"; };
 		760C23C619DC856000D34429 /* L1-AOb-3@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "L1-AOb-3@2x.png"; sourceTree = "<group>"; };
@@ -349,6 +352,7 @@
 		2DB3525619996C98006BF15C /* Levels */ = {
 			isa = PBXGroup;
 			children = (
+				760897AA1A24FB80002C28EB /* Tutorial */,
 				765DF28919A9288200FBFB16 /* Level 1: Event Horizon */,
 				2DB3525719996C9E006BF15C /* Level 2: The Whispers */,
 			);
@@ -492,6 +496,15 @@
 				2DB3529019999485006BF15C /* Level-1-Sky@2x.png */,
 			);
 			name = "Level 2";
+			sourceTree = "<group>";
+		};
+		760897AA1A24FB80002C28EB /* Tutorial */ = {
+			isa = PBXGroup;
+			children = (
+				760897AD1A24FBEA002C28EB /* Tutorial.h */,
+				760897AE1A24FBEA002C28EB /* Tutorial.m */,
+			);
+			name = Tutorial;
 			sourceTree = "<group>";
 		};
 		765DF28819A9286700FBFB16 /* Level 1 */ = {
@@ -753,6 +766,7 @@
 				76B9E91B19FBF04D000EF044 /* PowerUps.m in Sources */,
 				2DB3526819997A32006BF15C /* GameOver.m in Sources */,
 				2DB3523319996B83006BF15C /* ViewController.m in Sources */,
+				760897AF1A24FBEA002C28EB /* Tutorial.m in Sources */,
 				2DB35262199972CD006BF15C /* GameObjects.m in Sources */,
 				765C9BE11A2109860050C847 /* NWColor.m in Sources */,
 				2D800FFA19AC14FC0067CAC1 /* Obstacles.m in Sources */,
