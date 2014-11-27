@@ -79,7 +79,7 @@ int shieldIndex;
         [stars advanceSimulationTime:1.5];
         
         playerParent = [self createPlayerParent];
-        wingmanParent = [self createPlayerParent];
+        wingmanParent = [self createWingmanParent];
         [self createPlayerNode: playerNode];
         
         [self createAudio];
@@ -122,6 +122,19 @@ int shieldIndex;
     playerParent.physicsBody.collisionBitMask = 0;
     
     return playerParent;
+}
+
+-(Ships *)createWingmanParent {
+    wingmanParent = [Ships node];
+    wingmanParent.physicsBody = [SKPhysicsBody bodyWithCircleOfRadius:50];
+    wingmanParent.position = CGPointMake(self.frame.size.width/5, self.frame.size.height/2);
+    wingmanParent.physicsBody.dynamic = NO;
+    wingmanParent.physicsBody.allowsRotation = YES;
+    wingmanParent.physicsBody.categoryBitMask = 0;
+    wingmanParent.physicsBody.contactTestBitMask = 0;
+    wingmanParent.physicsBody.collisionBitMask = 0;
+    
+    return wingmanParent;
 }
 
 -(void)createBlackHole {
@@ -613,15 +626,15 @@ int shieldIndex;
             break;
         case Over_shield:
             [self createPupTitleWithText:@"Overshield!"];
-            [self overShield];
+            [self wingmanRun];
             break;
         case Auto_Cannon:
             [self createPupTitleWithText:@"Auto Cannon!"];
-            [self autoCannonRun];
+            [self wingmanRun];
             break;
         case Tiny_Nova:
             [self createPupTitleWithText:@"Tiny Nova!"];
-            [self tinyNova];
+            [self wingmanRun];
             break;
         default:
             break;
@@ -659,7 +672,7 @@ int shieldIndex;
     [[Multipliers alloc] popActionWithNode:flash];
     
     //Pass existing player into WingmanParent to preserve position data, etc.  Revise position of playerParent & wingmanParent.
-    wingmanNode = [self createPlayerNode: wingmanNode];
+    [self createWingmanNode: wingmanNode];
     [self addChild:wingmanParent];
     [wingmanParent addChild:wingmanNode];
     wingmanParent.name = @"wingman";
