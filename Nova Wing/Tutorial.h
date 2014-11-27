@@ -23,8 +23,6 @@
 
 
 SKSpriteNode *blackHole;
-SKLabelNode *tapPlay;
-NORLabelNode *introduction;
 SKSpriteNode *storyBadge;
 bool storymodeL1;
 bool levelComplete;

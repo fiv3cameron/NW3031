@@ -11,9 +11,9 @@
 
 @interface Multipliers : NSObject
 
--(SKSpriteNode *)createMultiplier;
--(SKShapeNode *)createFlash;
--(SKEmitterNode *)createShipTrail;
++(SKSpriteNode *)createMultiplier;
++(SKShapeNode *)createFlash;
++(SKEmitterNode *)createShipTrail;
 -(void)popActionWithNode: (SKNode *)node;
 
 

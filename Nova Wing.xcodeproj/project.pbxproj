@@ -180,6 +180,7 @@
 		2DB352AD1999A0C4006BF15C /* GameOver-BG@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "GameOver-BG@2x.png"; sourceTree = "<group>"; };
 		760897AD1A24FBEA002C28EB /* Tutorial.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Tutorial.h; sourceTree = "<group>"; };
 		760897AE1A24FBEA002C28EB /* Tutorial.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Tutorial.m; sourceTree = "<group>"; };
+		760897B01A250594002C28EB /* NWCollisions.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = NWCollisions.h; sourceTree = "<group>"; };
 		760C23C319DC832C00D34429 /* L1-AOb-1@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "L1-AOb-1@2x.png"; sourceTree = "<group>"; };
 		760C23C519DC856000D34429 /* L1-AOb-2@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "L1-AOb-2@2x.png"; sourceTree = "<group>"; };
 		760C23C619DC856000D34429 /* L1-AOb-3@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "L1-AOb-3@2x.png"; sourceTree = "<group>"; };
@@ -322,6 +323,7 @@
 		2DB3522319996B83006BF15C /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				760897B01A250594002C28EB /* NWCollisions.h */,
 				2DB352AB19999D5A006BF15C /* SF Movie Poster.ttf */,
 				2DB3522419996B83006BF15C /* Nova Wing-Info.plist */,
 				2DB3522519996B83006BF15C /* InfoPlist.strings */,

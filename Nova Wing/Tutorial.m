@@ -13,16 +13,6 @@
 #import "Multipliers.h"
 #import "PowerUps.h"
 
-typedef NS_OPTIONS(uint32_t, CollisionCategory) {
-    CollisionCategoryPlayer     = 0x1 << 0,
-    CollisionCategoryShield     = 0x1 << 1,
-    CollisionCategoryLaser      = 0x1 << 2,
-    CollisionCategoryObject     = 0x1 << 4,
-    CollisionCategoryBottom     = 0x1 << 5,
-    CollisionCategoryScore      = 0x1 << 6,
-    CollisionCategoryPup        = 0x1 << 7,
-};
-
 @interface Tutorial() <SKPhysicsContactDelegate>
 {
     Ships *playerNode;
@@ -30,33 +20,22 @@ typedef NS_OPTIONS(uint32_t, CollisionCategory) {
     pupType powerUp;
     SKSpriteNode *shield;
     BOOL activePup;
-    
+    NORLabelNode *tapPlay;
 }
 @end
 
 @implementation Tutorial
 
+
 NSTimeInterval _lastUpdateTime;
 NSTimeInterval _dt;
 SKLabelNode* _score;
-NSTimer *objectCreateTimer;
-NSTimer *multiTimer;
-NSTimer *pupTimer;
-NSTimer *tenSeconds;
-NSTimer *halfSecond;
-int shieldIndex;
 
 
 #pragma mark --CreateBackground
 
 -(id)initWithSize:(CGSize)size {
     if (self = [super initWithSize:size]) {
-        
-        levelComplete = NO;
-        storymodeL1 = NO;
-        [GameState sharedGameData].scoreMultiplier = 1;
-        [GameState sharedGameData].maxLaserHits = 0;
-        activePup = NO;
         
         self.backgroundColor = [SKColor colorWithRed:0 green:0 blue:0 alpha:1];
         
@@ -78,9 +57,9 @@ int shieldIndex;
         
         [self addChild:stars];
         [self createBlackHole];
-        [self bottomCollide];
         [self addChild:playerParent];
         [playerParent addChild:playerNode];
+        [self addChild:[self skipButtonBG]];
         
         //Physics Joint
         SKPhysicsJointFixed *test = [SKPhysicsJointFixed jointWithBodyA:playerParent.physicsBody bodyB:playerNode.physicsBody anchor:CGPointMake(playerParent.position.x+50, playerParent.position.y+50)];
@@ -90,12 +69,7 @@ int shieldIndex;
         [playerParent shipBobbing:playerParent];
         
         [self createScoreNode];
-        //[self scoreTrack];
-        if (storymodeL1 == YES) {
-            [self intro];
-            [self tapToPlay];
-        } else if (storymodeL1 == NO)
-            [self tapToPlay];
+        [self tapToPlay];
         _score.text = @"Score: 0";
         
     }
@@ -137,44 +111,6 @@ int shieldIndex;
     
     
     return tempPlayer;
-}
-
--(void)createObstacles {
-    
-    int tempObjectSelector = arc4random()%11;
-    switch (tempObjectSelector)
-    {
-        case 1:
-        case 2:
-            break;
-        case 3:
-            [self rocket];
-            break;
-        case 4:
-            [self asteroid1];
-            break;
-        case 5:
-            [self shipChunk];
-            break;
-        case 6:
-            break;
-        case 7:
-            [self asteroid2];
-            break;
-        case 8:
-            break;
-        case 9:
-            [self asteroid3];
-            break;
-        case 10:
-            [self asteroid4];
-            break;
-            
-        default:
-            break;
-    }
-    
-    
 }
 
 -(void)asteroid1 {
@@ -363,33 +299,47 @@ int shieldIndex;
 }
 
 -(void)tapToPlay {
-    tapPlay = [SKLabelNode labelNodeWithFontNamed:@"SF Movie Poster"];
+    tapPlay = [NORLabelNode labelNodeWithFontNamed:@"SF Movie Poster"];
     tapPlay.fontSize = 35;
+    tapPlay.lineSpacing = .8;
     tapPlay.fontColor = [SKColor whiteColor];
     tapPlay.position = CGPointMake(self.size.width/2, self.size.height / 5);
-    tapPlay.text = @"Tap the screen to play!";
+    tapPlay.text = @"Welcome to Nova Wing: 3031!\nLet's take a look around!\nTap the screen to continue,\nor just tap SKIP below!";
     
     [self addChild:tapPlay];
 }
 
--(void)intro {
+-(NORLabelNode *)skipButtonWithColor: (NSString*)color andOffset: (int)offset {
+    NORLabelNode *skip = [NORLabelNode labelNodeWithFontNamed:@"SF Movie Poster"];
+    skip.fontSize = 35;
+    skip.lineSpacing = .8;
+    if ([color isEqualToString:@"white"]) {
+        skip.fontColor = [SKColor whiteColor];
+    } else
+        skip.fontColor = [SKColor blackColor];
+    skip.position = CGPointMake(25 + offset, 15 - offset);
+    skip.zPosition = 111;
+    skip.horizontalAlignmentMode = SKLabelHorizontalAlignmentModeLeft;
+    skip.text = @"SKIP";
     
-    storyBadge = [SKSpriteNode spriteNodeWithImageNamed:@"CMDR-FletcherPop"];
-    storyBadge.position = CGPointMake(self.size.width / 2, self.size.height / 2);
-    storyBadge.zPosition = 101;
+    return skip;
+}
+
+-(SKShapeNode *)skipButtonBG {
+    SKShapeNode *rect = [SKShapeNode node];
+    [rect setPath: CGPathCreateWithRoundedRect(CGRectMake(-5, 13, 75, 30),4,4, nil)];
+    rect.position = CGPointMake(0, 0);
+    rect.zPosition = 10;
+    rect.fillColor = [NWColor NWBlue];
+    rect.alpha = 0.6;
+    rect.lineWidth = 0;
+    rect.name = @"skipButton";
     
-    introduction  = [NORLabelNode labelNodeWithFontNamed:@"SF Movie Poster"];
-    introduction.fontColor = [SKColor whiteColor];
-    introduction.fontSize = 30;
-    introduction.lineSpacing = 1;
-    introduction.position = CGPointMake(self.size.width / 2, self.size.height / 2 - 50);
-    introduction.zPosition = 102;
-    introduction.horizontalAlignmentMode = SKLabelHorizontalAlignmentModeCenter;
-    introduction.verticalAlignmentMode = SKLabelVerticalAlignmentModeCenter;
-    introduction.text = @"A Black Hole just came out of nowhere!\n Could it be? Theres... agh...\n the Whispers... I can't...";
+    [rect addChild:[self skipButtonWithColor:@"black" andOffset:1]];
+    [rect addChild:[self skipButtonWithColor:@"white" andOffset:0]];
+
     
-    [self addChild:storyBadge];
-    [self addChild:introduction];
+    return rect;
 }
 
 #pragma mark --Create Audio
@@ -397,17 +347,6 @@ int shieldIndex;
 {
     [[NWAudioPlayer sharedAudioPlayer] createAllMusicWithAudio:Level_1];
     [NWAudioPlayer sharedAudioPlayer].songName = Level_1;
-}
-
--(void)explosionAudio {
-    NSString *soundFile = [[NSBundle mainBundle] pathForResource:@"Explosion" ofType:@"wav"];
-    NSURL *soundFileUrl = [NSURL fileURLWithPath:soundFile];
-    NSError *Error = nil;
-    Explosion = [[AVAudioPlayer alloc] initWithContentsOfURL:soundFileUrl error:&Error];
-    Explosion.numberOfLoops = 1;
-    Explosion.volume = [[GameState sharedGameData] audioVolume];
-    [Explosion prepareToPlay];
-    [Explosion play];
 }
 
 #pragma mark --Score
@@ -443,53 +382,6 @@ int shieldIndex;
     SKAction *group = [SKAction group:@[scale,moveUp,fade]];
     [plusOne runAction:group];
     
-}
-
--(void)scoreMulti {
-    [trail removeFromParent];
-    
-    SKShapeNode *flash = [[Multipliers alloc] createFlash];
-    flash.path = [UIBezierPath bezierPathWithRect: CGRectMake(0, 0, self.size.width, self.size.height)].CGPath;
-    flash.position = CGPointMake(0, 0);
-    [self addChild:flash];
-    [[Multipliers alloc] popActionWithNode:flash];
-    
-    trail = [[Multipliers alloc] createShipTrail];
-    trail.position = CGPointMake(-30, 8);
-    trail.zPosition = 1;
-    trail.targetNode = self.scene;
-    trail.name = @"particleTrail";
-    [playerNode addChild:trail];
-    
-    switch ([GameState sharedGameData].scoreMultiplier) {
-        case 1:
-            [[self childNodeWithName:@"multiplier"] removeFromParent];
-            [GameState sharedGameData].scoreMultiplier ++;
-            [objectCreateTimer invalidate];
-            objectCreateTimer = [NSTimer scheduledTimerWithTimeInterval:0.35 target:self selector:@selector(createObstacles) userInfo:nil repeats:YES];
-            break;
-        case 2:
-            [[self childNodeWithName:@"multiplier"] removeFromParent];
-            [GameState sharedGameData].scoreMultiplier ++;
-            [objectCreateTimer invalidate];
-            objectCreateTimer = [NSTimer scheduledTimerWithTimeInterval:0.3 target:self selector:@selector(createObstacles) userInfo:nil repeats:YES];
-            break;
-        case 3:
-            [[self childNodeWithName:@"multiplier"] removeFromParent];
-            [GameState sharedGameData].scoreMultiplier ++;
-            [objectCreateTimer invalidate];
-            objectCreateTimer = [NSTimer scheduledTimerWithTimeInterval:0.28 target:self selector:@selector(createObstacles) userInfo:nil repeats:YES];
-            break;
-        case 4:
-            [[self childNodeWithName:@"multiplier"] removeFromParent];
-            [GameState sharedGameData].scoreMultiplier ++;
-            [objectCreateTimer invalidate];
-            objectCreateTimer = [NSTimer scheduledTimerWithTimeInterval:0.27 target:self selector:@selector(createObstacles) userInfo:nil repeats:YES];
-            [multiTimer invalidate];
-            break;
-        default:
-            break;
-    }
 }
 
 #pragma mark --Animate Obstacles
@@ -548,7 +440,7 @@ int shieldIndex;
     int tempRand = arc4random()%80;
     double randYPosition = (tempRand+10)/100.0;
     
-    SKSpriteNode *multiplier = [[Multipliers alloc] createMultiplier];
+    SKSpriteNode *multiplier = [Multipliers createMultiplier];
     multiplier.position = CGPointMake(self.size.width + multiplier.size.width, self.size.height * randYPosition);
     multiplier.physicsBody = [SKPhysicsBody bodyWithRectangleOfSize: multiplier.size];
     multiplier.physicsBody.categoryBitMask = CollisionCategoryScore;
@@ -587,31 +479,6 @@ int shieldIndex;
     }
 }
 
--(void)checkPup {
-    
-    switch (powerUp) {
-        case Wing_man:
-            [self createPupTitleWithText:@"Wingman!"];
-            [self overShield];
-            break;
-        case Over_shield:
-            [self createPupTitleWithText:@"Overshield!"];
-            [self overShield];
-            break;
-        case Auto_Cannon:
-            [self createPupTitleWithText:@"Auto Cannon!"];
-            [self autoCannonRun];
-            break;
-        case Tiny_Nova:
-            [self createPupTitleWithText:@"Tiny Nova!"];
-            [self tinyNova];
-            break;
-        default:
-            break;
-    }
-    [[self childNodeWithName:@"PowerUp"] removeFromParent];
-}
-
 -(void)createPupTitleWithText: (NSString *)title {
     SKLabelNode *pupText = [SKLabelNode labelNodeWithFontNamed:@"SF Movie Poster"];
     pupText.position = CGPointMake(self.size.width / 2, self.size.height * 0.75);
@@ -630,170 +497,33 @@ int shieldIndex;
     [pupText runAction:group];
 }
 
--(void)tinyNova {
-    [[PowerUps alloc] logicTinyNova:playerNode];
-    tenSeconds = [NSTimer scheduledTimerWithTimeInterval:10 target:self selector:@selector(tinyNovaClose) userInfo:nil repeats:NO];
-    activePup = YES;
-}
-
--(void)tinyNovaClose {
-    [[PowerUps alloc] closeTinyNova:playerNode];
-    activePup = NO;
-    [tenSeconds invalidate];
-}
-
--(void)autoCannonRun {
-    //tenSeconds = [NSTimer scheduledTimerWithTimeInterval:10.1 target:self selector:@selector(autoCannonFinish) userInfo:nil repeats:NO];
-    lasersFired = 0;
-    localLaserHits = 0;
-    halfSecond = [NSTimer scheduledTimerWithTimeInterval:0.45 target:self selector:@selector(autoCannonFire) userInfo:nil repeats:YES];
-    activePup = YES;
-}
-
--(void)autoCannonFire {
-    
-    if (lasersFired == 20) {
-        [self autoCannonFinish];
-    } else {
-        SKSpriteNode *laser = [[PowerUps alloc] autoCannonFire:playerNode];
-        laser.position = CGPointMake(playerParent.position.x, playerParent.position.y);
-        laser.zRotation = playerParent.zRotation;
-        laser.physicsBody.categoryBitMask = CollisionCategoryLaser;
-        laser.physicsBody.collisionBitMask = 0;
-        laser.physicsBody.contactTestBitMask = CollisionCategoryObject;
-        laser.name = @"laser";
-        [self addChild:laser];
-        lasersFired = lasersFired + 1;
-        [[PowerUps alloc] animateLaser:laser withWidth: self.size.width];
-    }
-}
-
--(void)laserContactRemove: (SKSpriteNode *)firstNodeToRemove andRemove: (SKSpriteNode *)secondNodeToRemove {
-    SKShapeNode *flash = [SKShapeNode node];
-    flash.fillColor = [SKColor colorWithRed:0.33 green:0.33 blue:0.34 alpha:1];
-    flash.alpha = 0;
-    flash.zPosition = 103;
-    flash.path = [UIBezierPath bezierPathWithRect: CGRectMake(0, 0, self.size.width, self.size.height)].CGPath;
-    flash.position = CGPointMake(0, 0);
-    [self addChild:flash];
-    SKAction *fadeIn = [SKAction fadeAlphaTo:1 duration:.05];
-    SKAction *fadeOut = [SKAction fadeAlphaTo:0 duration:.15];
-    SKAction *remove = [SKAction removeFromParent];
-    SKAction *seq = [SKAction sequence:@[fadeIn,fadeOut, remove]];
-    [flash runAction:seq];
-    [firstNodeToRemove removeFromParent];
-    [secondNodeToRemove removeFromParent];
-    localLaserHits = localLaserHits + 1;
-}
-
--(void)autoCannonFinish {
-    activePup = NO;
-    [halfSecond invalidate];
-    [GameState sharedGameData].maxLaserHits = MAX([GameState sharedGameData].maxLaserHits, localLaserHits);
-}
-
--(void)overShield {
-    shield = [SKSpriteNode spriteNodeWithImageNamed:@"Shield"];
-    shield.xScale = 1.2;
-    shield.yScale = 1.2;
-    shield.zPosition = 111;
-    shield.alpha = 1.0;
-    
-    CGFloat offsetX = (shield.frame.size.width * 1.2) * shield.anchorPoint.x;
-    CGFloat offsetY = (shield.frame.size.height * 1.2) * shield.anchorPoint.y;
-    CGMutablePathRef path = CGPathCreateMutable();
-    
-    CGPathMoveToPoint(path, NULL, 5 - offsetX, 45 - offsetY);
-    CGPathAddLineToPoint(path, NULL, 22 - offsetX, 13 - offsetY);
-    CGPathAddLineToPoint(path, NULL, 64 - offsetX, 3 - offsetY);
-    CGPathAddLineToPoint(path, NULL, 100 - offsetX, 23 - offsetY);
-    CGPathAddLineToPoint(path, NULL, 79 - offsetX, 61 - offsetY);
-    CGPathAddLineToPoint(path, NULL, 35 - offsetX, 70 - offsetY);
-    
-    CGPathCloseSubpath(path);
-    
-    shield.physicsBody = [SKPhysicsBody bodyWithPolygonFromPath:path];
-    
-    CGPathRelease(path);
-    
-    shield.physicsBody.dynamic = YES;
-    shield.physicsBody.restitution = 0.0f;
-    shield.physicsBody.friction = 0.1f;
-    shield.physicsBody.linearDamping = 1.0f;
-    shield.physicsBody.allowsRotation = NO;
-    shield.physicsBody.affectedByGravity = NO;
-    shield.physicsBody.usesPreciseCollisionDetection = YES;
-    shield.physicsBody.categoryBitMask = CollisionCategoryShield;
-    shield.physicsBody.collisionBitMask = 0;
-    shield.physicsBody.contactTestBitMask = CollisionCategoryObject;
-    shield.name = @"shield";
-    
-    [playerParent addChild:shield];
-    SKPhysicsJointFixed *shieldJoint = [SKPhysicsJointFixed jointWithBodyA:playerParent.physicsBody bodyB:shield.physicsBody anchor:CGPointMake(playerParent.position.x, playerParent.position.y)];
-    [self.physicsWorld addJoint:shieldJoint];
-    
-    playerNode.physicsBody.contactTestBitMask = CollisionCategoryBottom  | CollisionCategoryScore;
-    shieldIndex = 0;
-    activePup = YES;
-}
-
--(void)collideOvershieldandRemove: (SKSpriteNode *)object {
-    if (shieldIndex < 3 ) {
-        SKShapeNode *flash = [SKShapeNode node];
-        flash.path = [UIBezierPath bezierPathWithRect: CGRectMake(0, 0, self.size.width, self.size.height)].CGPath;
-        flash.position = CGPointMake(0, 0);
-        flash.zPosition = 111;
-        flash.fillColor = [NWColor NWShieldHit];
-        [self addChild:flash];
-        [[Multipliers alloc] popActionWithNode:flash];
-        
-        [object removeFromParent];
-        shield.alpha = shield.alpha - 0.3;
-        shieldIndex ++;
-        if(shieldIndex == 3) {
-            [shield removeFromParent];
-            playerNode.physicsBody.contactTestBitMask = CollisionCategoryBottom | CollisionCategoryObject | CollisionCategoryScore | CollisionCategoryPup;
-            activePup = NO;
-        }
-    }
-    
-}
 
 #pragma mark --User Interface
 
 -(void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event {
     
-    if ([self.children containsObject:storyBadge] && [self.children containsObject:introduction] && [self.children containsObject:tapPlay]) {
-        [storyBadge removeFromParent];
-        [introduction removeFromParent];
-        [tapPlay removeFromParent];
-    }
-    if (playerParent.physicsBody.dynamic == NO) {
-        playerParent.physicsBody.dynamic = YES;
-        playerNode.physicsBody.dynamic = YES;
-        //playerParent.physicsBody.allowsRotation = YES;
-        [self addChild:_score];
-        [self createObstacles];
-        [tapPlay removeFromParent];
-        objectCreateTimer = [NSTimer scheduledTimerWithTimeInterval:0.45 target:self selector:@selector(createObstacles) userInfo:nil repeats:YES];
-        multiTimer = [NSTimer scheduledTimerWithTimeInterval:2.7 target:self selector:@selector(createMultiplier) userInfo:nil repeats:YES];
-        pupTimer = [NSTimer scheduledTimerWithTimeInterval:5 target:self selector:@selector(createPowerUp) userInfo:nil repeats:YES];
-        [playerParent removeActionForKey:@"bobbingAction"];
-    }
     
-    [playerParent thrustPlayer:playerParent withHeight:self.size.height];
+}
+
+-(void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event {
+    UITouch *touchLift = [touches anyObject];
+    CGPoint locationLift = [touchLift locationInNode:self];
+    SKNode *nodeLift = [self nodeAtPoint:locationLift];
     
-    if (levelComplete == YES) {
-        SKView *gameOverView = (SKView *)self.view;
+    if ([nodeLift.name isEqualToString:@"skipButton"]) {
+        SKView * levelOneView = (SKView *)self.view;
+        levelOneView.showsFPS = YES;
+        levelOneView.showsNodeCount = YES;
+        //levelOneView.showsPhysics = YES;
         
-        SKScene *gameOverScene = [[GameOverL1 alloc] initWithSize:gameOverView.bounds.size];
+        // Create and configure the scene.
+        SKScene * levelOneScene = [[LevelOne alloc] initWithSize:levelOneView.bounds.size];
+        levelOneScene.scaleMode = SKSceneScaleModeAspectFill;
+        SKTransition *levelOneTrans = [SKTransition fadeWithColor:[SKColor whiteColor] duration:0.5];
         
-        SKColor *fadeColor = [SKColor colorWithRed:0 green:0 blue:0 alpha:1];
-        SKTransition *gameOverTransition = [SKTransition fadeWithColor:fadeColor duration:.25];
-        [gameOverView presentScene:gameOverScene transition:gameOverTransition];
+        // Present the scene.
+        [levelOneView presentScene:levelOneScene transition:levelOneTrans];
     }
-    
-    [playerParent rotateNodeUpwards:playerParent];
 }
 
 -(void)update:(NSTimeInterval)currentTime {
@@ -816,24 +546,8 @@ int shieldIndex;
     /*if ([self childNodeWithName:@"aerial"].position.x < self.size.width / 2) {
      [[self childNodeWithName:@"aerial"].physicsBody applyImpulse:CGVectorMake(0, -0.2)];
      }*/
-    
-    if ([self childNodeWithName:@"aerial"].position.x < playerParent.position.x - playerParent.size.width && [self childNodeWithName:@"aerial"].position.x > 1)
-    {
-        [self scoreAdd];
-        [self scorePlus];
-        [self childNodeWithName:@"aerial"].name = @"aerialClose";
-    }
-    
-    if ([self childNodeWithName:@"aerialClose"].position.x < -self.size.width / 2) {
-        [[self childNodeWithName:@"aerialClose"] removeFromParent];
-    }
-    
-}
 
--(void)timersInvalidate {
-    [objectCreateTimer invalidate];
-    [multiTimer invalidate];
-    [pupTimer invalidate];
+    
 }
 
 -(void)gameOver {
@@ -847,7 +561,6 @@ int shieldIndex;
     SKTransition *gameOverTransition = [SKTransition fadeWithColor:fadeColor duration:.25];
     [gameOverView presentScene:gameOverScene transition:gameOverTransition];
     
-    [self timersInvalidate];
     [Engine stop];
 }
 
@@ -864,35 +577,9 @@ int shieldIndex;
         secondBody = contact.bodyA;
     }
     
-    SKSpriteNode *firstNode = (SKSpriteNode *)firstBody.node;
-    SKSpriteNode *secondNode = (SKSpriteNode *)secondBody.node;
-    
-    if (firstBody.categoryBitMask == CollisionCategoryPlayer && secondBody.categoryBitMask == CollisionCategoryObject) {
-        [self gameOver];
-    }
-    
-    if (firstBody.categoryBitMask == CollisionCategoryPlayer && secondBody.categoryBitMask == CollisionCategoryBottom) {
-        [self gameOver];
-    }
-    
-    if (firstBody.categoryBitMask == CollisionCategoryPlayer && secondBody.categoryBitMask == CollisionCategoryScore) {
-        [self scoreMulti];
-    }
-    
-    if (firstBody.categoryBitMask == CollisionCategoryPlayer && secondBody.categoryBitMask == CollisionCategoryPup) {
-        [self checkPup];
-    }
-    
-    if (firstBody.categoryBitMask == CollisionCategoryLaser && secondBody.categoryBitMask == CollisionCategoryObject) {
-        [self laserContactRemove:firstNode andRemove:secondNode];
-        
-    }
-    
-    if (firstBody.categoryBitMask == CollisionCategoryShield && secondBody.categoryBitMask == CollisionCategoryObject) {
-        [self collideOvershieldandRemove: secondNode];
-        [self scoreAdd];
-        [self scorePlus];
-    }
+    //SKSpriteNode *firstNode = (SKSpriteNode *)firstBody.node;
+    //SKSpriteNode *secondNode = (SKSpriteNode *)secondBody.node;
+
     
 }
 

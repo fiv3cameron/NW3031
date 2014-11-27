@@ -9,6 +9,7 @@
 #import "MainMenu.h"
 #import "LevelOne.h"
 #import "LevelTwo.h"
+#import "Tutorial.h"
 
 static const float BG_VELOCITY = 10.0;
 
@@ -450,10 +451,10 @@ NSTimeInterval _dt;
         SKView * levelOneView = (SKView *)self.view;
         levelOneView.showsFPS = YES;
         levelOneView.showsNodeCount = YES;
-        //levelOneView.showsPhysics = YES;
+        levelOneView.showsPhysics = YES;
         
         // Create and configure the scene.
-        SKScene * levelOneScene = [[LevelOne alloc] initWithSize:levelOneView.bounds.size];
+        SKScene * levelOneScene = [[Tutorial alloc] initWithSize:levelOneView.bounds.size];
         levelOneScene.scaleMode = SKSceneScaleModeAspectFill;
         SKTransition *levelOneTrans = [SKTransition fadeWithColor:fadeColor duration:levelFadeDuration];
         

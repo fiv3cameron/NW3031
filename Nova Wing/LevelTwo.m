@@ -10,11 +10,6 @@
 #import "GameOver.h"
 #import "Obstacles.h"
 
-typedef NS_OPTIONS(uint32_t, CollisionCategory) {
-    CollisionCategoryPlayer     = 0x1 << 0,
-    CollisionCategoryObject     = 0x1 << 1,
-};
-
 @interface LevelTwo() <SKPhysicsContactDelegate>
 {
     Ships *_player;
