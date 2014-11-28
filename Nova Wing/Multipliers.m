@@ -10,7 +10,7 @@
 
 @implementation Multipliers
 
--(SKSpriteNode *)createMultiplier {
++(SKSpriteNode *)createMultiplier {
     SKSpriteNode *multitemp = [SKSpriteNode node];
     
     switch ([GameState sharedGameData].scoreMultiplier) {
@@ -33,7 +33,7 @@
     return multitemp;
 }
 
--(SKShapeNode *)createFlash {
++(SKShapeNode *)createFlash {
     
     SKShapeNode *flash = [SKShapeNode node];
     flash.alpha = 0;
@@ -59,7 +59,7 @@
     return flash;
 }
 
--(SKEmitterNode *)createShipTrail {
++(SKEmitterNode *)createShipTrail {
     
     SKEmitterNode *shipTrail = [[SKEmitterNode alloc] init];
     [shipTrail setParticleTexture: [SKTexture textureWithImageNamed:@"spark.png"]];

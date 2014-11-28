@@ -12,16 +12,6 @@
 #import "Multipliers.h"
 #import "PowerUps.h"
 
-typedef NS_OPTIONS(uint32_t, CollisionCategory) {
-    CollisionCategoryPlayer     = 0x1 << 0,
-    CollisionCategoryShield     = 0x1 << 1,
-    CollisionCategoryLaser      = 0x1 << 2,
-    CollisionCategoryObject     = 0x1 << 4,
-    CollisionCategoryBottom     = 0x1 << 5,
-    CollisionCategoryScore      = 0x1 << 6,
-    CollisionCategoryPup        = 0x1 << 7,
-};
-
 @interface LevelOne() <SKPhysicsContactDelegate>
 {
     Ships *playerNode;
@@ -447,13 +437,13 @@ int shieldIndex;
 -(void)scoreMulti {
     [trail removeFromParent];
     
-    SKShapeNode *flash = [[Multipliers alloc] createFlash];
+    SKShapeNode *flash = [Multipliers createFlash];
     flash.path = [UIBezierPath bezierPathWithRect: CGRectMake(0, 0, self.size.width, self.size.height)].CGPath;
     flash.position = CGPointMake(0, 0);
     [self addChild:flash];
     [[Multipliers alloc] popActionWithNode:flash];
     
-    trail = [[Multipliers alloc] createShipTrail];
+    trail = [Multipliers createShipTrail];
     trail.position = CGPointMake(-30, 8);
     trail.zPosition = 1;
     trail.targetNode = self.scene;
@@ -547,7 +537,7 @@ int shieldIndex;
     int tempRand = arc4random()%80;
     double randYPosition = (tempRand+10)/100.0;
     
-    SKSpriteNode *multiplier = [[Multipliers alloc] createMultiplier];
+    SKSpriteNode *multiplier = [Multipliers createMultiplier];
     multiplier.position = CGPointMake(self.size.width + multiplier.size.width, self.size.height * randYPosition);
     multiplier.physicsBody = [SKPhysicsBody bodyWithRectangleOfSize: multiplier.size];
     multiplier.physicsBody.categoryBitMask = CollisionCategoryScore;
