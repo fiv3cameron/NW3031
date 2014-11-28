@@ -19,16 +19,3 @@
 -(void)scoreAdd;
 
 @end
-
-
-
-SKSpriteNode *blackHole;
-SKSpriteNode *storyBadge;
-bool storymodeL1;
-bool levelComplete;
-SKSpriteNode *bottom;
-AVAudioPlayer *Engine;
-AVAudioPlayer *Explosion;
-SKEmitterNode *trail;
-int lasersFired;
-int localLaserHits;

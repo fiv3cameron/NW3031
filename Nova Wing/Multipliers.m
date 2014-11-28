@@ -10,7 +10,7 @@
 
 @implementation Multipliers
 
--(SKSpriteNode *)createMultiplier {
++(SKSpriteNode *)createMultiplier {
     SKSpriteNode *multitemp = [SKSpriteNode node];
     
     switch ([GameState sharedGameData].scoreMultiplier) {

@@ -446,27 +446,41 @@ NSTimeInterval _dt;
         
         [self mainMenuAnimateOut];
         
-        // Transition to Level One Scene
-        // Configure the developer view.
-        SKView * levelOneView = (SKView *)self.view;
-        levelOneView.showsFPS = YES;
-        levelOneView.showsNodeCount = YES;
-        levelOneView.showsPhysics = YES;
-        
-        // Create and configure the scene.
-        SKScene * levelOneScene = [[Tutorial alloc] initWithSize:levelOneView.bounds.size];
-        levelOneScene.scaleMode = SKSceneScaleModeAspectFill;
-        SKTransition *levelOneTrans = [SKTransition fadeWithColor:fadeColor duration:levelFadeDuration];
-        
-        // Present the scene.
-        [levelOneView presentScene:levelOneScene transition:levelOneTrans];
-        
-        // Load level select area
-        /*[GameState sharedGameData].levelIndex = 1;
-        [self addChild:[self levelThumbWithPositionModifier:1.5]];
-        [self animateLeft:levelThumb withDelay:0.5];
-        [self addChild:[self createRightArrowWithWait:0.5]];
-        [self addChild:[self backToMainButton]];*/
+        if ([GameState sharedGameData].highScoreL1 == 0) {
+            //Start Tutorial
+            SKView * tutView = (SKView *)self.view;
+            tutView.showsFPS = YES;
+            tutView.showsNodeCount = YES;
+            //levelOneView.showsPhysics = YES;
+            
+            // Create and configure the scene.
+            SKScene * tutScene = [[Tutorial alloc] initWithSize:tutView.bounds.size];
+            tutScene.scaleMode = SKSceneScaleModeAspectFill;
+            SKTransition *tutTrans = [SKTransition fadeWithColor:fadeColor duration:levelFadeDuration];
+            
+            // Present the scene.
+            [tutView presentScene:tutScene transition:tutTrans];
+        } else {
+            //Load Level 1
+            SKView * levelOneView = (SKView *)self.view;
+            levelOneView.showsFPS = YES;
+            levelOneView.showsNodeCount = YES;
+            //levelOneView.showsPhysics = YES;
+            
+            // Create and configure the scene.
+            SKScene * levelOneScene = [[LevelOne alloc] initWithSize:levelOneView.bounds.size];
+            levelOneScene.scaleMode = SKSceneScaleModeAspectFill;
+            SKTransition *levelOneTrans = [SKTransition fadeWithColor:fadeColor duration:levelFadeDuration];
+            
+            // Present the scene.
+            [levelOneView presentScene:levelOneScene transition:levelOneTrans];
+            
+            // Load level select area
+            /*[GameState sharedGameData].levelIndex = 1;
+             [self addChild:[self levelThumbWithPositionModifier:1.5]];
+             [self animateLeft:levelThumb withDelay:0.5];
+             [self addChild:[self createRightArrowWithWait:0.5]];
+             [self addChild:[self backToMainButton]];*/ }
         
     }
     if (![nodeLift.name isEqualToString:@"_startButton"] && ![nodeLift.name isEqualToString:@"_leaderButton"] && ![nodeLift.name isEqualToString:@"_settingsButton"]) {
