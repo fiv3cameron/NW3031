@@ -799,7 +799,7 @@ int shieldIndex;
 
 -(void)autoCannonFire {
     
-    if (lasersFired == 20) {
+    if (lasersFired > 20) {
         [self autoCannonFinish];
     } else {
         SKSpriteNode *laser = [[PowerUps alloc] autoCannonFire:playerNode];
