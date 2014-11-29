@@ -34,7 +34,6 @@ typedef NS_OPTIONS(uint32_t, CollisionCategory) {
     BOOL wingmanActive;
     BOOL wingmanTempSafe;
     SKPhysicsJointSpring *wingmanSpring;
-    
 }
 @end
 
@@ -50,7 +49,6 @@ NSTimer *tenSeconds;
 NSTimer *halfSecond;
 NSTimer *twoSecondSafety;
 int shieldIndex;
-
 
 #pragma mark --CreateBackground
 
@@ -105,9 +103,7 @@ int shieldIndex;
         } else if (storymodeL1 == NO)
             [self tapToPlay];
         _score.text = @"Score: 0";
-        
     }
-    
     return self;
 }
 
@@ -203,8 +199,6 @@ int shieldIndex;
         default:
             break;
     }
-    
-
 }
 
 -(void)asteroid1 {
@@ -258,7 +252,6 @@ int shieldIndex;
     
     [self addChild: obstacle2];
     [self moveAerialNode:obstacle2 allowsRotation:YES];
-    
 }
 
 -(void)asteroid3 {
@@ -305,7 +298,6 @@ int shieldIndex;
     
     [self addChild: obstacle2];
     [self moveAerialNode:obstacle2 allowsRotation:YES];
-    
 }
 
 -(void)rocket {
@@ -389,7 +381,6 @@ int shieldIndex;
     bottom.physicsBody.collisionBitMask = 0;
     
     [self addChild:bottom];
-    
 }
 
 -(void)tapToPlay {
@@ -429,17 +420,6 @@ int shieldIndex;
     [NWAudioPlayer sharedAudioPlayer].songName = Level_1;
 }
 
--(void)explosionAudio {
-    NSString *soundFile = [[NSBundle mainBundle] pathForResource:@"Explosion" ofType:@"wav"];
-    NSURL *soundFileUrl = [NSURL fileURLWithPath:soundFile];
-    NSError *Error = nil;
-    Explosion = [[AVAudioPlayer alloc] initWithContentsOfURL:soundFileUrl error:&Error];
-    Explosion.numberOfLoops = 1;
-    Explosion.volume = [[GameState sharedGameData] audioVolume];
-    [Explosion prepareToPlay];
-    [Explosion play];
-}
-
 #pragma mark --Score
 
 -(void)createScoreNode {
@@ -472,7 +452,24 @@ int shieldIndex;
     
     SKAction *group = [SKAction group:@[scale,moveUp,fade]];
     [plusOne runAction:group];
+}
 
+-(void)scorePlusLaser: (SKSpriteNode *)hitObject {
+    SKLabelNode *plusOne = [SKLabelNode labelNodeWithFontNamed:@"SF Movie Poster"];
+    plusOne.position = CGPointMake(MIN(hitObject.position.x, self.size.width-25), hitObject.position.y);
+    plusOne.fontColor = [SKColor whiteColor];
+    plusOne.fontSize = 30;
+    plusOne.zPosition = 101;
+    plusOne.text = [NSString stringWithFormat:@"+%i", [GameState sharedGameData].scoreMultiplier];
+    
+    [self addChild:plusOne];
+    
+    SKAction *scale = [SKAction scaleBy:2 duration:1];
+    SKAction *moveUp = [SKAction moveBy:CGVectorMake(0,50) duration:1];
+    SKAction *fade = [SKAction fadeAlphaTo:0 duration:1];
+    
+    SKAction *group = [SKAction group:@[scale,moveUp,fade]];
+    [plusOne runAction:group];
 }
 
 -(void)scoreMulti {
@@ -626,15 +623,15 @@ int shieldIndex;
             break;
         case Over_shield:
             [self createPupTitleWithText:@"Overshield!"];
-            [self wingmanRun];
+            [self overShield];
             break;
         case Auto_Cannon:
             [self createPupTitleWithText:@"Auto Cannon!"];
-            [self wingmanRun];
+            [self autoCannonRun];
             break;
         case Tiny_Nova:
             [self createPupTitleWithText:@"Tiny Nova!"];
-            [self wingmanRun];
+            [self tinyNova];
             break;
         default:
             break;
@@ -673,18 +670,23 @@ int shieldIndex;
     
     //Pass existing player into WingmanParent to preserve position data, etc.  Revise position of playerParent & wingmanParent.
     [self createWingmanNode: wingmanNode];
+    wingmanNode.physicsBody.allowsRotation = YES;
+    wingmanNode.physicsBody.dynamic = YES;
+    wingmanParent.physicsBody.allowsRotation = YES;
+    wingmanParent.physicsBody.dynamic = YES;
     [self addChild:wingmanParent];
     [wingmanParent addChild:wingmanNode];
     wingmanParent.name = @"wingman";
-    wingmanParent.position = CGPointMake(playerParent.position.x, playerParent.position.y);
-    playerParent.position = CGPointMake(playerParent.position.x, playerParent.position.y - 100); //Shift playerParent downward 100 pix.
-    wingmanParent.position = CGPointMake(wingmanParent.position.x, wingmanParent.position.y + 100); //Shift wingmanParent upward 100 pix from original location.
+    wingmanParent.alpha = 1;
+    //wingmanParent.position = CGPointMake(playerParent.position.x, playerParent.position.y);
+    //playerParent.position = CGPointMake(playerParent.position.x, playerParent.position.y - 50); //Shift playerParent downward 100 pix.
+    wingmanParent.position = CGPointMake(playerParent.position.x, playerParent.position.y + 150); //Shift wingmanParent upward 100 pix from original location.
     
     //Create spring joint & add to physicsWorld.
     //Physics Joint
     SKPhysicsJointFixed *test = [SKPhysicsJointFixed jointWithBodyA:wingmanParent.physicsBody bodyB:wingmanNode.physicsBody anchor:CGPointMake(wingmanParent.position.x+50, wingmanParent.position.y+50)];
     [self.physicsWorld addJoint:test];
-    wingmanSpring = [SKPhysicsJointSpring jointWithBodyA:playerParent.physicsBody bodyB:wingmanParent.physicsBody anchorA:CGPointMake(playerParent.size.width/2, playerParent.size.height/2) anchorB:CGPointMake(wingmanParent.size.width/2, wingmanParent.size.height/2)];
+    wingmanSpring = [SKPhysicsJointSpring jointWithBodyA:playerNode.physicsBody bodyB:wingmanNode.physicsBody anchorA:CGPointMake(playerParent.position.x+playerParent.size.width/2, playerParent.position.y+playerParent.size.height/2) anchorB:CGPointMake(wingmanParent.position.x+wingmanParent.size.width/2, wingmanParent.position.y+wingmanParent.size.height/2)];
     [self.physicsWorld addJoint:wingmanSpring];
     
     //Set variables to reflect state.
@@ -693,7 +695,7 @@ int shieldIndex;
     wingmanTempSafe = YES;
     wingmanParent.alpha = 0.5;
     playerParent.alpha = 0.5;
-    twoSecondSafety = [NSTimer timerWithTimeInterval:2.0 target:self selector:@selector(wingmanUnSafe) userInfo:nil repeats:NO];
+    twoSecondSafety = [NSTimer scheduledTimerWithTimeInterval:2.0 target:self selector:@selector(wingmanUnSafe) userInfo:nil repeats:YES];
 }
 
 -(void)wingmanUnSafe {
@@ -703,31 +705,49 @@ int shieldIndex;
     [twoSecondSafety invalidate];
 }
 
--(void)wingmanRemove: (SKSpriteNode *)nodeToRemove objectRemove:(SKSpriteNode *)objectToRemove remainingPlayer: (Ships *)remainingPlayer {
+-(void)wingmanRemove: (SKSpriteNode *)nodeToRemove objectRemove:(SKSpriteNode *)objectToRemove {
     //Pop color.
     SKShapeNode *flash = [SKShapeNode node];
-    flash.fillColor = [SKColor colorWithRed:0.97 green:0.79 blue:0.22 alpha:0]; //Gold.
+    flash.fillColor = [SKColor colorWithRed:0.97 green:0.79 blue:0.22 alpha:1]; //Gold.
+    flash.alpha = 0;
     flash.zPosition = 103;
     flash.path = [UIBezierPath bezierPathWithRect: CGRectMake(0, 0, self.size.width, self.size.height)].CGPath;
     flash.position = CGPointMake(0, 0);
     [self addChild:flash];
     [[Multipliers alloc] popActionWithNode:flash];
     
-    //Remove collided bodies & physics joint.
-    [nodeToRemove removeFromParent];
     [objectToRemove removeFromParent];
+    
+    if ([nodeToRemove.parent.name isEqual:@"wingman"]) {
+        //Remove wingman.
+        [wingmanNode removeFromParent];
+        [wingmanParent removeFromParent];
+    } else {
+        //Swap player & wingman.
+        playerParent.physicsBody.dynamic = NO;
+        playerNode.physicsBody.dynamic = NO;
+        SKAction *movePlayerParentToWingmansPosition = [SKAction moveBy:CGVectorMake(0, wingmanParent.position.y-playerParent.position.y) duration:0.0];
+        SKAction *rotatePlayerParentToWingmansRotation = [SKAction rotateToAngle:wingmanParent.zRotation duration:0.0];
+        SKAction *swapGroup = [SKAction group: @[movePlayerParentToWingmansPosition, rotatePlayerParentToWingmansRotation]];
+        [playerParent runAction:swapGroup];
+        playerParent.physicsBody.dynamic = YES;
+        playerNode.physicsBody.dynamic = YES;
+        
+        [wingmanNode removeFromParent];
+        [wingmanParent removeFromParent];
+    }
+    
     [self.physicsWorld removeJoint:wingmanSpring];
     
     //Safe remaining player & update globals.
     activePup = NO;
     wingmanActive = NO;
     wingmanTempSafe = YES;
-    playerParent = remainingPlayer;
-    playerParent.alpha = 0.5;
-    twoSecondSafety = [NSTimer timerWithTimeInterval:2.0 target:self selector:@selector(wingmanUnSafe) userInfo:nil repeats:NO];
+    playerParent.alpha = 0.7;
+    twoSecondSafety = [NSTimer scheduledTimerWithTimeInterval:2.0 target:self selector:@selector(wingmanUnSafe) userInfo:nil repeats:NO];
 }
 
--(void)wingmanRemoveCollideWithBottom: (SKSpriteNode *)nodeToRemove remainingPlayer: (SKSpriteNode *)remainingPlayer {
+-(void)wingmanRemoveCollideWithBottom: (SKSpriteNode *)nodeToRemove{
     //Pop color.
     SKShapeNode *flash = [SKShapeNode node];
     flash.fillColor = [SKColor colorWithRed:0.97 green:0.79 blue:0.22 alpha:0]; //Gold.
@@ -738,15 +758,33 @@ int shieldIndex;
     [[Multipliers alloc] popActionWithNode:flash];
     
     //Remove collided bodies & physics joint.
-    [nodeToRemove removeFromParent];
+    if ([nodeToRemove.parent.name isEqual:@"wingman"]) {
+        //Remove wingman.
+        [wingmanNode removeFromParent];
+        [wingmanParent removeFromParent];
+    } else {
+        //Swap player & wingman.
+        playerParent.physicsBody.dynamic = NO;
+        playerNode.physicsBody.dynamic = NO;
+        SKAction *movePlayerParentToWingmansPosition = [SKAction moveBy:CGVectorMake(0, wingmanParent.position.y-playerParent.position.y) duration:0.0];
+        SKAction *rotatePlayerParentToWingmansRotation = [SKAction rotateToAngle:wingmanParent.zRotation duration:0.0];
+        SKAction *swapGroup = [SKAction group: @[movePlayerParentToWingmansPosition, rotatePlayerParentToWingmansRotation]];
+        [playerParent runAction:swapGroup];
+        playerParent.physicsBody.dynamic = YES;
+        playerNode.physicsBody.dynamic = YES;
+        
+        [wingmanNode removeFromParent];
+        [wingmanParent removeFromParent];
+    }
+    
     [self.physicsWorld removeJoint:wingmanSpring];
     
     //Safe remaining player & update globals.
     activePup = NO;
     wingmanActive = NO;
     wingmanTempSafe = YES;
-    remainingPlayer.alpha = 0.5;
-    twoSecondSafety = [NSTimer timerWithTimeInterval:2.0 target:self selector:@selector(wingmanUnSafe) userInfo:nil repeats:NO];
+    playerParent.alpha = 0.7;
+    twoSecondSafety = [NSTimer scheduledTimerWithTimeInterval:2.0 target:self selector:@selector(wingmanUnSafe) userInfo:nil repeats:NO];
 }
 
 -(void)tinyNova {
@@ -803,6 +841,8 @@ int shieldIndex;
     [firstNodeToRemove removeFromParent];
     [secondNodeToRemove removeFromParent];
     localLaserHits = localLaserHits + 1;
+    [self scorePlus];
+    [self scoreAdd];
 }
 
 -(void)autoCannonFinish {
@@ -875,7 +915,6 @@ int shieldIndex;
             activePup = NO;
         }
     }
-    
 }
 
 #pragma mark --User Interface
@@ -902,7 +941,8 @@ int shieldIndex;
     
     [playerParent thrustPlayer:playerParent withHeight:self.size.height];
     if (wingmanActive == YES) {
-        [wingmanParent thrustPlayer:wingmanParent withHeight:self.size.height];
+        float tempheight = self.size.height + 50;
+        [wingmanParent thrustPlayer:wingmanParent withHeight:tempheight];
     }
     
     if (levelComplete == YES) {
@@ -956,13 +996,13 @@ int shieldIndex;
     if ([self childNodeWithName:@"aerialClose"].position.x < -self.size.width / 2) {
         [[self childNodeWithName:@"aerialClose"] removeFromParent];
     }
-    
 }
 
 -(void)timersInvalidate {
     [objectCreateTimer invalidate];
     [multiTimer invalidate];
     [pupTimer invalidate];
+    [twoSecondSafety invalidate];
 }
 
 -(void)gameOver {
@@ -1000,28 +1040,22 @@ int shieldIndex;
         if (wingmanTempSafe == NO) {
             if (wingmanActive == YES) {
                 //Run wingman or player removal
-                if ([firstNode.name  isEqual: @"wingman"]) {
-                    [self wingmanRemove:firstNode objectRemove:secondNode remainingPlayer:playerParent];
-                } else {
-                    [self wingmanRemove:firstNode objectRemove:secondNode remainingPlayer:wingmanParent];
-                }
+                [self wingmanRemove:firstNode objectRemove:secondNode];
             } else {
                 [self gameOver];
             }
         } else {
             //Player is safe, do nothing.  Objects will pass through player.
         }
-        
-        
     }
     
     if (firstBody.categoryBitMask == CollisionCategoryPlayer && secondBody.categoryBitMask == CollisionCategoryBottom) {
         if (wingmanActive == YES) {
             //Run wingman or player removal
             if ([firstNode.name  isEqual: @"wingman"]) {
-                [self wingmanRemoveCollideWithBottom:firstNode remainingPlayer:playerParent];
+                [self wingmanRemoveCollideWithBottom:firstNode];
             } else {
-                [self wingmanRemoveCollideWithBottom:firstNode remainingPlayer:playerParent];
+                [self wingmanRemoveCollideWithBottom:firstNode];
             }
         } else {
             [self gameOver];
@@ -1037,6 +1071,7 @@ int shieldIndex;
     }
     
     if (firstBody.categoryBitMask == CollisionCategoryLaser && secondBody.categoryBitMask == CollisionCategoryObject) {
+        [self scorePlusLaser: secondNode];
         [self laserContactRemove:firstNode andRemove:secondNode];
         
     }
@@ -1046,7 +1081,6 @@ int shieldIndex;
         [self scoreAdd];
         [self scorePlus];
     }
-    
 }
 
 @end
