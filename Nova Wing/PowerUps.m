@@ -78,6 +78,15 @@
     player.physicsBody.linearDamping = 0.0;
 }
 
++(void)wingmanInvincibilityFlicker: (SKSpriteNode *)player {
+    SKAction *alphaFadeOut = [SKAction fadeAlphaTo:0.5 duration:0.1];
+    SKAction *wait = [SKAction waitForDuration:0.3];
+    SKAction *alphaFadeUp = [SKAction fadeAlphaTo:1 duration:0.1];
+    SKAction *alphaFadeSqnce = [SKAction sequence:@[alphaFadeOut, wait, alphaFadeUp]];
+    SKAction *alphaFade4x = [SKAction sequence:@[alphaFadeSqnce,alphaFadeSqnce,alphaFadeSqnce,alphaFadeSqnce]];
+    [player runAction:alphaFade4x];
+}
+
 -(void)closeTinyNova: (SKSpriteNode *)player {
     player.physicsBody.linearDamping = 1.0;
 }
@@ -98,7 +107,7 @@
     float xvector = incomingWidth + laserToMove.size.width-laserToMove.position.x;
     float yvector = xvector*tan(laserToMove.zRotation);
     float hypotenuse = sqrtf(xvector*xvector+yvector*yvector);
-    float arbitraryVelocity = 350.0;
+    float arbitraryVelocity = 400.0;
     float tempDuration = hypotenuse/arbitraryVelocity;
 
     //Movements

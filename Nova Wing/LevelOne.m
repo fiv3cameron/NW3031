@@ -464,6 +464,7 @@ int shieldIndex;
 
 -(void)scoreMulti {
     [trail removeFromParent];
+    [wingmanTrail removeFromParent];
     
     SKShapeNode *flash = [Multipliers createFlash];
     flash.path = [UIBezierPath bezierPathWithRect: CGRectMake(0, 0, self.size.width, self.size.height)].CGPath;
@@ -471,12 +472,21 @@ int shieldIndex;
     [self addChild:flash];
     [[Multipliers alloc] popActionWithNode:flash];
     
+    //Create Main Player Trail
     trail = [Multipliers createShipTrail];
     trail.position = CGPointMake(-30, 8);
     trail.zPosition = 1;
     trail.targetNode = self.scene;
     trail.name = @"particleTrail";
     [playerNode addChild:trail];
+    
+    //Create Wingman Trail
+    wingmanTrail = [Multipliers createShipTrail];
+    wingmanTrail.position = CGPointMake(trail.position.x,trail.position.y);
+    wingmanTrail.zPosition = trail.zPosition;
+    wingmanTrail.targetNode = trail.targetNode;
+    wingmanTrail.name = trail.name;
+    [wingmanNode addChild:wingmanTrail];
     
     switch ([GameState sharedGameData].scoreMultiplier) {
         case 1:
@@ -668,9 +678,13 @@ int shieldIndex;
     [wingmanParent addChild:wingmanNode];
     wingmanParent.name = @"wingman";
     wingmanParent.alpha = 1;
-    //wingmanParent.position = CGPointMake(playerParent.position.x, playerParent.position.y);
-    //playerParent.position = CGPointMake(playerParent.position.x, playerParent.position.y - 50); //Shift playerParent downward 100 pix.
-    wingmanParent.position = CGPointMake(playerParent.position.x, playerParent.position.y + 150); //Shift wingmanParent upward 100 pix from original location.
+    wingmanParent.position = CGPointMake(playerParent.position.x, playerParent.position.y + 125); //Shift wingmanParent upward 100 pix from original location.
+    wingmanParent.zRotation = playerParent.zRotation;
+    
+    //Add particle trail if existent.
+    if ([GameState sharedGameData].scoreMultiplier > 1) {
+        [wingmanNode addChild:wingmanTrail];
+    }
     
     //Create spring joint & add to physicsWorld.
     //Physics Joint
@@ -683,15 +697,14 @@ int shieldIndex;
     activePup = YES;
     wingmanActive = YES;
     wingmanTempSafe = YES;
-    wingmanParent.alpha = 0.5;
-    playerParent.alpha = 0.5;
+    //wingmanParent.alpha = 0.5;
+    [PowerUps wingmanInvincibilityFlicker:playerParent];
+    [PowerUps wingmanInvincibilityFlicker:wingmanParent];
     twoSecondSafety = [NSTimer scheduledTimerWithTimeInterval:2.0 target:self selector:@selector(wingmanUnSafe) userInfo:nil repeats:YES];
 }
 
 -(void)wingmanUnSafe {
     wingmanTempSafe = NO;
-    wingmanParent.alpha = 1;
-    playerParent.alpha = 1;
     [twoSecondSafety invalidate];
 }
 
@@ -733,7 +746,7 @@ int shieldIndex;
     activePup = NO;
     wingmanActive = NO;
     wingmanTempSafe = YES;
-    playerParent.alpha = 0.7;
+    [PowerUps wingmanInvincibilityFlicker:playerParent];
     twoSecondSafety = [NSTimer scheduledTimerWithTimeInterval:2.0 target:self selector:@selector(wingmanUnSafe) userInfo:nil repeats:NO];
 }
 
@@ -773,7 +786,7 @@ int shieldIndex;
     activePup = NO;
     wingmanActive = NO;
     wingmanTempSafe = YES;
-    playerParent.alpha = 0.7;
+    [PowerUps wingmanInvincibilityFlicker:playerParent];
     twoSecondSafety = [NSTimer scheduledTimerWithTimeInterval:2.0 target:self selector:@selector(wingmanUnSafe) userInfo:nil repeats:NO];
 }
 

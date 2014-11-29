@@ -32,5 +32,6 @@ SKSpriteNode *bottom;
 AVAudioPlayer *Engine;
 AVAudioPlayer *Explosion;
 SKEmitterNode *trail;
+SKEmitterNode *wingmanTrail;
 int lasersFired;
 int localLaserHits;
