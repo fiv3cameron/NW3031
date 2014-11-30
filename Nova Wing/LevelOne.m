@@ -532,7 +532,7 @@ int shieldIndex;
     double square = (sumHeight * sumHeight + triangleWidth * triangleWidth);
     float arcCenterHeight = sqrt(square);
     float deltaHeight = arcCenterHeight - sumHeight;
-    double aerialSpeed = .8 - ([GameState sharedGameData].scoreMultiplier/10);
+    double aerialSpeed = 0.9 - ([GameState sharedGameData].scoreMultiplier/10);
     
     int tempRand = arc4random()%150;
     double randDuration = (tempRand-100)/1000.0;
@@ -936,7 +936,7 @@ int shieldIndex;
         [self addChild:_score];
         [self createObstacles];
         [tapPlay removeFromParent];
-        objectCreateTimer = [NSTimer scheduledTimerWithTimeInterval:0.45 target:self selector:@selector(createObstacles) userInfo:nil repeats:YES];
+        objectCreateTimer = [NSTimer scheduledTimerWithTimeInterval:0.5 target:self selector:@selector(createObstacles) userInfo:nil repeats:YES];
         multiTimer = [NSTimer scheduledTimerWithTimeInterval:2.7 target:self selector:@selector(createMultiplier) userInfo:nil repeats:YES];
         pupTimer = [NSTimer scheduledTimerWithTimeInterval:5 target:self selector:@selector(createPowerUp) userInfo:nil repeats:YES];
         [playerParent removeActionForKey:@"bobbingAction"];
