@@ -116,29 +116,25 @@
     return tempPlayer;
 }
 
--(SKNode *)createObstacles {
+-(SKNode *)createObstaclesWithIndex: (int)tempObjectSelector {
     
     SKNode *node = [SKNode node];
     
-    int tempObjectSelector = arc4random()%6;
     switch (tempObjectSelector)
     {
         case 1:
-            node = [self rocket];
-            break;
-        case 2:
             node = [self asteroid1];
             break;
-        case 3:
+        case 2:
             node = [self shipChunk];
             break;
-        case 4:
+        case 3:
             node = [self asteroid2];
             break;
-        case 5:
+        case 4:
             node = [self asteroid3];
             break;
-        case 6:
+        case 5:
             node = [self asteroid4];
             break;
         default:
@@ -155,9 +151,7 @@
     SKSpriteNode *tempNode = [SKSpriteNode node];
     SKSpriteNode *obstacle1 = [[Obstacles alloc] createObstacleWithNode:tempNode withName:@"aerial" withImage:@"L1-AOb-1"];
     
-    int tempRand = arc4random()%80;
-    double randYPosition = (tempRand+10)/100.0;
-    obstacle1.position = CGPointMake(self.size.width * 1.7, self.size.height*randYPosition);
+    obstacle1.position = CGPointMake(self.size.width * 1.7, (self.size.height / 6));
     //obstacle1.name = @"aerial";
     obstacle1.zPosition = 10;
     
@@ -177,9 +171,7 @@
     SKSpriteNode *tempNode = [SKSpriteNode node];
     SKSpriteNode *obstacle2 = [[Obstacles alloc] createObstacleWithNode:tempNode withName:@"aerial" withImage:@"L1-AOb-2"];
     
-    int tempRand = arc4random()%80;
-    double randYPosition = (tempRand+10)/100.0;
-    obstacle2.position = CGPointMake(self.size.width * 1.7, self.size.height*randYPosition);
+    obstacle2.position = CGPointMake(self.size.width * 1.7, (self.size.height / 6) * 2);
     obstacle2.anchorPoint = CGPointZero;
     obstacle2.zPosition = 10;
     obstacle2.xScale = 0.4;
@@ -207,9 +199,7 @@
     SKSpriteNode *tempNode = [SKSpriteNode node];
     SKSpriteNode *obstacle2 = [[Obstacles alloc] createObstacleWithNode:tempNode withName:@"aerial" withImage:@"L1-AOb-3"];
     
-    int tempRand = arc4random()%80;
-    double randYPosition = (tempRand+10)/100.0;
-    obstacle2.position = CGPointMake(self.size.width * 1.7, self.size.height*randYPosition);
+    obstacle2.position = CGPointMake(self.size.width * 1.7, (self.size.height / 6) * 3);
     //obstacle1.name = @"aerial";
     obstacle2.zPosition = 10;
     
@@ -228,10 +218,8 @@
     
     SKSpriteNode *tempNode = [SKSpriteNode node];
     SKSpriteNode *obstacle2 = [[Obstacles alloc] createObstacleWithNode:tempNode withName:@"aerial" withImage:@"L1-AOb-4"];
-    
-    int tempRand = arc4random()%80;
-    double randYPosition = (tempRand+10)/100.0;
-    obstacle2.position = CGPointMake(self.size.width * 1.7, self.size.height*randYPosition);
+
+    obstacle2.position = CGPointMake(self.size.width * 1.7, (self.size.height / 6) * 4);
     //obstacle1.name = @"aerial";
     obstacle2.zPosition = 10;
     
@@ -247,43 +235,11 @@
     
 }
 
--(SKNode *)rocket {
-    SKSpriteNode *tempNode = [SKSpriteNode node];
-    SKSpriteNode *obstacle2 = [[Obstacles alloc] createObstacleWithNode:tempNode withName:@"aerial" withImage:@"Rocket-1"];
-    
-    int tempRand = arc4random()%80;
-    double randYPosition = (tempRand+10)/100.0;
-    obstacle2.position = CGPointMake(self.size.width * 1.7, self.size.height*randYPosition);
-    obstacle2.anchorPoint = CGPointZero;
-    //obstacle1.name = @"aerial";
-    obstacle2.zPosition = 10;
-    
-    obstacle2.xScale = 0.4;
-    obstacle2.yScale = 0.4;
-    
-    CGMutablePathRef path = CGPathCreateMutable();
-    
-    CGPathMoveToPoint(path, NULL, 0, 0);
-    CGPathAddLineToPoint(path, NULL, 50, 0);
-    CGPathAddLineToPoint(path, NULL, 80, 10);
-    CGPathAddLineToPoint(path, NULL, 50, 20);
-    CGPathAddLineToPoint(path, NULL, 0, 20);
-    
-    CGPathCloseSubpath(path);
-    
-    obstacle2.physicsBody = [SKPhysicsBody bodyWithPolygonFromPath:path];
-    [self objectPhysicsStandards: obstacle2];
-    
-    return obstacle2;
-}
-
 -(SKNode *)shipChunk {
     SKSpriteNode *tempNode = [SKSpriteNode node];
     SKSpriteNode *obstacle2 = [[Obstacles alloc] createObstacleWithNode:tempNode withName:@"aerial" withImage:@"Ship-Chunk-1"];
     
-    int tempRand = arc4random()%80;
-    double randYPosition = (tempRand+10)/100.0;
-    obstacle2.position = CGPointMake(self.size.width * 1.7, self.size.height*randYPosition);
+    obstacle2.position = CGPointMake(self.size.width * 1.7, (self.size.height / 6) * 5);
     obstacle2.anchorPoint = CGPointZero;
     obstacle2.zPosition = 10;
     obstacle2.xScale = 0.5;
@@ -438,11 +394,11 @@
 
 -(void)tutStageThree {
     [self animateObjectOut:tutorialText withDelay:0.0];
-    for (int i = 0; i < 3; i++) {
-        SKNode *node = [self createObstacles];
+    for (int i = 1; i < 6; i++) {
+        SKNode *node = [self createObstaclesWithIndex:i];
         node.name = [NSString stringWithFormat:@"aerial-%i", i];
         [self addChild:node];
-        [self animateObjectIn:node withDelay:i/5];
+        [self animateObjectIn:node withDelay:0.25 + (i/10)];
     }
     tutorialText = [self tutorialText:@"These are obstacles.\nDon't run into these,\nthese are bad.\nAvoid at all costs!"];
     [self addChild:tutorialText];
@@ -451,11 +407,11 @@
 
 -(void)tutStageFour {
     [self animateObjectOut:tutorialText withDelay:0.0];
-    for (int x = 0; x < 3; x++) {
+    for (int x = 1; x < 6; x++) {
         [self animateObjectOut:[self childNodeWithName:[NSString stringWithFormat:@"aerial-%i", x]] withDelay:0.0];
     }
-    for (int i = 0; i < 3; i++) {
-        SKNode *node = [self createPowerUp];
+    for (int i = 1; i < 5; i++) {
+        SKNode *node = [self createPowerUpWithIndex:i];
         node.name = [NSString stringWithFormat:@"PowerUp-%i", i];
         [self addChild:node];
         [self animateObjectIn:node withDelay:i/5];
@@ -467,11 +423,11 @@
 
 -(void)tutStageFive {
     [self animateObjectOut:tutorialText withDelay:0.0];
-    for (int x = 0; x < 3; x++) {
+    for (int x = 0; x < 5; x++) {
         [self animateObjectOut:[self childNodeWithName:[NSString stringWithFormat:@"PowerUp-%i", x]] withDelay:0.0];
     }
-    for (int i = 0; i < 3; i++) {
-        SKNode *node = [self createMultiplier];
+    for (int i = 1; i < 5; i++) {
+        SKNode *node = [self createMultiplierWithIndex:i];
         node.name = [NSString stringWithFormat:@"Multi-%i", i];
         [self addChild:node];
         [self animateObjectIn:node withDelay:i/5];
@@ -483,7 +439,7 @@
 
 -(void)tutStageSix {
     [self animateObjectOut:tutorialText withDelay:0.0];
-    for (int x = 0; x < 3; x++) {
+    for (int x = 0; x < 5; x++) {
         [self animateObjectOut:[self childNodeWithName:[NSString stringWithFormat:@"Multi-%i", x]] withDelay:0.0];
     }
     tutorialText = [self tutorialText:@"Oh yea,\nat the bottom of the screen?\nThat's a black hole.\nSteer clear, the closer\nyou get, the harder\nit is to escape!"];
@@ -494,12 +450,10 @@
 
 #pragma mark --Power Ups
 
--(SKNode *)createMultiplier {
-    int tempRand = arc4random()%80;
-    double randYPosition = (tempRand+10)/100.0;
+-(SKNode *)createMultiplierWithIndex: (int)index {
     
-    SKSpriteNode *multiplier = [self createMultiplierRandom];
-    multiplier.position = CGPointMake(self.size.width * 1.7, self.size.height * randYPosition);
+    SKSpriteNode *multiplier = [self createMultiplierTextureWithIndex:index];
+    multiplier.position = CGPointMake(self.size.width * 1.7, (self.size.height / 5) * index);
     multiplier.physicsBody = [SKPhysicsBody bodyWithRectangleOfSize: multiplier.size];
     multiplier.physicsBody.categoryBitMask = CollisionCategoryScore;
     multiplier.physicsBody.dynamic = NO;
@@ -512,11 +466,10 @@
     return multiplier;
 }
 
--(SKSpriteNode *)createMultiplierRandom {
+-(SKSpriteNode *)createMultiplierTextureWithIndex: (int)index {
     SKSpriteNode *multitemp = [SKSpriteNode node];
-    int randPup = (arc4random()% 4) + 1;
     
-    switch (randPup) {
+    switch (index) {
         case 1:
             multitemp = [SKSpriteNode spriteNodeWithImageNamed:@"2xMulti"];
             break;
@@ -536,14 +489,9 @@
     return multitemp;
 }
 
--(SKNode *)createPowerUp {
-    
-        int tempRand = arc4random()%80;
-        double randYPos = (tempRand + 10) / 100.0;
-        
-        powerUp = [[PowerUps alloc] powerUpTypes];
-        SKSpriteNode *Pup = [[PowerUps alloc] createPupsWithType:powerUp];
-        Pup.position = CGPointMake(self.size.width * 1.7, self.size.height * randYPos);
+-(SKNode *)createPowerUpWithIndex: (int)index {
+        SKSpriteNode *Pup = [[PowerUps alloc] createPupsWithType:index];
+        Pup.position = CGPointMake(self.size.width * 1.7, (self.size.height / 5) * index);
         Pup.physicsBody = [SKPhysicsBody bodyWithCircleOfRadius: Pup.size.width * .3];
         Pup.physicsBody.categoryBitMask = CollisionCategoryPup;
         Pup.physicsBody.dynamic = NO;

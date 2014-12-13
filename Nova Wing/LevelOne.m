@@ -804,13 +804,13 @@ int shieldIndex;
     //tenSeconds = [NSTimer scheduledTimerWithTimeInterval:10.1 target:self selector:@selector(autoCannonFinish) userInfo:nil repeats:NO];
     lasersFired = 0;
     localLaserHits = 0;
-    halfSecond = [NSTimer scheduledTimerWithTimeInterval:0.45 target:self selector:@selector(autoCannonFire) userInfo:nil repeats:YES];
+    halfSecond = [NSTimer scheduledTimerWithTimeInterval:0.3 target:self selector:@selector(autoCannonFire) userInfo:nil repeats:YES];
     activePup = YES;
 }
 
 -(void)autoCannonFire {
     
-    if (lasersFired > 20) {
+    if (lasersFired > 25) {
         [self autoCannonFinish];
     } else {
         SKSpriteNode *laser = [[PowerUps alloc] autoCannonFire:playerNode];
