@@ -9,6 +9,7 @@
 #import "MainMenu.h"
 #import "LevelOne.h"
 #import "LevelTwo.h"
+#import "NWCodex.h"
 #import "Tutorial.h"
 
 static const float BG_VELOCITY = 10.0;
@@ -22,6 +23,16 @@ static inline CGPoint CGPointMultiplyScalar(const CGPoint a, const CGFloat b)
 {
     return CGPointMake(a.x * b, a.y * b);
 }
+
+@interface MainMenu()
+{
+    SKSpriteNode *startButton;
+    SKSpriteNode *leaderButton;
+    SKSpriteNode *settingsButton;
+    SKSpriteNode *codexButton;
+    SKSpriteNode *creditButton;
+}
+@end
 
 
 @implementation MainMenu
@@ -44,6 +55,8 @@ NSTimeInterval _dt;
         [self addChild: [self addTitleNode]];
         [self addChild: [self startButtonNode]];
         [self addChild: [self leaderButtonNode]];
+        [self addChild: [self codexButtonNode]];
+        [self addChild: [self creditsButtonNode]];
         [self addChild: [self settingsButtonNode]];
         [self addChild: [self highScoreLabel]];
         [self createAudio];
@@ -93,15 +106,19 @@ NSTimeInterval _dt;
 }
 
 #pragma mark --Create Buttons
+
+#define BUTTON_HEIGHT 280
+#define BUTTON_OFFSET 60
+
 -(SKSpriteNode *)startButtonNode
 {
     startButton = [SKSpriteNode spriteNodeWithTexture: [SKTexture textureWithImageNamed:@"buttonStart.png"]];
-    startButton.position = CGPointMake(self.size.width/2-300, 250);
+    startButton.position = CGPointMake(self.size.width/2-300, BUTTON_HEIGHT);
     startButton.xScale = 0.5;
     startButton.yScale = 0.5;
     startButton.name = @"_startButton";
     SKAction *buttonWait = [SKAction waitForDuration:1.0];
-    SKAction *buttonShift = [SKAction moveTo:CGPointMake(self.size.width/2, 250) duration:0.75];
+    SKAction *buttonShift = [SKAction moveTo:CGPointMake(self.size.width/2, BUTTON_HEIGHT) duration:0.75];
     buttonShift.timingMode = SKActionTimingEaseInEaseOut;
     SKAction *buttonSequence = [SKAction sequence:@[buttonWait,buttonShift]];
     [startButton runAction: buttonSequence];
@@ -111,32 +128,61 @@ NSTimeInterval _dt;
 -(SKSpriteNode *)leaderButtonNode
 {
     leaderButton = [SKSpriteNode spriteNodeWithImageNamed:@"buttonLeaderboard.png"];
-    leaderButton.position = CGPointMake(self.size.width/2-300, 190);
+    leaderButton.position = CGPointMake(self.size.width/2-300, BUTTON_HEIGHT - BUTTON_OFFSET);
     leaderButton.xScale = 0.5;
     leaderButton.yScale = 0.5;
     leaderButton.name = @"_leaderButton";
     SKAction *buttonWait = [SKAction waitForDuration:1.25];
-    SKAction *buttonShift = [SKAction moveTo:CGPointMake(self.size.width/2, 190) duration:0.75];
+    SKAction *buttonShift = [SKAction moveTo:CGPointMake(self.size.width/2, BUTTON_HEIGHT - BUTTON_OFFSET) duration:0.75];
     buttonShift.timingMode = SKActionTimingEaseInEaseOut;
     SKAction *buttonSequence = [SKAction sequence:@[buttonWait,buttonShift]];
     [leaderButton runAction: buttonSequence];
     return leaderButton;
 }
 
+-(SKSpriteNode *)codexButtonNode {
+    codexButton = [SKSpriteNode spriteNodeWithImageNamed:@"buttonCodex.png"];
+    codexButton.position = CGPointMake(self.size.width/2-300, BUTTON_HEIGHT - (BUTTON_OFFSET * 2));
+    codexButton.xScale = 0.5;
+    codexButton.yScale = 0.5;
+    codexButton.name = @"codexButton";
+    SKAction *buttonWait = [SKAction waitForDuration:1.5];
+    SKAction *buttonShift = [SKAction moveTo:CGPointMake(self.size.width/2, BUTTON_HEIGHT - (BUTTON_OFFSET * 2)) duration:0.75];
+    buttonShift.timingMode = SKActionTimingEaseInEaseOut;
+    SKAction *buttonSequence = [SKAction sequence:@[buttonWait,buttonShift]];
+    [codexButton runAction: buttonSequence];
+    return codexButton;
+}
+
+-(SKSpriteNode *)creditsButtonNode {
+    creditButton = [SKSpriteNode spriteNodeWithImageNamed:@"buttonCredits.png"];
+    creditButton.position = CGPointMake(self.size.width/2-300, BUTTON_HEIGHT - (BUTTON_OFFSET * 3));
+    creditButton.xScale = 0.5;
+    creditButton.yScale = 0.5;
+    creditButton.name = @"creditsButton";
+    SKAction *buttonWait = [SKAction waitForDuration:1.75];
+    SKAction *buttonShift = [SKAction moveTo:CGPointMake(self.size.width/2, BUTTON_HEIGHT - (BUTTON_OFFSET * 3)) duration:0.75];
+    buttonShift.timingMode = SKActionTimingEaseInEaseOut;
+    SKAction *buttonSequence = [SKAction sequence:@[buttonWait,buttonShift]];
+    [creditButton runAction: buttonSequence];
+    return creditButton;
+}
+
 -(SKSpriteNode *)settingsButtonNode
 {
-    settingsButton = [SKSpriteNode spriteNodeWithImageNamed:@"buttonSettings.png"];
-    settingsButton.position = CGPointMake(self.size.width/2-300, 130);
+    settingsButton = [SKSpriteNode spriteNodeWithImageNamed:@"Settings"];
+    settingsButton.position = CGPointMake(settingsButton.size.width, -settingsButton.size.height);
     settingsButton.xScale = 0.5;
     settingsButton.yScale = 0.5;
     settingsButton.name = @"_settingsButton";
     SKAction *buttonWait = [SKAction waitForDuration:1.5];
-    SKAction *buttonShift = [SKAction moveTo:CGPointMake(self.size.width/2, 130) duration:0.75];
+    SKAction *buttonShift = [SKAction moveTo:CGPointMake(settingsButton.size.width, settingsButton.size.height) duration:0.5];
     buttonShift.timingMode = SKActionTimingEaseInEaseOut;
     SKAction *buttonSequence = [SKAction sequence:@[buttonWait,buttonShift]];
     [settingsButton runAction: buttonSequence];
     return settingsButton;
 }
+
 
 -(SKLabelNode *)highScoreLabel {
     SKLabelNode *highScore = [[SKLabelNode alloc] initWithFontNamed:@"SF Movie Poster"];
@@ -332,9 +378,11 @@ NSTimeInterval _dt;
 
 -(void)mainMenuAnimateOut {
     // Button Node Removal.
-    SKAction *startButtonRemoved = [SKAction moveTo:CGPointMake(self.size.width/2-300, 250)  duration:0.75];
-    SKAction *leaderButtonRemoved = [SKAction moveTo:CGPointMake(self.size.width/2-300, 190)  duration:0.75];
-    SKAction *settingsButtonRemoved = [SKAction moveTo:CGPointMake(self.size.width/2-300, 130)  duration:0.75];
+    SKAction *startButtonRemoved = [SKAction moveTo:CGPointMake(self.size.width/2-300, BUTTON_HEIGHT)  duration:0.75];
+    SKAction *leaderButtonRemoved = [SKAction moveTo:CGPointMake(self.size.width/2-300, BUTTON_HEIGHT - BUTTON_OFFSET)  duration:0.75];
+    SKAction *codexButtonRemoved = [SKAction moveTo:CGPointMake(self.size.width/2-300, BUTTON_HEIGHT - (BUTTON_OFFSET * 2)) duration:0.75];
+    SKAction *creditButtonRemoved = [SKAction moveTo:CGPointMake(self.size.width/2-300, BUTTON_HEIGHT - (BUTTON_OFFSET * 3)) duration:0.75];
+    SKAction *settingsButtonRemoved = [SKAction moveTo:CGPointMake(settingsButton.size.width, -settingsButton.size.width)  duration:0.5];
     
     // Title Image Removal.
     SKAction *titleRemoval = [SKAction moveTo:CGPointMake(self.size.width/2, 700) duration:0.75];
@@ -344,8 +392,9 @@ NSTimeInterval _dt;
     
     // Delays.
     SKAction *titleWait = [SKAction waitForDuration:0.5];
-    SKAction *startWait = [SKAction waitForDuration:0.5];
-    SKAction *leaderWait = [SKAction waitForDuration:0.25];
+    SKAction *startWait = [SKAction waitForDuration:0.75];
+    SKAction *leaderWait = [SKAction waitForDuration:0.5];
+    SKAction *codexWait = [SKAction waitForDuration:0.25];
     
     // Button Texture Change.
     startButton.texture = [SKTexture textureWithImageNamed:@"buttonStart.png"];
@@ -354,10 +403,14 @@ NSTimeInterval _dt;
     SKAction *startSequence = [SKAction sequence:@[startWait,startButtonRemoved,unload]];
     SKAction *leaderSequence = [SKAction sequence:@[leaderWait,leaderButtonRemoved,unload]];
     SKAction *settingsSequence = [SKAction sequence:@[settingsButtonRemoved,unload]];
+    SKAction *codexSequence = [SKAction sequence:@[codexWait,codexButtonRemoved,unload]];
+    SKAction *creditSequence = [SKAction sequence:@[creditButtonRemoved,unload]];
     SKAction *titleSequence = [SKAction sequence:@[titleWait,titleRemoval,unload]];
     
     [startButton runAction: startSequence];
     [leaderButton runAction: leaderSequence];
+    [codexButton runAction: codexSequence];
+    [creditButton runAction: creditSequence];
     [settingsButton runAction: settingsSequence];
     [titleImage runAction: titleSequence];
 }
@@ -417,8 +470,12 @@ NSTimeInterval _dt;
         leaderButton.texture = [SKTexture textureWithImageNamed:@"buttonPressLeaderboard.png"];
     }
 
-    if ([node.name isEqualToString:@"_settingsButton"]) {
-        settingsButton.texture = [SKTexture textureWithImageNamed:@"buttonPressSettings.png"];
+    if ([node.name isEqualToString:@"codexButton"]) {
+        codexButton.texture = [SKTexture textureWithImageNamed:@"buttonPressCodex.png"];
+    }
+    
+    if ([node.name isEqualToString:@"creditsButton"]) {
+        creditButton.texture = [SKTexture textureWithImageNamed:@"buttonPressCredits.png"];
     }
     
     if ([node.name isEqualToString:@"musicToggle"]) {
@@ -483,15 +540,25 @@ NSTimeInterval _dt;
              [self addChild:[self backToMainButton]];*/ }
         
     }
-    if (![nodeLift.name isEqualToString:@"_startButton"] && ![nodeLift.name isEqualToString:@"_leaderButton"] && ![nodeLift.name isEqualToString:@"_settingsButton"]) {
-        startButton.texture = [SKTexture textureWithImageNamed:@"buttonStart.png"];
-        leaderButton.texture = [SKTexture textureWithImageNamed:@"buttonLeaderboard.png"];
-        settingsButton.texture = [SKTexture textureWithImageNamed:@"buttonSettings.png"];
-    }
     
     //Leaderboard Button
     if ([nodeLift.name isEqualToString:@"_leaderButton"]) {
         //SKTransition
+    }
+    
+    if ([nodeLift.name isEqualToString:@"codexButton"]) {
+        SKView * codexView = (SKView *)self.view;
+        codexView.showsFPS = YES;
+        codexView.showsNodeCount = YES;
+        //levelOneView.showsPhysics = YES;
+        
+        // Create and configure the scene.
+        SKScene * codexScene = [[NWCodex alloc] initWithSize:codexView.bounds.size];
+        codexScene.scaleMode = SKSceneScaleModeAspectFill;
+        SKTransition *tutTrans = [SKTransition fadeWithColor:fadeColor duration:levelFadeDuration];
+        
+        // Present the scene.
+        [codexView presentScene:codexScene transition:tutTrans];
     }
     
 #pragma mark -- Settings Action Buttons
@@ -521,6 +588,12 @@ NSTimeInterval _dt;
         [self toggleAudio];
     }
     
+    if (![nodeLift.name isEqualToString:@"_startButton"]) {
+        startButton.texture = [SKTexture textureWithImageNamed:@"buttonStart.png"];
+        leaderButton.texture = [SKTexture textureWithImageNamed:@"buttonLeaderboard.png"];
+        codexButton.texture = [SKTexture textureWithImageNamed:@"buttonCodex.png"];
+        creditButton.texture = [SKTexture textureWithImageNamed:@"buttonCredits.png"];
+    }    
 #pragma mark --Level Button Actions
     if ([nodeLift.name isEqualToString:@"rightArrow"]) {
         

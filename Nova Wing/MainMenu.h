@@ -9,9 +9,6 @@
 #import <SpriteKit/SpriteKit.h>
 #import "LevelTwo.h"
 
-SKSpriteNode *startButton;
-SKSpriteNode *leaderButton;
-SKSpriteNode *settingsButton;
 SKSpriteNode *musicToggle;
 SKSpriteNode *sfxToggle;
 SKSpriteNode *titleImage;

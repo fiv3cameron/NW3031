@@ -39,7 +39,6 @@
     self.physicsBody.linearDamping = 1.0f;
     self.physicsBody.allowsRotation = NO;
     self.physicsBody.usesPreciseCollisionDetection = YES;
-    
     // Keeps player ship on top of all other objects(unless other objects are assigned greater z position
     self.zPosition = 100.0f;
 
@@ -70,12 +69,14 @@
     
 }
 
+#define THRUST_CONSTANT 550.0
+
 -(void)thrustPlayer:(Ships *)player withHeight:(float)levelHeight {
     if (player.position.y > levelHeight - 50)
     {
         player.physicsBody.velocity = CGVectorMake(0.0f, 0.0f);
     }
-    else player.physicsBody.velocity = CGVectorMake(0.0f, player.position.y*1.3);
+    else player.physicsBody.velocity = CGVectorMake(0.0f, MIN(player.position.y * 1.5, THRUST_CONSTANT));
     
 }
 

@@ -164,8 +164,6 @@ int shieldIndex;
         case 2:
             break;
         case 3:
-            [self rocket];
-            break;
         case 4:
             [self asteroid1];
             break;
@@ -1009,6 +1007,8 @@ int shieldIndex;
 }
 
 -(void)gameOver {
+    
+    [self runAction:[SKAction playSoundFileNamed:@"Explosion.wav" waitForCompletion:YES]];
     [GameState sharedGameData].highScoreL1 = MAX([GameState sharedGameData].score, [GameState sharedGameData].highScoreL1);
     [playerNode removeAllChildren];
     SKView *gameOverView = (SKView *)self.view;
