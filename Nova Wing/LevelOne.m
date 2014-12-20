@@ -827,10 +827,13 @@ int shieldIndex;
 -(void)autoCannonRun {
     localLaserHits = 0;
     
+    [self runAction:[SKAction playSoundFileNamed:@"AutoCannon-Spool.wav" waitForCompletion:NO]];
+    
     //Time firing function
     SKAction *wait = [SKAction waitForDuration:AUTOCANNON_INTERVAL];
     SKAction *fire = [SKAction runBlock:^{
         [self autoCannonFire];
+        [self runAction:[SKAction playSoundFileNamed:@"Laser-test.wav" waitForCompletion:NO]];
     }];
     SKAction *run = [SKAction repeatAction: [SKAction sequence:@[wait, fire]] count:AUTOCANNON_SHOTS_FIRED];
     SKAction *close = [SKAction runBlock:^{

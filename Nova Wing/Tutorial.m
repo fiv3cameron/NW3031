@@ -621,8 +621,6 @@ static const float duration = 0.7;
     SKColor *fadeColor = [SKColor colorWithRed:1 green:1 blue:1 alpha:1];
     SKTransition *gameOverTransition = [SKTransition fadeWithColor:fadeColor duration:.25];
     [gameOverView presentScene:gameOverScene transition:gameOverTransition];
-    
-    [Engine stop];
 }
 
 -(void)didBeginContact:(SKPhysicsContact *)contact {
