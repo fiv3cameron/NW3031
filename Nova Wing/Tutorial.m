@@ -147,35 +147,31 @@
 }
 
 -(SKNode *)asteroid1 {
+    SKSpriteNode *obstacle = [SKSpriteNode spriteNodeWithImageNamed:@"L1-AOb-1"];
     
-    SKSpriteNode *tempNode = [SKSpriteNode node];
-    SKSpriteNode *obstacle1 = [[Obstacles alloc] createObstacleWithNode:tempNode withName:@"aerial" withImage:@"L1-AOb-1"];
-    
-    obstacle1.position = CGPointMake(self.size.width * 1.7, (self.size.height / 6));
-    //obstacle1.name = @"aerial";
-    obstacle1.zPosition = 10;
+    obstacle.position = CGPointMake(self.size.width * 1.7, (self.size.height / 6));
+    //obstacle.name = @"aerial";
+    obstacle.zPosition = 10;
     
     int tempRand2 = arc4random()%200;
     double randScale = (tempRand2-100)/1000.0;
-    obstacle1.xScale = 0.5 + randScale;
-    obstacle1.yScale = 0.5 + randScale;
+    obstacle.xScale = 0.5 + randScale;
+    obstacle.yScale = 0.5 + randScale;
     
-    obstacle1.physicsBody = [SKPhysicsBody bodyWithCircleOfRadius:obstacle1.size.height/2];
-    [self objectPhysicsStandards: obstacle1];
+    obstacle.physicsBody = [SKPhysicsBody bodyWithCircleOfRadius:obstacle.size.height/2];
+    [self objectPhysicsStandards: obstacle];
     
-    return obstacle1;
+    return obstacle;
 }
 
 -(SKNode *)asteroid2 {
+    SKSpriteNode *obstacle = [SKSpriteNode spriteNodeWithImageNamed:@"L1-AOb-2"];
     
-    SKSpriteNode *tempNode = [SKSpriteNode node];
-    SKSpriteNode *obstacle2 = [[Obstacles alloc] createObstacleWithNode:tempNode withName:@"aerial" withImage:@"L1-AOb-2"];
-    
-    obstacle2.position = CGPointMake(self.size.width * 1.7, (self.size.height / 6) * 2);
-    obstacle2.anchorPoint = CGPointZero;
-    obstacle2.zPosition = 10;
-    obstacle2.xScale = 0.4;
-    obstacle2.yScale = 0.4;
+    obstacle.position = CGPointMake(self.size.width * 1.7, (self.size.height / 6) * 2);
+    obstacle.anchorPoint = CGPointZero;
+    obstacle.zPosition = 10;
+    obstacle.xScale = 0.4;
+    obstacle.yScale = 0.4;
     
     CGMutablePathRef path = CGPathCreateMutable();
     
@@ -187,63 +183,58 @@
     
     CGPathCloseSubpath(path);
     
-    obstacle2.physicsBody = [SKPhysicsBody bodyWithPolygonFromPath:path];
-    [self objectPhysicsStandards: obstacle2];
+    obstacle.physicsBody = [SKPhysicsBody bodyWithPolygonFromPath:path];
+    [self objectPhysicsStandards: obstacle];
     
-    return obstacle2;
+    return obstacle;
     
 }
 
 -(SKNode *)asteroid3 {
+    SKSpriteNode *obstacle = [SKSpriteNode spriteNodeWithImageNamed:@"L1-AOb-3"];
     
-    SKSpriteNode *tempNode = [SKSpriteNode node];
-    SKSpriteNode *obstacle2 = [[Obstacles alloc] createObstacleWithNode:tempNode withName:@"aerial" withImage:@"L1-AOb-3"];
-    
-    obstacle2.position = CGPointMake(self.size.width * 1.7, (self.size.height / 6) * 3);
-    //obstacle1.name = @"aerial";
-    obstacle2.zPosition = 10;
+    obstacle.position = CGPointMake(self.size.width * 1.7, (self.size.height / 6) * 3);
+    //obstacle.name = @"aerial";
+    obstacle.zPosition = 10;
     
     int tempRand2 = arc4random()%100;
     double randScale = (tempRand2)/1000.0;
-    obstacle2.xScale = 0.4 + randScale;
-    obstacle2.yScale = 0.4 + randScale;
+    obstacle.xScale = 0.4 + randScale;
+    obstacle.yScale = 0.4 + randScale;
     
-    obstacle2.physicsBody = [SKPhysicsBody bodyWithCircleOfRadius:obstacle2.size.height/2];
-    [self objectPhysicsStandards: obstacle2];
+    obstacle.physicsBody = [SKPhysicsBody bodyWithCircleOfRadius:obstacle.size.height/2];
+    [self objectPhysicsStandards: obstacle];
     
-    return obstacle2;
+    return obstacle;
 }
 
 -(SKNode *)asteroid4 {
-    
-    SKSpriteNode *tempNode = [SKSpriteNode node];
-    SKSpriteNode *obstacle2 = [[Obstacles alloc] createObstacleWithNode:tempNode withName:@"aerial" withImage:@"L1-AOb-4"];
+    SKSpriteNode *obstacle = [SKSpriteNode spriteNodeWithImageNamed:@"L1-AOb-4"];
 
-    obstacle2.position = CGPointMake(self.size.width * 1.7, (self.size.height / 6) * 4);
-    //obstacle1.name = @"aerial";
-    obstacle2.zPosition = 10;
+    obstacle.position = CGPointMake(self.size.width * 1.7, (self.size.height / 6) * 4);
+    //obstacle.name = @"aerial";
+    obstacle.zPosition = 10;
     
     int tempRand2 = arc4random()%100;
     double randScale = (tempRand2)/1000.0;
-    obstacle2.xScale = 0.4 + randScale;
-    obstacle2.yScale = 0.4 + randScale;
+    obstacle.xScale = 0.4 + randScale;
+    obstacle.yScale = 0.4 + randScale;
     
-    obstacle2.physicsBody = [SKPhysicsBody bodyWithCircleOfRadius:obstacle2.size.height/2];
-    [self objectPhysicsStandards: obstacle2];
+    obstacle.physicsBody = [SKPhysicsBody bodyWithCircleOfRadius:obstacle.size.height/2];
+    [self objectPhysicsStandards: obstacle];
     
-    return obstacle2;
+    return obstacle;
     
 }
 
 -(SKNode *)shipChunk {
-    SKSpriteNode *tempNode = [SKSpriteNode node];
-    SKSpriteNode *obstacle2 = [[Obstacles alloc] createObstacleWithNode:tempNode withName:@"aerial" withImage:@"Ship-Chunk-1"];
+    SKSpriteNode *obstacle = [SKSpriteNode spriteNodeWithImageNamed:@"Ship-Chunk-1"];
     
-    obstacle2.position = CGPointMake(self.size.width * 1.7, (self.size.height / 6) * 5);
-    obstacle2.anchorPoint = CGPointZero;
-    obstacle2.zPosition = 10;
-    obstacle2.xScale = 0.5;
-    obstacle2.yScale = 0.5;
+    obstacle.position = CGPointMake(self.size.width * 1.7, (self.size.height / 6) * 5);
+    obstacle.anchorPoint = CGPointZero;
+    obstacle.zPosition = 10;
+    obstacle.xScale = 0.5;
+    obstacle.yScale = 0.5;
     
     CGMutablePathRef path = CGPathCreateMutable();
     
@@ -255,10 +246,10 @@
     
     CGPathCloseSubpath(path);
     
-    obstacle2.physicsBody = [SKPhysicsBody bodyWithPolygonFromPath:path];
-    [self objectPhysicsStandards: obstacle2];
+    obstacle.physicsBody = [SKPhysicsBody bodyWithPolygonFromPath:path];
+    [self objectPhysicsStandards: obstacle];
     
-    return obstacle2;
+    return obstacle;
 }
 
 -(void)objectPhysicsStandards: (SKSpriteNode *)object {
@@ -270,6 +261,8 @@
     object.physicsBody.friction = 0.2f;
     object.physicsBody.restitution = 0.0f;
     object.physicsBody.linearDamping = 0.0;
+    
+    object.name = @"aerial";
 }
 
 -(void)bottomCollide {

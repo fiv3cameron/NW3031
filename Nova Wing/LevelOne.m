@@ -22,8 +22,13 @@
     SKSpriteNode *shield;
     BOOL activePup;
     BOOL wingmanActive;
-    BOOL wingmanTempSafe;
     SKPhysicsJointSpring *wingmanSpring;
+    
+    //Strings for Action Keys (To ensure safety)
+    NSString *multiKey;
+    NSString *objectCreateKey;
+    NSString *powerUpKey;
+    
 }
 @end
 
@@ -32,12 +37,6 @@
 NSTimeInterval _lastUpdateTime;
 NSTimeInterval _dt;
 SKLabelNode* _score;
-NSTimer *objectCreateTimer;
-NSTimer *multiTimer;
-NSTimer *pupTimer;
-NSTimer *tenSeconds;
-NSTimer *halfSecond;
-NSTimer *twoSecondSafety;
 int shieldIndex;
 
 #pragma mark --CreateBackground
@@ -51,7 +50,10 @@ int shieldIndex;
         [GameState sharedGameData].maxLaserHits = 0;
         activePup = NO;
         wingmanActive = NO;
-        wingmanTempSafe = NO;
+        
+        multiKey = @"multiKey";
+        objectCreateKey = @"objectCreateKey";
+        powerUpKey = @"powerUpKey";
         
         self.backgroundColor = [SKColor colorWithRed:0 green:0 blue:0 alpha:1];
         
@@ -190,40 +192,37 @@ int shieldIndex;
 }
 
 -(void)asteroid1 {
-    
-    SKSpriteNode *tempNode = [SKSpriteNode node];
-    SKSpriteNode *obstacle1 = [[Obstacles alloc] createObstacleWithNode:tempNode withName:@"aerial" withImage:@"L1-AOb-1"];
+    SKSpriteNode *obstacle = [SKSpriteNode spriteNodeWithImageNamed:@"L1-AOb-1"];
     
     int tempRand = arc4random()%80;
     double randYPosition = (tempRand+10)/100.0;
-    obstacle1.position = CGPointMake(self.size.width+obstacle1.size.width, self.size.height*randYPosition);
-    //obstacle1.name = @"aerial";
-    obstacle1.zPosition = 10;
+    obstacle.position = CGPointMake(self.size.width+obstacle.size.width, self.size.height*randYPosition);
+    //obstacle.name = @"aerial";
+    obstacle.zPosition = 10;
     
     int tempRand2 = arc4random()%200;
     double randScale = (tempRand2-100)/1000.0;
-    obstacle1.xScale = 0.5 + randScale;
-    obstacle1.yScale = 0.5 + randScale;
+    obstacle.xScale = 0.5 + randScale;
+    obstacle.yScale = 0.5 + randScale;
     
-    obstacle1.physicsBody = [SKPhysicsBody bodyWithCircleOfRadius:obstacle1.size.height/2];
-    [self objectPhysicsStandards: obstacle1];
+    obstacle.physicsBody = [SKPhysicsBody bodyWithCircleOfRadius:obstacle.size.height/2];
+    [self objectPhysicsStandards: obstacle];
     
-    [self addChild: obstacle1];
-    [self moveAerialNode:obstacle1 allowsRotation:YES];
+    [self addChild: obstacle];
+    [self moveAerialNode:obstacle allowsRotation:YES];
 }
 
 -(void)asteroid2 {
     
-    SKSpriteNode *tempNode = [SKSpriteNode node];
-    SKSpriteNode *obstacle2 = [[Obstacles alloc] createObstacleWithNode:tempNode withName:@"aerial" withImage:@"L1-AOb-2"];
+    SKSpriteNode *obstacle = [SKSpriteNode spriteNodeWithImageNamed:@"L1-AOb-2"];
     
     int tempRand = arc4random()%80;
     double randYPosition = (tempRand+10)/100.0;
-    obstacle2.position = CGPointMake(self.size.width+obstacle2.size.width, self.size.height*randYPosition);
-    obstacle2.anchorPoint = CGPointZero;
-    obstacle2.zPosition = 10;
-    obstacle2.xScale = 0.4;
-    obstacle2.yScale = 0.4;
+    obstacle.position = CGPointMake(self.size.width+obstacle.size.width, self.size.height*randYPosition);
+    obstacle.anchorPoint = CGPointZero;
+    obstacle.zPosition = 10;
+    obstacle.xScale = 0.4;
+    obstacle.yScale = 0.4;
     
     CGMutablePathRef path = CGPathCreateMutable();
     
@@ -235,101 +234,66 @@ int shieldIndex;
     
     CGPathCloseSubpath(path);
     
-    obstacle2.physicsBody = [SKPhysicsBody bodyWithPolygonFromPath:path];
-    [self objectPhysicsStandards: obstacle2];
+    obstacle.physicsBody = [SKPhysicsBody bodyWithPolygonFromPath:path];
+    [self objectPhysicsStandards: obstacle];
     
-    [self addChild: obstacle2];
-    [self moveAerialNode:obstacle2 allowsRotation:YES];
+    [self addChild: obstacle];
+    [self moveAerialNode:obstacle allowsRotation:YES];
 }
 
 -(void)asteroid3 {
-    
-    SKSpriteNode *tempNode = [SKSpriteNode node];
-    SKSpriteNode *obstacle2 = [[Obstacles alloc] createObstacleWithNode:tempNode withName:@"aerial" withImage:@"L1-AOb-3"];
+    SKSpriteNode *obstacle = [SKSpriteNode spriteNodeWithImageNamed:@"L1-AOb-3"];
     
     int tempRand = arc4random()%80;
     double randYPosition = (tempRand+10)/100.0;
-    obstacle2.position = CGPointMake(self.size.width+obstacle2.size.width, self.size.height*randYPosition);
-    //obstacle1.name = @"aerial";
-    obstacle2.zPosition = 10;
+    obstacle.position = CGPointMake(self.size.width+obstacle.size.width, self.size.height*randYPosition);
+    //obstacle.name = @"aerial";
+    obstacle.zPosition = 10;
     
     int tempRand2 = arc4random()%100;
     double randScale = (tempRand2)/1000.0;
-    obstacle2.xScale = 0.4 + randScale;
-    obstacle2.yScale = 0.4 + randScale;
+    obstacle.xScale = 0.4 + randScale;
+    obstacle.yScale = 0.4 + randScale;
     
-    obstacle2.physicsBody = [SKPhysicsBody bodyWithCircleOfRadius:obstacle2.size.height/2];
-    [self objectPhysicsStandards: obstacle2];
+    obstacle.physicsBody = [SKPhysicsBody bodyWithCircleOfRadius:obstacle.size.height/2];
+    [self objectPhysicsStandards: obstacle];
     
-    [self addChild: obstacle2];
-    [self moveAerialNode:obstacle2 allowsRotation:YES];
+    [self addChild: obstacle];
+    [self moveAerialNode:obstacle allowsRotation:YES];
 }
 
 -(void)asteroid4 {
     
-    SKSpriteNode *tempNode = [SKSpriteNode node];
-    SKSpriteNode *obstacle2 = [[Obstacles alloc] createObstacleWithNode:tempNode withName:@"aerial" withImage:@"L1-AOb-4"];
+    SKSpriteNode *obstacle = [SKSpriteNode spriteNodeWithImageNamed:@"L1-AOb-4"];
     
     int tempRand = arc4random()%80;
     double randYPosition = (tempRand+10)/100.0;
-    obstacle2.position = CGPointMake(self.size.width+obstacle2.size.width, self.size.height*randYPosition);
-    //obstacle1.name = @"aerial";
-    obstacle2.zPosition = 10;
+    obstacle.position = CGPointMake(self.size.width+obstacle.size.width, self.size.height*randYPosition);
+    //obstacle.name = @"aerial";
+    obstacle.zPosition = 10;
     
     int tempRand2 = arc4random()%100;
     double randScale = (tempRand2)/1000.0;
-    obstacle2.xScale = 0.4 + randScale;
-    obstacle2.yScale = 0.4 + randScale;
+    obstacle.xScale = 0.4 + randScale;
+    obstacle.yScale = 0.4 + randScale;
     
-    obstacle2.physicsBody = [SKPhysicsBody bodyWithCircleOfRadius:obstacle2.size.height/2];
-    [self objectPhysicsStandards: obstacle2];
+    obstacle.physicsBody = [SKPhysicsBody bodyWithCircleOfRadius:obstacle.size.height/2];
+    [self objectPhysicsStandards: obstacle];
     
-    [self addChild: obstacle2];
-    [self moveAerialNode:obstacle2 allowsRotation:YES];
-}
-
--(void)rocket {
-    SKSpriteNode *tempNode = [SKSpriteNode node];
-    SKSpriteNode *obstacle2 = [[Obstacles alloc] createObstacleWithNode:tempNode withName:@"aerial" withImage:@"Rocket-1"];
-    
-    int tempRand = arc4random()%80;
-    double randYPosition = (tempRand+10)/100.0;
-    obstacle2.position = CGPointMake(self.size.width+obstacle2.size.width, self.size.height*randYPosition);
-    obstacle2.anchorPoint = CGPointZero;
-    //obstacle1.name = @"aerial";
-    obstacle2.zPosition = 10;
-
-    obstacle2.xScale = 0.4;
-    obstacle2.yScale = 0.4;
-    
-    CGMutablePathRef path = CGPathCreateMutable();
-    
-    CGPathMoveToPoint(path, NULL, 0, 0);
-    CGPathAddLineToPoint(path, NULL, 50, 0);
-    CGPathAddLineToPoint(path, NULL, 80, 10);
-    CGPathAddLineToPoint(path, NULL, 50, 20);
-    CGPathAddLineToPoint(path, NULL, 0, 20);
-    
-    CGPathCloseSubpath(path);
-    
-    obstacle2.physicsBody = [SKPhysicsBody bodyWithPolygonFromPath:path];
-    [self objectPhysicsStandards: obstacle2];
-    
-    [self addChild: obstacle2];
-    [self moveAerialNode:obstacle2 allowsRotation:YES];
+    [self addChild: obstacle];
+    [self moveAerialNode:obstacle allowsRotation:YES];
 }
 
 -(void)shipChunk {
-    SKSpriteNode *tempNode = [SKSpriteNode node];
-    SKSpriteNode *obstacle2 = [[Obstacles alloc] createObstacleWithNode:tempNode withName:@"aerial" withImage:@"Ship-Chunk-1"];
+    SKSpriteNode *obstacle = [SKSpriteNode spriteNodeWithImageNamed:@"Ship-Chunk-1"];
     
     int tempRand = arc4random()%80;
     double randYPosition = (tempRand+10)/100.0;
-    obstacle2.position = CGPointMake(self.size.width+obstacle2.size.width, self.size.height*randYPosition);
-    obstacle2.anchorPoint = CGPointZero;
-    obstacle2.zPosition = 10;
-    obstacle2.xScale = 0.5;
-    obstacle2.yScale = 0.5;
+    obstacle.position = CGPointMake(self.size.width+obstacle.size.width, self.size.height*randYPosition);
+    obstacle.anchorPoint = CGPointZero;
+    obstacle.zPosition = 10;
+    obstacle.xScale = 0.5;
+    obstacle.yScale = 0.5;
     
     CGMutablePathRef path = CGPathCreateMutable();
     
@@ -341,11 +305,11 @@ int shieldIndex;
     
     CGPathCloseSubpath(path);
     
-    obstacle2.physicsBody = [SKPhysicsBody bodyWithPolygonFromPath:path];
-    [self objectPhysicsStandards: obstacle2];
+    obstacle.physicsBody = [SKPhysicsBody bodyWithPolygonFromPath:path];
+    [self objectPhysicsStandards: obstacle];
     
-    [self addChild: obstacle2];
-    [self moveAerialNode:obstacle2 allowsRotation: YES];
+    [self addChild: obstacle];
+    [self moveAerialNode:obstacle allowsRotation: YES];
 }
 
 -(void)objectPhysicsStandards: (SKSpriteNode *)object {
@@ -357,6 +321,8 @@ int shieldIndex;
     object.physicsBody.friction = 0.2f;
     object.physicsBody.restitution = 0.0f;
     object.physicsBody.linearDamping = 0.0;
+    
+    object.name = @"aerial";
 }
 
 -(void)bottomCollide {
@@ -460,6 +426,8 @@ int shieldIndex;
     [plusOne runAction:group];
 }
 
+
+
 -(void)scoreMulti {
     [trail removeFromParent];
     [wingmanTrail removeFromParent];
@@ -490,27 +458,27 @@ int shieldIndex;
         case 1:
             [[self childNodeWithName:@"multiplier"] removeFromParent];
             [GameState sharedGameData].scoreMultiplier ++;
-            [objectCreateTimer invalidate];
-            objectCreateTimer = [NSTimer scheduledTimerWithTimeInterval:0.35 target:self selector:@selector(createObstacles) userInfo:nil repeats:YES];
+            [self removeActionForKey:objectCreateKey];
+            [self initializeObstaclesWithInterval:0.35];
             break;
         case 2:
             [[self childNodeWithName:@"multiplier"] removeFromParent];
             [GameState sharedGameData].scoreMultiplier ++;
-            [objectCreateTimer invalidate];
-            objectCreateTimer = [NSTimer scheduledTimerWithTimeInterval:0.3 target:self selector:@selector(createObstacles) userInfo:nil repeats:YES];
+            [self removeActionForKey:objectCreateKey];
+            [self initializeObstaclesWithInterval:0.3];
             break;
         case 3:
             [[self childNodeWithName:@"multiplier"] removeFromParent];
             [GameState sharedGameData].scoreMultiplier ++;
-            [objectCreateTimer invalidate];
-            objectCreateTimer = [NSTimer scheduledTimerWithTimeInterval:0.28 target:self selector:@selector(createObstacles) userInfo:nil repeats:YES];
+            [self removeActionForKey:objectCreateKey];
+            [self initializeObstaclesWithInterval:0.28];
             break;
         case 4:
             [[self childNodeWithName:@"multiplier"] removeFromParent];
             [GameState sharedGameData].scoreMultiplier ++;
-            [objectCreateTimer invalidate];
-            objectCreateTimer = [NSTimer scheduledTimerWithTimeInterval:0.27 target:self selector:@selector(createObstacles) userInfo:nil repeats:YES];
-            [multiTimer invalidate];
+            [self removeActionForKey:objectCreateKey];
+            [self initializeObstaclesWithInterval:0.27];
+            [self removeActionForKey:multiKey];
             break;
         default:
             break;
@@ -518,6 +486,14 @@ int shieldIndex;
 }
 
 #pragma mark --Animate Obstacles
+
+-(void)initializeObstaclesWithInterval: (float)interval {
+    SKAction *wait = [SKAction waitForDuration:interval];
+    SKAction *run = [SKAction runBlock:^{
+        [self createObstacles];
+    }];
+    [self runAction:[SKAction repeatActionForever:[SKAction sequence:@[wait,run]]] withKey:objectCreateKey];
+}
 
 -(void) moveAerialNode: (SKSpriteNode *)incomingNode allowsRotation: (BOOL)allowsRotate
 {
@@ -569,6 +545,16 @@ int shieldIndex;
 
 #pragma mark --Power Ups
 
+#define MULTI_INTERVAL 2.7
+
+-(void)initializeMultipliers {
+    SKAction *wait = [SKAction waitForDuration:MULTI_INTERVAL];
+    SKAction *run = [SKAction runBlock:^{
+        [self createMultiplier];
+    }];
+    [self runAction:[SKAction repeatActionForever:[SKAction sequence:@[wait,run]]] withKey:multiKey];
+}
+
 -(void)createMultiplier {
     int tempRand = arc4random()%80;
     double randYPosition = (tempRand+10)/100.0;
@@ -589,6 +575,15 @@ int shieldIndex;
         [self addChild:multiplier];
         [self moveAerialNode:multiplier allowsRotation: NO];
     }
+}
+
+-(void)initializePowerUps {
+    SKAction *wait = [SKAction waitForDuration:5.0];
+    SKAction *run = [SKAction runBlock:^{
+        [self createPowerUp];
+    }];
+    
+    [self runAction:[SKAction repeatActionForever:[SKAction sequence:@[wait, run]]] withKey:@"pupRun"];
 }
 
 -(void)createPowerUp {
@@ -694,16 +689,28 @@ int shieldIndex;
     //Set variables to reflect state.
     activePup = YES;
     wingmanActive = YES;
-    wingmanTempSafe = YES;
+    [self makeNodeSafe:playerNode];
+    [self makeNodeSafe:wingmanNode];
     //wingmanParent.alpha = 0.5;
     [PowerUps wingmanInvincibilityFlicker:playerParent];
     [PowerUps wingmanInvincibilityFlicker:wingmanParent];
-    twoSecondSafety = [NSTimer scheduledTimerWithTimeInterval:2.0 target:self selector:@selector(wingmanUnSafe) userInfo:nil repeats:YES];
+    
+    //Time 2 second safe period
+    SKAction *wait = [SKAction waitForDuration:2.0];
+    SKAction *activate = [SKAction runBlock:^{
+        [self makePlayerNodeActive:playerNode];
+        [self makePlayerNodeActive:wingmanNode];
+    }];
+    [self runAction:[SKAction sequence:@[wait, activate]]];
 }
 
--(void)wingmanUnSafe {
-    wingmanTempSafe = NO;
-    [twoSecondSafety invalidate];
+
+-(void)makeNodeSafe: (SKSpriteNode *)node {
+    node.physicsBody.categoryBitMask = 0;
+}
+
+-(void)makePlayerNodeActive: (SKSpriteNode *)node {
+    node.physicsBody.categoryBitMask = CollisionCategoryPlayer;
 }
 
 -(void)wingmanRemove: (SKSpriteNode *)nodeToRemove objectRemove:(SKSpriteNode *)objectToRemove {
@@ -743,9 +750,16 @@ int shieldIndex;
     //Safe remaining player & update globals.
     activePup = NO;
     wingmanActive = NO;
-    wingmanTempSafe = YES;
+    [self makeNodeSafe:playerNode];
+    [self makeNodeSafe:wingmanNode];
     [PowerUps wingmanInvincibilityFlicker:playerParent];
-    twoSecondSafety = [NSTimer scheduledTimerWithTimeInterval:2.0 target:self selector:@selector(wingmanUnSafe) userInfo:nil repeats:NO];
+    //Time 2 second safe period
+    SKAction *wait = [SKAction waitForDuration:2.0];
+    SKAction *activate = [SKAction runBlock:^{
+        [self makePlayerNodeActive:playerNode];
+        [self makePlayerNodeActive:wingmanNode];
+    }];
+    [self runAction:[SKAction sequence:@[wait, activate]]];
 }
 
 -(void)wingmanRemoveCollideWithBottom: (SKSpriteNode *)nodeToRemove{
@@ -783,36 +797,51 @@ int shieldIndex;
     //Safe remaining player & update globals.
     activePup = NO;
     wingmanActive = NO;
-    wingmanTempSafe = YES;
+    [self makeNodeSafe:playerNode];
+    [self makeNodeSafe:wingmanNode];
     [PowerUps wingmanInvincibilityFlicker:playerParent];
-    twoSecondSafety = [NSTimer scheduledTimerWithTimeInterval:2.0 target:self selector:@selector(wingmanUnSafe) userInfo:nil repeats:NO];
+    //Time 2 second safe period
+    SKAction *wait = [SKAction waitForDuration:2.0];
+    SKAction *activate = [SKAction runBlock:^{
+        [self makePlayerNodeActive:playerNode];
+        [self makePlayerNodeActive:wingmanNode];
+    }];
+    [self runAction:[SKAction sequence:@[wait, activate]]];
 }
 
 -(void)tinyNova {
     [[PowerUps alloc] logicTinyNova:playerNode];
-    tenSeconds = [NSTimer scheduledTimerWithTimeInterval:10 target:self selector:@selector(tinyNovaClose) userInfo:nil repeats:NO];
     activePup = YES;
+    
+    SKAction *wait = [SKAction waitForDuration:10.0];
+    SKAction *closeTinyNova = [SKAction runBlock:^{
+        [[PowerUps alloc] closeTinyNova:playerNode];
+        activePup = NO;
+    }];
+    [self runAction:[SKAction sequence:@[wait,closeTinyNova]]];
 }
 
--(void)tinyNovaClose {
-    [[PowerUps alloc] closeTinyNova:playerNode];
-    activePup = NO;
-    [tenSeconds invalidate];
-}
+#define AUTOCANNON_INTERVAL 0.3
+#define AUTOCANNON_SHOTS_FIRED 25
 
 -(void)autoCannonRun {
-    //tenSeconds = [NSTimer scheduledTimerWithTimeInterval:10.1 target:self selector:@selector(autoCannonFinish) userInfo:nil repeats:NO];
-    lasersFired = 0;
     localLaserHits = 0;
-    halfSecond = [NSTimer scheduledTimerWithTimeInterval:0.3 target:self selector:@selector(autoCannonFire) userInfo:nil repeats:YES];
+    
+    //Time firing function
+    SKAction *wait = [SKAction waitForDuration:AUTOCANNON_INTERVAL];
+    SKAction *fire = [SKAction runBlock:^{
+        [self autoCannonFire];
+    }];
+    SKAction *run = [SKAction repeatAction: [SKAction sequence:@[wait, fire]] count:AUTOCANNON_SHOTS_FIRED];
+    SKAction *close = [SKAction runBlock:^{
+        [self autoCannonFinish];
+    }];
+    [self runAction:[SKAction sequence:@[run, close]]];
+    
     activePup = YES;
 }
 
 -(void)autoCannonFire {
-    
-    if (lasersFired > 25) {
-        [self autoCannonFinish];
-    } else {
         SKSpriteNode *laser = [[PowerUps alloc] autoCannonFire:playerNode];
         laser.position = CGPointMake(playerParent.position.x, playerParent.position.y);
         laser.zRotation = playerParent.zRotation;
@@ -821,9 +850,7 @@ int shieldIndex;
         laser.physicsBody.contactTestBitMask = CollisionCategoryObject;
         laser.name = @"laser";
         [self addChild:laser];
-        lasersFired = lasersFired + 1;
         [[PowerUps alloc] animateLaser:laser withWidth: self.size.width];
-    }
 }
 
 -(void)laserContactRemove: (SKSpriteNode *)firstNodeToRemove andRemove: (SKSpriteNode *)secondNodeToRemove {
@@ -848,7 +875,6 @@ int shieldIndex;
 
 -(void)autoCannonFinish {
     activePup = NO;
-    [halfSecond invalidate];
     [GameState sharedGameData].maxLaserHits = MAX([GameState sharedGameData].maxLaserHits, localLaserHits);
 }
 
@@ -934,9 +960,9 @@ int shieldIndex;
         [self addChild:_score];
         [self createObstacles];
         [tapPlay removeFromParent];
-        objectCreateTimer = [NSTimer scheduledTimerWithTimeInterval:0.5 target:self selector:@selector(createObstacles) userInfo:nil repeats:YES];
-        multiTimer = [NSTimer scheduledTimerWithTimeInterval:2.7 target:self selector:@selector(createMultiplier) userInfo:nil repeats:YES];
-        pupTimer = [NSTimer scheduledTimerWithTimeInterval:5 target:self selector:@selector(createPowerUp) userInfo:nil repeats:YES];
+        [self initializeObstaclesWithInterval:0.5];
+        [self initializeMultipliers];
+        [self initializePowerUps];
         [playerParent removeActionForKey:@"bobbingAction"];
     }
     
@@ -999,13 +1025,6 @@ int shieldIndex;
     }
 }
 
--(void)timersInvalidate {
-    [objectCreateTimer invalidate];
-    [multiTimer invalidate];
-    [pupTimer invalidate];
-    [twoSecondSafety invalidate];
-}
-
 -(void)gameOver {
     
     [self runAction:[SKAction playSoundFileNamed:@"Explosion.wav" waitForCompletion:YES]];
@@ -1019,8 +1038,7 @@ int shieldIndex;
     SKTransition *gameOverTransition = [SKTransition fadeWithColor:fadeColor duration:.25];
     [gameOverView presentScene:gameOverScene transition:gameOverTransition];
     
-    [self timersInvalidate];
-    [Engine stop];
+    [self removeAllActions];
 }
 
 -(void)didBeginContact:(SKPhysicsContact *)contact {
@@ -1040,16 +1058,12 @@ int shieldIndex;
     SKSpriteNode *secondNode = (SKSpriteNode *)secondBody.node;
 
     if (firstBody.categoryBitMask == CollisionCategoryPlayer && secondBody.categoryBitMask == CollisionCategoryObject) {
-        if (wingmanTempSafe == NO) {
             if (wingmanActive == YES) {
                 //Run wingman or player removal
                 [self wingmanRemove:firstNode objectRemove:secondNode];
             } else {
                 [self gameOver];
             }
-        } else {
-            //Player is safe, do nothing.  Objects will pass through player.
-        }
     }
     
     if (firstBody.categoryBitMask == CollisionCategoryPlayer && secondBody.categoryBitMask == CollisionCategoryBottom) {
