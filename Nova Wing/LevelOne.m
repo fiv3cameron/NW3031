@@ -937,7 +937,6 @@ SKColor *wingmanLaserColorCast;
     SKAction *wait = [SKAction waitForDuration:AUTOCANNON_INTERVAL];
     SKAction *fire = [SKAction runBlock:^{
         [self autoCannonFireFromPlayer:tempPlayer withColor:tempColor];
-        [self autoCannonFire];
         [self runAction:[SKAction playSoundFileNamed:@"Laser-test.wav" waitForCompletion:NO]];
     }];
     SKAction *run = [SKAction repeatAction: [SKAction sequence:@[wait, fire]] count:AUTOCANNON_SHOTS_FIRED];
