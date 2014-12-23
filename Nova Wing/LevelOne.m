@@ -844,7 +844,7 @@ SKColor *wingmanLaserColorCast;
 -(void)wingmanRemoveCollideWithBottom: (SKSpriteNode *)nodeToRemove{
     //Pop color.
     SKShapeNode *flash = [SKShapeNode node];
-    flash.fillColor = [SKColor colorWithRed:0.97 green:0.79 blue:0.22 alpha:0]; //Gold.
+    flash.fillColor = [SKColor colorWithRed:0.97 green:0.79 blue:0.22 alpha:1]; //Gold.
     flash.zPosition = 103;
     flash.path = [UIBezierPath bezierPathWithRect: CGRectMake(0, 0, self.size.width, self.size.height)].CGPath;
     flash.position = CGPointMake(0, 0);
@@ -869,6 +869,32 @@ SKColor *wingmanLaserColorCast;
         
         [wingmanNode removeFromParent];
         [wingmanParent removeFromParent];
+        
+        //Update laser color casting to match wingman that survived.  Update new wingman color casting.
+        playerLaserColorCast = wingmanLaserColorCast;
+        int tempInt = arc4random()%6;
+        switch (tempInt) {
+            case 1:
+                wingmanLaserColorCast = [NWColor NWBlue];
+                break;
+            case 2:
+                wingmanLaserColorCast = [NWColor NWRed];
+                break;
+            case 3:
+                wingmanLaserColorCast = [NWColor NWGreen];
+                break;
+            case 4:
+                wingmanLaserColorCast = [NWColor NWPurple];
+                break;
+            case 5:
+                wingmanLaserColorCast = [NWColor NWYellow];
+                break;
+            case 6:
+                wingmanLaserColorCast = [NWColor NWSilver];
+                break;
+            default:
+                break;
+        }
     }
     
     [self.physicsWorld removeJoint:wingmanSpring];
