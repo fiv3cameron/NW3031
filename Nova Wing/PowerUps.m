@@ -91,8 +91,10 @@
     player.physicsBody.linearDamping = 1.0;
 }
 
--(SKSpriteNode *)autoCannonFire: (SKSpriteNode *)player {
+-(SKSpriteNode *)autoCannonFire: (SKSpriteNode *)player withColor: (SKColor *)tempColor {
     SKSpriteNode *laser = [SKSpriteNode spriteNodeWithImageNamed:@"Laser"];
+    laser.color = tempColor;
+    laser.colorBlendFactor = 1.0;
     laser.xScale = 0.25;
     laser.yScale = 0.8;
     laser.physicsBody = [SKPhysicsBody bodyWithRectangleOfSize:CGSizeMake(laser.size.width, laser.size.height)];
