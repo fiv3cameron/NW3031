@@ -28,6 +28,8 @@
     NSString *multiKey;
     NSString *objectCreateKey;
     NSString *powerUpKey;
+    NSString *autocannonKey;
+    NSString *wingmanCannonKey;
     
 }
 @end
@@ -38,6 +40,11 @@ NSTimeInterval _lastUpdateTime;
 NSTimeInterval _dt;
 SKLabelNode* _score;
 int shieldIndex;
+SKColor *playerLaserColorCast;
+SKColor *wingmanLaserColorCast;
+
+#define AUTOCANNON_INTERVAL 0.3
+#define AUTOCANNON_SHOTS_FIRED 25
 
 #pragma mark --CreateBackground
 
@@ -54,6 +61,8 @@ int shieldIndex;
         multiKey = @"multiKey";
         objectCreateKey = @"objectCreateKey";
         powerUpKey = @"powerUpKey";
+        autocannonKey = @"autocannonKey";
+        wingmanCannonKey = @"wingmanCannonKey";
         
         self.backgroundColor = [SKColor colorWithRed:0 green:0 blue:0 alpha:1];
         
@@ -68,9 +77,38 @@ int shieldIndex;
         //Pre emits particles so layer is populated when scene begins
         [stars advanceSimulationTime:1.5];
         
+        //Create playerParent & wingmanParent.
         playerParent = [self createPlayerParent];
         wingmanParent = [self createWingmanParent];
         [self createPlayerNode: playerNode];
+        
+        //Set initial laser colors.
+        playerLaserColorCast = [NWColor NWGreen];
+        int tempInt = arc4random() % 6;
+        switch (tempInt) {
+            case 1:
+                wingmanLaserColorCast = [NWColor NWBlue];
+                break;
+            case 2:
+                wingmanLaserColorCast = [NWColor NWRed];
+                break;
+            case 3:
+                wingmanLaserColorCast = [NWColor NWGreen];
+                break;
+            case 4:
+                wingmanLaserColorCast = [NWColor NWPurple];
+                break;
+            case 5:
+                wingmanLaserColorCast = [NWColor NWYellow];
+                break;
+            case 6:
+                wingmanLaserColorCast = [NWColor NWSilver];
+                break;
+            default:
+                break;
+        }
+        
+        
         
         [self createAudio];
         
@@ -185,7 +223,6 @@ int shieldIndex;
         case 10:
             [self asteroid4];
             break;
-
         default:
             break;
     }
@@ -620,7 +657,7 @@ int shieldIndex;
             break;
         case Auto_Cannon:
             [self createPupTitleWithText:@"Auto Cannon!"];
-            [self autoCannonRun];
+            [self autoCannonRunFromPlayer:playerParent withColor: playerLaserColorCast withKey:autocannonKey];
             break;
         case Tiny_Nova:
             [self createPupTitleWithText:@"Tiny Nova!"];
@@ -661,7 +698,7 @@ int shieldIndex;
     [self addChild:flash];
     [[Multipliers alloc] popActionWithNode:flash];
     
-    //Pass existing player into WingmanParent to preserve position data, etc.  Revise position of playerParent & wingmanParent.
+    //Create wingmanNode and wingmanParent.
     [self createWingmanNode: wingmanNode];
     wingmanNode.physicsBody.allowsRotation = YES;
     wingmanNode.physicsBody.dynamic = YES;
@@ -671,7 +708,7 @@ int shieldIndex;
     [wingmanParent addChild:wingmanNode];
     wingmanParent.name = @"wingman";
     wingmanParent.alpha = 1;
-    wingmanParent.position = CGPointMake(playerParent.position.x, playerParent.position.y + 125); //Shift wingmanParent upward 100 pix from original location.
+    wingmanParent.position = CGPointMake(playerParent.position.x, playerParent.position.y + 150); //Shift wingmanParent upward 150 pix from original location.
     wingmanParent.zRotation = playerParent.zRotation;
     
     //Add particle trail if existent.
@@ -702,6 +739,20 @@ int shieldIndex;
         [self makePlayerNodeActive:wingmanNode];
     }];
     [self runAction:[SKAction sequence:@[wait, activate]]];
+    
+    //Run autocannon from each player.
+    SKAction *wingmanCannonWait = [SKAction waitForDuration:0.15];
+    SKAction *wingmanCannonRunBlock = [SKAction runBlock:^{
+        [self autoCannonRunFromPlayer:wingmanParent withColor:wingmanLaserColorCast withKey:wingmanCannonKey];
+    }];
+    SKAction *wingmanCannonRun = [SKAction sequence:@[wingmanCannonWait,wingmanCannonRunBlock]];
+    [self runAction:wingmanCannonRun];
+    
+    SKAction *playerCannonRunBlock = [SKAction runBlock:^{
+        [self autoCannonRunFromPlayer:playerParent withColor:playerLaserColorCast withKey:autocannonKey];
+    }];
+    [self runAction:playerCannonRunBlock];
+    
 }
 
 
@@ -741,11 +792,39 @@ int shieldIndex;
         playerParent.physicsBody.dynamic = YES;
         playerNode.physicsBody.dynamic = YES;
         
+        //Update laser color casting to match wingman that survived.  Update new wingman color casting.
+        playerLaserColorCast = wingmanLaserColorCast;
+        int tempInt = arc4random()%6;
+        switch (tempInt) {
+            case 1:
+                wingmanLaserColorCast = [NWColor NWBlue];
+                break;
+            case 2:
+                wingmanLaserColorCast = [NWColor NWRed];
+                break;
+            case 3:
+                wingmanLaserColorCast = [NWColor NWGreen];
+                break;
+            case 4:
+                wingmanLaserColorCast = [NWColor NWPurple];
+                break;
+            case 5:
+                wingmanLaserColorCast = [NWColor NWYellow];
+                break;
+            case 6:
+                wingmanLaserColorCast = [NWColor NWSilver];
+                break;
+            default:
+                break;
+        }
+        
         [wingmanNode removeFromParent];
         [wingmanParent removeFromParent];
     }
     
     [self.physicsWorld removeJoint:wingmanSpring];
+    [self removeActionForKey:autocannonKey];
+    [self removeActionForKey:wingmanCannonKey];
     
     //Safe remaining player & update globals.
     activePup = NO;
@@ -793,6 +872,8 @@ int shieldIndex;
     }
     
     [self.physicsWorld removeJoint:wingmanSpring];
+    [self removeActionForKey:autocannonKey];
+    [self removeActionForKey:wingmanCannonKey];
     
     //Safe remaining player & update globals.
     activePup = NO;
@@ -821,30 +902,28 @@ int shieldIndex;
     [self runAction:[SKAction sequence:@[wait,closeTinyNova]]];
 }
 
-#define AUTOCANNON_INTERVAL 0.3
-#define AUTOCANNON_SHOTS_FIRED 25
-
--(void)autoCannonRun {
+-(void)autoCannonRunFromPlayer: (Ships *)tempPlayer withColor: (SKColor *)tempColor withKey: (NSString *)tempKey {
     localLaserHits = 0;
     
     //Time firing function
     SKAction *wait = [SKAction waitForDuration:AUTOCANNON_INTERVAL];
     SKAction *fire = [SKAction runBlock:^{
-        [self autoCannonFire];
+        [self autoCannonFireFromPlayer:tempPlayer withColor:tempColor];
     }];
     SKAction *run = [SKAction repeatAction: [SKAction sequence:@[wait, fire]] count:AUTOCANNON_SHOTS_FIRED];
     SKAction *close = [SKAction runBlock:^{
         [self autoCannonFinish];
     }];
-    [self runAction:[SKAction sequence:@[run, close]]];
+    SKAction *autocannon = [SKAction sequence:@[run, close]];
+    [self runAction:autocannon withKey:tempKey];
     
     activePup = YES;
 }
 
--(void)autoCannonFire {
-        SKSpriteNode *laser = [[PowerUps alloc] autoCannonFire:playerNode];
-        laser.position = CGPointMake(playerParent.position.x, playerParent.position.y);
-        laser.zRotation = playerParent.zRotation;
+-(void)autoCannonFireFromPlayer: (Ships *)tempPlayer withColor: (SKColor *)tempColor {
+        SKSpriteNode *laser = [[PowerUps alloc] autoCannonFire:tempPlayer withColor:tempColor];
+        laser.position = CGPointMake(tempPlayer.position.x, tempPlayer.position.y);
+        laser.zRotation = tempPlayer.zRotation;
         laser.physicsBody.categoryBitMask = CollisionCategoryLaser;
         laser.physicsBody.collisionBitMask = 0;
         laser.physicsBody.contactTestBitMask = CollisionCategoryObject;
@@ -874,7 +953,9 @@ int shieldIndex;
 }
 
 -(void)autoCannonFinish {
-    activePup = NO;
+    if (!wingmanActive) {
+        activePup = NO;
+    }
     [GameState sharedGameData].maxLaserHits = MAX([GameState sharedGameData].maxLaserHits, localLaserHits);
 }
 

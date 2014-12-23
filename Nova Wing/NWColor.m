@@ -26,6 +26,18 @@
     return [SKColor colorWithRed:1 green:1 blue:0 alpha:1];
 }
 
++(SKColor *)NWRed {
+    return [SKColor colorWithRed:1 green:0.1 blue:0.2 alpha:1];
+}
+
++(SKColor *)NWSilver {
+    return [SKColor colorWithRed:0.75 green:0.75 blue:0.85 alpha:1];
+}
+
++(SKColor *)NWTransparent {
+    return[SKColor colorWithRed:1 green:1 blue:1 alpha:0];
+}
+
 +(SKColor *)NWLaserHit {
     return [SKColor colorWithRed:0.33 green:0.33 blue:0.34 alpha:1.0];
 }

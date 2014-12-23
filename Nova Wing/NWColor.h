@@ -15,6 +15,9 @@
 +(SKColor *)NWGreen;
 +(SKColor *)NWPurple;
 +(SKColor *)NWYellow;
++(SKColor *)NWRed;
++(SKColor *)NWSilver;
++(SKColor *)NWTransparent;
 +(SKColor *)NWLaserHit;
 +(SKColor *)NWShieldHit;
 
