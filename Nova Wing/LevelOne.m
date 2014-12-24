@@ -6,6 +6,8 @@
 //  Copyright (c) 2014 FIV3 Interactive, LLC. All rights reserved.
 //
 
+#import <AudioToolbox/AudioToolbox.h>
+
 #import "LevelOne.h"
 #import "GameOverL1.h"
 #import "Obstacles.h"
@@ -374,6 +376,10 @@ int shieldIndex;
     [NWAudioPlayer sharedAudioPlayer].songName = Level_1;
 }
 
+-(void)vibrate {
+    AudioServicesPlaySystemSound(kSystemSoundID_Vibrate);
+}
+
 #pragma mark --Score
 
 -(void)createScoreNode {
@@ -386,6 +392,7 @@ int shieldIndex;
 }
 
 -(void)scoreAdd {
+    [self runAction:[SKAction playSoundFileNamed:@"Score-Collect.wav" waitForCompletion:NO]];
     [GameState sharedGameData].score = [GameState sharedGameData].score + [GameState sharedGameData].scoreMultiplier;
     _score.text = [NSString stringWithFormat:@"Score: %li", [GameState sharedGameData].score];
 }
@@ -429,6 +436,8 @@ int shieldIndex;
 
 
 -(void)scoreMulti {
+    [self runAction:[SKAction playSoundFileNamed:@"Multiplier-Collection.wav" waitForCompletion:YES]];
+    
     [trail removeFromParent];
     [wingmanTrail removeFromParent];
     
@@ -833,7 +842,7 @@ int shieldIndex;
     SKAction *wait = [SKAction waitForDuration:AUTOCANNON_INTERVAL];
     SKAction *fire = [SKAction runBlock:^{
         [self autoCannonFire];
-        [self runAction:[SKAction playSoundFileNamed:@"Laser-test.wav" waitForCompletion:NO]];
+        [self runAction:[SKAction playSoundFileNamed:@"AutoCannon-Fire.wav" waitForCompletion:NO]];
     }];
     SKAction *run = [SKAction repeatAction: [SKAction sequence:@[wait, fire]] count:AUTOCANNON_SHOTS_FIRED];
     SKAction *close = [SKAction runBlock:^{
@@ -857,6 +866,7 @@ int shieldIndex;
 }
 
 -(void)laserContactRemove: (SKSpriteNode *)firstNodeToRemove andRemove: (SKSpriteNode *)secondNodeToRemove {
+    [self runAction:[SKAction playSoundFileNamed:@"Cannon-Hit-Explode.wav" waitForCompletion:NO]];
     SKShapeNode *flash = [SKShapeNode node];
     flash.fillColor = [SKColor colorWithRed:0.33 green:0.33 blue:0.34 alpha:1];
     flash.alpha = 0;
@@ -869,6 +879,7 @@ int shieldIndex;
     SKAction *remove = [SKAction removeFromParent];
     SKAction *seq = [SKAction sequence:@[fadeIn,fadeOut, remove]];
     [flash runAction:seq];
+
     [firstNodeToRemove removeFromParent];
     [secondNodeToRemove removeFromParent];
     localLaserHits = localLaserHits + 1;
@@ -882,6 +893,8 @@ int shieldIndex;
 }
 
 -(void)overShield {
+    [self runAction:[SKAction playSoundFileNamed:@"Shield-PowerUp.wav" waitForCompletion:NO]];
+    
     shield = [SKSpriteNode spriteNodeWithImageNamed:@"Shield"];
     shield.xScale = 1.2;
     shield.yScale = 1.2;
@@ -1026,6 +1039,10 @@ int shieldIndex;
     if ([self childNodeWithName:@"aerialClose"].position.x < -self.size.width / 2) {
         [[self childNodeWithName:@"aerialClose"] removeFromParent];
     }
+    
+    if (playerParent.position.y < 100) {
+        [self vibrate];
+    }
 }
 
 -(void)gameOver {
@@ -1061,6 +1078,7 @@ int shieldIndex;
     SKSpriteNode *secondNode = (SKSpriteNode *)secondBody.node;
 
     if (firstBody.categoryBitMask == CollisionCategoryPlayer && secondBody.categoryBitMask == CollisionCategoryObject) {
+        [self vibrate];
             if (wingmanActive == YES) {
                 //Run wingman or player removal
                 [self wingmanRemove:firstNode objectRemove:secondNode];
@@ -1070,6 +1088,7 @@ int shieldIndex;
     }
     
     if (firstBody.categoryBitMask == CollisionCategoryPlayer && secondBody.categoryBitMask == CollisionCategoryBottom) {
+        [self vibrate];
         if (wingmanActive == YES) {
             //Run wingman or player removal
             if ([firstNode.name  isEqual: @"wingman"]) {
@@ -1097,6 +1116,7 @@ int shieldIndex;
     }
     
     if (firstBody.categoryBitMask == CollisionCategoryShield && secondBody.categoryBitMask == CollisionCategoryObject) {
+        [self vibrate];
         [self collideOvershieldandRemove: secondNode];
         [self scoreAdd];
         [self scorePlus];

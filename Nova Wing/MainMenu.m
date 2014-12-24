@@ -501,69 +501,85 @@ NSTimeInterval _dt;
     //Start Button
     if ([nodeLift.name isEqualToString:@"_startButton"]) {
         
-        [self mainMenuAnimateOut];
-        
-        if ([GameState sharedGameData].highScoreL1 == 0) {
-            //Start Tutorial
-            SKView * tutView = (SKView *)self.view;
-            tutView.showsFPS = YES;
-            tutView.showsNodeCount = YES;
-            //levelOneView.showsPhysics = YES;
-            
-            // Create and configure the scene.
-            SKScene * tutScene = [[Tutorial alloc] initWithSize:tutView.bounds.size];
-            tutScene.scaleMode = SKSceneScaleModeAspectFill;
-            SKTransition *tutTrans = [SKTransition fadeWithColor:fadeColor duration:levelFadeDuration];
-            
-            // Present the scene.
-            [tutView presentScene:tutScene transition:tutTrans];
-        } else {
-            //Load Level 1
-            SKView * levelOneView = (SKView *)self.view;
-            levelOneView.showsFPS = YES;
-            levelOneView.showsNodeCount = YES;
-            //levelOneView.showsPhysics = YES;
-            
-            // Create and configure the scene.
-            SKScene * levelOneScene = [[LevelOne alloc] initWithSize:levelOneView.bounds.size];
-            levelOneScene.scaleMode = SKSceneScaleModeAspectFill;
-            SKTransition *levelOneTrans = [SKTransition fadeWithColor:fadeColor duration:levelFadeDuration];
-            
-            // Present the scene.
-            [levelOneView presentScene:levelOneScene transition:levelOneTrans];
-            
-            // Load level select area
-            /*[GameState sharedGameData].levelIndex = 1;
-             [self addChild:[self levelThumbWithPositionModifier:1.5]];
-             [self animateLeft:levelThumb withDelay:0.5];
-             [self addChild:[self createRightArrowWithWait:0.5]];
-             [self addChild:[self backToMainButton]];*/ }
-        
+        SKAction *sound = [SKAction playSoundFileNamed:@"Button-Press.wav" waitForCompletion:NO];
+        SKAction *menuAnimate = [SKAction runBlock:^{
+            [self mainMenuAnimateOut];
+        }];
+        SKAction *wait = [SKAction waitForDuration:1.25];
+        SKAction *Scene = [SKAction runBlock:^{
+            if ([GameState sharedGameData].highScoreL1 == 0) {
+                //Start Tutorial
+                SKView * tutView = (SKView *)self.view;
+                tutView.showsFPS = YES;
+                tutView.showsNodeCount = YES;
+                //levelOneView.showsPhysics = YES;
+                
+                // Create and configure the scene.
+                SKScene * tutScene = [[Tutorial alloc] initWithSize:tutView.bounds.size];
+                tutScene.scaleMode = SKSceneScaleModeAspectFill;
+                SKTransition *tutTrans = [SKTransition fadeWithColor:fadeColor duration:levelFadeDuration];
+                
+                // Present the scene.
+                [tutView presentScene:tutScene transition:tutTrans];
+            } else {
+                //Load Level 1
+                SKView * levelOneView = (SKView *)self.view;
+                levelOneView.showsFPS = YES;
+                levelOneView.showsNodeCount = YES;
+                //levelOneView.showsPhysics = YES;
+                
+                // Create and configure the scene.
+                SKScene * levelOneScene = [[LevelOne alloc] initWithSize:levelOneView.bounds.size];
+                levelOneScene.scaleMode = SKSceneScaleModeAspectFill;
+                SKTransition *levelOneTrans = [SKTransition fadeWithColor:fadeColor duration:levelFadeDuration];
+                
+                // Present the scene.
+                [levelOneView presentScene:levelOneScene transition:levelOneTrans];
+                
+                // Load level select area
+                /*[GameState sharedGameData].levelIndex = 1;
+                 [self addChild:[self levelThumbWithPositionModifier:1.5]];
+                 [self animateLeft:levelThumb withDelay:0.5];
+                 [self addChild:[self createRightArrowWithWait:0.5]];
+                 [self addChild:[self backToMainButton]];*/ }
+            }];
+        [self runAction:[SKAction sequence:@[sound,menuAnimate,wait,Scene]]];
     }
     
     //Leaderboard Button
     if ([nodeLift.name isEqualToString:@"_leaderButton"]) {
         //SKTransition
+        SKAction *sound = [SKAction playSoundFileNamed:@"Button-Press.wav" waitForCompletion:NO];
+        [self runAction:sound];
     }
     
     if ([nodeLift.name isEqualToString:@"codexButton"]) {
-        SKView * codexView = (SKView *)self.view;
-        codexView.showsFPS = YES;
-        codexView.showsNodeCount = YES;
-        //levelOneView.showsPhysics = YES;
-        
-        // Create and configure the scene.
-        SKScene * codexScene = [[NWCodex alloc] initWithSize:codexView.bounds.size];
-        codexScene.scaleMode = SKSceneScaleModeAspectFill;
-        SKTransition *tutTrans = [SKTransition fadeWithColor:fadeColor duration:levelFadeDuration];
-        
-        // Present the scene.
-        [codexView presentScene:codexScene transition:tutTrans];
+        SKAction *sound = [SKAction playSoundFileNamed:@"Button-Press.wav" waitForCompletion:NO];
+        SKAction *menuAnimate = [SKAction runBlock:^{
+            [self mainMenuAnimateOut];
+        }];
+        SKAction *wait = [SKAction waitForDuration:1.25];
+        SKAction *Scene = [SKAction runBlock:^{
+            SKView * codexView = (SKView *)self.view;
+            codexView.showsFPS = YES;
+            codexView.showsNodeCount = YES;
+            //levelOneView.showsPhysics = YES;
+            
+            // Create and configure the scene.
+            SKScene * codexScene = [[NWCodex alloc] initWithSize:codexView.bounds.size];
+            codexScene.scaleMode = SKSceneScaleModeAspectFill;
+            SKTransition *tutTrans = [SKTransition fadeWithColor:fadeColor duration:levelFadeDuration];
+            
+            // Present the scene.
+            [codexView presentScene:codexScene transition:tutTrans];
+        }];
+        [self runAction:[SKAction sequence:@[sound,menuAnimate,wait,Scene]]];
     }
     
 #pragma mark -- Settings Action Buttons
     if ([nodeLift.name isEqualToString:@"_settingsButton"]) {
         //SKTransition
+        [self runAction:[SKAction playSoundFileNamed:@"Button-Press.wav" waitForCompletion:NO]];
         [self mainMenuAnimateOut];
         [self musicVolumeLabel];
         [self musicToggleButton];
@@ -577,11 +593,15 @@ NSTimeInterval _dt;
         [self resetSuccessPop];
     }
     
-    if ([nodeLift.name isEqualToString:@"backToMain"]) {        
-        SKView *mainMenuView = (SKView *)self.view;
-        SKScene *mainMenuScene = [[MainMenu alloc] initWithSize:mainMenuView.bounds.size];
-        SKTransition *menuTransition = [SKTransition fadeWithDuration:.5];
-        [mainMenuView presentScene:mainMenuScene transition:menuTransition];
+    if ([nodeLift.name isEqualToString:@"backToMain"]) {
+        SKAction *sound = [SKAction playSoundFileNamed:@"Button-Press.wav" waitForCompletion:NO];
+        SKAction *scene = [SKAction runBlock:^{
+            SKView *mainMenuView = (SKView *)self.view;
+            SKScene *mainMenuScene = [[MainMenu alloc] initWithSize:mainMenuView.bounds.size];
+            SKTransition *menuTransition = [SKTransition fadeWithDuration:.5];
+            [mainMenuView presentScene:mainMenuScene transition:menuTransition];
+        }];
+        [self runAction:[SKAction sequence:@[sound,scene]]];
     };
     
     if ([nodeLift.name isEqualToString:@"musicToggle"]) {
