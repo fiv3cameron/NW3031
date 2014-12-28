@@ -550,7 +550,7 @@ SKColor *wingmanLaserColorCast;
     //Calculations.
     float startHeight = incomingNode.position.y;
     float blackHoleRad = blackHole.size.width/2;
-    float distToCent = sqrt(blackHoleRad * blackHoleRad - self.size.width/2 * self.size.width/2);
+    float distToCent = sqrt(blackHoleRad * blackHoleRad - self.size.width/2 * self.size.width/2)*0.9;
     float sumHeight = startHeight + distToCent;
     float triangleWidth = self.size.width/2;
     double square = (sumHeight * sumHeight + triangleWidth * triangleWidth);
