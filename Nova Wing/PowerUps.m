@@ -68,15 +68,11 @@
     [player runAction:alphaFade4x];
 }
 
-<<<<<<< HEAD
 -(void)closeTinyNova: (SKSpriteNode *)player {
     player.physicsBody.linearDamping = 1.0;
 }
 
 -(SKSpriteNode *)autoCannonFire: (SKSpriteNode *)player withColor: (SKColor *)tempColor {
-=======
--(SKSpriteNode *)autoCannonFire: (SKSpriteNode *)player {
->>>>>>> feature/SoundFX
     SKSpriteNode *laser = [SKSpriteNode spriteNodeWithImageNamed:@"Laser"];
     laser.color = tempColor;
     laser.colorBlendFactor = 1.0;
