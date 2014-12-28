@@ -6,11 +6,13 @@
 //  Copyright (c) 2014 FIV3 Interactive, LLC. All rights reserved.
 //
 
+#import <AudioToolbox/AudioToolbox.h>
+
 #import "LevelOne.h"
-#import "GameOverL1.h"
 #import "Obstacles.h"
 #import "Multipliers.h"
 #import "PowerUps.h"
+#import "MainMenu.h"
 
 @interface LevelOne() <SKPhysicsContactDelegate>
 {
@@ -23,6 +25,10 @@
     BOOL activePup;
     BOOL wingmanActive;
     SKPhysicsJointSpring *wingmanSpring;
+    
+        //Game Over ivars
+    SKLabelNode *backToMain;
+    SKSpriteNode *playAgain;
     
     //Strings for Action Keys (To ensure safety)
     NSString *multiKey;
@@ -411,6 +417,10 @@ SKColor *wingmanLaserColorCast;
     [NWAudioPlayer sharedAudioPlayer].songName = Level_1;
 }
 
+-(void)vibrate {
+    AudioServicesPlaySystemSound(kSystemSoundID_Vibrate);
+}
+
 #pragma mark --Score
 
 -(void)createScoreNode {
@@ -423,6 +433,7 @@ SKColor *wingmanLaserColorCast;
 }
 
 -(void)scoreAdd {
+    [self runAction:[SKAction playSoundFileNamed:@"Score-Collect.wav" waitForCompletion:NO]];
     [GameState sharedGameData].score = [GameState sharedGameData].score + [GameState sharedGameData].scoreMultiplier;
     _score.text = [NSString stringWithFormat:@"Score: %li", [GameState sharedGameData].score];
 }
@@ -466,6 +477,8 @@ SKColor *wingmanLaserColorCast;
 
 
 -(void)scoreMulti {
+    [self runAction:[SKAction playSoundFileNamed:@"Multiplier-Collection.wav" waitForCompletion:YES]];
+    
     [trail removeFromParent];
     [wingmanTrail removeFromParent];
     
@@ -688,6 +701,7 @@ SKColor *wingmanLaserColorCast;
 }
 
 -(void)wingmanRun {
+    [self runAction:[SKAction playSoundFileNamed:@"Wingman-Collect.wav" waitForCompletion:NO]];
     //Pop color.
     SKShapeNode *flash = [SKShapeNode node];
     flash.fillColor = [SKColor colorWithRed:0.67 green:0.05 blue:0.05 alpha:1]; //Deep red.
@@ -917,12 +931,13 @@ SKColor *wingmanLaserColorCast;
 }
 
 -(void)tinyNova {
-    [[PowerUps alloc] logicTinyNova:playerNode];
+    [self runAction:[SKAction playSoundFileNamed:@"TinyNova-Collect.wav" waitForCompletion:NO]];
+    [playerNode logicTinyNova];
     activePup = YES;
     
     SKAction *wait = [SKAction waitForDuration:10.0];
     SKAction *closeTinyNova = [SKAction runBlock:^{
-        [[PowerUps alloc] closeTinyNova:playerNode];
+        [playerNode closeTinyNova];
         activePup = NO;
     }];
     [self runAction:[SKAction sequence:@[wait,closeTinyNova]]];
@@ -936,8 +951,13 @@ SKColor *wingmanLaserColorCast;
     //Time firing function
     SKAction *wait = [SKAction waitForDuration:AUTOCANNON_INTERVAL];
     SKAction *fire = [SKAction runBlock:^{
+<<<<<<< HEAD
         [self autoCannonFireFromPlayer:tempPlayer withColor:tempColor];
         [self runAction:[SKAction playSoundFileNamed:@"Laser-test.wav" waitForCompletion:NO]];
+=======
+        [self autoCannonFire];
+        [self runAction:[SKAction playSoundFileNamed:@"AutoCannon-Fire.wav" waitForCompletion:NO]];
+>>>>>>> feature/SoundFX
     }];
     SKAction *run = [SKAction repeatAction: [SKAction sequence:@[wait, fire]] count:AUTOCANNON_SHOTS_FIRED];
     SKAction *close = [SKAction runBlock:^{
@@ -962,6 +982,7 @@ SKColor *wingmanLaserColorCast;
 }
 
 -(void)laserContactRemove: (SKSpriteNode *)firstNodeToRemove andRemove: (SKSpriteNode *)secondNodeToRemove {
+    [self runAction:[SKAction playSoundFileNamed:@"Cannon-Hit-Explode.wav" waitForCompletion:NO]];
     SKShapeNode *flash = [SKShapeNode node];
     flash.fillColor = [SKColor colorWithRed:0.33 green:0.33 blue:0.34 alpha:1];
     flash.alpha = 0;
@@ -974,6 +995,7 @@ SKColor *wingmanLaserColorCast;
     SKAction *remove = [SKAction removeFromParent];
     SKAction *seq = [SKAction sequence:@[fadeIn,fadeOut, remove]];
     [flash runAction:seq];
+
     [firstNodeToRemove removeFromParent];
     [secondNodeToRemove removeFromParent];
     localLaserHits = localLaserHits + 1;
@@ -989,6 +1011,8 @@ SKColor *wingmanLaserColorCast;
 }
 
 -(void)overShield {
+    [self runAction:[SKAction playSoundFileNamed:@"Shield-PowerUp.wav" waitForCompletion:NO]];
+    
     shield = [SKSpriteNode spriteNodeWithImageNamed:@"Shield"];
     shield.xScale = 1.2;
     shield.yScale = 1.2;
@@ -1035,6 +1059,11 @@ SKColor *wingmanLaserColorCast;
 
 -(void)collideOvershieldandRemove: (SKSpriteNode *)object {
     if (shieldIndex < 3 ) {
+        if (shieldIndex < 2) {
+            [self runAction:[SKAction playSoundFileNamed:@"ShieldCollision.wav" waitForCompletion:NO]];
+        } else {
+            [self runAction:[SKAction playSoundFileNamed:@"ShieldBreak.wav" waitForCompletion:NO]];
+        }
         SKShapeNode *flash = [SKShapeNode node];
         flash.path = [UIBezierPath bezierPathWithRect: CGRectMake(0, 0, self.size.width, self.size.height)].CGPath;
         flash.position = CGPointMake(0, 0);
@@ -1046,6 +1075,7 @@ SKColor *wingmanLaserColorCast;
         [object removeFromParent];
         shield.alpha = shield.alpha - 0.3;
         shieldIndex ++;
+        
         if(shieldIndex == 3) {
             [shield removeFromParent];
             playerNode.physicsBody.contactTestBitMask = CollisionCategoryBottom | CollisionCategoryObject | CollisionCategoryScore | CollisionCategoryPup;
@@ -1081,21 +1111,57 @@ SKColor *wingmanLaserColorCast;
         float tempheight = self.size.height + 50;
         [wingmanParent thrustPlayer:wingmanParent withHeight:tempheight];
     }
-    
-    if (levelComplete == YES) {
-        SKView *gameOverView = (SKView *)self.view;
-        
-        SKScene *gameOverScene = [[GameOverL1 alloc] initWithSize:gameOverView.bounds.size];
-        
-        SKColor *fadeColor = [SKColor colorWithRed:0 green:0 blue:0 alpha:1];
-        SKTransition *gameOverTransition = [SKTransition fadeWithColor:fadeColor duration:.25];
-        [gameOverView presentScene:gameOverScene transition:gameOverTransition];
-    }
-    
+
     [playerParent rotateNodeUpwards:playerParent];
     if (wingmanActive == YES) {
         [wingmanParent rotateNodeUpwards:wingmanParent];
     }
+    
+    UITouch *touch = [touches anyObject];
+    CGPoint location = [touch locationInNode:self];
+    SKNode *node = [self nodeAtPoint:location];
+    
+    if ([node.name isEqualToString:@"playButton"]) {
+        playAgain.texture = [SKTexture textureWithImageNamed:@"buttonPressPlay"];
+    }
+}
+
+-(void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event {
+        //Called when a touch ends
+    UITouch *touchLift = [touches anyObject];
+    CGPoint locationLift = [touchLift locationInNode:self];
+    SKNode *nodeLift = [self nodeAtPoint:locationLift];
+    
+    if ([nodeLift.name isEqualToString:@"backToMain"]) {
+        
+        [[GameState sharedGameData] reset];
+        
+        SKView *mainMenuView = (SKView *)self.view;
+        SKScene *mainMenuScene = [[MainMenu alloc] initWithSize:mainMenuView.bounds.size];
+        SKTransition *menuTransition = [SKTransition fadeWithDuration:.5];
+        [mainMenuView presentScene:mainMenuScene transition:menuTransition];
+    };
+    
+    if ([nodeLift.name isEqualToString:@"playButton"]) {
+        
+        [[GameState sharedGameData] reset];
+        
+        playAgain.texture = [SKTexture textureWithImageNamed:@"buttonPlay"];
+        SKColor *fadeColor = [SKColor colorWithRed:0 green:0 blue:0 alpha:1];
+        
+        SKView * levelOneView = (SKView *)self.view;
+        levelOneView.showsFPS = YES;
+        levelOneView.showsNodeCount = YES;
+        
+            // Create and configure the scene.
+        SKScene * levelOneScene = [[LevelOne alloc] initWithSize:levelOneView.bounds.size];
+        levelOneScene.scaleMode = SKSceneScaleModeAspectFill;
+        SKTransition *levelOneTrans = [SKTransition fadeWithColor:fadeColor duration:0.5];
+        
+            // Present the scene.
+        [levelOneView presentScene:levelOneScene transition:levelOneTrans];
+    }
+    
 }
 
 -(void)update:(NSTimeInterval)currentTime {
@@ -1135,10 +1201,11 @@ SKColor *wingmanLaserColorCast;
     }
 }
 
+#pragma mark --Game Over
+
 -(void)gameOver {
-    
-    [self runAction:[SKAction playSoundFileNamed:@"Explosion.wav" waitForCompletion:YES]];
-    [GameState sharedGameData].highScoreL1 = MAX([GameState sharedGameData].score, [GameState sharedGameData].highScoreL1);
+
+    /*[GameState sharedGameData].highScoreL1 = MAX([GameState sharedGameData].score, [GameState sharedGameData].highScoreL1);
     [playerNode removeAllChildren];
     SKView *gameOverView = (SKView *)self.view;
     
@@ -1146,10 +1213,73 @@ SKColor *wingmanLaserColorCast;
     
     SKColor *fadeColor = [SKColor colorWithRed:1 green:1 blue:1 alpha:1];
     SKTransition *gameOverTransition = [SKTransition fadeWithColor:fadeColor duration:.25];
-    [gameOverView presentScene:gameOverScene transition:gameOverTransition];
+    [gameOverView presentScene:gameOverScene transition:gameOverTransition]; */
     
     [self removeAllActions];
+    [self removeAllChildren];
+    
+    [[GameState sharedGameData] save];
+    [self runAction:[SKAction playSoundFileNamed:@"Ship-Explode.wav" waitForCompletion:NO]];
+    
+    [self createBackground];
+    [self addChild:[self backToMenu]];
+    [self createCurrentScore];
+    [self createHighScore];
+    [self playAgainButton];
 }
+
+-(void)createBackground {
+    SKSpriteNode *bgImg = [SKSpriteNode spriteNodeWithImageNamed:@"GameOver-L1"];
+    bgImg.anchorPoint = CGPointMake(0.5f, 0.0f);
+    bgImg.position = CGPointMake(160.0f, 0.0f);
+    [self addChild:bgImg];
+}
+
+-(void)createCurrentScore {
+    SKLabelNode *curScore = [[SKLabelNode alloc] initWithFontNamed:@"SF Movie Poster"];
+    curScore.position = CGPointMake(self.size.width / 2, (self.size.height / 6) * 3.7);
+    curScore.fontColor = [SKColor whiteColor];
+    curScore.fontSize = 60;
+    curScore.horizontalAlignmentMode = SKLabelHorizontalAlignmentModeCenter;
+    curScore.zPosition = 101;
+    curScore.text = [NSString stringWithFormat:@"SCORE: %li", [GameState sharedGameData].score];
+    [self addChild:curScore];
+}
+
+-(void)createHighScore {
+    SKLabelNode *highScore = [[SKLabelNode alloc] initWithFontNamed:@"SF Movie Poster"];
+    highScore.position = CGPointMake(self.size.width / 2, (self.size.height / 6) * 3.4);
+    highScore.fontColor = [SKColor whiteColor];
+    highScore.fontSize = 30;
+    highScore.horizontalAlignmentMode = SKLabelHorizontalAlignmentModeCenter;
+    highScore.zPosition = 101;
+    highScore.text = [NSString stringWithFormat:@"HIGH SCORE: %li", [GameState sharedGameData].highScoreL1];
+    [self addChild:highScore];
+}
+
+-(void)playAgainButton {
+    playAgain = [SKSpriteNode spriteNodeWithTexture: [SKTexture textureWithImageNamed:@"buttonPlay"]];
+    playAgain.position = CGPointMake(self.size.width + playAgain.size.width, self.size.height/6);
+    playAgain.name = @"playButton";
+    [self addChild:playAgain];
+    
+    SKAction *wait = [SKAction waitForDuration:0.1];
+    SKAction *move = [SKAction moveTo:CGPointMake(self.size.width / 2, self.size.height/6) duration:0.5];
+    [playAgain runAction:[SKAction sequence:@[wait,move]]];
+}
+
+-(SKLabelNode *) backToMenu
+{
+    backToMain = [SKLabelNode labelNodeWithFontNamed:@"SF Movie Poster"];
+    backToMain.position = CGPointMake(60.0f, self.size.height - 40);
+    backToMain.fontColor = [SKColor whiteColor];
+    backToMain.fontSize = 30;
+    backToMain.name = @"backToMain";
+    backToMain.text = @"BACK to MAIN";
+    
+    return backToMain;
+}
+
 
 -(void)didBeginContact:(SKPhysicsContact *)contact {
     
@@ -1168,6 +1298,8 @@ SKColor *wingmanLaserColorCast;
     SKSpriteNode *secondNode = (SKSpriteNode *)secondBody.node;
 
     if (firstBody.categoryBitMask == CollisionCategoryPlayer && secondBody.categoryBitMask == CollisionCategoryObject) {
+        [self vibrate];
+        [self runAction:[SKAction playSoundFileNamed:@"Ship-Explode.wav" waitForCompletion:YES]];
             if (wingmanActive == YES) {
                 //Run wingman or player removal
                 [self wingmanRemove:firstNode objectRemove:secondNode];
@@ -1177,6 +1309,8 @@ SKColor *wingmanLaserColorCast;
     }
     
     if (firstBody.categoryBitMask == CollisionCategoryPlayer && secondBody.categoryBitMask == CollisionCategoryBottom) {
+        [self vibrate];
+        [self runAction:[SKAction playSoundFileNamed:@"Ship-Explode.wav" waitForCompletion:YES]];
         if (wingmanActive == YES) {
             //Run wingman or player removal
             if ([firstNode.name  isEqual: @"wingman"]) {
@@ -1204,6 +1338,7 @@ SKColor *wingmanLaserColorCast;
     }
     
     if (firstBody.categoryBitMask == CollisionCategoryShield && secondBody.categoryBitMask == CollisionCategoryObject) {
+        [self vibrate];
         [self collideOvershieldandRemove: secondNode];
         [self scoreAdd];
         [self scorePlus];

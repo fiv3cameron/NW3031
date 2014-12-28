@@ -22,9 +22,13 @@ typedef NS_ENUM(int, pupType) {
 
 -(SKSpriteNode *)createPupsWithType: (pupType)type;
 -(pupType)powerUpTypes;
+<<<<<<< HEAD
 -(void)logicTinyNova: (SKSpriteNode *)player;
 -(void)closeTinyNova: (SKSpriteNode *)player;
 -(SKSpriteNode *)autoCannonFire: (SKSpriteNode *)player withColor: (SKColor *)tempColor;
+=======
+-(SKSpriteNode *)autoCannonFire: (SKSpriteNode *)player;
+>>>>>>> feature/SoundFX
 -(void)animateLaser: (SKSpriteNode *)laserToMove withWidth: (float)incomingWidth;
 +(void)wingmanInvincibilityFlicker: (SKSpriteNode *)player;
 
