@@ -15,5 +15,7 @@
 -(void)rotateNodeDownwards: (SKNode *)nodeRotate;
 -(void)shipBobbing: (SKNode *)bobShip;
 -(void)thrustPlayer:(SKNode *)player withHeight:(float)levelHeight;
+-(void)logicTinyNova;
+-(void)closeTinyNova;
 
 @end

@@ -111,6 +111,11 @@
 		767321041A4628D00057EF70 /* Cannon-Hit-Explode.wav in Resources */ = {isa = PBXBuildFile; fileRef = 767321001A4628D00057EF70 /* Cannon-Hit-Explode.wav */; };
 		767321051A4628D00057EF70 /* Multiplier-Collection.wav in Resources */ = {isa = PBXBuildFile; fileRef = 767321011A4628D00057EF70 /* Multiplier-Collection.wav */; };
 		767321071A4678D70057EF70 /* Score-Collect.wav in Resources */ = {isa = PBXBuildFile; fileRef = 767321061A4678D70057EF70 /* Score-Collect.wav */; };
+		7673210C1A4F48430057EF70 /* ShieldBreak.wav in Resources */ = {isa = PBXBuildFile; fileRef = 767321081A4F48430057EF70 /* ShieldBreak.wav */; };
+		7673210D1A4F48430057EF70 /* ShieldCollision.wav in Resources */ = {isa = PBXBuildFile; fileRef = 767321091A4F48430057EF70 /* ShieldCollision.wav */; };
+		7673210E1A4F48430057EF70 /* TinyNova-Collect.wav in Resources */ = {isa = PBXBuildFile; fileRef = 7673210A1A4F48430057EF70 /* TinyNova-Collect.wav */; };
+		7673210F1A4F48430057EF70 /* Wingman-Collect.wav in Resources */ = {isa = PBXBuildFile; fileRef = 7673210B1A4F48430057EF70 /* Wingman-Collect.wav */; };
+		767321111A4F78630057EF70 /* Ship-Explode.wav in Resources */ = {isa = PBXBuildFile; fileRef = 767321101A4F78630057EF70 /* Ship-Explode.wav */; };
 		7678881A19E1C43E009714A1 /* 4xMulti@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 7678881819E1C43E009714A1 /* 4xMulti@2x.png */; };
 		7678881B19E1C43E009714A1 /* 5xMulti@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 7678881919E1C43E009714A1 /* 5xMulti@2x.png */; };
 		767DE0051A0C72FF00E098DF /* TinyNova@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 767DE0041A0C72FF00E098DF /* TinyNova@2x.png */; };
@@ -264,6 +269,11 @@
 		767321001A4628D00057EF70 /* Cannon-Hit-Explode.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = "Cannon-Hit-Explode.wav"; sourceTree = "<group>"; };
 		767321011A4628D00057EF70 /* Multiplier-Collection.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = "Multiplier-Collection.wav"; sourceTree = "<group>"; };
 		767321061A4678D70057EF70 /* Score-Collect.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = "Score-Collect.wav"; sourceTree = "<group>"; };
+		767321081A4F48430057EF70 /* ShieldBreak.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = ShieldBreak.wav; sourceTree = "<group>"; };
+		767321091A4F48430057EF70 /* ShieldCollision.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = ShieldCollision.wav; sourceTree = "<group>"; };
+		7673210A1A4F48430057EF70 /* TinyNova-Collect.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = "TinyNova-Collect.wav"; sourceTree = "<group>"; };
+		7673210B1A4F48430057EF70 /* Wingman-Collect.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = "Wingman-Collect.wav"; sourceTree = "<group>"; };
+		767321101A4F78630057EF70 /* Ship-Explode.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = "Ship-Explode.wav"; sourceTree = "<group>"; };
 		7678881819E1C43E009714A1 /* 4xMulti@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "4xMulti@2x.png"; sourceTree = "<group>"; };
 		7678881919E1C43E009714A1 /* 5xMulti@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "5xMulti@2x.png"; sourceTree = "<group>"; };
 		767DE0041A0C72FF00E098DF /* TinyNova@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "TinyNova@2x.png"; sourceTree = "<group>"; };
@@ -596,6 +606,11 @@
 		767320F71A4617530057EF70 /* GameSFX */ = {
 			isa = PBXGroup;
 			children = (
+				767321101A4F78630057EF70 /* Ship-Explode.wav */,
+				767321081A4F48430057EF70 /* ShieldBreak.wav */,
+				767321091A4F48430057EF70 /* ShieldCollision.wav */,
+				7673210A1A4F48430057EF70 /* TinyNova-Collect.wav */,
+				7673210B1A4F48430057EF70 /* Wingman-Collect.wav */,
 				767320FE1A4628D00057EF70 /* AutoCannon-Fire.wav */,
 				767320FF1A4628D00057EF70 /* Button-Press.wav */,
 				767321001A4628D00057EF70 /* Cannon-Hit-Explode.wav */,
@@ -759,6 +774,7 @@
 			files = (
 				76B9E91719FB1BE8000EF044 /* ShipTrail.sks in Resources */,
 				76105BDC19F33EE600A3F242 /* Audio_press@2x.png in Resources */,
+				767321111A4F78630057EF70 /* Ship-Explode.wav in Resources */,
 				2DB3528819999445006BF15C /* AOb-3@2x.png in Resources */,
 				765DF29919A9294B00FBFB16 /* GameOver-L1@2x.png in Resources */,
 				767320F31A3CBDAD0057EF70 /* buttonPressReplayTut.png in Resources */,
@@ -768,11 +784,13 @@
 				764BF9A319A19A11007DABF8 /* arrowR@2x.png in Resources */,
 				2DB3528A19999445006BF15C /* Pillar-2@2x.png in Resources */,
 				7640AFB919E06F9A00EFD3C5 /* 3xMulti@2x.png in Resources */,
+				7673210E1A4F48430057EF70 /* TinyNova-Collect.wav in Resources */,
 				763BCED81A33550000AF65DB /* buttonPressCredits.png in Resources */,
 				2DB3527B1999940A006BF15C /* buttonStart.png in Resources */,
 				7651E8D719B0FFA900F7E9D0 /* Level-2-Music.m4a in Resources */,
 				2DB3522719996B83006BF15C /* InfoPlist.strings in Resources */,
 				7678881A19E1C43E009714A1 /* 4xMulti@2x.png in Resources */,
+				7673210F1A4F48430057EF70 /* Wingman-Collect.wav in Resources */,
 				767321021A4628D00057EF70 /* AutoCannon-Fire.wav in Resources */,
 				767320E51A3B96530057EF70 /* NovaWingIcon@3x.png in Resources */,
 				764BF9A719A2BC04007DABF8 /* Nova-L1@2x.png in Resources */,
@@ -813,11 +831,13 @@
 				760C23C419DC832C00D34429 /* L1-AOb-1@2x.png in Resources */,
 				2DB3528B19999445006BF15C /* Pillar-3@2x.png in Resources */,
 				2DB352771999940A006BF15C /* buttonPressLeaderboard.png in Resources */,
+				7673210D1A4F48430057EF70 /* ShieldCollision.wav in Resources */,
 				763BCEC91A32A8A500AF65DB /* buttonPressCodex.png in Resources */,
 				767320FB1A4617970057EF70 /* Shield-PowerUp.wav in Resources */,
 				767320E91A3B96530057EF70 /* NovaWingSpotlight@3x.png in Resources */,
 				763BCECF1A32BA2300AF65DB /* Settings.png in Resources */,
 				767321031A4628D00057EF70 /* Button-Press.wav in Resources */,
+				7673210C1A4F48430057EF70 /* ShieldBreak.wav in Resources */,
 				2DB3529119999485006BF15C /* Level-1-Far@2x.png in Resources */,
 				767321071A4678D70057EF70 /* Score-Collect.wav in Resources */,
 				2DB352781999940A006BF15C /* buttonPressSettings.png in Resources */,
