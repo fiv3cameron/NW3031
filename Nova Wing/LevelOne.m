@@ -101,31 +101,7 @@ SKColor *wingmanLaserColorCast;
         
         //Set initial laser colors.
         playerLaserColorCast = [NWColor NWGreen];
-        int tempInt = arc4random() % 6;
-        switch (tempInt) {
-            case 1:
-                wingmanLaserColorCast = [NWColor NWBlue];
-                break;
-            case 2:
-                wingmanLaserColorCast = [NWColor NWRed];
-                break;
-            case 3:
-                wingmanLaserColorCast = [NWColor NWGreen];
-                break;
-            case 4:
-                wingmanLaserColorCast = [NWColor NWPurple];
-                break;
-            case 5:
-                wingmanLaserColorCast = [NWColor NWYellow];
-                break;
-            case 6:
-                wingmanLaserColorCast = [NWColor NWSilver];
-                break;
-            default:
-                break;
-        }
-        
-        
+        wingmanLaserColorCast = [NWColor NWGreen];
         
         [self createAudio];
         
@@ -380,9 +356,9 @@ SKColor *wingmanLaserColorCast;
 
 -(void)bottomCollide {
     bottom = [SKSpriteNode node];
-    bottom.position = CGPointMake(0, -4);
+    bottom.position = CGPointMake(0, -12);
     bottom.size = CGSizeMake(self.size.width, 1);
-    bottom.physicsBody = [SKPhysicsBody bodyWithEdgeLoopFromRect:CGRectMake(0, 0, self.size.width, 1)];
+    bottom.physicsBody = [SKPhysicsBody bodyWithEdgeLoopFromRect:CGRectMake(0, 0, self.size.width, 10)];
     bottom.physicsBody.dynamic = NO;
     bottom.physicsBody.categoryBitMask = CollisionCategoryBottom;
     bottom.physicsBody.collisionBitMask = 0;
@@ -578,6 +554,20 @@ SKColor *wingmanLaserColorCast;
     double randAngleRad = (tempRandSigned)*180/100.0;
     double randAngleDeg = randAngleRad*3.141592654/180;
     
+    //Time dilation calculations.  If position <=40% & >30% of screen height, reduce base aerial speed by 10% (corresponds to duration increase of 10/9).  Else if position <=30% & >20%, reduce base aerial speed by 20% (corresponds to duration increase of 25%).  If position <=20%, reduce base aerial speed by 30% (corresponds to duration increase of 10/7).
+    if (startHeight <= self.size.height*0.40 && startHeight > self.size.height*0.30) {
+        totalDuration = totalDuration * 10/9;
+    } else if (startHeight <= self.size.height*0.30 && startHeight > self.size.height*0.20) {
+        totalDuration = totalDuration * 5/4;
+    } else if (startHeight <= self.size.height*0.20) {
+        totalDuration = totalDuration * 10/7;
+    }
+    
+    //Score differential calculations.  Max score-based speed differential is an increase in speed of 50% (corresponds to a duration decrease of 2/3).
+    float scoreDifferential = MIN([GameState sharedGameData].score/1500, 1);  // <---ratio from 0 to 1 of score normalized against score of 1500.
+    float durationReduction = 1/3*scoreDifferential;  // <---reduce duration by 33% max corresponds to increase in speed of 50%.
+    totalDuration = totalDuration*(1-durationReduction);
+    
     //Action Definitions.
     SKAction *horzMove = [SKAction moveToX: -incomingNode.size.width duration:totalDuration*2];
     SKAction *vertMoveUp = [SKAction moveByX:0 y:deltaHeight duration:totalDuration];
@@ -723,6 +713,31 @@ SKColor *wingmanLaserColorCast;
     [self addChild:flash];
     [[Multipliers alloc] popActionWithNode:flash];
     
+    //Create wingman laser colors.
+    int tempInt = arc4random() % 6;
+    switch (tempInt) {
+        case 1:
+            wingmanLaserColorCast = [NWColor NWBlue];
+            break;
+        case 2:
+            wingmanLaserColorCast = [NWColor NWRed];
+            break;
+        case 3:
+            wingmanLaserColorCast = [NWColor NWGreen];
+            break;
+        case 4:
+            wingmanLaserColorCast = [NWColor NWPurple];
+            break;
+        case 5:
+            wingmanLaserColorCast = [NWColor NWYellow];
+            break;
+        case 6:
+            wingmanLaserColorCast = [NWColor NWSilver];
+            break;
+        default:
+            break;
+    }
+    
     //Create wingmanNode and wingmanParent.
     [self createWingmanNode: wingmanNode];
     wingmanNode.physicsBody.allowsRotation = YES;
@@ -781,11 +796,13 @@ SKColor *wingmanLaserColorCast;
 }
 
 -(void)makeNodeSafe: (SKSpriteNode *)node {
-    node.physicsBody.categoryBitMask = 0;
+    //node.physicsBody.categoryBitMask = 0;
+    node.physicsBody.contactTestBitMask = CollisionCategoryBottom | CollisionCategoryMulti | CollisionCategoryPup;
 }
 
 -(void)makePlayerNodeActive: (SKSpriteNode *)node {
-    node.physicsBody.categoryBitMask = CollisionCategoryPlayer;
+    //node.physicsBody.categoryBitMask = CollisionCategoryPlayer;
+    node.physicsBody.contactTestBitMask = CollisionCategoryBottom | CollisionCategoryObject | CollisionCategoryMulti | CollisionCategoryPup;
 }
 
 -(void)wingmanRemove: (SKSpriteNode *)nodeToRemove objectRemove:(SKSpriteNode *)objectToRemove {
@@ -818,29 +835,6 @@ SKColor *wingmanLaserColorCast;
         
         //Update laser color casting to match wingman that survived.  Update new wingman color casting.
         playerLaserColorCast = wingmanLaserColorCast;
-        int tempInt = arc4random()%6;
-        switch (tempInt) {
-            case 1:
-                wingmanLaserColorCast = [NWColor NWBlue];
-                break;
-            case 2:
-                wingmanLaserColorCast = [NWColor NWRed];
-                break;
-            case 3:
-                wingmanLaserColorCast = [NWColor NWGreen];
-                break;
-            case 4:
-                wingmanLaserColorCast = [NWColor NWPurple];
-                break;
-            case 5:
-                wingmanLaserColorCast = [NWColor NWYellow];
-                break;
-            case 6:
-                wingmanLaserColorCast = [NWColor NWSilver];
-                break;
-            default:
-                break;
-        }
         
         [wingmanNode removeFromParent];
         [wingmanParent removeFromParent];
