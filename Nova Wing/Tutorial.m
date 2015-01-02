@@ -483,7 +483,7 @@
 }
 
 -(SKNode *)createPowerUpWithIndex: (int)index {
-        SKSpriteNode *Pup = [[PowerUps alloc] createPupsWithType:index];
+        SKSpriteNode *Pup = [PowerUps createPupsWithType:index];
         Pup.position = CGPointMake(self.size.width * 1.7, (self.size.height / 5) * index);
         Pup.physicsBody = [SKPhysicsBody bodyWithCircleOfRadius: Pup.size.width * .3];
         Pup.physicsBody.categoryBitMask = CollisionCategoryPup;

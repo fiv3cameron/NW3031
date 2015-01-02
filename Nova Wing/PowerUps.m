@@ -33,7 +33,7 @@
     
 }
 
-+(pupType)powerUpTypes {
+-(pupType)powerUpTypes {
     
     int randPup = (arc4random()% 4) + 1;
 
