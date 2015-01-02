@@ -1254,12 +1254,13 @@ SKColor *wingmanLaserColorCast;
 
 -(void)playAgainButton {
     playAgain = [SKSpriteNode spriteNodeWithTexture: [SKTexture textureWithImageNamed:@"buttonPlay"]];
-    playAgain.position = CGPointMake(self.size.width + playAgain.size.width, self.size.height/6);
+    playAgain.position = CGPointMake(self.size.width / 2, self.size.height/5);
     playAgain.name = @"playButton";
+    playAgain.alpha = 0.0;
     [self addChild:playAgain];
     
     SKAction *wait = [SKAction waitForDuration:0.1];
-    SKAction *move = [SKAction moveTo:CGPointMake(self.size.width / 2, self.size.height/6) duration:0.5];
+    SKAction *move = [SKAction fadeAlphaTo:1.0 duration:0.5];
     [playAgain runAction:[SKAction sequence:@[wait,move]]];
 }
 
