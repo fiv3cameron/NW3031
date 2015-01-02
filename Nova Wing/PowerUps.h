@@ -20,12 +20,11 @@ typedef NS_ENUM(int, pupType) {
 
 @property (nonatomic, assign) pupType powerUp;
 
--(SKSpriteNode *)createPupsWithType: (pupType)type;
--(pupType)powerUpTypes;
-//-(void)logicTinyNova: (SKSpriteNode *)player;
++(SKSpriteNode *)createPupsWithType: (pupType)type;
++(pupType)powerUpTypes;
 -(void)closeTinyNova: (SKSpriteNode *)player;
--(SKSpriteNode *)autoCannonFire: (SKSpriteNode *)player withColor: (SKColor *)tempColor;
--(void)animateLaser: (SKSpriteNode *)laserToMove withWidth: (float)incomingWidth;
++(SKSpriteNode *)autoCannonFire: (SKSpriteNode *)player withColor: (SKColor *)tempColor;
++(void)animateLaser: (SKSpriteNode *)laserToMove withWidth: (float)incomingWidth;
 +(void)wingmanInvincibilityFlicker: (SKSpriteNode *)player;
 
 @end

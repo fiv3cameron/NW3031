@@ -10,9 +10,7 @@
 
 @implementation PowerUps
 
-
-
--(SKSpriteNode *)createPupsWithType: (pupType)type {
++(SKSpriteNode *)createPupsWithType: (pupType)type {
     SKSpriteNode  *pupTemp = [SKSpriteNode node];
     
     switch (type) {
@@ -31,12 +29,12 @@
             break;
     }
     
-    
     return pupTemp;
     
 }
 
--(pupType)powerUpTypes {
++(pupType)powerUpTypes {
+    
     int randPup = (arc4random()% 4) + 1;
 
     switch (randPup) {
@@ -72,7 +70,7 @@
     player.physicsBody.linearDamping = 1.0;
 }
 
--(SKSpriteNode *)autoCannonFire: (SKSpriteNode *)player withColor: (SKColor *)tempColor {
++(SKSpriteNode *)autoCannonFire: (SKSpriteNode *)player withColor: (SKColor *)tempColor {
     SKSpriteNode *laser = [SKSpriteNode spriteNodeWithImageNamed:@"Laser"];
     laser.color = tempColor;
     laser.colorBlendFactor = 1.0;
@@ -85,7 +83,7 @@
     return laser;
 }
 
--(void)animateLaser: (SKSpriteNode *)laserToMove withWidth: (float)incomingWidth {
++(void)animateLaser: (SKSpriteNode *)laserToMove withWidth: (float)incomingWidth {
     //Calcs
     float xvector = incomingWidth + laserToMove.size.width-laserToMove.position.x;
     float yvector = xvector*tan(laserToMove.zRotation);

@@ -14,7 +14,6 @@
 +(SKSpriteNode *)createMultiplier;
 +(SKShapeNode *)createFlash;
 +(SKEmitterNode *)createShipTrail;
--(void)popActionWithNode: (SKNode *)node;
-
++(void)popActionWithNode: (SKNode *)node;
 
 @end
