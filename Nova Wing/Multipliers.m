@@ -108,7 +108,7 @@
     return shipTrail;
 }
 
--(void)popActionWithNode: (SKNode *)node {
++(void)popActionWithNode: (SKNode *)node {
     SKAction *fadeIn = [SKAction fadeAlphaTo:1 duration:.05];
     SKAction *fadeOut = [SKAction fadeAlphaTo:0 duration:.15];
     SKAction *remove = [SKAction removeFromParent];

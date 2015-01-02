@@ -473,7 +473,7 @@ SKColor *wingmanLaserColorCast;
     flash.path = [UIBezierPath bezierPathWithRect: CGRectMake(0, 0, self.size.width, self.size.height)].CGPath;
     flash.position = CGPointMake(0, 0);
     [self addChild:flash];
-    [[Multipliers alloc] popActionWithNode:flash];
+    [Multipliers popActionWithNode:flash];
     
     //Create Main Player Trail
     trail = [Multipliers createShipTrail];
@@ -644,7 +644,7 @@ SKColor *wingmanLaserColorCast;
         double randYPos = (tempRand + 10) / 100.0;
         
         powerUp = [[PowerUps alloc] powerUpTypes];
-        SKSpriteNode *Pup = [[PowerUps alloc] createPupsWithType:powerUp];
+        SKSpriteNode *Pup = [PowerUps createPupsWithType:powerUp];
         Pup.position = CGPointMake(self.size.width + Pup.size.width, self.size.height * randYPos);
         Pup.physicsBody = [SKPhysicsBody bodyWithCircleOfRadius: Pup.size.width * .3];
         Pup.physicsBody.categoryBitMask = CollisionCategoryPup;
@@ -711,7 +711,7 @@ SKColor *wingmanLaserColorCast;
     flash.path = [UIBezierPath bezierPathWithRect: CGRectMake(0, 0, self.size.width, self.size.height)].CGPath;
     flash.position = CGPointMake(0, 0);
     [self addChild:flash];
-    [[Multipliers alloc] popActionWithNode:flash];
+    [Multipliers popActionWithNode:flash];
     
     //Create wingman laser colors.
     int tempInt = arc4random() % 6;
@@ -814,7 +814,7 @@ SKColor *wingmanLaserColorCast;
     flash.path = [UIBezierPath bezierPathWithRect: CGRectMake(0, 0, self.size.width, self.size.height)].CGPath;
     flash.position = CGPointMake(0, 0);
     [self addChild:flash];
-    [[Multipliers alloc] popActionWithNode:flash];
+    [Multipliers popActionWithNode:flash];
     
     [objectToRemove removeFromParent];
     
@@ -867,7 +867,7 @@ SKColor *wingmanLaserColorCast;
     flash.path = [UIBezierPath bezierPathWithRect: CGRectMake(0, 0, self.size.width, self.size.height)].CGPath;
     flash.position = CGPointMake(0, 0);
     [self addChild:flash];
-    [[Multipliers alloc] popActionWithNode:flash];
+    [Multipliers popActionWithNode:flash];
     
     //Swap player & wingman.
     playerParent.physicsBody.dynamic = NO;
@@ -961,7 +961,7 @@ SKColor *wingmanLaserColorCast;
 }
 
 -(void)autoCannonFireFromPlayer: (Ships *)tempPlayer withColor: (SKColor *)tempColor {
-        SKSpriteNode *laser = [[PowerUps alloc] autoCannonFire:tempPlayer withColor:tempColor];
+        SKSpriteNode *laser = [PowerUps autoCannonFire:tempPlayer withColor:tempColor];
         laser.position = CGPointMake(tempPlayer.position.x, tempPlayer.position.y);
         laser.zRotation = tempPlayer.zRotation;
         laser.physicsBody.categoryBitMask = CollisionCategoryLaser;
@@ -969,7 +969,7 @@ SKColor *wingmanLaserColorCast;
         laser.physicsBody.contactTestBitMask = CollisionCategoryObject;
         laser.name = @"laser";
         [self addChild:laser];
-        [[PowerUps alloc] animateLaser:laser withWidth: self.size.width];
+        [PowerUps animateLaser:laser withWidth: self.size.width];
 }
 
 -(void)laserContactRemove: (SKSpriteNode *)firstNodeToRemove andRemove: (SKSpriteNode *)secondNodeToRemove {
@@ -1059,7 +1059,7 @@ SKColor *wingmanLaserColorCast;
         flash.zPosition = 111;
         flash.fillColor = [NWColor NWShieldHit];
         [self addChild:flash];
-        [[Multipliers alloc] popActionWithNode:flash];
+        [Multipliers popActionWithNode:flash];
         
         [object removeFromParent];
         shield.alpha = shield.alpha - 0.3;

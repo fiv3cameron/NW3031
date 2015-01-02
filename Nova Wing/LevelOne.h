@@ -18,8 +18,6 @@
 
 @end
 
-
-
 SKSpriteNode *blackHole;
 SKLabelNode *tapPlay;
 NORLabelNode *introduction;
