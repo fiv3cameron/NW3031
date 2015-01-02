@@ -88,6 +88,17 @@ SKColor *wingmanLaserColorCast;
         wingmanParent = [self createWingmanParent];
         [self createPlayerNode: playerNode];
         
+        //Create scoring node.
+        SKSpriteNode *scoreColumn = [SKSpriteNode node];
+        scoreColumn.physicsBody = [SKPhysicsBody bodyWithEdgeLoopFromRect:CGRectMake(0, 0, 10, self.size.height)];
+        scoreColumn.physicsBody.categoryBitMask = CollisionCategoryScore;
+        scoreColumn.physicsBody.contactTestBitMask = CollisionCategoryObject;
+        scoreColumn.physicsBody.collisionBitMask = 0;
+        scoreColumn.physicsBody.usesPreciseCollisionDetection = YES;
+        scoreColumn.physicsBody.dynamic = NO;
+        scoreColumn.position = CGPointMake(0, 0);
+        [self addChild:scoreColumn];
+        
         //Set initial laser colors.
         playerLaserColorCast = [NWColor NWGreen];
         int tempInt = arc4random() % 6;
@@ -131,7 +142,7 @@ SKColor *wingmanLaserColorCast;
         //shipBobbing is factory method within playerNode.
         [playerParent shipBobbing:playerParent];
         
-        [self createScoreNode];
+        [self createScoreTextBox];
         //[self scoreTrack];
         if (storymodeL1 == YES) {
             [self intro];
@@ -186,7 +197,7 @@ SKColor *wingmanLaserColorCast;
     playerNode.position = CGPointMake(0, 0);
     playerNode.physicsBody.categoryBitMask = CollisionCategoryPlayer;
     playerNode.physicsBody.collisionBitMask = 0;
-    playerNode.physicsBody.contactTestBitMask = CollisionCategoryBottom | CollisionCategoryObject | CollisionCategoryScore | CollisionCategoryPup;
+    playerNode.physicsBody.contactTestBitMask = CollisionCategoryBottom | CollisionCategoryObject | CollisionCategoryMulti | CollisionCategoryPup;
     
     return tempPlayer;
 }
@@ -196,7 +207,7 @@ SKColor *wingmanLaserColorCast;
     wingmanNode.position = CGPointMake(0, 0);
     wingmanNode.physicsBody.categoryBitMask = CollisionCategoryPlayer;
     wingmanNode.physicsBody.collisionBitMask = 0;
-    wingmanNode.physicsBody.contactTestBitMask = CollisionCategoryBottom | CollisionCategoryObject | CollisionCategoryScore | CollisionCategoryPup;
+    wingmanNode.physicsBody.contactTestBitMask = CollisionCategoryBottom | CollisionCategoryObject | CollisionCategoryMulti | CollisionCategoryPup;
     
     return tempWingman;
 }
@@ -360,7 +371,6 @@ SKColor *wingmanLaserColorCast;
     object.physicsBody.dynamic = YES;
     object.physicsBody.affectedByGravity = NO;
     object.physicsBody.collisionBitMask = CollisionCategoryObject;
-    object.physicsBody.usesPreciseCollisionDetection = YES;
     object.physicsBody.friction = 0.2f;
     object.physicsBody.restitution = 0.0f;
     object.physicsBody.linearDamping = 0.0;
@@ -423,7 +433,7 @@ SKColor *wingmanLaserColorCast;
 
 #pragma mark --Score
 
--(void)createScoreNode {
+-(void)createScoreTextBox {
     _score = [[SKLabelNode alloc] initWithFontNamed:@"SF Movie Poster"];
     _score.position = CGPointMake(self.size.width - 100, self.size.height - 30);
     _score.fontColor = [SKColor whiteColor];
@@ -432,19 +442,20 @@ SKColor *wingmanLaserColorCast;
     _score.zPosition = 101;
 }
 
--(void)scoreAdd {
+-(void)scoreAddWithMultiplier: (int)tempMultiplier {
     [self runAction:[SKAction playSoundFileNamed:@"Score-Collect.wav" waitForCompletion:NO]];
-    [GameState sharedGameData].score = [GameState sharedGameData].score + [GameState sharedGameData].scoreMultiplier;
+    [GameState sharedGameData].score = [GameState sharedGameData].score + [GameState sharedGameData].scoreMultiplier*tempMultiplier;
     _score.text = [NSString stringWithFormat:@"Score: %li", [GameState sharedGameData].score];
 }
 
--(void)scorePlus {
+-(void)scorePlusWithMultiplier: (int)tempMultiplier {
     SKLabelNode *plusOne = [SKLabelNode labelNodeWithFontNamed:@"SF Movie Poster"];
     plusOne.position = CGPointMake(25, [self childNodeWithName:@"aerial"].position.y);
     plusOne.fontColor = [SKColor whiteColor];
     plusOne.fontSize = 30;
     plusOne.zPosition = 101;
-    plusOne.text = [NSString stringWithFormat:@"+%i", [GameState sharedGameData].scoreMultiplier];
+    int tempScore = [GameState sharedGameData].scoreMultiplier*tempMultiplier;
+    plusOne.text = [NSString stringWithFormat:@"+%i", tempScore];
     
     [self addChild:plusOne];
     
@@ -612,7 +623,7 @@ SKColor *wingmanLaserColorCast;
     SKSpriteNode *multiplier = [Multipliers createMultiplier];
     multiplier.position = CGPointMake(self.size.width + multiplier.size.width, self.size.height * randYPosition);
     multiplier.physicsBody = [SKPhysicsBody bodyWithRectangleOfSize: multiplier.size];
-    multiplier.physicsBody.categoryBitMask = CollisionCategoryScore;
+    multiplier.physicsBody.categoryBitMask = CollisionCategoryMulti;
     multiplier.physicsBody.dynamic = NO;
     multiplier.physicsBody.collisionBitMask = 0;
     multiplier.name = @"multiplier";
@@ -769,7 +780,6 @@ SKColor *wingmanLaserColorCast;
     
 }
 
-
 -(void)makeNodeSafe: (SKSpriteNode *)node {
     node.physicsBody.categoryBitMask = 0;
 }
@@ -855,7 +865,7 @@ SKColor *wingmanLaserColorCast;
     [self runAction:[SKAction sequence:@[wait, activate]]];
 }
 
--(void)wingmanRemoveCollideWithBottom: (SKSpriteNode *)nodeToRemove{
+-(void)wingmanRemoveCollideWithBottom {
     //Pop color.
     SKShapeNode *flash = [SKShapeNode node];
     flash.fillColor = [SKColor colorWithRed:0.97 green:0.79 blue:0.22 alpha:1]; //Gold.
@@ -865,53 +875,45 @@ SKColor *wingmanLaserColorCast;
     [self addChild:flash];
     [[Multipliers alloc] popActionWithNode:flash];
     
-    //Remove collided bodies & physics joint.
-    if ([nodeToRemove.parent.name isEqual:@"wingman"]) {
-        //Remove wingman.
-        [wingmanNode removeFromParent];
-        [wingmanParent removeFromParent];
-    } else {
-        //Swap player & wingman.
-        playerParent.physicsBody.dynamic = NO;
-        playerNode.physicsBody.dynamic = NO;
-        SKAction *movePlayerParentToWingmansPosition = [SKAction moveBy:CGVectorMake(0, wingmanParent.position.y-playerParent.position.y) duration:0.0];
-        SKAction *rotatePlayerParentToWingmansRotation = [SKAction rotateToAngle:wingmanParent.zRotation duration:0.0];
-        SKAction *swapGroup = [SKAction group: @[movePlayerParentToWingmansPosition, rotatePlayerParentToWingmansRotation]];
-        [playerParent runAction:swapGroup];
-        playerParent.physicsBody.dynamic = YES;
-        playerNode.physicsBody.dynamic = YES;
-        
-        [wingmanNode removeFromParent];
-        [wingmanParent removeFromParent];
-        
-        //Update laser color casting to match wingman that survived.  Update new wingman color casting.
-        playerLaserColorCast = wingmanLaserColorCast;
-        int tempInt = arc4random()%6;
-        switch (tempInt) {
-            case 1:
-                wingmanLaserColorCast = [NWColor NWBlue];
-                break;
-            case 2:
-                wingmanLaserColorCast = [NWColor NWRed];
-                break;
-            case 3:
-                wingmanLaserColorCast = [NWColor NWGreen];
-                break;
-            case 4:
-                wingmanLaserColorCast = [NWColor NWPurple];
-                break;
-            case 5:
-                wingmanLaserColorCast = [NWColor NWYellow];
-                break;
-            case 6:
-                wingmanLaserColorCast = [NWColor NWSilver];
-                break;
-            default:
-                break;
-        }
+    //Swap player & wingman.
+    playerParent.physicsBody.dynamic = NO;
+    playerNode.physicsBody.dynamic = NO;
+    SKAction *movePlayerParentToWingmansPosition = [SKAction moveBy:CGVectorMake(0, wingmanParent.position.y-playerParent.position.y) duration:0.0];
+    SKAction *rotatePlayerParentToWingmansRotation = [SKAction rotateToAngle:wingmanParent.zRotation duration:0.0];
+    SKAction *swapGroup = [SKAction group: @[movePlayerParentToWingmansPosition, rotatePlayerParentToWingmansRotation]];
+    [playerParent runAction:swapGroup];
+    playerParent.physicsBody.dynamic = YES;
+    playerNode.physicsBody.dynamic = YES;
+    
+    //Update laser color casting to match wingman that survived.  Update new wingman color casting.
+    playerLaserColorCast = wingmanLaserColorCast;
+    int tempInt = arc4random()%6;
+    switch (tempInt) {
+        case 1:
+            wingmanLaserColorCast = [NWColor NWBlue];
+            break;
+        case 2:
+            wingmanLaserColorCast = [NWColor NWRed];
+            break;
+        case 3:
+            wingmanLaserColorCast = [NWColor NWGreen];
+            break;
+        case 4:
+            wingmanLaserColorCast = [NWColor NWPurple];
+            break;
+        case 5:
+            wingmanLaserColorCast = [NWColor NWYellow];
+            break;
+        case 6:
+            wingmanLaserColorCast = [NWColor NWSilver];
+            break;
+        default:
+            break;
     }
     
     [self.physicsWorld removeJoint:wingmanSpring];
+    [wingmanNode removeFromParent];
+    [wingmanParent removeFromParent];
     [self removeActionForKey:autocannonKey];
     [self removeActionForKey:wingmanCannonKey];
     
@@ -919,13 +921,13 @@ SKColor *wingmanLaserColorCast;
     activePup = NO;
     wingmanActive = NO;
     [self makeNodeSafe:playerNode];
-    [self makeNodeSafe:wingmanNode];
+    //[self makeNodeSafe:wingmanNode];
     [PowerUps wingmanInvincibilityFlicker:playerParent];
     //Time 2 second safe period
     SKAction *wait = [SKAction waitForDuration:2.0];
     SKAction *activate = [SKAction runBlock:^{
         [self makePlayerNodeActive:playerNode];
-        [self makePlayerNodeActive:wingmanNode];
+        //[self makePlayerNodeActive:wingmanNode];
     }];
     [self runAction:[SKAction sequence:@[wait, activate]]];
 }
@@ -994,8 +996,6 @@ SKColor *wingmanLaserColorCast;
     [firstNodeToRemove removeFromParent];
     [secondNodeToRemove removeFromParent];
     localLaserHits = localLaserHits + 1;
-    [self scorePlus];
-    [self scoreAdd];
 }
 
 -(void)autoCannonFinish {
@@ -1047,7 +1047,7 @@ SKColor *wingmanLaserColorCast;
     SKPhysicsJointFixed *shieldJoint = [SKPhysicsJointFixed jointWithBodyA:playerParent.physicsBody bodyB:shield.physicsBody anchor:CGPointMake(playerParent.position.x, playerParent.position.y)];
     [self.physicsWorld addJoint:shieldJoint];
     
-    playerNode.physicsBody.contactTestBitMask = CollisionCategoryBottom  | CollisionCategoryScore;
+    playerNode.physicsBody.contactTestBitMask = CollisionCategoryBottom  | CollisionCategoryMulti;
     shieldIndex = 0;
     activePup = YES;
 }
@@ -1073,7 +1073,7 @@ SKColor *wingmanLaserColorCast;
         
         if(shieldIndex == 3) {
             [shield removeFromParent];
-            playerNode.physicsBody.contactTestBitMask = CollisionCategoryBottom | CollisionCategoryObject | CollisionCategoryScore | CollisionCategoryPup;
+            playerNode.physicsBody.contactTestBitMask = CollisionCategoryBottom | CollisionCategoryObject | CollisionCategoryMulti | CollisionCategoryPup;
             activePup = NO;
         }
     }
@@ -1182,18 +1182,16 @@ SKColor *wingmanLaserColorCast;
     
     /*if ([self childNodeWithName:@"aerial"].position.x < self.size.width / 2) {
         [[self childNodeWithName:@"aerial"].physicsBody applyImpulse:CGVectorMake(0, -0.2)];
-    }*/
+    }
     
     if ([self childNodeWithName:@"aerial"].position.x < playerParent.position.x - playerParent.size.width && [self childNodeWithName:@"aerial"].position.x > 1)
     {
-        [self scoreAdd];
-        [self scorePlus];
         [self childNodeWithName:@"aerial"].name = @"aerialClose";
     }
     
     if ([self childNodeWithName:@"aerialClose"].position.x < -self.size.width / 2) {
         [[self childNodeWithName:@"aerialClose"] removeFromParent];
-    }
+    }*/
 }
 
 #pragma mark --Game Over
@@ -1308,18 +1306,14 @@ SKColor *wingmanLaserColorCast;
         [self vibrate];
         [self runAction:[SKAction playSoundFileNamed:@"Ship-Explode.wav" waitForCompletion:YES]];
         if (wingmanActive == YES) {
-            //Run wingman or player removal
-            if ([firstNode.name  isEqual: @"wingman"]) {
-                [self wingmanRemoveCollideWithBottom:firstNode];
-            } else {
-                [self wingmanRemoveCollideWithBottom:firstNode];
-            }
+            //Run wingman removal.
+            [self wingmanRemoveCollideWithBottom];
         } else {
             [self gameOver];
         }
     }
     
-    if (firstBody.categoryBitMask == CollisionCategoryPlayer && secondBody.categoryBitMask == CollisionCategoryScore) {
+    if (firstBody.categoryBitMask == CollisionCategoryPlayer && secondBody.categoryBitMask == CollisionCategoryMulti) {
         [self scoreMulti];
         }
     
@@ -1336,8 +1330,22 @@ SKColor *wingmanLaserColorCast;
     if (firstBody.categoryBitMask == CollisionCategoryShield && secondBody.categoryBitMask == CollisionCategoryObject) {
         [self vibrate];
         [self collideOvershieldandRemove: secondNode];
-        [self scoreAdd];
-        [self scorePlus];
+        [self scoreAddWithMultiplier:1];
+        [self scorePlusWithMultiplier:1];
+    }
+    
+    if (firstBody.categoryBitMask == CollisionCategoryScore && secondBody.categoryBitMask == CollisionCategoryObject) {
+        //Object has passed scoring threshold.  Run score function.
+        if (wingmanActive) {
+            [self scoreAddWithMultiplier:2];
+            [self scorePlusWithMultiplier:2];
+        } else {
+            [self scoreAddWithMultiplier:1];
+            [self scorePlusWithMultiplier:1];
+        }
+        
+        secondNode.physicsBody.categoryBitMask = 0;
+        
     }
 }
 

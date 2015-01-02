@@ -16,8 +16,6 @@
     AVAudioPlayer *bgPlayer;
 }
 
-    -(void)scoreAdd;
-
 @end
 
 
