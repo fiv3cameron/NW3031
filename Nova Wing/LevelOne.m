@@ -38,7 +38,7 @@
     NSString *wingmanCannonKey;
     
 }
-        //Preloading Actions -> Properties Here
+        //Preloading Sound Actions -> Properties Here
     @property (strong, nonatomic) SKAction* AutoCannonFire;
     @property (strong, nonatomic) SKAction* AutoCannonSpool;
     @property (strong, nonatomic) SKAction* CannonHitExplode;
@@ -83,7 +83,7 @@ SKColor *wingmanLaserColorCast;
         autocannonKey = @"autocannonKey";
         wingmanCannonKey = @"wingmanCannonKey";
         
-            //Preload Sound Actions
+        //Preload Sound Actions
         [self preloadSoundActions];
         
         self.backgroundColor = [SKColor colorWithRed:0 green:0 blue:0 alpha:1];
@@ -439,9 +439,9 @@ SKColor *wingmanLaserColorCast;
     _score.text = [NSString stringWithFormat:@"Score: %li", [GameState sharedGameData].score];
 }
 
--(void)scorePlusWithMultiplier: (int)tempMultiplier {
+-(void)scorePlusWithMultiplier: (int)tempMultiplier fromNode: (SKSpriteNode *)tempNode {
     SKLabelNode *plusOne = [SKLabelNode labelNodeWithFontNamed:@"SF Movie Poster"];
-    plusOne.position = CGPointMake(25, [self childNodeWithName:@"aerial"].position.y);
+    plusOne.position = CGPointMake(25, tempNode.position.y);
     plusOne.fontColor = [SKColor whiteColor];
     plusOne.fontSize = 30;
     plusOne.zPosition = 101;
@@ -1340,17 +1340,17 @@ SKColor *wingmanLaserColorCast;
         [self vibrate];
         [self collideOvershieldandRemove: secondNode];
         [self scoreAddWithMultiplier:1];
-        [self scorePlusWithMultiplier:1];
+        [self scorePlusWithMultiplier:1 fromNode:secondNode];
     }
     
     if (firstBody.categoryBitMask == CollisionCategoryScore && secondBody.categoryBitMask == CollisionCategoryObject) {
         //Object has passed scoring threshold.  Run score function.
         if (wingmanActive) {
             [self scoreAddWithMultiplier:2];
-            [self scorePlusWithMultiplier:2];
+            [self scorePlusWithMultiplier:2 fromNode:secondNode];
         } else {
             [self scoreAddWithMultiplier:1];
-            [self scorePlusWithMultiplier:1];
+            [self scorePlusWithMultiplier:1 fromNode:secondNode];
         }
         
         secondNode.physicsBody.categoryBitMask = 0;
