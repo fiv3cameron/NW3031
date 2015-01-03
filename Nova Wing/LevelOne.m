@@ -30,7 +30,7 @@
     SKLabelNode *backToMain;
     SKSpriteNode *playAgain;
     
-    //Strings for Action Keys (To ensure safety)
+        //Strings for Action Keys (To ensure safety)
     NSString *multiKey;
     NSString *objectCreateKey;
     NSString *powerUpKey;
@@ -38,7 +38,22 @@
     NSString *wingmanCannonKey;
     
 }
+        //Preloading Sound Actions -> Properties Here
+    @property (strong, nonatomic) SKAction* AutoCannonFire;
+    @property (strong, nonatomic) SKAction* AutoCannonSpool;
+    @property (strong, nonatomic) SKAction* CannonHitExplode;
+    @property (strong, nonatomic) SKAction* Explosion;
+    @property (strong, nonatomic) SKAction* MultiplierCollection;
+    @property (strong, nonatomic) SKAction* ScoreCollect;
+    @property (strong, nonatomic) SKAction* ShieldPowerUp;
+    @property (strong, nonatomic) SKAction* ShieldBreak;
+    @property (strong, nonatomic) SKAction* ShieldCollision;
+    @property (strong, nonatomic) SKAction* ShipExplode;
+    @property (strong, nonatomic) SKAction* TinyNovaCollect;
+    @property (strong, nonatomic) SKAction* WingmanCollect;
+
 @end
+
 
 @implementation LevelOne
 
@@ -57,8 +72,6 @@ SKColor *wingmanLaserColorCast;
 -(id)initWithSize:(CGSize)size {
     if (self = [super initWithSize:size]) {
         
-        levelComplete = NO;
-        storymodeL1 = NO;
         [GameState sharedGameData].scoreMultiplier = 1;
         [GameState sharedGameData].maxLaserHits = 0;
         activePup = NO;
@@ -69,6 +82,9 @@ SKColor *wingmanLaserColorCast;
         powerUpKey = @"powerUpKey";
         autocannonKey = @"autocannonKey";
         wingmanCannonKey = @"wingmanCannonKey";
+        
+        //Preload Sound Actions
+        [self preloadSoundActions];
         
         self.backgroundColor = [SKColor colorWithRed:0 green:0 blue:0 alpha:1];
         
@@ -120,14 +136,26 @@ SKColor *wingmanLaserColorCast;
         
         [self createScoreTextBox];
         //[self scoreTrack];
-        if (storymodeL1 == YES) {
-            [self intro];
-            [self tapToPlay];
-        } else if (storymodeL1 == NO)
-            [self tapToPlay];
+
+        [self tapToPlay];
         _score.text = @"Score: 0";
     }
     return self;
+}
+
+-(void)preloadSoundActions {
+    _AutoCannonFire = [SKAction playSoundFileNamed:@"AutoCannon-Fire.caf" waitForCompletion:NO];
+    _AutoCannonSpool = [SKAction playSoundFileNamed:@"AutoCannon-Spool.caf" waitForCompletion:NO];
+    _CannonHitExplode = [SKAction playSoundFileNamed:@"Cannon-Hit-Explode.caf" waitForCompletion:NO];
+    _Explosion = [SKAction playSoundFileNamed:@"Explosion.caf" waitForCompletion:NO];
+    _MultiplierCollection = [SKAction playSoundFileNamed:@"Multiplier-Collection.caf" waitForCompletion:NO];
+    _ScoreCollect = [SKAction playSoundFileNamed:@"Score-Collect.caf" waitForCompletion:NO];
+    _ShieldPowerUp = [SKAction playSoundFileNamed:@"Shield-PowerUp.caf" waitForCompletion:NO];
+    _ShieldBreak = [SKAction playSoundFileNamed:@"ShieldBreak.caf" waitForCompletion:NO];
+    _ShieldCollision = [SKAction playSoundFileNamed:@"ShieldCollision.caf" waitForCompletion:NO];
+    _ShipExplode = [SKAction playSoundFileNamed:@"Ship-Explode.caf" waitForCompletion:NO];
+    _TinyNovaCollect = [SKAction playSoundFileNamed:@"TinyNova-Collect.caf" waitForCompletion:NO];
+    _WingmanCollect = [SKAction playSoundFileNamed:@"Wingman-Collect.caf" waitForCompletion:NO];
 }
 
 -(Ships *)createPlayerParent {
@@ -376,26 +404,6 @@ SKColor *wingmanLaserColorCast;
     [self addChild:tapPlay];
 }
 
--(void)intro {
-
-    storyBadge = [SKSpriteNode spriteNodeWithImageNamed:@"CMDR-FletcherPop"];
-    storyBadge.position = CGPointMake(self.size.width / 2, self.size.height / 2);
-    storyBadge.zPosition = 101;
-    
-    introduction  = [NORLabelNode labelNodeWithFontNamed:@"SF Movie Poster"];
-    introduction.fontColor = [SKColor whiteColor];
-    introduction.fontSize = 30;
-    introduction.lineSpacing = 1;
-    introduction.position = CGPointMake(self.size.width / 2, self.size.height / 2 - 50);
-    introduction.zPosition = 102;
-    introduction.horizontalAlignmentMode = SKLabelHorizontalAlignmentModeCenter;
-    introduction.verticalAlignmentMode = SKLabelVerticalAlignmentModeCenter;
-    introduction.text = @"A Black Hole just came out of nowhere!\n Could it be? Theres... agh...\n the Whispers... I can't...";
-    
-    [self addChild:storyBadge];
-    [self addChild:introduction];
-}
-
 #pragma mark --Create Audio
 -(void)createAudio
 {
@@ -405,6 +413,13 @@ SKColor *wingmanLaserColorCast;
 
 -(void)vibrate {
     AudioServicesPlaySystemSound(kSystemSoundID_Vibrate);
+}
+
+-(void)playSoundEffectsWithAction: (SKAction *)action {
+    if ([GameState sharedGameData].audioVolume == 1.0) {
+        [self runAction:action];
+    }
+
 }
 
 #pragma mark --Score
@@ -419,14 +434,14 @@ SKColor *wingmanLaserColorCast;
 }
 
 -(void)scoreAddWithMultiplier: (int)tempMultiplier {
-    [self runAction:[SKAction playSoundFileNamed:@"Score-Collect.wav" waitForCompletion:NO]];
+    [self playSoundEffectsWithAction:_ScoreCollect];
     [GameState sharedGameData].score = [GameState sharedGameData].score + [GameState sharedGameData].scoreMultiplier*tempMultiplier;
     _score.text = [NSString stringWithFormat:@"Score: %li", [GameState sharedGameData].score];
 }
 
--(void)scorePlusWithMultiplier: (int)tempMultiplier {
+-(void)scorePlusWithMultiplier: (int)tempMultiplier fromNode: (SKSpriteNode *)tempNode {
     SKLabelNode *plusOne = [SKLabelNode labelNodeWithFontNamed:@"SF Movie Poster"];
-    plusOne.position = CGPointMake(25, [self childNodeWithName:@"aerial"].position.y);
+    plusOne.position = CGPointMake(25, tempNode.position.y);
     plusOne.fontColor = [SKColor whiteColor];
     plusOne.fontSize = 30;
     plusOne.zPosition = 101;
@@ -464,7 +479,7 @@ SKColor *wingmanLaserColorCast;
 
 
 -(void)scoreMulti {
-    [self runAction:[SKAction playSoundFileNamed:@"Multiplier-Collection.wav" waitForCompletion:YES]];
+    [self playSoundEffectsWithAction:_MultiplierCollection];
     
     [trail removeFromParent];
     [wingmanTrail removeFromParent];
@@ -702,7 +717,7 @@ SKColor *wingmanLaserColorCast;
 }
 
 -(void)wingmanRun {
-    [self runAction:[SKAction playSoundFileNamed:@"Wingman-Collect.wav" waitForCompletion:NO]];
+    [self playSoundEffectsWithAction:_WingmanCollect];
     //Pop color.
     SKShapeNode *flash = [SKShapeNode node];
     flash.fillColor = [SKColor colorWithRed:0.67 green:0.05 blue:0.05 alpha:1]; //Deep red.
@@ -927,7 +942,7 @@ SKColor *wingmanLaserColorCast;
 }
 
 -(void)tinyNova {
-    [self runAction:[SKAction playSoundFileNamed:@"TinyNova-Collect.wav" waitForCompletion:NO]];
+    [self playSoundEffectsWithAction:_TinyNovaCollect];
     [playerNode logicTinyNova];
     activePup = YES;
     
@@ -942,13 +957,13 @@ SKColor *wingmanLaserColorCast;
 -(void)autoCannonRunFromPlayer: (Ships *)tempPlayer withColor: (SKColor *)tempColor withKey: (NSString *)tempKey {
     localLaserHits = 0;
     
-    [self runAction:[SKAction playSoundFileNamed:@"AutoCannon-Spool.wav" waitForCompletion:NO]];
+    [self playSoundEffectsWithAction:_AutoCannonSpool];
     
     //Time firing function
     SKAction *wait = [SKAction waitForDuration:AUTOCANNON_INTERVAL];
     SKAction *fire = [SKAction runBlock:^{
         [self autoCannonFireFromPlayer:tempPlayer withColor:tempColor];
-        [self runAction:[SKAction playSoundFileNamed:@"AutoCannon-Fire.wav" waitForCompletion:NO]];
+        [self playSoundEffectsWithAction:_AutoCannonFire];
     }];
     SKAction *run = [SKAction repeatAction: [SKAction sequence:@[wait, fire]] count:AUTOCANNON_SHOTS_FIRED];
     SKAction *close = [SKAction runBlock:^{
@@ -973,7 +988,7 @@ SKColor *wingmanLaserColorCast;
 }
 
 -(void)laserContactRemove: (SKSpriteNode *)firstNodeToRemove andRemove: (SKSpriteNode *)secondNodeToRemove {
-    [self runAction:[SKAction playSoundFileNamed:@"Cannon-Hit-Explode.wav" waitForCompletion:NO]];
+    [self playSoundEffectsWithAction:_CannonHitExplode];
     SKShapeNode *flash = [SKShapeNode node];
     flash.fillColor = [SKColor colorWithRed:0.33 green:0.33 blue:0.34 alpha:1];
     flash.alpha = 0;
@@ -1000,7 +1015,7 @@ SKColor *wingmanLaserColorCast;
 }
 
 -(void)overShield {
-    [self runAction:[SKAction playSoundFileNamed:@"Shield-PowerUp.wav" waitForCompletion:NO]];
+    [self playSoundEffectsWithAction:_ShieldPowerUp];
     
     shield = [SKSpriteNode spriteNodeWithImageNamed:@"Shield"];
     shield.xScale = 1.2;
@@ -1049,9 +1064,9 @@ SKColor *wingmanLaserColorCast;
 -(void)collideOvershieldandRemove: (SKSpriteNode *)object {
     if (shieldIndex < 3 ) {
         if (shieldIndex < 2) {
-            [self runAction:[SKAction playSoundFileNamed:@"ShieldCollision.wav" waitForCompletion:NO]];
+            [self playSoundEffectsWithAction:_ShieldCollision];
         } else {
-            [self runAction:[SKAction playSoundFileNamed:@"ShieldBreak.wav" waitForCompletion:NO]];
+            [self playSoundEffectsWithAction:_ShieldBreak];
         }
         SKShapeNode *flash = [SKShapeNode node];
         flash.path = [UIBezierPath bezierPathWithRect: CGRectMake(0, 0, self.size.width, self.size.height)].CGPath;
@@ -1206,7 +1221,7 @@ SKColor *wingmanLaserColorCast;
     [self removeAllChildren];
     
     [[GameState sharedGameData] save];
-    [self runAction:[SKAction playSoundFileNamed:@"Ship-Explode.wav" waitForCompletion:NO]];
+    [self playSoundEffectsWithAction:_ShipExplode];
     
     [self createBackground];
     [self addChild:[self backToMenu]];
@@ -1287,7 +1302,7 @@ SKColor *wingmanLaserColorCast;
 
     if (firstBody.categoryBitMask == CollisionCategoryPlayer && secondBody.categoryBitMask == CollisionCategoryObject) {
         [self vibrate];
-        [self runAction:[SKAction playSoundFileNamed:@"Ship-Explode.wav" waitForCompletion:YES]];
+        [self playSoundEffectsWithAction:_ShipExplode];
             if (wingmanActive == YES) {
                 //Run wingman or player removal
                 [self wingmanRemove:firstNode objectRemove:secondNode];
@@ -1298,7 +1313,7 @@ SKColor *wingmanLaserColorCast;
     
     if (firstBody.categoryBitMask == CollisionCategoryPlayer && secondBody.categoryBitMask == CollisionCategoryBottom) {
         [self vibrate];
-        [self runAction:[SKAction playSoundFileNamed:@"Ship-Explode.wav" waitForCompletion:YES]];
+        [self playSoundEffectsWithAction:_ShipExplode];
         if (wingmanActive == YES) {
             //Run wingman removal.
             [self wingmanRemoveCollideWithBottom];
@@ -1325,17 +1340,17 @@ SKColor *wingmanLaserColorCast;
         [self vibrate];
         [self collideOvershieldandRemove: secondNode];
         [self scoreAddWithMultiplier:1];
-        [self scorePlusWithMultiplier:1];
+        [self scorePlusWithMultiplier:1 fromNode:secondNode];
     }
     
     if (firstBody.categoryBitMask == CollisionCategoryScore && secondBody.categoryBitMask == CollisionCategoryObject) {
         //Object has passed scoring threshold.  Run score function.
         if (wingmanActive) {
             [self scoreAddWithMultiplier:2];
-            [self scorePlusWithMultiplier:2];
+            [self scorePlusWithMultiplier:2 fromNode:secondNode];
         } else {
             [self scoreAddWithMultiplier:1];
-            [self scorePlusWithMultiplier:1];
+            [self scorePlusWithMultiplier:1 fromNode:secondNode];
         }
         
         secondNode.physicsBody.categoryBitMask = 0;

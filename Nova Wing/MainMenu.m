@@ -501,7 +501,7 @@ NSTimeInterval _dt;
     //Start Button
     if ([nodeLift.name isEqualToString:@"_startButton"]) {
         
-        SKAction *sound = [SKAction playSoundFileNamed:@"Button-Press.wav" waitForCompletion:NO];
+        SKAction *sound = [SKAction playSoundFileNamed:@"Button-Press.caf" waitForCompletion:NO];
         SKAction *menuAnimate = [SKAction runBlock:^{
             [self mainMenuAnimateOut];
         }];
@@ -549,12 +549,12 @@ NSTimeInterval _dt;
     //Leaderboard Button
     if ([nodeLift.name isEqualToString:@"_leaderButton"]) {
         //SKTransition
-        SKAction *sound = [SKAction playSoundFileNamed:@"Button-Press.wav" waitForCompletion:NO];
+        SKAction *sound = [SKAction playSoundFileNamed:@"Button-Press.caf" waitForCompletion:NO];
         [self runAction:sound];
     }
     
     if ([nodeLift.name isEqualToString:@"codexButton"]) {
-        SKAction *sound = [SKAction playSoundFileNamed:@"Button-Press.wav" waitForCompletion:NO];
+        SKAction *sound = [SKAction playSoundFileNamed:@"Button-Press.caf" waitForCompletion:NO];
         SKAction *menuAnimate = [SKAction runBlock:^{
             [self mainMenuAnimateOut];
         }];
@@ -579,7 +579,7 @@ NSTimeInterval _dt;
 #pragma mark -- Settings Action Buttons
     if ([nodeLift.name isEqualToString:@"_settingsButton"]) {
         //SKTransition
-        [self runAction:[SKAction playSoundFileNamed:@"Button-Press.wav" waitForCompletion:NO]];
+        [self runAction:[SKAction playSoundFileNamed:@"Button-Press.caf" waitForCompletion:NO]];
         [self mainMenuAnimateOut];
         [self musicVolumeLabel];
         [self musicToggleButton];
@@ -594,7 +594,7 @@ NSTimeInterval _dt;
     }
     
     if ([nodeLift.name isEqualToString:@"backToMain"]) {
-        SKAction *sound = [SKAction playSoundFileNamed:@"Button-Press.wav" waitForCompletion:NO];
+        SKAction *sound = [SKAction playSoundFileNamed:@"Button-Press.caf" waitForCompletion:NO];
         SKAction *scene = [SKAction runBlock:^{
             SKView *mainMenuView = (SKView *)self.view;
             SKScene *mainMenuScene = [[MainMenu alloc] initWithSize:mainMenuView.bounds.size];
