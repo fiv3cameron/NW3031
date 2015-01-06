@@ -1242,34 +1242,41 @@ SKColor *wingmanLaserColorCast;
 #pragma mark --Game Over
 
 -(void)gameOver {
-
-    /*[GameState sharedGameData].highScoreL1 = MAX([GameState sharedGameData].score, [GameState sharedGameData].highScoreL1);
-    [playerNode removeAllChildren];
-    SKView *gameOverView = (SKView *)self.view;
-    
-    SKScene *gameOverScene = [[GameOverL1 alloc] initWithSize:gameOverView.bounds.size];
-    
-    SKColor *fadeColor = [SKColor colorWithRed:1 green:1 blue:1 alpha:1];
-    SKTransition *gameOverTransition = [SKTransition fadeWithColor:fadeColor duration:.25];
-    [gameOverView presentScene:gameOverScene transition:gameOverTransition]; */
-    
+    [GameState sharedGameData].highScoreL1 = MAX([GameState sharedGameData].score, [GameState sharedGameData].highScoreL1);
     [self removeAllActions];
     [self removeAllChildren];
     
     [[GameState sharedGameData] save];
     [self playSoundEffectsWithAction:_ShipExplode];
+    [self createBackgroundWithIndex:0];
+        //Pop color.
+    SKShapeNode *flash = [SKShapeNode node];
+    flash.fillColor = [SKColor whiteColor]; //Deep red.
+    flash.alpha = 0;
+    flash.zPosition = 103;
+    flash.path = [UIBezierPath bezierPathWithRect: CGRectMake(0, 0, self.size.width, self.size.height)].CGPath;
+    flash.position = CGPointMake(0, 0);
+    [self addChild:flash];
+    [Multipliers popActionWithNode:flash];
     
-    [self createBackground];
+    SKAction *wait = [SKAction waitForDuration:0.5];
+    SKAction *gameOver = [SKAction runBlock:^{[self gameOverComplete];}];
+    [self runAction:[SKAction sequence:@[wait,gameOver]]];
+}
+
+-(void)gameOverComplete {
+
     [self addChild:[self backToMenu]];
     [self createCurrentScore];
     [self createHighScore];
     [self playAgainButton];
 }
 
--(void)createBackground {
+-(void)createBackgroundWithIndex: (CGFloat)index {
     SKSpriteNode *bgImg = [SKSpriteNode spriteNodeWithImageNamed:@"GameOver-L1"];
     bgImg.anchorPoint = CGPointMake(0.5f, 0.0f);
     bgImg.position = CGPointMake(160.0f, 0.0f);
+    bgImg.zPosition = index;
     [self addChild:bgImg];
 }
 
