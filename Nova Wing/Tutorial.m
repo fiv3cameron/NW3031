@@ -28,6 +28,9 @@
     NSTimeInterval _dt;
     SKLabelNode* _score;
     int tutorialStage;
+    
+        //Set Up Atlases...
+    NSArray *asteroid_1;
 }
 @end
 
@@ -40,6 +43,16 @@
     if (self = [super initWithSize:size]) {
         
         self.backgroundColor = [SKColor colorWithRed:0 green:0 blue:0 alpha:1];
+        
+            //Set up Arrays
+        NSMutableArray *Asteroid_1_Frames = [NSMutableArray array];
+        SKTextureAtlas *Asteroid_1_Atlas = [SKTextureAtlas atlasNamed:@"Asteroid-1"];
+        for (int i=1; i <= Asteroid_1_Atlas.textureNames.count; i++) {
+            NSString *textureName = [NSString stringWithFormat:@"Asteroid-1-%d", i];
+            SKTexture *temp = [Asteroid_1_Atlas textureNamed:textureName];
+            [Asteroid_1_Frames addObject:temp];
+        }
+        asteroid_1 = Asteroid_1_Frames;
         
         self.physicsWorld.gravity = CGVectorMake(0.0f, -8.0f);
         self.physicsWorld.contactDelegate = self;
@@ -147,7 +160,8 @@
 }
 
 -(SKNode *)asteroid1 {
-    SKSpriteNode *obstacle = [SKSpriteNode spriteNodeWithImageNamed:@"L1-AOb-1"];
+    SKTexture *temp = asteroid_1[0];
+    SKSpriteNode *obstacle = [SKSpriteNode spriteNodeWithTexture:temp];
     
     obstacle.position = CGPointMake(self.size.width * 1.7, (self.size.height / 6));
     //obstacle.name = @"aerial";
@@ -155,8 +169,8 @@
     
     int tempRand2 = arc4random()%200;
     double randScale = (tempRand2-100)/1000.0;
-    obstacle.xScale = 0.5 + randScale;
-    obstacle.yScale = 0.5 + randScale;
+    obstacle.xScale = 0.4 + randScale;
+    obstacle.yScale = 0.4 + randScale;
     
     obstacle.physicsBody = [SKPhysicsBody bodyWithCircleOfRadius:obstacle.size.height/2];
     [self objectPhysicsStandards: obstacle];

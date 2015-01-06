@@ -24,6 +24,7 @@
     SKSpriteNode *shield;
     BOOL activePup;
     BOOL wingmanActive;
+    BOOL isSceneLoading;
     SKPhysicsJointSpring *wingmanSpring;
     
         //Game Over ivars
@@ -36,6 +37,9 @@
     NSString *powerUpKey;
     NSString *autocannonKey;
     NSString *wingmanCannonKey;
+    
+        //Set Up Atlases
+    NSArray *asteroid_1;
     
 }
         //Preloading Sound Actions -> Properties Here
@@ -51,6 +55,9 @@
     @property (strong, nonatomic) SKAction* ShipExplode;
     @property (strong, nonatomic) SKAction* TinyNovaCollect;
     @property (strong, nonatomic) SKAction* WingmanCollect;
+
+        //Atlas Properties
+    @property (strong, nonatomic) SKTextureAtlas *Asteroid_1_Atlas;
 
 @end
 
@@ -76,6 +83,7 @@ SKColor *wingmanLaserColorCast;
         [GameState sharedGameData].maxLaserHits = 0;
         activePup = NO;
         wingmanActive = NO;
+        isSceneLoading = YES;
         
         multiKey = @"multiKey";
         objectCreateKey = @"objectCreateKey";
@@ -86,61 +94,87 @@ SKColor *wingmanLaserColorCast;
         //Preload Sound Actions
         [self preloadSoundActions];
         
-        self.backgroundColor = [SKColor colorWithRed:0 green:0 blue:0 alpha:1];
-        
-        self.physicsWorld.gravity = CGVectorMake(0.0f, -8.0f);
-        self.physicsWorld.contactDelegate = self;
-        self.scaleMode = SKSceneScaleModeAspectFit;
-        
-        NSString *starsPath = [[NSBundle mainBundle] pathForResource:@"Stars-L1" ofType:@"sks"];
-        SKEmitterNode *stars = [NSKeyedUnarchiver unarchiveObjectWithFile:starsPath];
-        stars.position = CGPointMake(self.size.width, self.size.height / 2);
-        
-        //Pre emits particles so layer is populated when scene begins
-        [stars advanceSimulationTime:1.5];
-        
-        //Create playerParent & wingmanParent.
-        playerParent = [self createPlayerParent];
-        wingmanParent = [self createWingmanParent];
-        [self createPlayerNode: playerNode];
-        
-        //Create scoring node.
-        SKSpriteNode *scoreColumn = [SKSpriteNode node];
-        scoreColumn.physicsBody = [SKPhysicsBody bodyWithEdgeLoopFromRect:CGRectMake(0, 0, 10, self.size.height)];
-        scoreColumn.physicsBody.categoryBitMask = CollisionCategoryScore;
-        scoreColumn.physicsBody.contactTestBitMask = CollisionCategoryObject;
-        scoreColumn.physicsBody.collisionBitMask = 0;
-        scoreColumn.physicsBody.usesPreciseCollisionDetection = YES;
-        scoreColumn.physicsBody.dynamic = NO;
-        scoreColumn.position = CGPointMake(0, 0);
-        [self addChild:scoreColumn];
-        
-        //Set initial laser colors.
-        playerLaserColorCast = [NWColor NWGreen];
-        wingmanLaserColorCast = [NWColor NWGreen];
-        
-        [self createAudio];
-        
-        [self addChild:stars];
-        [self createBlackHole];
-        [self bottomCollide];
-        [self addChild:playerParent];
-        [playerParent addChild:playerNode];
-        
-        //Physics Joint
-        SKPhysicsJointFixed *test = [SKPhysicsJointFixed jointWithBodyA:playerParent.physicsBody bodyB:playerNode.physicsBody anchor:CGPointMake(playerParent.position.x+50, playerParent.position.y+50)];
-        [self.physicsWorld addJoint:test];
-        
-        //shipBobbing is factory method within playerNode.
-        [playerParent shipBobbing:playerParent];
-        
-        [self createScoreTextBox];
-        //[self scoreTrack];
-
-        [self tapToPlay];
-        _score.text = @"Score: 0";
+            //Set up Arrays
     }
     return self;
+}
+
+-(void)didMoveToView:(SKView *)view {
+    NSMutableArray *textureAtlases = [NSMutableArray array];
+    
+    self.Asteroid_1_Atlas = [SKTextureAtlas atlasNamed:@"Asteroid-1"];
+    
+    [textureAtlases addObject:self.Asteroid_1_Atlas];
+    
+    [SKTextureAtlas preloadTextureAtlases:textureAtlases withCompletionHandler:^{
+        [self setUpScene];
+        isSceneLoading = NO;
+    }];
+}
+
+-(void)setUpScene {
+    NSMutableArray *Asteroid_1_Frames = [NSMutableArray array];
+    for (int i=1; i <= _Asteroid_1_Atlas.textureNames.count; i++) {
+        NSString *textureName = [NSString stringWithFormat:@"Asteroid-1-%d", i];
+        SKTexture *temp = [_Asteroid_1_Atlas textureNamed:textureName];
+        [Asteroid_1_Frames addObject:temp];
+    }
+    asteroid_1 = Asteroid_1_Frames;
+    
+    self.backgroundColor = [SKColor colorWithRed:0 green:0 blue:0 alpha:1];
+    
+    self.physicsWorld.gravity = CGVectorMake(0.0f, -8.0f);
+    self.physicsWorld.contactDelegate = self;
+    self.scaleMode = SKSceneScaleModeAspectFit;
+    
+    NSString *starsPath = [[NSBundle mainBundle] pathForResource:@"Stars-L1" ofType:@"sks"];
+    SKEmitterNode *stars = [NSKeyedUnarchiver unarchiveObjectWithFile:starsPath];
+    stars.position = CGPointMake(self.size.width, self.size.height / 2);
+    
+        //Pre emits particles so layer is populated when scene begins
+    [stars advanceSimulationTime:1.5];
+    
+        //Create playerParent & wingmanParent.
+    playerParent = [self createPlayerParent];
+    wingmanParent = [self createWingmanParent];
+    [self createPlayerNode: playerNode];
+    
+        //Create scoring node.
+    SKSpriteNode *scoreColumn = [SKSpriteNode node];
+    scoreColumn.physicsBody = [SKPhysicsBody bodyWithEdgeLoopFromRect:CGRectMake(0, 0, 10, self.size.height)];
+    scoreColumn.physicsBody.categoryBitMask = CollisionCategoryScore;
+    scoreColumn.physicsBody.contactTestBitMask = CollisionCategoryObject;
+    scoreColumn.physicsBody.collisionBitMask = 0;
+    scoreColumn.physicsBody.usesPreciseCollisionDetection = YES;
+    scoreColumn.physicsBody.dynamic = NO;
+    scoreColumn.position = CGPointMake(0, 0);
+    [self addChild:scoreColumn];
+    
+        //Set initial laser colors.
+    playerLaserColorCast = [NWColor NWGreen];
+    wingmanLaserColorCast = [NWColor NWGreen];
+    
+    [self createAudio];
+    
+    [self addChild:stars];
+    [self createBlackHole];
+    [self bottomCollide];
+    [self addChild:playerParent];
+    [playerParent addChild:playerNode];
+    
+        //Physics Joint
+    SKPhysicsJointFixed *test = [SKPhysicsJointFixed jointWithBodyA:playerParent.physicsBody bodyB:playerNode.physicsBody anchor:CGPointMake(playerParent.position.x+50, playerParent.position.y+50)];
+    [self.physicsWorld addJoint:test];
+    
+        //shipBobbing is factory method within playerNode.
+    [playerParent shipBobbing:playerParent];
+    
+    [self createScoreTextBox];
+        //[self scoreTrack];
+    
+    [self tapToPlay];
+    _score.text = @"Score: 0";
+    
 }
 
 -(void)preloadSoundActions {
@@ -250,7 +284,8 @@ SKColor *wingmanLaserColorCast;
 }
 
 -(void)asteroid1 {
-    SKSpriteNode *obstacle = [SKSpriteNode spriteNodeWithImageNamed:@"L1-AOb-1"];
+    SKTexture *temp = asteroid_1[0];
+    SKSpriteNode *obstacle = [SKSpriteNode spriteNodeWithTexture:temp];
     
     int tempRand = arc4random()%80;
     double randYPosition = (tempRand+10)/100.0;
@@ -259,14 +294,19 @@ SKColor *wingmanLaserColorCast;
     obstacle.zPosition = 10;
     
     int tempRand2 = arc4random()%200;
-    double randScale = (tempRand2-100)/1000.0;
-    obstacle.xScale = 0.5 + randScale;
-    obstacle.yScale = 0.5 + randScale;
+    double randScale = (tempRand2-100)/10000.0;
+    obstacle.xScale = 0.4 + randScale;
+    obstacle.yScale = 0.4 + randScale;
     
     obstacle.physicsBody = [SKPhysicsBody bodyWithCircleOfRadius:obstacle.size.height/2];
     [self objectPhysicsStandards: obstacle];
     
     [self addChild: obstacle];
+    [obstacle runAction:[SKAction repeatActionForever:
+                         [SKAction animateWithTextures:asteroid_1
+                                          timePerFrame:0.06f
+                                                resize:NO
+                                               restore:YES]] withKey:@"Asteroid 1 Animate"];
     [self moveAerialNode:obstacle allowsRotation:YES];
 }
 
@@ -1092,35 +1132,31 @@ SKColor *wingmanLaserColorCast;
 
 -(void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event {
 
-    if ([self.children containsObject:storyBadge] && [self.children containsObject:introduction] && [self.children containsObject:tapPlay]) {
-        [storyBadge removeFromParent];
-        [introduction removeFromParent];
-        [tapPlay removeFromParent];
-    }
-    if (playerParent.physicsBody.dynamic == NO) {
-        playerParent.physicsBody.dynamic = YES;
-        playerNode.physicsBody.dynamic = YES;
-        //playerParent.physicsBody.allowsRotation = YES;
-        [self addChild:_score];
-        [self createObstacles];
-        [tapPlay removeFromParent];
-        [self initializeObstaclesWithInterval:0.5];
-        [self initializeMultipliers];
-        [self initializePowerUps];
-        [playerParent removeActionForKey:@"bobbingAction"];
-    }
-    
-    [playerParent thrustPlayer:playerParent withHeight:self.size.height];
-    if (wingmanActive == YES) {
-        float tempheight = self.size.height + 50;
-        [wingmanParent thrustPlayer:wingmanParent withHeight:tempheight];
-    }
+    if (!isSceneLoading) {
+        if (playerParent.physicsBody.dynamic == NO) {
+            playerParent.physicsBody.dynamic = YES;
+            playerNode.physicsBody.dynamic = YES;
+            //playerParent.physicsBody.allowsRotation = YES;
+            [self addChild:_score];
+            [self createObstacles];
+            [tapPlay removeFromParent];
+            [self initializeObstaclesWithInterval:0.5];
+            [self initializeMultipliers];
+            [self initializePowerUps];
+            [playerParent removeActionForKey:@"bobbingAction"];
+        }
+        
+        [playerParent thrustPlayer:playerParent withHeight:self.size.height];
+        if (wingmanActive == YES) {
+            float tempheight = self.size.height + 50;
+            [wingmanParent thrustPlayer:wingmanParent withHeight:tempheight];
+        }
 
-    [playerParent rotateNodeUpwards:playerParent];
-    if (wingmanActive == YES) {
-        [wingmanParent rotateNodeUpwards:wingmanParent];
+        [playerParent rotateNodeUpwards:playerParent];
+        if (wingmanActive == YES) {
+            [wingmanParent rotateNodeUpwards:wingmanParent];
+        }
     }
-    
     UITouch *touch = [touches anyObject];
     CGPoint location = [touch locationInNode:self];
     SKNode *node = [self nodeAtPoint:location];

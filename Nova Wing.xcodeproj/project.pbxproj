@@ -117,6 +117,7 @@
 		767321361A574CE00057EF70 /* Ship-Explode.caf in Resources */ = {isa = PBXBuildFile; fileRef = 767321291A574CE00057EF70 /* Ship-Explode.caf */; };
 		767321371A574CE00057EF70 /* TinyNova-Collect.caf in Resources */ = {isa = PBXBuildFile; fileRef = 7673212A1A574CE00057EF70 /* TinyNova-Collect.caf */; };
 		767321381A574CE00057EF70 /* Wingman-Collect.caf in Resources */ = {isa = PBXBuildFile; fileRef = 7673212B1A574CE00057EF70 /* Wingman-Collect.caf */; };
+		7673213A1A5B66870057EF70 /* Asteroid-1.atlas in Resources */ = {isa = PBXBuildFile; fileRef = 767321391A5B66870057EF70 /* Asteroid-1.atlas */; };
 		7678881A19E1C43E009714A1 /* 4xMulti@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 7678881819E1C43E009714A1 /* 4xMulti@2x.png */; };
 		7678881B19E1C43E009714A1 /* 5xMulti@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 7678881919E1C43E009714A1 /* 5xMulti@2x.png */; };
 		767DE0051A0C72FF00E098DF /* TinyNova@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 767DE0041A0C72FF00E098DF /* TinyNova@2x.png */; };
@@ -274,6 +275,7 @@
 		767321291A574CE00057EF70 /* Ship-Explode.caf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Ship-Explode.caf"; sourceTree = "<group>"; };
 		7673212A1A574CE00057EF70 /* TinyNova-Collect.caf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "TinyNova-Collect.caf"; sourceTree = "<group>"; };
 		7673212B1A574CE00057EF70 /* Wingman-Collect.caf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Wingman-Collect.caf"; sourceTree = "<group>"; };
+		767321391A5B66870057EF70 /* Asteroid-1.atlas */ = {isa = PBXFileReference; lastKnownFileType = folder.skatlas; path = "Asteroid-1.atlas"; sourceTree = "<group>"; };
 		7678881819E1C43E009714A1 /* 4xMulti@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "4xMulti@2x.png"; sourceTree = "<group>"; };
 		7678881919E1C43E009714A1 /* 5xMulti@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "5xMulti@2x.png"; sourceTree = "<group>"; };
 		767DE0041A0C72FF00E098DF /* TinyNova@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "TinyNova@2x.png"; sourceTree = "<group>"; };
@@ -532,6 +534,7 @@
 		2DB352A119999575006BF15C /* Levels */ = {
 			isa = PBXGroup;
 			children = (
+				767321391A5B66870057EF70 /* Asteroid-1.atlas */,
 				765DF28819A9286700FBFB16 /* Level 1 */,
 				2DB352A21999957A006BF15C /* Level 2 */,
 			);
@@ -797,6 +800,7 @@
 				2DB3529319999485006BF15C /* Level-1-Mid@2x.png in Resources */,
 				2DB35299199994B9006BF15C /* Stars-Seamless.jpg in Resources */,
 				2DB3528719999445006BF15C /* AOb-2@2x.png in Resources */,
+				7673213A1A5B66870057EF70 /* Asteroid-1.atlas in Resources */,
 				2DB352AC19999D5A006BF15C /* SF Movie Poster.ttf in Resources */,
 				2DB352AA19999D1B006BF15C /* Level-2@2x.png in Resources */,
 				2DB3529219999485006BF15C /* Level-1-Floor@2x.png in Resources */,
@@ -1030,7 +1034,7 @@
 				INFOPLIST_FILE = "Nova Wing/Nova Wing-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 8;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "8f446e39-f7e2-4455-ab7d-291808e916db";
+				PROVISIONING_PROFILE = "";
 				SPRITEKIT_TEXTURE_ATLAS_OUTPUT = YES;
 				WRAPPER_EXTENSION = app;
 			};
@@ -1048,7 +1052,7 @@
 				INFOPLIST_FILE = "Nova Wing/Nova Wing-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 8;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "8f446e39-f7e2-4455-ab7d-291808e916db";
+				PROVISIONING_PROFILE = "";
 				SPRITEKIT_TEXTURE_ATLAS_OUTPUT = YES;
 				WRAPPER_EXTENSION = app;
 			};
