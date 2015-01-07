@@ -40,6 +40,9 @@
     
         //Set Up Atlases
     NSArray *asteroid_1;
+    NSArray *asteroid_2;
+    NSArray *asteroid_3;
+    NSArray *asteroid_Red;
     
 }
         //Preloading Sound Actions -> Properties Here
@@ -58,6 +61,9 @@
 
         //Atlas Properties
     @property (strong, nonatomic) SKTextureAtlas *Asteroid_1_Atlas;
+    @property (strong, nonatomic) SKTextureAtlas *Asteroid_2_Atlas;
+    @property (strong, nonatomic) SKTextureAtlas *Asteroid_3_Atlas;
+    @property (strong, nonatomic) SKTextureAtlas *Asteroid_Red_Atlas;
 
 @end
 
@@ -103,8 +109,14 @@ SKColor *wingmanLaserColorCast;
     NSMutableArray *textureAtlases = [NSMutableArray array];
     
     self.Asteroid_1_Atlas = [SKTextureAtlas atlasNamed:@"Asteroid-1"];
+    self.Asteroid_2_Atlas = [SKTextureAtlas atlasNamed:@"Asteroid-2"];
+    self.Asteroid_3_Atlas = [SKTextureAtlas atlasNamed:@"Asteroid-3"];
+    self.Asteroid_Red_Atlas = [SKTextureAtlas atlasNamed:@"Asteroid-Red"];
     
     [textureAtlases addObject:self.Asteroid_1_Atlas];
+    [textureAtlases addObject:self.Asteroid_2_Atlas];
+    [textureAtlases addObject:self.Asteroid_3_Atlas];
+    [textureAtlases addObject:self.Asteroid_Red_Atlas];
     
     [SKTextureAtlas preloadTextureAtlases:textureAtlases withCompletionHandler:^{
         [self setUpScene];
@@ -120,6 +132,30 @@ SKColor *wingmanLaserColorCast;
         [Asteroid_1_Frames addObject:temp];
     }
     asteroid_1 = Asteroid_1_Frames;
+    
+    NSMutableArray *Asteroid_2_Frames = [NSMutableArray array];
+    for (int i=1; i <= _Asteroid_2_Atlas.textureNames.count; i++) {
+        NSString *textureName = [NSString stringWithFormat:@"Asteroid-2-%d", i];
+        SKTexture *temp = [_Asteroid_2_Atlas textureNamed:textureName];
+        [Asteroid_2_Frames addObject:temp];
+    }
+    asteroid_2 = Asteroid_2_Frames;
+    
+    NSMutableArray *Asteroid_3_Frames = [NSMutableArray array];
+    for (int i=1; i <= _Asteroid_3_Atlas.textureNames.count; i++) {
+        NSString *textureName = [NSString stringWithFormat:@"Asteroid-3-%d", i];
+        SKTexture *temp = [_Asteroid_3_Atlas textureNamed:textureName];
+        [Asteroid_3_Frames addObject:temp];
+    }
+    asteroid_3 = Asteroid_3_Frames;
+    
+    NSMutableArray *Asteroid_Red_Frames = [NSMutableArray array];
+    for (int i=1; i <= _Asteroid_Red_Atlas.textureNames.count; i++) {
+        NSString *textureName = [NSString stringWithFormat:@"Asteroid-Red-%d", i];
+        SKTexture *temp = [_Asteroid_Red_Atlas textureNamed:textureName];
+        [Asteroid_Red_Frames addObject:temp];
+    }
+    asteroid_Red = Asteroid_Red_Frames;
     
     self.backgroundColor = [SKColor colorWithRed:0 green:0 blue:0 alpha:1];
     
@@ -311,8 +347,8 @@ SKColor *wingmanLaserColorCast;
 }
 
 -(void)asteroid2 {
-    
-    SKSpriteNode *obstacle = [SKSpriteNode spriteNodeWithImageNamed:@"L1-AOb-2"];
+    SKTexture *temp = asteroid_3[0];
+    SKSpriteNode *obstacle = [SKSpriteNode spriteNodeWithTexture:temp];
     
     int tempRand = arc4random()%80;
     double randYPosition = (tempRand+10)/100.0;
@@ -336,11 +372,17 @@ SKColor *wingmanLaserColorCast;
     [self objectPhysicsStandards: obstacle];
     
     [self addChild: obstacle];
+    [obstacle runAction:[SKAction repeatActionForever:
+                         [SKAction animateWithTextures:asteroid_3
+                                          timePerFrame:0.06f
+                                                resize:NO
+                                               restore:YES]] withKey:@"Asteroid 2 Animate"];
     [self moveAerialNode:obstacle allowsRotation:YES];
 }
 
 -(void)asteroid3 {
-    SKSpriteNode *obstacle = [SKSpriteNode spriteNodeWithImageNamed:@"L1-AOb-3"];
+    SKTexture *temp = asteroid_2[0];
+    SKSpriteNode *obstacle = [SKSpriteNode spriteNodeWithTexture:temp];
     
     int tempRand = arc4random()%80;
     double randYPosition = (tempRand+10)/100.0;
@@ -357,12 +399,17 @@ SKColor *wingmanLaserColorCast;
     [self objectPhysicsStandards: obstacle];
     
     [self addChild: obstacle];
+    [obstacle runAction:[SKAction repeatActionForever:
+                         [SKAction animateWithTextures:asteroid_2
+                                          timePerFrame:0.06f
+                                                resize:NO
+                                               restore:YES]] withKey:@"Asteroid 3 Animate"];
     [self moveAerialNode:obstacle allowsRotation:YES];
 }
 
 -(void)asteroid4 {
-    
-    SKSpriteNode *obstacle = [SKSpriteNode spriteNodeWithImageNamed:@"L1-AOb-4"];
+    SKTexture *temp = asteroid_Red[0];
+    SKSpriteNode *obstacle = [SKSpriteNode spriteNodeWithTexture:temp];
     
     int tempRand = arc4random()%80;
     double randYPosition = (tempRand+10)/100.0;
@@ -379,6 +426,11 @@ SKColor *wingmanLaserColorCast;
     [self objectPhysicsStandards: obstacle];
     
     [self addChild: obstacle];
+    [obstacle runAction:[SKAction repeatActionForever:
+                         [SKAction animateWithTextures:asteroid_Red
+                                          timePerFrame:0.06f
+                                                resize:NO
+                                               restore:YES]] withKey:@"Asteroid Red Animate"];
     [self moveAerialNode:obstacle allowsRotation:YES];
 }
 
