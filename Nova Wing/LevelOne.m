@@ -355,8 +355,11 @@ SKColor *wingmanLaserColorCast;
     obstacle.position = CGPointMake(self.size.width+obstacle.size.width, self.size.height*randYPosition);
     obstacle.anchorPoint = CGPointZero;
     obstacle.zPosition = 10;
-    obstacle.xScale = 0.4;
-    obstacle.yScale = 0.4;
+    
+    int tempRand2 = arc4random()%100;
+    double randScale = (tempRand2)/1000.0;
+    obstacle.xScale = 0.3 + randScale;
+    obstacle.yScale = 0.3 + randScale;
     
     CGMutablePathRef path = CGPathCreateMutable();
     
@@ -470,6 +473,7 @@ SKColor *wingmanLaserColorCast;
     object.physicsBody.friction = 0.2f;
     object.physicsBody.restitution = 0.0f;
     object.physicsBody.linearDamping = 0.0;
+    object.physicsBody.allowsRotation = YES;
     
     object.name = @"aerial";
 }
@@ -650,12 +654,16 @@ SKColor *wingmanLaserColorCast;
     double square = (sumHeight * sumHeight + triangleWidth * triangleWidth);
     float arcCenterHeight = sqrt(square);
     float deltaHeight = arcCenterHeight - sumHeight;
-    double aerialSpeed = 0.9 - ([GameState sharedGameData].scoreMultiplier/10);
+    double aerialSpeed = 0.95 - ([GameState sharedGameData].scoreMultiplier/10); //Base duration of 0.95 seconds.
     
-    int tempRand = arc4random()%150;
-    double randDuration = (tempRand-100)/1000.0;
+    //Random +/-0.05s duration adjustment.
+    int tempRand = arc4random()%100;
+    double randDuration = (tempRand-50)/1000.0;
     double totalDuration = aerialSpeed + randDuration;
     
+    totalDuration = MAX(totalDuration, 0.5);
+    
+    //Random rotation function.
     int tempRand2 = arc4random()%75 + 50;
     double tempRandSigned = tempRand2-50.0;
     double randAngleRad = (tempRandSigned)*180/100.0;
