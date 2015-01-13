@@ -29,3 +29,8 @@ AVAudioPlayer *Explosion;
 SKEmitterNode *trail;
 SKEmitterNode *wingmanTrail;
 int localLaserHits;
+int localTotalLaserHits;
+int localTotalLasersFired;
+int localTotalAsteroidHits;
+int localTotalDebrisHits;
+int localChallengePoints;

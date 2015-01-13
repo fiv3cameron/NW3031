@@ -90,6 +90,11 @@ SKColor *wingmanLaserColorCast;
         powerUpKey = @"powerUpKey";
         autocannonKey = @"autocannonKey";
         wingmanCannonKey = @"wingmanCannonKey";
+        localTotalLaserHits = 0;
+        localTotalLasersFired = 0;
+        localTotalAsteroidHits = 0;
+        localTotalDebrisHits = 0;
+        localChallengePoints = 0;
         
         //Preload Sound Actions
         [self preloadSoundActions];
@@ -300,6 +305,7 @@ SKColor *wingmanLaserColorCast;
     
     obstacle.physicsBody = [SKPhysicsBody bodyWithCircleOfRadius:obstacle.size.height/2];
     [self objectPhysicsStandards: obstacle];
+    obstacle.name = @"asteroid";
     
     [self addChild: obstacle];
     [obstacle runAction:[SKAction repeatActionForever:
@@ -334,6 +340,7 @@ SKColor *wingmanLaserColorCast;
     
     obstacle.physicsBody = [SKPhysicsBody bodyWithPolygonFromPath:path];
     [self objectPhysicsStandards: obstacle];
+    obstacle.name = @"asteroid";
     
     [self addChild: obstacle];
     [self moveAerialNode:obstacle allowsRotation:YES];
@@ -355,6 +362,7 @@ SKColor *wingmanLaserColorCast;
     
     obstacle.physicsBody = [SKPhysicsBody bodyWithCircleOfRadius:obstacle.size.height/2];
     [self objectPhysicsStandards: obstacle];
+    obstacle.name = @"asteroid";
     
     [self addChild: obstacle];
     [self moveAerialNode:obstacle allowsRotation:YES];
@@ -377,6 +385,7 @@ SKColor *wingmanLaserColorCast;
     
     obstacle.physicsBody = [SKPhysicsBody bodyWithCircleOfRadius:obstacle.size.height/2];
     [self objectPhysicsStandards: obstacle];
+    obstacle.name = @"red_asteroid";
     
     [self addChild: obstacle];
     [self moveAerialNode:obstacle allowsRotation:YES];
@@ -405,6 +414,7 @@ SKColor *wingmanLaserColorCast;
     
     obstacle.physicsBody = [SKPhysicsBody bodyWithPolygonFromPath:path];
     [self objectPhysicsStandards: obstacle];
+    obstacle.name = @"debris";
     
     [self addChild: obstacle];
     [self moveAerialNode:obstacle allowsRotation: YES];
@@ -418,8 +428,6 @@ SKColor *wingmanLaserColorCast;
     object.physicsBody.friction = 0.2f;
     object.physicsBody.restitution = 0.0f;
     object.physicsBody.linearDamping = 0.0;
-    
-    object.name = @"aerial";
 }
 
 -(void)bottomCollide {
@@ -1016,15 +1024,17 @@ SKColor *wingmanLaserColorCast;
 }
 
 -(void)autoCannonFireFromPlayer: (Ships *)tempPlayer withColor: (SKColor *)tempColor {
-        SKSpriteNode *laser = [PowerUps autoCannonFire:tempPlayer withColor:tempColor];
-        laser.position = CGPointMake(tempPlayer.position.x, tempPlayer.position.y);
-        laser.zRotation = tempPlayer.zRotation;
-        laser.physicsBody.categoryBitMask = CollisionCategoryLaser;
-        laser.physicsBody.collisionBitMask = 0;
-        laser.physicsBody.contactTestBitMask = CollisionCategoryObject;
-        laser.name = @"laser";
-        [self addChild:laser];
-        [PowerUps animateLaser:laser withWidth: self.size.width];
+    SKSpriteNode *laser = [PowerUps autoCannonFire:tempPlayer withColor:tempColor];
+    laser.position = CGPointMake(tempPlayer.position.x, tempPlayer.position.y);
+    laser.zRotation = tempPlayer.zRotation;
+    laser.physicsBody.categoryBitMask = CollisionCategoryLaser;
+    laser.physicsBody.collisionBitMask = 0;
+    laser.physicsBody.contactTestBitMask = CollisionCategoryObject;
+    laser.name = @"laser";
+    [self addChild:laser];
+    [PowerUps animateLaser:laser withWidth: self.size.width];
+    
+    localTotalLasersFired = localTotalLasersFired + 1;
 }
 
 -(void)laserContactRemove: (SKSpriteNode *)firstNodeToRemove andRemove: (SKSpriteNode *)secondNodeToRemove {
@@ -1242,7 +1252,19 @@ SKColor *wingmanLaserColorCast;
 #pragma mark --Game Over
 
 -(void)gameOver {
+    //Update GameState data & stats tracking.
     [GameState sharedGameData].highScoreL1 = MAX([GameState sharedGameData].score, [GameState sharedGameData].highScoreL1);
+    [GameState sharedGameData].totalLaserHits = [GameState sharedGameData].totalLaserHits + localTotalLaserHits;
+    [GameState sharedGameData].totalLasersFired = [GameState sharedGameData].totalLasersFired + localTotalLasersFired;
+    [GameState sharedGameData].totalAsteroidsDestroyed = [GameState sharedGameData].totalAsteroidsDestroyed + localTotalAsteroidHits;
+    [GameState sharedGameData].totalDebrisDestroyed = [GameState sharedGameData].totalDebrisDestroyed + localTotalDebrisHits;
+    [GameState sharedGameData].totalChallengePoints = [GameState sharedGameData].totalChallengePoints + localChallengePoints;
+    [GameState sharedGameData].totalGames = [GameState sharedGameData].totalGames + 1;
+    [GameState sharedGameData].totalPoints = [GameState sharedGameData].totalPoints + [GameState sharedGameData].score;
+    [GameState sharedGameData].allTimeAverageAccuracy = [GameState sharedGameData].totalLaserHits / [GameState sharedGameData].totalLasersFired;
+    [GameState sharedGameData].allTimeAverageScore = [GameState sharedGameData].totalPoints / [GameState sharedGameData].totalGames;
+    
+    //Remove all actions & children from the scene.
     [self removeAllActions];
     [self removeAllChildren];
     
@@ -1352,6 +1374,12 @@ SKColor *wingmanLaserColorCast;
             } else {
                 [self gameOver];
             }
+        if ([secondNode.name isEqualToString:@"asteroid"] || [secondNode.name isEqualToString:@"red_asteroid"]) {
+            [GameState sharedGameData].totalAsteroidDeaths = [GameState sharedGameData].totalAsteroidDeaths + 1;
+        } else if ([secondNode.name isEqualToString:@"debris"]) {
+            [GameState sharedGameData].totalDebrisDeaths = [GameState sharedGameData].totalDebrisDeaths + 1;
+        }
+        
     }
     
     if (firstBody.categoryBitMask == CollisionCategoryPlayer && secondBody.categoryBitMask == CollisionCategoryBottom) {
@@ -1363,6 +1391,7 @@ SKColor *wingmanLaserColorCast;
         } else {
             [self gameOver];
         }
+        [GameState sharedGameData].totalBlackHoleDeaths = [GameState sharedGameData].totalBlackHoleDeaths + 1;
     }
     
     if (firstBody.categoryBitMask == CollisionCategoryPlayer && secondBody.categoryBitMask == CollisionCategoryMulti) {
@@ -1376,6 +1405,15 @@ SKColor *wingmanLaserColorCast;
     if (firstBody.categoryBitMask == CollisionCategoryLaser && secondBody.categoryBitMask == CollisionCategoryObject) {
         [self scorePlusLaser: secondNode];
         [self laserContactRemove:firstNode andRemove:secondNode];
+        localTotalLaserHits = localTotalLaserHits + 1;
+        
+        if ([secondNode.name isEqualToString:@"asteroid"]) {
+            localTotalAsteroidHits = localTotalAsteroidHits + 1;
+        } else if ([secondNode.name isEqualToString:@"debris"]) {
+            localTotalDebrisHits = localTotalDebrisHits + 1;
+        } else if ([secondNode.name isEqualToString:@"red_asteroid"]) {
+            localChallengePoints = localChallengePoints + 1;
+        }
         
     }
     
@@ -1395,9 +1433,7 @@ SKColor *wingmanLaserColorCast;
             [self scoreAddWithMultiplier:1];
             [self scorePlusWithMultiplier:1 fromNode:secondNode];
         }
-        
         secondNode.physicsBody.categoryBitMask = 0;
-        
     }
 }
 

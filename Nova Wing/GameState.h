@@ -15,9 +15,21 @@
     @property (assign, nonatomic) long highScoreL2;
     @property (nonatomic) long levelIndex;
     @property (nonatomic) long lvlIndexMax;
-    @property (nonatomic) int scoreMultiplier;
-    @property (nonatomic, assign) long audioVolume;
+    @property (assign, nonatomic) int scoreMultiplier;
+    @property (assign, nonatomic) long audioVolume;
     @property (assign, nonatomic) int maxLaserHits;
+    @property (assign, nonatomic) int totalLaserHits;
+    @property (assign, nonatomic) int totalLasersFired;
+    @property (assign, nonatomic) int totalAsteroidsDestroyed;
+    @property (assign, nonatomic) int totalDebrisDestroyed;
+    @property (assign, nonatomic) int totalChallengePoints;
+    @property (assign, nonatomic) long totalPoints;
+    @property (assign, nonatomic) int totalGames;
+    @property (assign, nonatomic) int totalBlackHoleDeaths;
+    @property (assign, nonatomic) int totalAsteroidDeaths;
+    @property (assign, nonatomic) int totalDebrisDeaths;
+    @property (assign, nonatomic) float allTimeAverageScore;
+    @property (assign, nonatomic) float allTimeAverageAccuracy;
 
 +(instancetype)sharedGameData;
 -(void)reset;
