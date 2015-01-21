@@ -15,11 +15,13 @@ static NSString* const SSGameDataChecksumKey = @"SSGameDataChecksumKey";
 static NSString* const SSGameDataHighScoreL1Key = @"highScoreL1";
 static NSString* const SSGameDataHighScoreL2Key = @"highScoreL2";
 static NSString* const SSGameDataAudioVolume = @"audioVolume";
+static NSString* const SSGameDataVibeState = @"vibrationState";
 
 -(void)encodeWithCoder:(NSCoder *)encoder {
     [encoder encodeDouble:self.highScoreL1 forKey:SSGameDataHighScoreL1Key];
     [encoder encodeDouble:self.highScoreL2 forKey:SSGameDataHighScoreL2Key];
     [encoder encodeDouble:self.audioVolume forKey:SSGameDataAudioVolume];
+    [encoder encodeInt:self.vibeOn forKey:SSGameDataVibeState];
 }
 
 -(instancetype)initWithCoder:(NSCoder *)decoder {
@@ -28,6 +30,7 @@ static NSString* const SSGameDataAudioVolume = @"audioVolume";
         _highScoreL1 = [decoder decodeDoubleForKey:SSGameDataHighScoreL1Key];
         _highScoreL2 = [decoder decodeDoubleForKey:SSGameDataHighScoreL2Key];
         _audioVolume = [decoder decodeDoubleForKey:SSGameDataAudioVolume];
+        _vibeOn = [decoder decodeIntForKey:SSGameDataVibeState];
     }
     
     return self;

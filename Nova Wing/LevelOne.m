@@ -460,7 +460,9 @@ SKColor *wingmanLaserColorCast;
 }
 
 -(void)vibrate {
-    AudioServicesPlaySystemSound(kSystemSoundID_Vibrate);
+    if ([GameState sharedGameData].vibeOn == YES) {
+        AudioServicesPlaySystemSound(kSystemSoundID_Vibrate);
+    }
 }
 
 -(void)playSoundEffectsWithAction: (SKAction *)action {

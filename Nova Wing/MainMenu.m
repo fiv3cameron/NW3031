@@ -242,6 +242,19 @@ NSTimeInterval _dt;
     }
 }
 
+-(void)toggleVibration {
+    if ([GameState sharedGameData].vibeOn == YES) { //Vibration is on, and user has selected to turn it off.  Do not vibrate.
+        vibrationToggleButton.texture = [SKTexture textureWithImageNamed:@"L1-AOb-1"];
+        [GameState sharedGameData].vibeOn = NO;
+        [[GameState sharedGameData] save];
+    } else { //Vibration is off and user has selected to turn it on.  Vibrate.
+        vibrationToggleButton.texture = [SKTexture textureWithImageNamed:@"L1-AOb-2"];
+        [GameState sharedGameData].vibeOn = YES;
+        [[GameState sharedGameData] save];
+        AudioServicesPlaySystemSound(kSystemSoundID_Vibrate);
+    }
+}
+
 #pragma mark --Level Select
 
 -(SKSpriteNode *)createRightArrowWithWait: (double)waitTime
@@ -309,7 +322,7 @@ NSTimeInterval _dt;
     SKLabelNode *musicVolume = [SKLabelNode labelNodeWithFontNamed:@"SF Movie Poster"];
     musicVolume.fontColor = [SKColor whiteColor];
     musicVolume.fontSize = 50;
-    musicVolume.position = CGPointMake(self.size.width * 1.5, (self.size.height / 8) * 6);
+    musicVolume.position = CGPointMake(self.size.width * 1.5, (self.size.height / 6) * 5);
     musicVolume.horizontalAlignmentMode = SKLabelHorizontalAlignmentModeCenter;
     musicVolume.text = @"Music Volume";
     
@@ -324,7 +337,7 @@ NSTimeInterval _dt;
     if ([[GameState sharedGameData] audioVolume] == 0.0) {
         musicToggle = [SKSpriteNode spriteNodeWithTexture: [SKTexture textureWithImageNamed:@"Audio_off"]];
     }
-    musicToggle.position = CGPointMake(self.size.width * 1.5, (self.size.height / 8) * 5);
+    musicToggle.position = CGPointMake(self.size.width * 1.5, (self.size.height / 8) * 6);
     musicToggle.xScale = 0.3;
     musicToggle.yScale = 0.3;
     musicToggle.name = @"musicToggle";
@@ -333,11 +346,38 @@ NSTimeInterval _dt;
     [self animateLeft:musicToggle withDelay:1];
 }
 
+-(void)vibrationLabel {
+    SKLabelNode *vibrationLabel = [SKLabelNode labelNodeWithFontNamed:@"SF Movie Poster"];
+    vibrationLabel.fontColor = [SKColor whiteColor];
+    vibrationLabel.fontSize = 50;
+    vibrationLabel.position = CGPointMake(self.size.width * 1.5, self.size.height * 0.5);
+    vibrationLabel.horizontalAlignmentMode = SKLabelHorizontalAlignmentModeCenter;
+    vibrationLabel.text = @"Vibration";
+    
+    [self addChild:vibrationLabel];
+    [self animateLeft:vibrationLabel withDelay:1];
+}
+
+-(void)vibrationToggleButtonCreate {
+    if ([GameState sharedGameData].vibeOn == YES) {
+        vibrationToggleButton = [SKSpriteNode spriteNodeWithImageNamed:@"L1-AOb-2"];
+    } else {
+        vibrationToggleButton = [SKSpriteNode spriteNodeWithImageNamed:@"L1-AOb-1"];
+    }
+    vibrationToggleButton.position = CGPointMake(self.size.width * 1.5, self.size.height * 0.5 - self.size.height * 5/6 + self.size.height * 0.75);
+    vibrationToggleButton.xScale = 0.5;
+    vibrationToggleButton.yScale = 0.5;
+    vibrationToggleButton.name = @"vibrationToggleButton";
+    
+    [self addChild:vibrationToggleButton];
+    [self animateLeft:vibrationToggleButton withDelay:1];
+}
+
 -(void)resetGameData {
     GDReset = [SKLabelNode labelNodeWithFontNamed:@"SF Movie Poster"];
     GDReset.fontColor = [SKColor whiteColor];
     GDReset.fontSize = 50;
-    GDReset.position = CGPointMake(self.size.width * 1.5, (self.size.height / 8) * 2);
+    GDReset.position = CGPointMake(self.size.width * 1.5, (self.size.height / 6) * 1);
     GDReset.horizontalAlignmentMode = SKLabelHorizontalAlignmentModeCenter;
     GDReset.text = @"Reset Scores";
     GDReset.name = @"GameReset";
@@ -583,6 +623,8 @@ NSTimeInterval _dt;
         [self mainMenuAnimateOut];
         [self musicVolumeLabel];
         [self musicToggleButton];
+        [self vibrationLabel];
+        [self vibrationToggleButtonCreate];
         [self resetGameData];
         [self addChild:[self backToMainButton]];
     }
@@ -606,6 +648,10 @@ NSTimeInterval _dt;
     
     if ([nodeLift.name isEqualToString:@"musicToggle"]) {
         [self toggleAudio];
+    }
+    
+    if ([nodeLift.name isEqualToString:@"vibrationToggleButton"]) {
+        [self toggleVibration];
     }
     
     if (![nodeLift.name isEqualToString:@"_startButton"]) {
