@@ -469,7 +469,6 @@ SKColor *wingmanLaserColorCast;
     if ([GameState sharedGameData].audioVolume == 1.0) {
         [self runAction:action];
     }
-
 }
 
 #pragma mark --Score
