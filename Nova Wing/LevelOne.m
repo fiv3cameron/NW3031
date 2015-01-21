@@ -43,6 +43,8 @@
     NSArray *asteroid_2;
     NSArray *asteroid_3;
     NSArray *asteroid_Red;
+    NSArray *ship_Fragment;
+    NSArray *shield_Load;
     
 }
         //Preloading Sound Actions -> Properties Here
@@ -64,6 +66,8 @@
     @property (strong, nonatomic) SKTextureAtlas *Asteroid_2_Atlas;
     @property (strong, nonatomic) SKTextureAtlas *Asteroid_3_Atlas;
     @property (strong, nonatomic) SKTextureAtlas *Asteroid_Red_Atlas;
+    @property (strong, nonatomic) SKTextureAtlas *Ship_Fragment_Atlas;
+    @property (strong, nonatomic) SKTextureAtlas *Shield_Atlas;
 
 @end
 
@@ -112,11 +116,15 @@ SKColor *wingmanLaserColorCast;
     self.Asteroid_2_Atlas = [SKTextureAtlas atlasNamed:@"Asteroid-2"];
     self.Asteroid_3_Atlas = [SKTextureAtlas atlasNamed:@"Asteroid-3"];
     self.Asteroid_Red_Atlas = [SKTextureAtlas atlasNamed:@"Asteroid-Red"];
+    self.Ship_Fragment_Atlas = [SKTextureAtlas atlasNamed:@"Ship-Fragment"];
+    self.Shield_Atlas = [SKTextureAtlas atlasNamed:@"Shield"];
     
     [textureAtlases addObject:self.Asteroid_1_Atlas];
     [textureAtlases addObject:self.Asteroid_2_Atlas];
     [textureAtlases addObject:self.Asteroid_3_Atlas];
     [textureAtlases addObject:self.Asteroid_Red_Atlas];
+    [textureAtlases addObject:self.Ship_Fragment_Atlas];
+    [textureAtlases addObject:self.Shield_Atlas];
     
     [SKTextureAtlas preloadTextureAtlases:textureAtlases withCompletionHandler:^{
         [self setUpScene];
@@ -156,6 +164,22 @@ SKColor *wingmanLaserColorCast;
         [Asteroid_Red_Frames addObject:temp];
     }
     asteroid_Red = Asteroid_Red_Frames;
+    
+    NSMutableArray *Ship_Fragment_Frames = [NSMutableArray array];
+    for (int i=1; i <= _Ship_Fragment_Atlas.textureNames.count; i++) {
+        NSString *textureName = [NSString stringWithFormat:@"Ship-Fragment-%d", i];
+        SKTexture *temp = [_Ship_Fragment_Atlas textureNamed:textureName];
+        [Ship_Fragment_Frames addObject:temp];
+    }
+    ship_Fragment = Ship_Fragment_Frames;
+    
+    NSMutableArray *Shield_Frames = [NSMutableArray array];
+    for (int i=1; i <= _Shield_Atlas.textureNames.count; i++) {
+        NSString *textureName = [NSString stringWithFormat:@"Shield-%d", i];
+        SKTexture *temp = [_Shield_Atlas textureNamed:textureName];
+        [Shield_Frames addObject:temp];
+    }
+    shield_Load = Shield_Frames;
     
     self.backgroundColor = [SKColor colorWithRed:0 green:0 blue:0 alpha:1];
     
@@ -438,7 +462,8 @@ SKColor *wingmanLaserColorCast;
 }
 
 -(void)shipChunk {
-    SKSpriteNode *obstacle = [SKSpriteNode spriteNodeWithImageNamed:@"Ship-Chunk-1"];
+    SKTexture *temp = ship_Fragment[0];
+    SKSpriteNode *obstacle = [SKSpriteNode spriteNodeWithTexture:temp];
     
     int tempRand = arc4random()%80;
     double randYPosition = (tempRand+10)/100.0;
@@ -462,6 +487,11 @@ SKColor *wingmanLaserColorCast;
     [self objectPhysicsStandards: obstacle];
     
     [self addChild: obstacle];
+    [obstacle runAction:[SKAction repeatActionForever:
+                         [SKAction animateWithTextures:ship_Fragment
+                                          timePerFrame:0.06f
+                                                resize:NO
+                                               restore:YES]] withKey:@"Ship Fragment Animate"];
     [self moveAerialNode:obstacle allowsRotation: YES];
 }
 
@@ -1117,7 +1147,8 @@ SKColor *wingmanLaserColorCast;
 -(void)overShield {
     [self playSoundEffectsWithAction:_ShieldPowerUp];
     
-    shield = [SKSpriteNode spriteNodeWithImageNamed:@"Shield"];
+    SKTexture *temp = shield_Load[0];
+    shield = [SKSpriteNode spriteNodeWithTexture:temp];
     shield.xScale = 1.2;
     shield.yScale = 1.2;
     shield.zPosition = 111;
@@ -1155,6 +1186,11 @@ SKColor *wingmanLaserColorCast;
     [playerParent addChild:shield];
     SKPhysicsJointFixed *shieldJoint = [SKPhysicsJointFixed jointWithBodyA:playerParent.physicsBody bodyB:shield.physicsBody anchor:CGPointMake(playerParent.position.x, playerParent.position.y)];
     [self.physicsWorld addJoint:shieldJoint];
+    NSMutableArray *shieldStatic = [NSMutableArray array];
+    [shieldStatic addObject:shield_Load[25]];
+    SKAction *shieldAnimate = [SKAction animateWithTextures:shield_Load timePerFrame:0.03 resize:NO restore:YES];
+    SKAction *fullShield = [SKAction repeatActionForever:[SKAction animateWithTextures:shieldStatic timePerFrame:0.05]];
+    [shield runAction:[SKAction sequence:@[shieldAnimate, fullShield]] withKey:@"Shield Animate"];
     
     playerNode.physicsBody.contactTestBitMask = CollisionCategoryBottom  | CollisionCategoryMulti;
     shieldIndex = 0;
