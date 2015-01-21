@@ -56,16 +56,13 @@
 		2DB352AC19999D5A006BF15C /* SF Movie Poster.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 2DB352AB19999D5A006BF15C /* SF Movie Poster.ttf */; };
 		2DB352AE1999A0C4006BF15C /* GameOver-BG@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 2DB352AD1999A0C4006BF15C /* GameOver-BG@2x.png */; };
 		760897AF1A24FBEA002C28EB /* Tutorial.m in Sources */ = {isa = PBXBuildFile; fileRef = 760897AE1A24FBEA002C28EB /* Tutorial.m */; };
-		760897B21A2A9A43002C28EB /* Shield@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 760897B11A2A9A43002C28EB /* Shield@2x.png */; };
-		760C23C419DC832C00D34429 /* L1-AOb-1@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 760C23C319DC832C00D34429 /* L1-AOb-1@2x.png */; };
-		760C23C719DC856000D34429 /* L1-AOb-2@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 760C23C519DC856000D34429 /* L1-AOb-2@2x.png */; };
-		760C23C819DC856000D34429 /* L1-AOb-3@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 760C23C619DC856000D34429 /* L1-AOb-3@2x.png */; };
+		760C79C21A70281900E58170 /* Ship-Fragment.atlas in Resources */ = {isa = PBXBuildFile; fileRef = 760C79C11A70281900E58170 /* Ship-Fragment.atlas */; };
+		760C79C41A702B9700E58170 /* Shield.atlas in Resources */ = {isa = PBXBuildFile; fileRef = 760C79C31A702B9700E58170 /* Shield.atlas */; };
 		76105BD119E5B3D400A3F242 /* Multipliers.m in Sources */ = {isa = PBXBuildFile; fileRef = 76105BD019E5B3D400A3F242 /* Multipliers.m */; };
 		76105BD719F1DB1300A3F242 /* NWAudioPlayer.m in Sources */ = {isa = PBXBuildFile; fileRef = 76105BD619F1DB1300A3F242 /* NWAudioPlayer.m */; };
 		76105BDB19F33EE600A3F242 /* Audio_off@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 76105BD819F33EE600A3F242 /* Audio_off@2x.png */; };
 		76105BDC19F33EE600A3F242 /* Audio_press@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 76105BD919F33EE600A3F242 /* Audio_press@2x.png */; };
 		76105BDD19F33EE600A3F242 /* Audio@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 76105BDA19F33EE600A3F242 /* Audio@2x.png */; };
-		76105BDF19F5C65400A3F242 /* L1-AOb-4@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 76105BDE19F5C65400A3F242 /* L1-AOb-4@2x.png */; };
 		763BCEC91A32A8A500AF65DB /* buttonPressCodex.png in Resources */ = {isa = PBXBuildFile; fileRef = 763BCEC71A32A8A500AF65DB /* buttonPressCodex.png */; };
 		763BCECD1A32B67600AF65DB /* buttonCodex.png in Resources */ = {isa = PBXBuildFile; fileRef = 763BCECC1A32B67600AF65DB /* buttonCodex.png */; };
 		763BCECF1A32BA2300AF65DB /* Settings.png in Resources */ = {isa = PBXBuildFile; fileRef = 763BCECE1A32BA2300AF65DB /* Settings.png */; };
@@ -87,7 +84,6 @@
 		765DF29119A9293100FBFB16 /* spark.png in Resources */ = {isa = PBXBuildFile; fileRef = 765DF28F19A9293100FBFB16 /* spark.png */; };
 		765DF29219A9293100FBFB16 /* Stars-L1.sks in Resources */ = {isa = PBXBuildFile; fileRef = 765DF29019A9293100FBFB16 /* Stars-L1.sks */; };
 		765DF29519A9293D00FBFB16 /* NORLabelNode.m in Sources */ = {isa = PBXBuildFile; fileRef = 765DF29419A9293D00FBFB16 /* NORLabelNode.m */; };
-		765DF29819A9294B00FBFB16 /* CMDR-FletcherPop@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 765DF29619A9294B00FBFB16 /* CMDR-FletcherPop@2x.png */; };
 		765DF29919A9294B00FBFB16 /* GameOver-L1@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 765DF29719A9294B00FBFB16 /* GameOver-L1@2x.png */; };
 		765DF29C19A9295800FBFB16 /* GameOverL1.m in Sources */ = {isa = PBXBuildFile; fileRef = 765DF29B19A9295800FBFB16 /* GameOverL1.m */; };
 		765DF29E19A9298900FBFB16 /* menuMusic.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 765DF29D19A9298900FBFB16 /* menuMusic.m4a */; };
@@ -118,6 +114,9 @@
 		767321371A574CE00057EF70 /* TinyNova-Collect.caf in Resources */ = {isa = PBXBuildFile; fileRef = 7673212A1A574CE00057EF70 /* TinyNova-Collect.caf */; };
 		767321381A574CE00057EF70 /* Wingman-Collect.caf in Resources */ = {isa = PBXBuildFile; fileRef = 7673212B1A574CE00057EF70 /* Wingman-Collect.caf */; };
 		7673213A1A5B66870057EF70 /* Asteroid-1.atlas in Resources */ = {isa = PBXBuildFile; fileRef = 767321391A5B66870057EF70 /* Asteroid-1.atlas */; };
+		7673213E1A5C276A0057EF70 /* Asteroid-2.atlas in Resources */ = {isa = PBXBuildFile; fileRef = 7673213B1A5C276A0057EF70 /* Asteroid-2.atlas */; };
+		7673213F1A5C276A0057EF70 /* Asteroid-3.atlas in Resources */ = {isa = PBXBuildFile; fileRef = 7673213C1A5C276A0057EF70 /* Asteroid-3.atlas */; };
+		767321401A5C276A0057EF70 /* Asteroid-Red.atlas in Resources */ = {isa = PBXBuildFile; fileRef = 7673213D1A5C276A0057EF70 /* Asteroid-Red.atlas */; };
 		7678881A19E1C43E009714A1 /* 4xMulti@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 7678881819E1C43E009714A1 /* 4xMulti@2x.png */; };
 		7678881B19E1C43E009714A1 /* 5xMulti@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 7678881919E1C43E009714A1 /* 5xMulti@2x.png */; };
 		767DE0051A0C72FF00E098DF /* TinyNova@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 767DE0041A0C72FF00E098DF /* TinyNova@2x.png */; };
@@ -127,8 +126,6 @@
 		76B9E91719FB1BE8000EF044 /* ShipTrail.sks in Resources */ = {isa = PBXBuildFile; fileRef = 76B9E91619FB1BE8000EF044 /* ShipTrail.sks */; };
 		76B9E91B19FBF04D000EF044 /* PowerUps.m in Sources */ = {isa = PBXBuildFile; fileRef = 76B9E91A19FBF04D000EF044 /* PowerUps.m */; };
 		76C6F15419A2CCB100B37331 /* Level-1@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 76C6F15319A2CCB100B37331 /* Level-1@2x.png */; };
-		76EC502419D4EAE100363C97 /* Rocket-1@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 76EC502219D4EAE100363C97 /* Rocket-1@2x.png */; };
-		76EC502519D4EAE100363C97 /* Ship-Chunk-1@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 76EC502319D4EAE100363C97 /* Ship-Chunk-1@2x.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -206,10 +203,8 @@
 		760897AD1A24FBEA002C28EB /* Tutorial.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Tutorial.h; sourceTree = "<group>"; };
 		760897AE1A24FBEA002C28EB /* Tutorial.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Tutorial.m; sourceTree = "<group>"; };
 		760897B01A250594002C28EB /* NWCollisions.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = NWCollisions.h; sourceTree = "<group>"; };
-		760897B11A2A9A43002C28EB /* Shield@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Shield@2x.png"; sourceTree = "<group>"; };
-		760C23C319DC832C00D34429 /* L1-AOb-1@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "L1-AOb-1@2x.png"; sourceTree = "<group>"; };
-		760C23C519DC856000D34429 /* L1-AOb-2@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "L1-AOb-2@2x.png"; sourceTree = "<group>"; };
-		760C23C619DC856000D34429 /* L1-AOb-3@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "L1-AOb-3@2x.png"; sourceTree = "<group>"; };
+		760C79C11A70281900E58170 /* Ship-Fragment.atlas */ = {isa = PBXFileReference; lastKnownFileType = folder.skatlas; path = "Ship-Fragment.atlas"; sourceTree = "<group>"; };
+		760C79C31A702B9700E58170 /* Shield.atlas */ = {isa = PBXFileReference; lastKnownFileType = folder.skatlas; path = Shield.atlas; sourceTree = "<group>"; };
 		76105BCF19E5B3D400A3F242 /* Multipliers.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Multipliers.h; sourceTree = "<group>"; };
 		76105BD019E5B3D400A3F242 /* Multipliers.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Multipliers.m; sourceTree = "<group>"; };
 		76105BD519F1DB1300A3F242 /* NWAudioPlayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NWAudioPlayer.h; sourceTree = "<group>"; };
@@ -217,7 +212,6 @@
 		76105BD819F33EE600A3F242 /* Audio_off@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Audio_off@2x.png"; sourceTree = "<group>"; };
 		76105BD919F33EE600A3F242 /* Audio_press@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Audio_press@2x.png"; sourceTree = "<group>"; };
 		76105BDA19F33EE600A3F242 /* Audio@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Audio@2x.png"; sourceTree = "<group>"; };
-		76105BDE19F5C65400A3F242 /* L1-AOb-4@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "L1-AOb-4@2x.png"; sourceTree = "<group>"; };
 		763BCEC71A32A8A500AF65DB /* buttonPressCodex.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = buttonPressCodex.png; sourceTree = "<group>"; };
 		763BCECC1A32B67600AF65DB /* buttonCodex.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = buttonCodex.png; sourceTree = "<group>"; };
 		763BCECE1A32BA2300AF65DB /* Settings.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Settings.png; sourceTree = "<group>"; };
@@ -244,7 +238,6 @@
 		765DF29019A9293100FBFB16 /* Stars-L1.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = "Stars-L1.sks"; sourceTree = "<group>"; };
 		765DF29319A9293D00FBFB16 /* NORLabelNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NORLabelNode.h; sourceTree = "<group>"; };
 		765DF29419A9293D00FBFB16 /* NORLabelNode.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NORLabelNode.m; sourceTree = "<group>"; };
-		765DF29619A9294B00FBFB16 /* CMDR-FletcherPop@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "CMDR-FletcherPop@2x.png"; sourceTree = "<group>"; };
 		765DF29719A9294B00FBFB16 /* GameOver-L1@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "GameOver-L1@2x.png"; sourceTree = "<group>"; };
 		765DF29A19A9295800FBFB16 /* GameOverL1.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GameOverL1.h; sourceTree = "<group>"; };
 		765DF29B19A9295800FBFB16 /* GameOverL1.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GameOverL1.m; sourceTree = "<group>"; };
@@ -276,6 +269,9 @@
 		7673212A1A574CE00057EF70 /* TinyNova-Collect.caf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "TinyNova-Collect.caf"; sourceTree = "<group>"; };
 		7673212B1A574CE00057EF70 /* Wingman-Collect.caf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Wingman-Collect.caf"; sourceTree = "<group>"; };
 		767321391A5B66870057EF70 /* Asteroid-1.atlas */ = {isa = PBXFileReference; lastKnownFileType = folder.skatlas; path = "Asteroid-1.atlas"; sourceTree = "<group>"; };
+		7673213B1A5C276A0057EF70 /* Asteroid-2.atlas */ = {isa = PBXFileReference; lastKnownFileType = folder.skatlas; path = "Asteroid-2.atlas"; sourceTree = "<group>"; };
+		7673213C1A5C276A0057EF70 /* Asteroid-3.atlas */ = {isa = PBXFileReference; lastKnownFileType = folder.skatlas; path = "Asteroid-3.atlas"; sourceTree = "<group>"; };
+		7673213D1A5C276A0057EF70 /* Asteroid-Red.atlas */ = {isa = PBXFileReference; lastKnownFileType = folder.skatlas; path = "Asteroid-Red.atlas"; sourceTree = "<group>"; };
 		7678881819E1C43E009714A1 /* 4xMulti@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "4xMulti@2x.png"; sourceTree = "<group>"; };
 		7678881919E1C43E009714A1 /* 5xMulti@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "5xMulti@2x.png"; sourceTree = "<group>"; };
 		767DE0041A0C72FF00E098DF /* TinyNova@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "TinyNova@2x.png"; sourceTree = "<group>"; };
@@ -286,8 +282,6 @@
 		76B9E91919FBF04D000EF044 /* PowerUps.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PowerUps.h; sourceTree = "<group>"; };
 		76B9E91A19FBF04D000EF044 /* PowerUps.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PowerUps.m; sourceTree = "<group>"; };
 		76C6F15319A2CCB100B37331 /* Level-1@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Level-1@2x.png"; sourceTree = "<group>"; };
-		76EC502219D4EAE100363C97 /* Rocket-1@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Rocket-1@2x.png"; sourceTree = "<group>"; };
-		76EC502319D4EAE100363C97 /* Ship-Chunk-1@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Ship-Chunk-1@2x.png"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -534,6 +528,11 @@
 		2DB352A119999575006BF15C /* Levels */ = {
 			isa = PBXGroup;
 			children = (
+				760C79C31A702B9700E58170 /* Shield.atlas */,
+				760C79C11A70281900E58170 /* Ship-Fragment.atlas */,
+				7673213B1A5C276A0057EF70 /* Asteroid-2.atlas */,
+				7673213C1A5C276A0057EF70 /* Asteroid-3.atlas */,
+				7673213D1A5C276A0057EF70 /* Asteroid-Red.atlas */,
 				767321391A5B66870057EF70 /* Asteroid-1.atlas */,
 				765DF28819A9286700FBFB16 /* Level 1 */,
 				2DB352A21999957A006BF15C /* Level 2 */,
@@ -566,13 +565,6 @@
 		765DF28819A9286700FBFB16 /* Level 1 */ = {
 			isa = PBXGroup;
 			children = (
-				76105BDE19F5C65400A3F242 /* L1-AOb-4@2x.png */,
-				760C23C519DC856000D34429 /* L1-AOb-2@2x.png */,
-				760C23C619DC856000D34429 /* L1-AOb-3@2x.png */,
-				760C23C319DC832C00D34429 /* L1-AOb-1@2x.png */,
-				76EC502219D4EAE100363C97 /* Rocket-1@2x.png */,
-				76EC502319D4EAE100363C97 /* Ship-Chunk-1@2x.png */,
-				765DF29619A9294B00FBFB16 /* CMDR-FletcherPop@2x.png */,
 				765DF29719A9294B00FBFB16 /* GameOver-L1@2x.png */,
 				765DF28A19A928A700FBFB16 /* BlackHole@2x.png */,
 			);
@@ -637,7 +629,6 @@
 		76B9E91C19FC1891000EF044 /* Game Objects */ = {
 			isa = PBXGroup;
 			children = (
-				760897B11A2A9A43002C28EB /* Shield@2x.png */,
 				767DE0041A0C72FF00E098DF /* TinyNova@2x.png */,
 				76B9821119FC7A4E00F7E606 /* Autocannon@2x.png */,
 				76B9821219FC7A4E00F7E606 /* Overshield@2x.png */,
@@ -786,6 +777,7 @@
 				764BF9A319A19A11007DABF8 /* arrowR@2x.png in Resources */,
 				2DB3528A19999445006BF15C /* Pillar-2@2x.png in Resources */,
 				7673212F1A574CE00057EF70 /* Cannon-Hit-Explode.caf in Resources */,
+				7673213F1A5C276A0057EF70 /* Asteroid-3.atlas in Resources */,
 				7640AFB919E06F9A00EFD3C5 /* 3xMulti@2x.png in Resources */,
 				763BCED81A33550000AF65DB /* buttonPressCredits.png in Resources */,
 				2DB3527B1999940A006BF15C /* buttonStart.png in Resources */,
@@ -805,12 +797,11 @@
 				2DB352AA19999D1B006BF15C /* Level-2@2x.png in Resources */,
 				2DB3529219999485006BF15C /* Level-1-Floor@2x.png in Resources */,
 				2DB352AE1999A0C4006BF15C /* GameOver-BG@2x.png in Resources */,
-				760897B21A2A9A43002C28EB /* Shield@2x.png in Resources */,
 				767320F41A3CBDAD0057EF70 /* buttonReplayTut.png in Resources */,
 				7651E8D519B0EC8900F7E9D0 /* Level-1-Music.m4a in Resources */,
 				76C6F15419A2CCB100B37331 /* Level-1@2x.png in Resources */,
 				2DB3529B199994C0006BF15C /* Title.png in Resources */,
-				760C23C719DC856000D34429 /* L1-AOb-2@2x.png in Resources */,
+				760C79C21A70281900E58170 /* Ship-Fragment.atlas in Resources */,
 				76B9821419FC7A4E00F7E606 /* Autocannon@2x.png in Resources */,
 				76B9821619FC7A4F00F7E606 /* Wingman@2x.png in Resources */,
 				767321321A574CE00057EF70 /* Score-Collect.caf in Resources */,
@@ -823,10 +814,9 @@
 				767DE0051A0C72FF00E098DF /* TinyNova@2x.png in Resources */,
 				76B9821519FC7A4E00F7E606 /* Overshield@2x.png in Resources */,
 				767320E41A3B96530057EF70 /* NovaWingIcon@2x.png in Resources */,
-				76105BDF19F5C65400A3F242 /* L1-AOb-4@2x.png in Resources */,
 				765DF29219A9293100FBFB16 /* Stars-L1.sks in Resources */,
 				767320F21A3CBDAD0057EF70 /* buttonPressPlay@2x.png in Resources */,
-				760C23C419DC832C00D34429 /* L1-AOb-1@2x.png in Resources */,
+				767321401A5C276A0057EF70 /* Asteroid-Red.atlas in Resources */,
 				2DB3528B19999445006BF15C /* Pillar-3@2x.png in Resources */,
 				2DB352771999940A006BF15C /* buttonPressLeaderboard.png in Resources */,
 				767321361A574CE00057EF70 /* Ship-Explode.caf in Resources */,
@@ -835,7 +825,6 @@
 				763BCECF1A32BA2300AF65DB /* Settings.png in Resources */,
 				2DB3529119999485006BF15C /* Level-1-Far@2x.png in Resources */,
 				2DB352781999940A006BF15C /* buttonPressSettings.png in Resources */,
-				76EC502519D4EAE100363C97 /* Ship-Chunk-1@2x.png in Resources */,
 				767321381A574CE00057EF70 /* Wingman-Collect.caf in Resources */,
 				2DB3528619999445006BF15C /* AOb-1@2x.png in Resources */,
 				767321331A574CE00057EF70 /* Shield-PowerUp.caf in Resources */,
@@ -843,11 +832,11 @@
 				2DB3528C19999445006BF15C /* Pillar-4@2x.png in Resources */,
 				2DB3523A19996B83006BF15C /* Images.xcassets in Resources */,
 				7640AFB819E06F9A00EFD3C5 /* 2xMulti@2x.png in Resources */,
-				760C23C819DC856000D34429 /* L1-AOb-3@2x.png in Resources */,
 				2DB352761999940A006BF15C /* buttonLeaderboard.png in Resources */,
 				764BF9A219A19A11007DABF8 /* arrowL@2x.png in Resources */,
+				760C79C41A702B9700E58170 /* Shield.atlas in Resources */,
+				7673213E1A5C276A0057EF70 /* Asteroid-2.atlas in Resources */,
 				767320E71A3B96530057EF70 /* NovaWingSettings@3x.png in Resources */,
-				76EC502419D4EAE100363C97 /* Rocket-1@2x.png in Resources */,
 				764BF9A619A2BC04007DABF8 /* Nova-L2@2x.png in Resources */,
 				2DB3527A1999940A006BF15C /* buttonSettings.png in Resources */,
 				2DB352791999940A006BF15C /* buttonPressStart.png in Resources */,
@@ -860,7 +849,6 @@
 				767321301A574CE00057EF70 /* Explosion.caf in Resources */,
 				765DF29119A9293100FBFB16 /* spark.png in Resources */,
 				767320F61A3CBDD70057EF70 /* buttonPlay@2x.png in Resources */,
-				765DF29819A9294B00FBFB16 /* CMDR-FletcherPop@2x.png in Resources */,
 				767321371A574CE00057EF70 /* TinyNova-Collect.caf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
