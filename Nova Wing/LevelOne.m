@@ -7,7 +7,6 @@
 //  test
 //  So incredibly annoying.
 
-
 #import <AudioToolbox/AudioToolbox.h>
 
 #import "LevelOne.h"
@@ -42,7 +41,12 @@
     
         //Set Up Atlases
     NSArray *asteroid_1;
-    
+    NSArray *asteroid_2;
+    NSArray *asteroid_3;
+    NSArray *asteroid_Red;
+    NSArray *ship_Fragment;
+    NSArray *shield_Load;
+    //test
 }
         //Preloading Sound Actions -> Properties Here
     @property (strong, nonatomic) SKAction* AutoCannonFire;
@@ -60,6 +64,11 @@
 
         //Atlas Properties
     @property (strong, nonatomic) SKTextureAtlas *Asteroid_1_Atlas;
+    @property (strong, nonatomic) SKTextureAtlas *Asteroid_2_Atlas;
+    @property (strong, nonatomic) SKTextureAtlas *Asteroid_3_Atlas;
+    @property (strong, nonatomic) SKTextureAtlas *Asteroid_Red_Atlas;
+    @property (strong, nonatomic) SKTextureAtlas *Ship_Fragment_Atlas;
+    @property (strong, nonatomic) SKTextureAtlas *Shield_Atlas;
 
 @end
 
@@ -110,8 +119,18 @@ SKColor *wingmanLaserColorCast;
     NSMutableArray *textureAtlases = [NSMutableArray array];
     
     self.Asteroid_1_Atlas = [SKTextureAtlas atlasNamed:@"Asteroid-1"];
+    self.Asteroid_2_Atlas = [SKTextureAtlas atlasNamed:@"Asteroid-2"];
+    self.Asteroid_3_Atlas = [SKTextureAtlas atlasNamed:@"Asteroid-3"];
+    self.Asteroid_Red_Atlas = [SKTextureAtlas atlasNamed:@"Asteroid-Red"];
+    self.Ship_Fragment_Atlas = [SKTextureAtlas atlasNamed:@"Ship-Fragment"];
+    self.Shield_Atlas = [SKTextureAtlas atlasNamed:@"Shield"];
     
     [textureAtlases addObject:self.Asteroid_1_Atlas];
+    [textureAtlases addObject:self.Asteroid_2_Atlas];
+    [textureAtlases addObject:self.Asteroid_3_Atlas];
+    [textureAtlases addObject:self.Asteroid_Red_Atlas];
+    [textureAtlases addObject:self.Ship_Fragment_Atlas];
+    [textureAtlases addObject:self.Shield_Atlas];
     
     [SKTextureAtlas preloadTextureAtlases:textureAtlases withCompletionHandler:^{
         [self setUpScene];
@@ -127,6 +146,46 @@ SKColor *wingmanLaserColorCast;
         [Asteroid_1_Frames addObject:temp];
     }
     asteroid_1 = Asteroid_1_Frames;
+    
+    NSMutableArray *Asteroid_2_Frames = [NSMutableArray array];
+    for (int i=1; i <= _Asteroid_2_Atlas.textureNames.count; i++) {
+        NSString *textureName = [NSString stringWithFormat:@"Asteroid-2-%d", i];
+        SKTexture *temp = [_Asteroid_2_Atlas textureNamed:textureName];
+        [Asteroid_2_Frames addObject:temp];
+    }
+    asteroid_2 = Asteroid_2_Frames;
+    
+    NSMutableArray *Asteroid_3_Frames = [NSMutableArray array];
+    for (int i=1; i <= _Asteroid_3_Atlas.textureNames.count; i++) {
+        NSString *textureName = [NSString stringWithFormat:@"Asteroid-3-%d", i];
+        SKTexture *temp = [_Asteroid_3_Atlas textureNamed:textureName];
+        [Asteroid_3_Frames addObject:temp];
+    }
+    asteroid_3 = Asteroid_3_Frames;
+    
+    NSMutableArray *Asteroid_Red_Frames = [NSMutableArray array];
+    for (int i=1; i <= _Asteroid_Red_Atlas.textureNames.count; i++) {
+        NSString *textureName = [NSString stringWithFormat:@"Asteroid-Red-%d", i];
+        SKTexture *temp = [_Asteroid_Red_Atlas textureNamed:textureName];
+        [Asteroid_Red_Frames addObject:temp];
+    }
+    asteroid_Red = Asteroid_Red_Frames;
+    
+    NSMutableArray *Ship_Fragment_Frames = [NSMutableArray array];
+    for (int i=1; i <= _Ship_Fragment_Atlas.textureNames.count; i++) {
+        NSString *textureName = [NSString stringWithFormat:@"Ship-Fragment-%d", i];
+        SKTexture *temp = [_Ship_Fragment_Atlas textureNamed:textureName];
+        [Ship_Fragment_Frames addObject:temp];
+    }
+    ship_Fragment = Ship_Fragment_Frames;
+    
+    NSMutableArray *Shield_Frames = [NSMutableArray array];
+    for (int i=1; i <= _Shield_Atlas.textureNames.count; i++) {
+        NSString *textureName = [NSString stringWithFormat:@"Shield-%d", i];
+        SKTexture *temp = [_Shield_Atlas textureNamed:textureName];
+        [Shield_Frames addObject:temp];
+    }
+    shield_Load = Shield_Frames;
     
     self.backgroundColor = [SKColor colorWithRed:0 green:0 blue:0 alpha:1];
     
@@ -307,7 +366,6 @@ SKColor *wingmanLaserColorCast;
     
     obstacle.physicsBody = [SKPhysicsBody bodyWithCircleOfRadius:obstacle.size.height/2];
     [self objectPhysicsStandards: obstacle];
-    obstacle.name = @"asteroid";
     
     [self addChild: obstacle];
     [obstacle runAction:[SKAction repeatActionForever:
@@ -319,16 +377,19 @@ SKColor *wingmanLaserColorCast;
 }
 
 -(void)asteroid2 {
-    
-    SKSpriteNode *obstacle = [SKSpriteNode spriteNodeWithImageNamed:@"L1-AOb-2"];
+    SKTexture *temp = asteroid_3[0];
+    SKSpriteNode *obstacle = [SKSpriteNode spriteNodeWithTexture:temp];
     
     int tempRand = arc4random()%80;
     double randYPosition = (tempRand+10)/100.0;
     obstacle.position = CGPointMake(self.size.width+obstacle.size.width, self.size.height*randYPosition);
     obstacle.anchorPoint = CGPointZero;
     obstacle.zPosition = 10;
-    obstacle.xScale = 0.4;
-    obstacle.yScale = 0.4;
+    
+    int tempRand2 = arc4random()%100;
+    double randScale = (tempRand2)/1000.0;
+    obstacle.xScale = 0.3 + randScale;
+    obstacle.yScale = 0.3 + randScale;
     
     CGMutablePathRef path = CGPathCreateMutable();
     
@@ -342,14 +403,19 @@ SKColor *wingmanLaserColorCast;
     
     obstacle.physicsBody = [SKPhysicsBody bodyWithPolygonFromPath:path];
     [self objectPhysicsStandards: obstacle];
-    obstacle.name = @"asteroid";
     
     [self addChild: obstacle];
+    [obstacle runAction:[SKAction repeatActionForever:
+                         [SKAction animateWithTextures:asteroid_3
+                                          timePerFrame:0.06f
+                                                resize:NO
+                                               restore:YES]] withKey:@"Asteroid 2 Animate"];
     [self moveAerialNode:obstacle allowsRotation:YES];
 }
 
 -(void)asteroid3 {
-    SKSpriteNode *obstacle = [SKSpriteNode spriteNodeWithImageNamed:@"L1-AOb-3"];
+    SKTexture *temp = asteroid_2[0];
+    SKSpriteNode *obstacle = [SKSpriteNode spriteNodeWithTexture:temp];
     
     int tempRand = arc4random()%80;
     double randYPosition = (tempRand+10)/100.0;
@@ -364,15 +430,19 @@ SKColor *wingmanLaserColorCast;
     
     obstacle.physicsBody = [SKPhysicsBody bodyWithCircleOfRadius:obstacle.size.height/2];
     [self objectPhysicsStandards: obstacle];
-    obstacle.name = @"asteroid";
     
     [self addChild: obstacle];
+    [obstacle runAction:[SKAction repeatActionForever:
+                         [SKAction animateWithTextures:asteroid_2
+                                          timePerFrame:0.06f
+                                                resize:NO
+                                               restore:YES]] withKey:@"Asteroid 3 Animate"];
     [self moveAerialNode:obstacle allowsRotation:YES];
 }
 
 -(void)asteroid4 {
-    
-    SKSpriteNode *obstacle = [SKSpriteNode spriteNodeWithImageNamed:@"L1-AOb-4"];
+    SKTexture *temp = asteroid_Red[0];
+    SKSpriteNode *obstacle = [SKSpriteNode spriteNodeWithTexture:temp];
     
     int tempRand = arc4random()%80;
     double randYPosition = (tempRand+10)/100.0;
@@ -387,14 +457,19 @@ SKColor *wingmanLaserColorCast;
     
     obstacle.physicsBody = [SKPhysicsBody bodyWithCircleOfRadius:obstacle.size.height/2];
     [self objectPhysicsStandards: obstacle];
-    obstacle.name = @"red_asteroid";
     
     [self addChild: obstacle];
+    [obstacle runAction:[SKAction repeatActionForever:
+                         [SKAction animateWithTextures:asteroid_Red
+                                          timePerFrame:0.06f
+                                                resize:NO
+                                               restore:YES]] withKey:@"Asteroid Red Animate"];
     [self moveAerialNode:obstacle allowsRotation:YES];
 }
 
 -(void)shipChunk {
-    SKSpriteNode *obstacle = [SKSpriteNode spriteNodeWithImageNamed:@"Ship-Chunk-1"];
+    SKTexture *temp = ship_Fragment[0];
+    SKSpriteNode *obstacle = [SKSpriteNode spriteNodeWithTexture:temp];
     
     int tempRand = arc4random()%80;
     double randYPosition = (tempRand+10)/100.0;
@@ -416,9 +491,13 @@ SKColor *wingmanLaserColorCast;
     
     obstacle.physicsBody = [SKPhysicsBody bodyWithPolygonFromPath:path];
     [self objectPhysicsStandards: obstacle];
-    obstacle.name = @"debris";
     
     [self addChild: obstacle];
+    [obstacle runAction:[SKAction repeatActionForever:
+                         [SKAction animateWithTextures:ship_Fragment
+                                          timePerFrame:0.06f
+                                                resize:NO
+                                               restore:YES]] withKey:@"Ship Fragment Animate"];
     [self moveAerialNode:obstacle allowsRotation: YES];
 }
 
@@ -430,6 +509,9 @@ SKColor *wingmanLaserColorCast;
     object.physicsBody.friction = 0.2f;
     object.physicsBody.restitution = 0.0f;
     object.physicsBody.linearDamping = 0.0;
+    object.physicsBody.allowsRotation = YES;
+    
+    object.name = @"aerial";
 }
 
 -(void)bottomCollide {
@@ -608,12 +690,16 @@ SKColor *wingmanLaserColorCast;
     double square = (sumHeight * sumHeight + triangleWidth * triangleWidth);
     float arcCenterHeight = sqrt(square);
     float deltaHeight = arcCenterHeight - sumHeight;
-    double aerialSpeed = 0.9 - ([GameState sharedGameData].scoreMultiplier/10);
+    double aerialSpeed = 0.95 - ([GameState sharedGameData].scoreMultiplier/10); //Base duration of 0.95 seconds.
     
-    int tempRand = arc4random()%150;
-    double randDuration = (tempRand-100)/1000.0;
+    //Random +/-0.05s duration adjustment.
+    int tempRand = arc4random()%100;
+    double randDuration = (tempRand-50)/1000.0;
     double totalDuration = aerialSpeed + randDuration;
     
+    totalDuration = MAX(totalDuration, 0.5);
+    
+    //Random rotation function.
     int tempRand2 = arc4random()%75 + 50;
     double tempRandSigned = tempRand2-50.0;
     double randAngleRad = (tempRandSigned)*180/100.0;
@@ -1069,7 +1155,8 @@ SKColor *wingmanLaserColorCast;
 -(void)overShield {
     [self playSoundEffectsWithAction:_ShieldPowerUp];
     
-    shield = [SKSpriteNode spriteNodeWithImageNamed:@"Shield"];
+    SKTexture *temp = shield_Load[0];
+    shield = [SKSpriteNode spriteNodeWithTexture:temp];
     shield.xScale = 1.2;
     shield.yScale = 1.2;
     shield.zPosition = 111;
@@ -1107,6 +1194,11 @@ SKColor *wingmanLaserColorCast;
     [playerParent addChild:shield];
     SKPhysicsJointFixed *shieldJoint = [SKPhysicsJointFixed jointWithBodyA:playerParent.physicsBody bodyB:shield.physicsBody anchor:CGPointMake(playerParent.position.x, playerParent.position.y)];
     [self.physicsWorld addJoint:shieldJoint];
+    NSMutableArray *shieldStatic = [NSMutableArray array];
+    [shieldStatic addObject:shield_Load[25]];
+    SKAction *shieldAnimate = [SKAction animateWithTextures:shield_Load timePerFrame:0.03 resize:NO restore:YES];
+    SKAction *fullShield = [SKAction repeatActionForever:[SKAction animateWithTextures:shieldStatic timePerFrame:0.05]];
+    [shield runAction:[SKAction sequence:@[shieldAnimate, fullShield]] withKey:@"Shield Animate"];
     
     playerNode.physicsBody.contactTestBitMask = CollisionCategoryBottom  | CollisionCategoryMulti;
     shieldIndex = 0;
