@@ -26,10 +26,7 @@
 		2DB3524319996B83006BF15C /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2DB3521E19996B83006BF15C /* UIKit.framework */; };
 		2DB3524B19996B83006BF15C /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 2DB3524919996B83006BF15C /* InfoPlist.strings */; };
 		2DB3524D19996B83006BF15C /* Nova_WingTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 2DB3524C19996B83006BF15C /* Nova_WingTests.m */; };
-		2DB3525A19996CC1006BF15C /* LevelTwo.m in Sources */ = {isa = PBXBuildFile; fileRef = 2DB3525919996CC1006BF15C /* LevelTwo.m */; };
-		2DB3525E19996D6D006BF15C /* PBParallaxScrolling.m in Sources */ = {isa = PBXBuildFile; fileRef = 2DB3525D19996D6D006BF15C /* PBParallaxScrolling.m */; };
 		2DB35262199972CD006BF15C /* GameObjects.m in Sources */ = {isa = PBXBuildFile; fileRef = 2DB35261199972CD006BF15C /* GameObjects.m */; };
-		2DB3526819997A32006BF15C /* GameOver.m in Sources */ = {isa = PBXBuildFile; fileRef = 2DB3526719997A32006BF15C /* GameOver.m */; };
 		2DB3526B19997A98006BF15C /* GameState.m in Sources */ = {isa = PBXBuildFile; fileRef = 2DB3526A19997A98006BF15C /* GameState.m */; };
 		2DB352761999940A006BF15C /* buttonLeaderboard.png in Resources */ = {isa = PBXBuildFile; fileRef = 2DB352701999940A006BF15C /* buttonLeaderboard.png */; };
 		2DB352771999940A006BF15C /* buttonPressLeaderboard.png in Resources */ = {isa = PBXBuildFile; fileRef = 2DB352711999940A006BF15C /* buttonPressLeaderboard.png */; };
@@ -126,6 +123,7 @@
 		76B9E91719FB1BE8000EF044 /* ShipTrail.sks in Resources */ = {isa = PBXBuildFile; fileRef = 76B9E91619FB1BE8000EF044 /* ShipTrail.sks */; };
 		76B9E91B19FBF04D000EF044 /* PowerUps.m in Sources */ = {isa = PBXBuildFile; fileRef = 76B9E91A19FBF04D000EF044 /* PowerUps.m */; };
 		76C6F15419A2CCB100B37331 /* Level-1@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 76C6F15319A2CCB100B37331 /* Level-1@2x.png */; };
+		76DFCC921A7455A100AB48E1 /* Black-Hole.atlas in Resources */ = {isa = PBXBuildFile; fileRef = 76DFCC911A7455A100AB48E1 /* Black-Hole.atlas */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -166,14 +164,8 @@
 		2DB3524819996B83006BF15C /* Nova WingTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Nova WingTests-Info.plist"; sourceTree = "<group>"; };
 		2DB3524A19996B83006BF15C /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		2DB3524C19996B83006BF15C /* Nova_WingTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Nova_WingTests.m; sourceTree = "<group>"; };
-		2DB3525819996CC1006BF15C /* LevelTwo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LevelTwo.h; sourceTree = "<group>"; };
-		2DB3525919996CC1006BF15C /* LevelTwo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LevelTwo.m; sourceTree = "<group>"; };
-		2DB3525C19996D6D006BF15C /* PBParallaxScrolling.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PBParallaxScrolling.h; sourceTree = "<group>"; };
-		2DB3525D19996D6D006BF15C /* PBParallaxScrolling.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PBParallaxScrolling.m; sourceTree = "<group>"; };
 		2DB35260199972CD006BF15C /* GameObjects.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GameObjects.h; sourceTree = "<group>"; };
 		2DB35261199972CD006BF15C /* GameObjects.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GameObjects.m; sourceTree = "<group>"; };
-		2DB3526619997A32006BF15C /* GameOver.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GameOver.h; sourceTree = "<group>"; };
-		2DB3526719997A32006BF15C /* GameOver.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GameOver.m; sourceTree = "<group>"; };
 		2DB3526919997A98006BF15C /* GameState.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GameState.h; sourceTree = "<group>"; };
 		2DB3526A19997A98006BF15C /* GameState.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GameState.m; sourceTree = "<group>"; };
 		2DB352701999940A006BF15C /* buttonLeaderboard.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = buttonLeaderboard.png; sourceTree = "<group>"; };
@@ -282,6 +274,7 @@
 		76B9E91919FBF04D000EF044 /* PowerUps.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PowerUps.h; sourceTree = "<group>"; };
 		76B9E91A19FBF04D000EF044 /* PowerUps.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PowerUps.m; sourceTree = "<group>"; };
 		76C6F15319A2CCB100B37331 /* Level-1@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Level-1@2x.png"; sourceTree = "<group>"; };
+		76DFCC911A7455A100AB48E1 /* Black-Hole.atlas */ = {isa = PBXFileReference; lastKnownFileType = folder.skatlas; path = "Black-Hole.atlas"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -403,20 +396,8 @@
 				763BCED31A334F0000AF65DB /* NWCodex.m */,
 				760897AA1A24FB80002C28EB /* Tutorial */,
 				765DF28919A9288200FBFB16 /* Level 1: Event Horizon */,
-				2DB3525719996C9E006BF15C /* Level 2: The Whispers */,
 			);
 			name = Levels;
-			sourceTree = "<group>";
-		};
-		2DB3525719996C9E006BF15C /* Level 2: The Whispers */ = {
-			isa = PBXGroup;
-			children = (
-				2DB3525819996CC1006BF15C /* LevelTwo.h */,
-				2DB3525919996CC1006BF15C /* LevelTwo.m */,
-				2DB3526619997A32006BF15C /* GameOver.h */,
-				2DB3526719997A32006BF15C /* GameOver.m */,
-			);
-			name = "Level 2: The Whispers";
 			sourceTree = "<group>";
 		};
 		2DB3525B19996D02006BF15C /* External Classes */ = {
@@ -426,8 +407,6 @@
 				765DF29419A9293D00FBFB16 /* NORLabelNode.m */,
 				764BF94B199EBC3F007DABF8 /* KeychainWrapper.h */,
 				764BF94C199EBC3F007DABF8 /* KeychainWrapper.m */,
-				2DB3525C19996D6D006BF15C /* PBParallaxScrolling.h */,
-				2DB3525D19996D6D006BF15C /* PBParallaxScrolling.m */,
 			);
 			name = "External Classes";
 			sourceTree = "<group>";
@@ -528,6 +507,7 @@
 		2DB352A119999575006BF15C /* Levels */ = {
 			isa = PBXGroup;
 			children = (
+				76DFCC911A7455A100AB48E1 /* Black-Hole.atlas */,
 				760C79C31A702B9700E58170 /* Shield.atlas */,
 				760C79C11A70281900E58170 /* Ship-Fragment.atlas */,
 				7673213B1A5C276A0057EF70 /* Asteroid-2.atlas */,
@@ -784,6 +764,7 @@
 				7651E8D719B0FFA900F7E9D0 /* Level-2-Music.m4a in Resources */,
 				2DB3522719996B83006BF15C /* InfoPlist.strings in Resources */,
 				7678881A19E1C43E009714A1 /* 4xMulti@2x.png in Resources */,
+				76DFCC921A7455A100AB48E1 /* Black-Hole.atlas in Resources */,
 				767320E51A3B96530057EF70 /* NovaWingIcon@3x.png in Resources */,
 				764BF9A719A2BC04007DABF8 /* Nova-L1@2x.png in Resources */,
 				763BCECD1A32B67600AF65DB /* buttonCodex.png in Resources */,
@@ -868,10 +849,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				2DB3525E19996D6D006BF15C /* PBParallaxScrolling.m in Sources */,
 				2DB3523619996B83006BF15C /* MainMenu.m in Sources */,
 				76B9E91B19FBF04D000EF044 /* PowerUps.m in Sources */,
-				2DB3526819997A32006BF15C /* GameOver.m in Sources */,
 				2DB3523319996B83006BF15C /* ViewController.m in Sources */,
 				760897AF1A24FBEA002C28EB /* Tutorial.m in Sources */,
 				2DB35262199972CD006BF15C /* GameObjects.m in Sources */,
@@ -886,7 +865,6 @@
 				76105BD119E5B3D400A3F242 /* Multipliers.m in Sources */,
 				2DB3522919996B83006BF15C /* main.m in Sources */,
 				2D4C0B9A19A6D29B00AD0717 /* Ships.m in Sources */,
-				2DB3525A19996CC1006BF15C /* LevelTwo.m in Sources */,
 				2DB3526B19997A98006BF15C /* GameState.m in Sources */,
 				765DF28E19A9290F00FBFB16 /* LevelOne.m in Sources */,
 			);

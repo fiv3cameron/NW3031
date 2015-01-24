@@ -11,6 +11,5 @@
 @interface Obstacles : GameObjects
 
 - (SKSpriteNode *) createObstacleWithNode: (SKSpriteNode *) incomingNode withName: (NSString*) obstacleType withImage: (NSString *)imageName;
-- (SKSpriteNode *) createPillarPhysicsBody: (SKSpriteNode *) incomingNode withIdentifier: (int) pillarSelect;
 
 @end

@@ -512,7 +512,6 @@ NSTimeInterval _dt;
                 SKView * tutView = (SKView *)self.view;
                 tutView.showsFPS = YES;
                 tutView.showsNodeCount = YES;
-                //levelOneView.showsPhysics = YES;
                 
                 // Create and configure the scene.
                 SKScene * tutScene = [[Tutorial alloc] initWithSize:tutView.bounds.size];
@@ -526,7 +525,7 @@ NSTimeInterval _dt;
                 SKView * levelOneView = (SKView *)self.view;
                 levelOneView.showsFPS = YES;
                 levelOneView.showsNodeCount = YES;
-                //levelOneView.showsPhysics = YES;
+                    //levelOneView.showsPhysics = YES;
                 
                 // Create and configure the scene.
                 SKScene * levelOneScene = [[LevelOne alloc] initWithSize:levelOneView.bounds.size];
@@ -662,22 +661,6 @@ NSTimeInterval _dt;
     }
     
 #pragma mark --Level 2
-    if ([nodeLift.name isEqualToString:@"_level2"]) {
-        // Transition to Level One Scene
-        // Configure the developer view.
-        SKView * levelTwoView = (SKView *)self.view;
-        levelTwoView.showsFPS = YES;
-        levelTwoView.showsNodeCount = YES;
-        //levelTwoView.showsPhysics = YES;
-        
-        // Create and configure the scene.
-        SKScene * levelTwoScene = [[LevelTwo alloc] initWithSize:levelTwoView.bounds.size andDirection:self.direction];
-        levelTwoScene.scaleMode = SKSceneScaleModeAspectFill;
-        SKTransition *levelTwoTrans = [SKTransition fadeWithColor:fadeColor duration:levelFadeDuration];
-        
-        // Present the scene.
-        [levelTwoView presentScene:levelTwoScene transition:levelTwoTrans];
-    }
     
 
     

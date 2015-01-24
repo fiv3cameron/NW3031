@@ -7,7 +7,8 @@
 //
 
 #import "LevelTwo.h"
-#import "GameOver.h"
+/*
+ #import "GameOver.h"
 #import "Obstacles.h"
 
 @interface LevelTwo() <SKPhysicsContactDelegate>
@@ -16,7 +17,7 @@
     Ships *playerNode;
 }
 
-@property (nonatomic, strong) PBParallaxScrolling * parallaxBackground;
+    //@property (nonatomic, strong) PBParallaxScrolling * parallaxBackground;
 
 @end
 
@@ -61,7 +62,7 @@ NSTimer *aerialCreateTimer;
         NSArray * imageNames;
         imageNames = @[midBG, farBG, skyBG];
         PBParallaxScrolling * parallax = [[PBParallaxScrolling alloc] initWithBackgrounds:imageNames size:size direction:kPBParallaxBackgroundDirectionLeft fastestSpeed:3 andSpeedDecrease:1];
-        self.parallaxBackground = parallax;
+            //self.parallaxBackground = parallax;
         [self addChild:parallax];
         
         _player = [self createPlayerNode];
@@ -421,7 +422,7 @@ NSTimer *aerialCreateTimer;
         _dt = 0;
     }
     _lastUpdateTime = currentTime;
-    [self.parallaxBackground update:currentTime];
+        //[self.parallaxBackground update:currentTime];
     [self moveFloor];
     
     if (_player.physicsBody.velocity.dy < 0) {
@@ -462,7 +463,7 @@ NSTimer *aerialCreateTimer;
         [gameOverView presentScene:gameOverScene transition:gameOverTransition];
     }
 }
-
+*/
 
 
 

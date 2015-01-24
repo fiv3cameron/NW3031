@@ -187,17 +187,6 @@
     obstacle.xScale = 0.4;
     obstacle.yScale = 0.4;
     
-    CGMutablePathRef path = CGPathCreateMutable();
-    
-    CGPathMoveToPoint(path, NULL, 5, 5);
-    CGPathAddLineToPoint(path, NULL, 50, 5);
-    CGPathAddLineToPoint(path, NULL, 55, 15);
-    CGPathAddLineToPoint(path, NULL, 50, 25);
-    CGPathAddLineToPoint(path, NULL, 10, 25);
-    
-    CGPathCloseSubpath(path);
-    
-    obstacle.physicsBody = [SKPhysicsBody bodyWithPolygonFromPath:path];
     [self objectPhysicsStandards: obstacle];
     
     return obstacle;
@@ -250,17 +239,6 @@
     obstacle.xScale = 0.5;
     obstacle.yScale = 0.5;
     
-    CGMutablePathRef path = CGPathCreateMutable();
-    
-    CGPathMoveToPoint(path, NULL, 10, 0);
-    CGPathAddLineToPoint(path, NULL, 50, 20);
-    CGPathAddLineToPoint(path, NULL, 60, 60);
-    CGPathAddLineToPoint(path, NULL, 50, 60);
-    CGPathAddLineToPoint(path, NULL, 10, 20);
-    
-    CGPathCloseSubpath(path);
-    
-    obstacle.physicsBody = [SKPhysicsBody bodyWithPolygonFromPath:path];
     [self objectPhysicsStandards: obstacle];
     
     return obstacle;
@@ -638,17 +616,7 @@ static const float duration = 0.7;
 }
 
 -(void)didBeginContact:(SKPhysicsContact *)contact {
-    
-    SKPhysicsBody *firstBody;
-    SKPhysicsBody *secondBody;
-    
-    if (contact.bodyA.categoryBitMask < contact.bodyB.categoryBitMask) {
-        firstBody = contact.bodyA;
-        secondBody = contact.bodyB;
-    } else {
-        firstBody = contact.bodyB;
-        secondBody = contact.bodyA;
-    }
+
     
     //SKSpriteNode *firstNode = (SKSpriteNode *)firstBody.node;
     //SKSpriteNode *secondNode = (SKSpriteNode *)secondBody.node;

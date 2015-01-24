@@ -27,6 +27,7 @@
     BOOL wingmanActive;
     BOOL isSceneLoading;
     SKPhysicsJointSpring *wingmanSpring;
+    SKLabelNode *loading;
     
         //Game Over ivars
     SKLabelNode *backToMain;
@@ -46,6 +47,7 @@
     NSArray *asteroid_Red;
     NSArray *ship_Fragment;
     NSArray *shield_Load;
+    NSArray *black_Hole;
     //test
 }
         //Preloading Sound Actions -> Properties Here
@@ -69,6 +71,7 @@
     @property (strong, nonatomic) SKTextureAtlas *Asteroid_Red_Atlas;
     @property (strong, nonatomic) SKTextureAtlas *Ship_Fragment_Atlas;
     @property (strong, nonatomic) SKTextureAtlas *Shield_Atlas;
+    @property (strong, nonatomic) SKTextureAtlas *Black_Hole_Atlas;
 
 @end
 
@@ -89,6 +92,16 @@ SKColor *wingmanLaserColorCast;
 
 -(id)initWithSize:(CGSize)size {
     if (self = [super initWithSize:size]) {
+        
+        self.backgroundColor = [SKColor colorWithRed:0 green:0 blue:0 alpha:1];
+    
+        loading = [SKLabelNode labelNodeWithFontNamed:@"SF Movie Poster"];
+        loading.position = CGPointMake(self.size.width / 2, self.size.height / 2);
+        loading.fontColor = [SKColor whiteColor];
+        loading.fontSize = 40;
+        loading.name = @"loading";
+        loading.text = @"LOADING...";
+        [self addChild:loading];
         
         [GameState sharedGameData].scoreMultiplier = 1;
         [GameState sharedGameData].maxLaserHits = 0;
@@ -124,6 +137,7 @@ SKColor *wingmanLaserColorCast;
     self.Asteroid_Red_Atlas = [SKTextureAtlas atlasNamed:@"Asteroid-Red"];
     self.Ship_Fragment_Atlas = [SKTextureAtlas atlasNamed:@"Ship-Fragment"];
     self.Shield_Atlas = [SKTextureAtlas atlasNamed:@"Shield"];
+    self.Black_Hole_Atlas = [SKTextureAtlas atlasNamed:@"Black-Hole"];
     
     [textureAtlases addObject:self.Asteroid_1_Atlas];
     [textureAtlases addObject:self.Asteroid_2_Atlas];
@@ -131,6 +145,7 @@ SKColor *wingmanLaserColorCast;
     [textureAtlases addObject:self.Asteroid_Red_Atlas];
     [textureAtlases addObject:self.Ship_Fragment_Atlas];
     [textureAtlases addObject:self.Shield_Atlas];
+    [textureAtlases addObject:self.Black_Hole_Atlas];
     
     [SKTextureAtlas preloadTextureAtlases:textureAtlases withCompletionHandler:^{
         [self setUpScene];
@@ -187,7 +202,16 @@ SKColor *wingmanLaserColorCast;
     }
     shield_Load = Shield_Frames;
     
+    NSMutableArray *Black_Hole_Frames = [NSMutableArray array];
+    for (int i=1; i <= _Black_Hole_Atlas.textureNames.count; i++) {
+        NSString *textureName = [NSString stringWithFormat:@"Black-Hole-%d", i];
+        SKTexture *temp = [_Black_Hole_Atlas textureNamed:textureName];
+        [Black_Hole_Frames addObject:temp];
+    }
+    black_Hole = Black_Hole_Frames;
+    
     self.backgroundColor = [SKColor colorWithRed:0 green:0 blue:0 alpha:1];
+    [loading removeFromParent];
     
     self.physicsWorld.gravity = CGVectorMake(0.0f, -8.0f);
     self.physicsWorld.contactDelegate = self;
@@ -285,12 +309,18 @@ SKColor *wingmanLaserColorCast;
 }
 
 -(void)createBlackHole {
-    blackHole = [SKSpriteNode spriteNodeWithImageNamed:@"BlackHole"];
+    SKTexture *temp = black_Hole[0];
+    blackHole = [SKSpriteNode spriteNodeWithTexture:temp];
     blackHole.position = CGPointMake(self.size.width/2, -160);
-    blackHole.xScale = 1.4;
-    blackHole.yScale = 1.4;
+    blackHole.xScale = 0.7;
+    blackHole.yScale = 0.7;
     
     [self addChild:blackHole];
+    [blackHole runAction:[SKAction repeatActionForever:
+                         [SKAction animateWithTextures:black_Hole
+                                          timePerFrame:0.06f
+                                                resize:NO
+                                               restore:YES]] withKey:@"Black Hole Animate"];
 }
 
 #pragma mark --Create Elements
@@ -411,6 +441,7 @@ SKColor *wingmanLaserColorCast;
                                                 resize:NO
                                                restore:YES]] withKey:@"Asteroid 2 Animate"];
     [self moveAerialNode:obstacle allowsRotation:YES];
+    CGPathRelease(path);
 }
 
 -(void)asteroid3 {
@@ -499,6 +530,7 @@ SKColor *wingmanLaserColorCast;
                                                 resize:NO
                                                restore:YES]] withKey:@"Ship Fragment Animate"];
     [self moveAerialNode:obstacle allowsRotation: YES];
+    CGPathRelease(path);
 }
 
 -(void)objectPhysicsStandards: (SKSpriteNode *)object {
