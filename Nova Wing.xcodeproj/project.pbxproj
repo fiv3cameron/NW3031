@@ -10,9 +10,9 @@
 		2D4C0B9A19A6D29B00AD0717 /* Ships.m in Sources */ = {isa = PBXBuildFile; fileRef = 2D4C0B9919A6D29B00AD0717 /* Ships.m */; };
 		2D800FFA19AC14FC0067CAC1 /* Obstacles.m in Sources */ = {isa = PBXBuildFile; fileRef = 2D800FF919AC14FC0067CAC1 /* Obstacles.m */; };
 		2D99094A1A1EC09D00D9CDE8 /* Laser.png in Resources */ = {isa = PBXBuildFile; fileRef = 2D9909491A1EC09D00D9CDE8 /* Laser.png */; };
-		2D9C37981A771F020083E283 /* Audio_off.png in Resources */ = {isa = PBXBuildFile; fileRef = 2D9C37951A771F020083E283 /* Audio_off.png */; };
-		2D9C37991A771F020083E283 /* Audio_press.png in Resources */ = {isa = PBXBuildFile; fileRef = 2D9C37961A771F020083E283 /* Audio_press.png */; };
-		2D9C379A1A771F020083E283 /* Audio.png in Resources */ = {isa = PBXBuildFile; fileRef = 2D9C37971A771F020083E283 /* Audio.png */; };
+		2D9C37981A771F020083E283 /* Audio_off@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 2D9C37951A771F020083E283 /* Audio_off@2x.png */; };
+		2D9C37991A771F020083E283 /* Audio_press@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 2D9C37961A771F020083E283 /* Audio_press@2x.png */; };
+		2D9C379A1A771F020083E283 /* Audio@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 2D9C37971A771F020083E283 /* Audio@2x.png */; };
 		2DA3A7141A7717880026BD54 /* vibrateButton_off@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 2DA3A7111A7717880026BD54 /* vibrateButton_off@2x.png */; };
 		2DA3A7151A7717880026BD54 /* vibrateButton_press@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 2DA3A7121A7717880026BD54 /* vibrateButton_press@2x.png */; };
 		2DA3A7161A7717880026BD54 /* vibrateButton@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 2DA3A7131A7717880026BD54 /* vibrateButton@2x.png */; };
@@ -150,9 +150,9 @@
 		2D800FF819AC14FC0067CAC1 /* Obstacles.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Obstacles.h; sourceTree = "<group>"; };
 		2D800FF919AC14FC0067CAC1 /* Obstacles.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Obstacles.m; sourceTree = "<group>"; };
 		2D9909491A1EC09D00D9CDE8 /* Laser.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Laser.png; sourceTree = "<group>"; };
-		2D9C37951A771F020083E283 /* Audio_off.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Audio_off.png; sourceTree = "<group>"; };
-		2D9C37961A771F020083E283 /* Audio_press.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Audio_press.png; sourceTree = "<group>"; };
-		2D9C37971A771F020083E283 /* Audio.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Audio.png; sourceTree = "<group>"; };
+		2D9C37951A771F020083E283 /* Audio_off@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Audio_off@2x.png"; sourceTree = "<group>"; };
+		2D9C37961A771F020083E283 /* Audio_press@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Audio_press@2x.png"; sourceTree = "<group>"; };
+		2D9C37971A771F020083E283 /* Audio@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Audio@2x.png"; sourceTree = "<group>"; };
 		2DA3A7111A7717880026BD54 /* vibrateButton_off@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "vibrateButton_off@2x.png"; sourceTree = "<group>"; };
 		2DA3A7121A7717880026BD54 /* vibrateButton_press@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "vibrateButton_press@2x.png"; sourceTree = "<group>"; };
 		2DA3A7131A7717880026BD54 /* vibrateButton@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "vibrateButton@2x.png"; sourceTree = "<group>"; };
@@ -659,9 +659,9 @@
 		76B9E91D19FC18A8000EF044 /* Buttons */ = {
 			isa = PBXGroup;
 			children = (
-				2D9C37951A771F020083E283 /* Audio_off.png */,
-				2D9C37961A771F020083E283 /* Audio_press.png */,
-				2D9C37971A771F020083E283 /* Audio.png */,
+				2D9C37951A771F020083E283 /* Audio_off@2x.png */,
+				2D9C37961A771F020083E283 /* Audio_press@2x.png */,
+				2D9C37971A771F020083E283 /* Audio@2x.png */,
 				767320F51A3CBDD70057EF70 /* buttonPlay@2x.png */,
 				767320F11A3CBDAD0057EF70 /* buttonReplayTut.png */,
 				763BCED51A33550000AF65DB /* buttonCredits.png */,
@@ -813,7 +813,7 @@
 				2DA3A7141A7717880026BD54 /* vibrateButton_off@2x.png in Resources */,
 				2DB352AE1999A0C4006BF15C /* GameOver-BG@2x.png in Resources */,
 				760897B21A2A9A43002C28EB /* Shield@2x.png in Resources */,
-				2D9C37991A771F020083E283 /* Audio_press.png in Resources */,
+				2D9C37991A771F020083E283 /* Audio_press@2x.png in Resources */,
 				767320F41A3CBDAD0057EF70 /* buttonReplayTut.png in Resources */,
 				7651E8D519B0EC8900F7E9D0 /* Level-1-Music.m4a in Resources */,
 				76C6F15419A2CCB100B37331 /* Level-1@2x.png in Resources */,
@@ -849,7 +849,7 @@
 				767321331A574CE00057EF70 /* Shield-PowerUp.caf in Resources */,
 				7673212E1A574CE00057EF70 /* Button-Press.caf in Resources */,
 				2DB3528C19999445006BF15C /* Pillar-4@2x.png in Resources */,
-				2D9C379A1A771F020083E283 /* Audio.png in Resources */,
+				2D9C379A1A771F020083E283 /* Audio@2x.png in Resources */,
 				2DB3523A19996B83006BF15C /* Images.xcassets in Resources */,
 				7640AFB819E06F9A00EFD3C5 /* 2xMulti@2x.png in Resources */,
 				760C23C819DC856000D34429 /* L1-AOb-3@2x.png in Resources */,
@@ -857,7 +857,7 @@
 				764BF9A219A19A11007DABF8 /* arrowL@2x.png in Resources */,
 				767320E71A3B96530057EF70 /* NovaWingSettings@3x.png in Resources */,
 				76EC502419D4EAE100363C97 /* Rocket-1@2x.png in Resources */,
-				2D9C37981A771F020083E283 /* Audio_off.png in Resources */,
+				2D9C37981A771F020083E283 /* Audio_off@2x.png in Resources */,
 				764BF9A619A2BC04007DABF8 /* Nova-L2@2x.png in Resources */,
 				2DB3527A1999940A006BF15C /* buttonSettings.png in Resources */,
 				2DB352791999940A006BF15C /* buttonPressStart.png in Resources */,
