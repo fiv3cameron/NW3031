@@ -250,11 +250,11 @@ NSTimeInterval _dt;
 
 -(void)toggleVibration {
     if ([GameState sharedGameData].vibeOn == YES) { //Vibration is on, and user has selected to turn it off.  Do not vibrate.
-        vibrationToggleButton.texture = [SKTexture textureWithImageNamed:@"L1-AOb-1"];
+        vibrationToggleButton.texture = [SKTexture textureWithImageNamed:@"vibrateButton_off"];
         [GameState sharedGameData].vibeOn = NO;
         [[GameState sharedGameData] save];
     } else { //Vibration is off and user has selected to turn it on.  Vibrate.
-        vibrationToggleButton.texture = [SKTexture textureWithImageNamed:@"L1-AOb-2"];
+        vibrationToggleButton.texture = [SKTexture textureWithImageNamed:@"vibrateButton"];
         [GameState sharedGameData].vibeOn = YES;
         [[GameState sharedGameData] save];
         [self vibrate];
@@ -537,6 +537,10 @@ NSTimeInterval _dt;
     if ([node.name isEqualToString:@"sfxToggle"]) {
         sfxToggle.texture = [SKTexture textureWithImageNamed:@"Audio_press"];
     }
+    
+    if ([node.name isEqualToString:@"vibrationToggleButton"]) {
+        vibrationToggleButton.texture = [SKTexture textureWithImageNamed:@"vibrateButton_press"];
+    }
 }
 
 -(void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event {
@@ -680,7 +684,24 @@ NSTimeInterval _dt;
         leaderButton.texture = [SKTexture textureWithImageNamed:@"buttonLeaderboard.png"];
         codexButton.texture = [SKTexture textureWithImageNamed:@"buttonCodex.png"];
         creditButton.texture = [SKTexture textureWithImageNamed:@"buttonCredits.png"];
-    }    
+    }
+    
+    if (![nodeLift.name isEqualToString:@"vibrationToggleButton"]) {
+        if ([GameState sharedGameData].vibeOn == YES) {
+            vibrationToggleButton.texture = [SKTexture textureWithImageNamed:@"vibrateButton"];
+        } else {
+            vibrationToggleButton.texture = [SKTexture textureWithImageNamed:@"vibrateButton_off"];
+        }
+    }
+    
+    if (![nodeLift.name isEqualToString:@"sfxToggle"]) {
+        if ([GameState sharedGameData].audioVolume == 1.0) {
+            sfxToggle.texture = [SKTexture textureWithImageNamed:@"Audio"];
+        } else {
+            sfxToggle.texture = [SKTexture textureWithImageNamed:@"Audio_off"];
+        }
+    }
+    
 #pragma mark --Level Button Actions
     if ([nodeLift.name isEqualToString:@"rightArrow"]) {
         
@@ -745,9 +766,6 @@ NSTimeInterval _dt;
         // Present the scene.
         [levelTwoView presentScene:levelTwoScene transition:levelTwoTrans];
     }
-    
-
-    
 }
 
 #pragma mark --Update

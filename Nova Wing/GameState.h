@@ -17,7 +17,7 @@
     @property (nonatomic) long lvlIndexMax;
     @property (assign, nonatomic) int scoreMultiplier;
     @property (assign, nonatomic) long audioVolume;
-    @property (assign, nonatomic) long vibeOn;
+    @property (assign, nonatomic) BOOL vibeOn;
     @property (assign, nonatomic) int maxLaserHits;
     @property (assign, nonatomic) int totalLaserHits;
     @property (assign, nonatomic) int totalLasersFired;
