@@ -350,8 +350,6 @@ NSTimeInterval _dt;
         musicToggle = [SKSpriteNode spriteNodeWithTexture: [SKTexture textureWithImageNamed:@"Audio_off"]];
     }
     musicToggle.position = CGPointMake(self.size.width * 1.5, (self.size.height / 8) * 6);
-    musicToggle.xScale = 0.3;
-    musicToggle.yScale = 0.3;
     musicToggle.name = @"musicToggle";
     
     [self addChild:musicToggle];
@@ -694,7 +692,7 @@ NSTimeInterval _dt;
         }
     }
     
-    if (![nodeLift.name isEqualToString:@"sfxToggle"]) {
+    if (![nodeLift.name isEqualToString:@"musicToggle"]) {
         if ([GameState sharedGameData].audioVolume == 1.0) {
             sfxToggle.texture = [SKTexture textureWithImageNamed:@"Audio"];
         } else {
