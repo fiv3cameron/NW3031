@@ -10,7 +10,6 @@
 		2D4C0B9A19A6D29B00AD0717 /* Ships.m in Sources */ = {isa = PBXBuildFile; fileRef = 2D4C0B9919A6D29B00AD0717 /* Ships.m */; };
 		2D800FFA19AC14FC0067CAC1 /* Obstacles.m in Sources */ = {isa = PBXBuildFile; fileRef = 2D800FF919AC14FC0067CAC1 /* Obstacles.m */; };
 		2D99094A1A1EC09D00D9CDE8 /* Laser.png in Resources */ = {isa = PBXBuildFile; fileRef = 2D9909491A1EC09D00D9CDE8 /* Laser.png */; };
-		2D9C37981A771F020083E283 /* Audio_off@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 2D9C37951A771F020083E283 /* Audio_off@2x.png */; };
 		2D9C37991A771F020083E283 /* Audio_press@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 2D9C37961A771F020083E283 /* Audio_press@2x.png */; };
 		2D9C379A1A771F020083E283 /* Audio@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 2D9C37971A771F020083E283 /* Audio@2x.png */; };
 		2DA3A7141A7717880026BD54 /* vibrateButton_off@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 2DA3A7111A7717880026BD54 /* vibrateButton_off@2x.png */; };
@@ -32,10 +31,7 @@
 		2DB3524319996B83006BF15C /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2DB3521E19996B83006BF15C /* UIKit.framework */; };
 		2DB3524B19996B83006BF15C /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 2DB3524919996B83006BF15C /* InfoPlist.strings */; };
 		2DB3524D19996B83006BF15C /* Nova_WingTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 2DB3524C19996B83006BF15C /* Nova_WingTests.m */; };
-		2DB3525A19996CC1006BF15C /* LevelTwo.m in Sources */ = {isa = PBXBuildFile; fileRef = 2DB3525919996CC1006BF15C /* LevelTwo.m */; };
-		2DB3525E19996D6D006BF15C /* PBParallaxScrolling.m in Sources */ = {isa = PBXBuildFile; fileRef = 2DB3525D19996D6D006BF15C /* PBParallaxScrolling.m */; };
 		2DB35262199972CD006BF15C /* GameObjects.m in Sources */ = {isa = PBXBuildFile; fileRef = 2DB35261199972CD006BF15C /* GameObjects.m */; };
-		2DB3526819997A32006BF15C /* GameOver.m in Sources */ = {isa = PBXBuildFile; fileRef = 2DB3526719997A32006BF15C /* GameOver.m */; };
 		2DB3526B19997A98006BF15C /* GameState.m in Sources */ = {isa = PBXBuildFile; fileRef = 2DB3526A19997A98006BF15C /* GameState.m */; };
 		2DB352761999940A006BF15C /* buttonLeaderboard.png in Resources */ = {isa = PBXBuildFile; fileRef = 2DB352701999940A006BF15C /* buttonLeaderboard.png */; };
 		2DB352771999940A006BF15C /* buttonPressLeaderboard.png in Resources */ = {isa = PBXBuildFile; fileRef = 2DB352711999940A006BF15C /* buttonPressLeaderboard.png */; };
@@ -66,9 +62,6 @@
 		760C79C41A702B9700E58170 /* Shield.atlas in Resources */ = {isa = PBXBuildFile; fileRef = 760C79C31A702B9700E58170 /* Shield.atlas */; };
 		76105BD119E5B3D400A3F242 /* Multipliers.m in Sources */ = {isa = PBXBuildFile; fileRef = 76105BD019E5B3D400A3F242 /* Multipliers.m */; };
 		76105BD719F1DB1300A3F242 /* NWAudioPlayer.m in Sources */ = {isa = PBXBuildFile; fileRef = 76105BD619F1DB1300A3F242 /* NWAudioPlayer.m */; };
-		76105BDB19F33EE600A3F242 /* Audio_off@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 76105BD819F33EE600A3F242 /* Audio_off@2x.png */; };
-		76105BDC19F33EE600A3F242 /* Audio_press@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 76105BD919F33EE600A3F242 /* Audio_press@2x.png */; };
-		76105BDD19F33EE600A3F242 /* Audio@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 76105BDA19F33EE600A3F242 /* Audio@2x.png */; };
 		763BCEC91A32A8A500AF65DB /* buttonPressCodex.png in Resources */ = {isa = PBXBuildFile; fileRef = 763BCEC71A32A8A500AF65DB /* buttonPressCodex.png */; };
 		763BCECD1A32B67600AF65DB /* buttonCodex.png in Resources */ = {isa = PBXBuildFile; fileRef = 763BCECC1A32B67600AF65DB /* buttonCodex.png */; };
 		763BCECF1A32BA2300AF65DB /* Settings.png in Resources */ = {isa = PBXBuildFile; fileRef = 763BCECE1A32BA2300AF65DB /* Settings.png */; };
@@ -179,14 +172,10 @@
 		2DB3524819996B83006BF15C /* Nova WingTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Nova WingTests-Info.plist"; sourceTree = "<group>"; };
 		2DB3524A19996B83006BF15C /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		2DB3524C19996B83006BF15C /* Nova_WingTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Nova_WingTests.m; sourceTree = "<group>"; };
-		2DB3525819996CC1006BF15C /* LevelTwo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LevelTwo.h; sourceTree = "<group>"; };
-		2DB3525919996CC1006BF15C /* LevelTwo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LevelTwo.m; sourceTree = "<group>"; };
 		2DB3525C19996D6D006BF15C /* PBParallaxScrolling.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PBParallaxScrolling.h; sourceTree = "<group>"; };
 		2DB3525D19996D6D006BF15C /* PBParallaxScrolling.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PBParallaxScrolling.m; sourceTree = "<group>"; };
 		2DB35260199972CD006BF15C /* GameObjects.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GameObjects.h; sourceTree = "<group>"; };
 		2DB35261199972CD006BF15C /* GameObjects.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GameObjects.m; sourceTree = "<group>"; };
-		2DB3526619997A32006BF15C /* GameOver.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GameOver.h; sourceTree = "<group>"; };
-		2DB3526719997A32006BF15C /* GameOver.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GameOver.m; sourceTree = "<group>"; };
 		2DB3526919997A98006BF15C /* GameState.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GameState.h; sourceTree = "<group>"; };
 		2DB3526A19997A98006BF15C /* GameState.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GameState.m; sourceTree = "<group>"; };
 		2DB352701999940A006BF15C /* buttonLeaderboard.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = buttonLeaderboard.png; sourceTree = "<group>"; };
@@ -222,9 +211,6 @@
 		76105BD019E5B3D400A3F242 /* Multipliers.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Multipliers.m; sourceTree = "<group>"; };
 		76105BD519F1DB1300A3F242 /* NWAudioPlayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NWAudioPlayer.h; sourceTree = "<group>"; };
 		76105BD619F1DB1300A3F242 /* NWAudioPlayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NWAudioPlayer.m; sourceTree = "<group>"; };
-		76105BD819F33EE600A3F242 /* Audio_off@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Audio_off@2x.png"; sourceTree = "<group>"; };
-		76105BD919F33EE600A3F242 /* Audio_press@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Audio_press@2x.png"; sourceTree = "<group>"; };
-		76105BDA19F33EE600A3F242 /* Audio@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Audio@2x.png"; sourceTree = "<group>"; };
 		763BCEC71A32A8A500AF65DB /* buttonPressCodex.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = buttonPressCodex.png; sourceTree = "<group>"; };
 		763BCECC1A32B67600AF65DB /* buttonCodex.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = buttonCodex.png; sourceTree = "<group>"; };
 		763BCECE1A32BA2300AF65DB /* Settings.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Settings.png; sourceTree = "<group>"; };
@@ -417,20 +403,8 @@
 				763BCED31A334F0000AF65DB /* NWCodex.m */,
 				760897AA1A24FB80002C28EB /* Tutorial */,
 				765DF28919A9288200FBFB16 /* Level 1: Event Horizon */,
-				2DB3525719996C9E006BF15C /* Level 2: The Whispers */,
 			);
 			name = Levels;
-			sourceTree = "<group>";
-		};
-		2DB3525719996C9E006BF15C /* Level 2: The Whispers */ = {
-			isa = PBXGroup;
-			children = (
-				2DB3525819996CC1006BF15C /* LevelTwo.h */,
-				2DB3525919996CC1006BF15C /* LevelTwo.m */,
-				2DB3526619997A32006BF15C /* GameOver.h */,
-				2DB3526719997A32006BF15C /* GameOver.m */,
-			);
-			name = "Level 2: The Whispers";
 			sourceTree = "<group>";
 		};
 		2DB3525B19996D02006BF15C /* External Classes */ = {
@@ -814,7 +788,6 @@
 				2DB3529219999485006BF15C /* Level-1-Floor@2x.png in Resources */,
 				2DA3A7141A7717880026BD54 /* vibrateButton_off@2x.png in Resources */,
 				2DB352AE1999A0C4006BF15C /* GameOver-BG@2x.png in Resources */,
-				760897B21A2A9A43002C28EB /* Shield@2x.png in Resources */,
 				2D9C37991A771F020083E283 /* Audio_press@2x.png in Resources */,
 				767320F41A3CBDAD0057EF70 /* buttonReplayTut.png in Resources */,
 				7651E8D519B0EC8900F7E9D0 /* Level-1-Music.m4a in Resources */,

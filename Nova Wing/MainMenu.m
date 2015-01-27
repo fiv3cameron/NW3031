@@ -8,7 +8,7 @@
 
 #import "MainMenu.h"
 #import "LevelOne.h"
-#import "LevelTwo.h"
+
 #import "NWCodex.h"
 #import "Tutorial.h"
 
@@ -756,12 +756,12 @@ NSTimeInterval _dt;
         //levelTwoView.showsPhysics = YES;
         
         // Create and configure the scene.
-        SKScene * levelTwoScene = [[LevelTwo alloc] initWithSize:levelTwoView.bounds.size andDirection:self.direction];
+        /*SKScene * levelTwoScene = [[LevelTwo alloc] initWithSize:levelTwoView.bounds.size andDirection:self.direction];
         levelTwoScene.scaleMode = SKSceneScaleModeAspectFill;
-        SKTransition *levelTwoTrans = [SKTransition fadeWithColor:fadeColor duration:levelFadeDuration];
+        SKTransition *levelTwoTrans = [SKTransition fadeWithColor:fadeColor duration:levelFadeDuration];*/
         
         // Present the scene.
-        [levelTwoView presentScene:levelTwoScene transition:levelTwoTrans];
+        //[levelTwoView presentScene:levelTwoScene transition:levelTwoTrans];
     }
 }
 

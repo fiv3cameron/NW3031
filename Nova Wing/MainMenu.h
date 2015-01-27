@@ -7,7 +7,7 @@
 //
 
 #import <SpriteKit/SpriteKit.h>
-#import "LevelTwo.h"
+//#import "PBParallaxScrolling.h"
 
 SKSpriteNode *musicToggle;
 SKSpriteNode *sfxToggle;
@@ -26,7 +26,7 @@ NSArray *levelTitles;
 {
 }
 
-@property (nonatomic) PBParallaxBackgroundDirection direction;
+//@property (nonatomic) PBParallaxBackgroundDirection direction;
 @property (nonatomic) AVAudioPlayer* bgPlayer;
 
 @end
