@@ -693,9 +693,9 @@ NSTimeInterval _dt;
     
     if (![nodeLift.name isEqualToString:@"musicToggle"]) {
         if ([GameState sharedGameData].audioVolume == 1.0) {
-            musicToggle.texture = [SKTexture textureWithImageNamed:@"Audio"];
+            sfxToggle.texture = [SKTexture textureWithImageNamed:@"Audio"];
         } else {
-            musicToggle.texture = [SKTexture textureWithImageNamed:@"Audio_off"];
+            sfxToggle.texture = [SKTexture textureWithImageNamed:@"Audio_off"];
         }
     }
     
