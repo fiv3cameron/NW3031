@@ -228,6 +228,12 @@ NSTimeInterval _dt;
     [NWAudioPlayer sharedAudioPlayer].songName = Menu_Music;
 }
 
+-(void)playSoundEffectsWithAction: (SKAction *)action {
+    if ([GameState sharedGameData].audioVolume == 1.0) {
+        [self runAction:action];
+    }
+}
+
 -(void)toggleAudio {
     if ([GameState sharedGameData].audioVolume == 1.0) {
         musicToggle.texture = [SKTexture textureWithImageNamed:@"Audio_off"];
@@ -239,6 +245,25 @@ NSTimeInterval _dt;
         [GameState sharedGameData].audioVolume = 1.0;
         [[NWAudioPlayer sharedAudioPlayer] bgPlayer].volume = [GameState sharedGameData].audioVolume;
         [[GameState sharedGameData] save];
+    }
+}
+
+-(void)toggleVibration {
+    if ([GameState sharedGameData].vibeOn == YES) { //Vibration is on, and user has selected to turn it off.  Do not vibrate.
+        vibrationToggleButton.texture = [SKTexture textureWithImageNamed:@"vibrateButton_off"];
+        [GameState sharedGameData].vibeOn = NO;
+        [[GameState sharedGameData] save];
+    } else { //Vibration is off and user has selected to turn it on.  Vibrate.
+        vibrationToggleButton.texture = [SKTexture textureWithImageNamed:@"vibrateButton"];
+        [GameState sharedGameData].vibeOn = YES;
+        [[GameState sharedGameData] save];
+        [self vibrate];
+    }
+}
+
+-(void)vibrate {
+    if ([GameState sharedGameData].vibeOn == YES) {
+        AudioServicesPlaySystemSound(kSystemSoundID_Vibrate);
     }
 }
 
@@ -309,7 +334,7 @@ NSTimeInterval _dt;
     SKLabelNode *musicVolume = [SKLabelNode labelNodeWithFontNamed:@"SF Movie Poster"];
     musicVolume.fontColor = [SKColor whiteColor];
     musicVolume.fontSize = 50;
-    musicVolume.position = CGPointMake(self.size.width * 1.5, (self.size.height / 8) * 6);
+    musicVolume.position = CGPointMake(self.size.width * 1.5, (self.size.height / 6) * 5);
     musicVolume.horizontalAlignmentMode = SKLabelHorizontalAlignmentModeCenter;
     musicVolume.text = @"Music Volume";
     
@@ -324,20 +349,45 @@ NSTimeInterval _dt;
     if ([[GameState sharedGameData] audioVolume] == 0.0) {
         musicToggle = [SKSpriteNode spriteNodeWithTexture: [SKTexture textureWithImageNamed:@"Audio_off"]];
     }
-    musicToggle.position = CGPointMake(self.size.width * 1.5, (self.size.height / 8) * 5);
-    musicToggle.xScale = 0.3;
-    musicToggle.yScale = 0.3;
+    musicToggle.position = CGPointMake(self.size.width * 1.5, (self.size.height / 8) * 6);
     musicToggle.name = @"musicToggle";
     
     [self addChild:musicToggle];
     [self animateLeft:musicToggle withDelay:1];
 }
 
+-(void)vibrationLabel {
+    SKLabelNode *vibrationLabel = [SKLabelNode labelNodeWithFontNamed:@"SF Movie Poster"];
+    vibrationLabel.fontColor = [SKColor whiteColor];
+    vibrationLabel.fontSize = 50;
+    vibrationLabel.position = CGPointMake(self.size.width * 1.5, self.size.height * 0.5);
+    vibrationLabel.horizontalAlignmentMode = SKLabelHorizontalAlignmentModeCenter;
+    vibrationLabel.text = @"Vibration";
+    
+    [self addChild:vibrationLabel];
+    [self animateLeft:vibrationLabel withDelay:1];
+}
+
+-(void)vibrationToggleButtonCreate {
+    if ([GameState sharedGameData].vibeOn == YES) {
+        vibrationToggleButton = [SKSpriteNode spriteNodeWithImageNamed:@"L1-AOb-2"];
+    } else {
+        vibrationToggleButton = [SKSpriteNode spriteNodeWithImageNamed:@"L1-AOb-1"];
+    }
+    vibrationToggleButton.position = CGPointMake(self.size.width * 1.5, self.size.height * 0.5 - self.size.height * 5/6 + self.size.height * 0.75);
+    vibrationToggleButton.xScale = 0.5;
+    vibrationToggleButton.yScale = 0.5;
+    vibrationToggleButton.name = @"vibrationToggleButton";
+    
+    [self addChild:vibrationToggleButton];
+    [self animateLeft:vibrationToggleButton withDelay:1];
+}
+
 -(void)resetGameData {
     GDReset = [SKLabelNode labelNodeWithFontNamed:@"SF Movie Poster"];
     GDReset.fontColor = [SKColor whiteColor];
     GDReset.fontSize = 50;
-    GDReset.position = CGPointMake(self.size.width * 1.5, (self.size.height / 8) * 2);
+    GDReset.position = CGPointMake(self.size.width * 1.5, (self.size.height / 6) * 1);
     GDReset.horizontalAlignmentMode = SKLabelHorizontalAlignmentModeCenter;
     GDReset.text = @"Reset Scores";
     GDReset.name = @"GameReset";
@@ -485,6 +535,10 @@ NSTimeInterval _dt;
     if ([node.name isEqualToString:@"sfxToggle"]) {
         sfxToggle.texture = [SKTexture textureWithImageNamed:@"Audio_press"];
     }
+    
+    if ([node.name isEqualToString:@"vibrationToggleButton"]) {
+        vibrationToggleButton.texture = [SKTexture textureWithImageNamed:@"vibrateButton_press"];
+    }
 }
 
 -(void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event {
@@ -497,11 +551,13 @@ NSTimeInterval _dt;
     SKColor *fadeColor = [SKColor colorWithRed:0 green:0 blue:0 alpha:1];
     static double levelFadeDuration = 0.5;
     
-    
     //Start Button
     if ([nodeLift.name isEqualToString:@"_startButton"]) {
         
-        SKAction *sound = [SKAction playSoundFileNamed:@"Button-Press.caf" waitForCompletion:NO];
+        SKAction *createSound = [SKAction playSoundFileNamed:@"Button-Press.caf" waitForCompletion:NO];
+        SKAction *playSound = [SKAction runBlock:^{
+            [self playSoundEffectsWithAction:createSound];
+        }];
         SKAction *menuAnimate = [SKAction runBlock:^{
             [self mainMenuAnimateOut];
         }];
@@ -525,7 +581,7 @@ NSTimeInterval _dt;
                 SKView * levelOneView = (SKView *)self.view;
                 levelOneView.showsFPS = YES;
                 levelOneView.showsNodeCount = YES;
-                    //levelOneView.showsPhysics = YES;
+                //levelOneView.showsPhysics = YES;
                 
                 // Create and configure the scene.
                 SKScene * levelOneScene = [[LevelOne alloc] initWithSize:levelOneView.bounds.size];
@@ -542,18 +598,21 @@ NSTimeInterval _dt;
                  [self addChild:[self createRightArrowWithWait:0.5]];
                  [self addChild:[self backToMainButton]];*/ }
             }];
-        [self runAction:[SKAction sequence:@[sound,menuAnimate,wait,Scene]]];
+        [self runAction:[SKAction sequence:@[playSound,menuAnimate,wait,Scene]]];
     }
     
     //Leaderboard Button
     if ([nodeLift.name isEqualToString:@"_leaderButton"]) {
         //SKTransition
-        SKAction *sound = [SKAction playSoundFileNamed:@"Button-Press.caf" waitForCompletion:NO];
-        [self runAction:sound];
+        SKAction *createSound = [SKAction playSoundFileNamed:@"Button-Press.caf" waitForCompletion:NO];
+        [self playSoundEffectsWithAction:createSound];
     }
     
     if ([nodeLift.name isEqualToString:@"codexButton"]) {
-        SKAction *sound = [SKAction playSoundFileNamed:@"Button-Press.caf" waitForCompletion:NO];
+        SKAction *createSound = [SKAction playSoundFileNamed:@"Button-Press.caf" waitForCompletion:NO];
+        SKAction *playSound = [SKAction runBlock:^{
+            [self playSoundEffectsWithAction:createSound];
+        }];
         SKAction *menuAnimate = [SKAction runBlock:^{
             [self mainMenuAnimateOut];
         }];
@@ -572,16 +631,19 @@ NSTimeInterval _dt;
             // Present the scene.
             [codexView presentScene:codexScene transition:tutTrans];
         }];
-        [self runAction:[SKAction sequence:@[sound,menuAnimate,wait,Scene]]];
+        [self runAction:[SKAction sequence:@[playSound,menuAnimate,wait,Scene]]];
     }
     
 #pragma mark -- Settings Action Buttons
     if ([nodeLift.name isEqualToString:@"_settingsButton"]) {
         //SKTransition
-        [self runAction:[SKAction playSoundFileNamed:@"Button-Press.caf" waitForCompletion:NO]];
+        SKAction *sound = [SKAction playSoundFileNamed:@"Button-Press.caf" waitForCompletion:NO];
+        [self playSoundEffectsWithAction:sound];
         [self mainMenuAnimateOut];
         [self musicVolumeLabel];
         [self musicToggleButton];
+        [self vibrationLabel];
+        [self vibrationToggleButtonCreate];
         [self resetGameData];
         [self addChild:[self backToMainButton]];
     }
@@ -593,18 +655,25 @@ NSTimeInterval _dt;
     }
     
     if ([nodeLift.name isEqualToString:@"backToMain"]) {
-        SKAction *sound = [SKAction playSoundFileNamed:@"Button-Press.caf" waitForCompletion:NO];
+        SKAction *createSound = [SKAction playSoundFileNamed:@"Button-Press.caf" waitForCompletion:NO];
+        SKAction *playSound = [SKAction runBlock:^{
+            [self playSoundEffectsWithAction:createSound];
+        }];
         SKAction *scene = [SKAction runBlock:^{
             SKView *mainMenuView = (SKView *)self.view;
             SKScene *mainMenuScene = [[MainMenu alloc] initWithSize:mainMenuView.bounds.size];
             SKTransition *menuTransition = [SKTransition fadeWithDuration:.5];
             [mainMenuView presentScene:mainMenuScene transition:menuTransition];
         }];
-        [self runAction:[SKAction sequence:@[sound,scene]]];
+        [self runAction:[SKAction sequence:@[playSound,scene]]];
     };
     
     if ([nodeLift.name isEqualToString:@"musicToggle"]) {
         [self toggleAudio];
+    }
+    
+    if ([nodeLift.name isEqualToString:@"vibrationToggleButton"]) {
+        [self toggleVibration];
     }
     
     if (![nodeLift.name isEqualToString:@"_startButton"]) {
@@ -612,7 +681,24 @@ NSTimeInterval _dt;
         leaderButton.texture = [SKTexture textureWithImageNamed:@"buttonLeaderboard.png"];
         codexButton.texture = [SKTexture textureWithImageNamed:@"buttonCodex.png"];
         creditButton.texture = [SKTexture textureWithImageNamed:@"buttonCredits.png"];
-    }    
+    }
+    
+    if (![nodeLift.name isEqualToString:@"vibrationToggleButton"]) {
+        if ([GameState sharedGameData].vibeOn == YES) {
+            vibrationToggleButton.texture = [SKTexture textureWithImageNamed:@"vibrateButton"];
+        } else {
+            vibrationToggleButton.texture = [SKTexture textureWithImageNamed:@"vibrateButton_off"];
+        }
+    }
+    
+    if (![nodeLift.name isEqualToString:@"musicToggle"]) {
+        if ([GameState sharedGameData].audioVolume == 1.0) {
+            musicToggle.texture = [SKTexture textureWithImageNamed:@"Audio"];
+        } else {
+            musicToggle.texture = [SKTexture textureWithImageNamed:@"Audio_off"];
+        }
+    }
+    
 #pragma mark --Level Button Actions
     if ([nodeLift.name isEqualToString:@"rightArrow"]) {
         
@@ -661,9 +747,22 @@ NSTimeInterval _dt;
     }
     
 #pragma mark --Level 2
-    
-
-    
+    if ([nodeLift.name isEqualToString:@"_level2"]) {
+        // Transition to Level One Scene
+        // Configure the developer view.
+        SKView * levelTwoView = (SKView *)self.view;
+        levelTwoView.showsFPS = YES;
+        levelTwoView.showsNodeCount = YES;
+        //levelTwoView.showsPhysics = YES;
+        
+        // Create and configure the scene.
+        SKScene * levelTwoScene = [[LevelTwo alloc] initWithSize:levelTwoView.bounds.size andDirection:self.direction];
+        levelTwoScene.scaleMode = SKSceneScaleModeAspectFill;
+        SKTransition *levelTwoTrans = [SKTransition fadeWithColor:fadeColor duration:levelFadeDuration];
+        
+        // Present the scene.
+        [levelTwoView presentScene:levelTwoScene transition:levelTwoTrans];
+    }
 }
 
 #pragma mark --Update

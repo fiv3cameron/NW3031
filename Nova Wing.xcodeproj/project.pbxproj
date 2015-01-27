@@ -10,6 +10,12 @@
 		2D4C0B9A19A6D29B00AD0717 /* Ships.m in Sources */ = {isa = PBXBuildFile; fileRef = 2D4C0B9919A6D29B00AD0717 /* Ships.m */; };
 		2D800FFA19AC14FC0067CAC1 /* Obstacles.m in Sources */ = {isa = PBXBuildFile; fileRef = 2D800FF919AC14FC0067CAC1 /* Obstacles.m */; };
 		2D99094A1A1EC09D00D9CDE8 /* Laser.png in Resources */ = {isa = PBXBuildFile; fileRef = 2D9909491A1EC09D00D9CDE8 /* Laser.png */; };
+		2D9C37981A771F020083E283 /* Audio_off@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 2D9C37951A771F020083E283 /* Audio_off@2x.png */; };
+		2D9C37991A771F020083E283 /* Audio_press@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 2D9C37961A771F020083E283 /* Audio_press@2x.png */; };
+		2D9C379A1A771F020083E283 /* Audio@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 2D9C37971A771F020083E283 /* Audio@2x.png */; };
+		2DA3A7141A7717880026BD54 /* vibrateButton_off@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 2DA3A7111A7717880026BD54 /* vibrateButton_off@2x.png */; };
+		2DA3A7151A7717880026BD54 /* vibrateButton_press@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 2DA3A7121A7717880026BD54 /* vibrateButton_press@2x.png */; };
+		2DA3A7161A7717880026BD54 /* vibrateButton@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 2DA3A7131A7717880026BD54 /* vibrateButton@2x.png */; };
 		2DB3521B19996B83006BF15C /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2DB3521A19996B83006BF15C /* Foundation.framework */; };
 		2DB3521D19996B83006BF15C /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2DB3521C19996B83006BF15C /* CoreGraphics.framework */; };
 		2DB3521F19996B83006BF15C /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2DB3521E19996B83006BF15C /* UIKit.framework */; };
@@ -26,7 +32,10 @@
 		2DB3524319996B83006BF15C /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2DB3521E19996B83006BF15C /* UIKit.framework */; };
 		2DB3524B19996B83006BF15C /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 2DB3524919996B83006BF15C /* InfoPlist.strings */; };
 		2DB3524D19996B83006BF15C /* Nova_WingTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 2DB3524C19996B83006BF15C /* Nova_WingTests.m */; };
+		2DB3525A19996CC1006BF15C /* LevelTwo.m in Sources */ = {isa = PBXBuildFile; fileRef = 2DB3525919996CC1006BF15C /* LevelTwo.m */; };
+		2DB3525E19996D6D006BF15C /* PBParallaxScrolling.m in Sources */ = {isa = PBXBuildFile; fileRef = 2DB3525D19996D6D006BF15C /* PBParallaxScrolling.m */; };
 		2DB35262199972CD006BF15C /* GameObjects.m in Sources */ = {isa = PBXBuildFile; fileRef = 2DB35261199972CD006BF15C /* GameObjects.m */; };
+		2DB3526819997A32006BF15C /* GameOver.m in Sources */ = {isa = PBXBuildFile; fileRef = 2DB3526719997A32006BF15C /* GameOver.m */; };
 		2DB3526B19997A98006BF15C /* GameState.m in Sources */ = {isa = PBXBuildFile; fileRef = 2DB3526A19997A98006BF15C /* GameState.m */; };
 		2DB352761999940A006BF15C /* buttonLeaderboard.png in Resources */ = {isa = PBXBuildFile; fileRef = 2DB352701999940A006BF15C /* buttonLeaderboard.png */; };
 		2DB352771999940A006BF15C /* buttonPressLeaderboard.png in Resources */ = {isa = PBXBuildFile; fileRef = 2DB352711999940A006BF15C /* buttonPressLeaderboard.png */; };
@@ -142,6 +151,12 @@
 		2D800FF819AC14FC0067CAC1 /* Obstacles.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Obstacles.h; sourceTree = "<group>"; };
 		2D800FF919AC14FC0067CAC1 /* Obstacles.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Obstacles.m; sourceTree = "<group>"; };
 		2D9909491A1EC09D00D9CDE8 /* Laser.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Laser.png; sourceTree = "<group>"; };
+		2D9C37951A771F020083E283 /* Audio_off@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Audio_off@2x.png"; sourceTree = "<group>"; };
+		2D9C37961A771F020083E283 /* Audio_press@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Audio_press@2x.png"; sourceTree = "<group>"; };
+		2D9C37971A771F020083E283 /* Audio@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Audio@2x.png"; sourceTree = "<group>"; };
+		2DA3A7111A7717880026BD54 /* vibrateButton_off@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "vibrateButton_off@2x.png"; sourceTree = "<group>"; };
+		2DA3A7121A7717880026BD54 /* vibrateButton_press@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "vibrateButton_press@2x.png"; sourceTree = "<group>"; };
+		2DA3A7131A7717880026BD54 /* vibrateButton@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "vibrateButton@2x.png"; sourceTree = "<group>"; };
 		2DB3521719996B83006BF15C /* Nova Wing.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Nova Wing.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		2DB3521A19996B83006BF15C /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		2DB3521C19996B83006BF15C /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -164,8 +179,14 @@
 		2DB3524819996B83006BF15C /* Nova WingTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Nova WingTests-Info.plist"; sourceTree = "<group>"; };
 		2DB3524A19996B83006BF15C /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		2DB3524C19996B83006BF15C /* Nova_WingTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Nova_WingTests.m; sourceTree = "<group>"; };
+		2DB3525819996CC1006BF15C /* LevelTwo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LevelTwo.h; sourceTree = "<group>"; };
+		2DB3525919996CC1006BF15C /* LevelTwo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LevelTwo.m; sourceTree = "<group>"; };
+		2DB3525C19996D6D006BF15C /* PBParallaxScrolling.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PBParallaxScrolling.h; sourceTree = "<group>"; };
+		2DB3525D19996D6D006BF15C /* PBParallaxScrolling.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PBParallaxScrolling.m; sourceTree = "<group>"; };
 		2DB35260199972CD006BF15C /* GameObjects.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GameObjects.h; sourceTree = "<group>"; };
 		2DB35261199972CD006BF15C /* GameObjects.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GameObjects.m; sourceTree = "<group>"; };
+		2DB3526619997A32006BF15C /* GameOver.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GameOver.h; sourceTree = "<group>"; };
+		2DB3526719997A32006BF15C /* GameOver.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GameOver.m; sourceTree = "<group>"; };
 		2DB3526919997A98006BF15C /* GameState.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GameState.h; sourceTree = "<group>"; };
 		2DB3526A19997A98006BF15C /* GameState.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GameState.m; sourceTree = "<group>"; };
 		2DB352701999940A006BF15C /* buttonLeaderboard.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = buttonLeaderboard.png; sourceTree = "<group>"; };
@@ -396,8 +417,20 @@
 				763BCED31A334F0000AF65DB /* NWCodex.m */,
 				760897AA1A24FB80002C28EB /* Tutorial */,
 				765DF28919A9288200FBFB16 /* Level 1: Event Horizon */,
+				2DB3525719996C9E006BF15C /* Level 2: The Whispers */,
 			);
 			name = Levels;
+			sourceTree = "<group>";
+		};
+		2DB3525719996C9E006BF15C /* Level 2: The Whispers */ = {
+			isa = PBXGroup;
+			children = (
+				2DB3525819996CC1006BF15C /* LevelTwo.h */,
+				2DB3525919996CC1006BF15C /* LevelTwo.m */,
+				2DB3526619997A32006BF15C /* GameOver.h */,
+				2DB3526719997A32006BF15C /* GameOver.m */,
+			);
+			name = "Level 2: The Whispers";
 			sourceTree = "<group>";
 		};
 		2DB3525B19996D02006BF15C /* External Classes */ = {
@@ -407,6 +440,8 @@
 				765DF29419A9293D00FBFB16 /* NORLabelNode.m */,
 				764BF94B199EBC3F007DABF8 /* KeychainWrapper.h */,
 				764BF94C199EBC3F007DABF8 /* KeychainWrapper.m */,
+				2DB3525C19996D6D006BF15C /* PBParallaxScrolling.h */,
+				2DB3525D19996D6D006BF15C /* PBParallaxScrolling.m */,
 			);
 			name = "External Classes";
 			sourceTree = "<group>";
@@ -624,6 +659,9 @@
 		76B9E91D19FC18A8000EF044 /* Buttons */ = {
 			isa = PBXGroup;
 			children = (
+				2D9C37951A771F020083E283 /* Audio_off@2x.png */,
+				2D9C37961A771F020083E283 /* Audio_press@2x.png */,
+				2D9C37971A771F020083E283 /* Audio@2x.png */,
 				767320F51A3CBDD70057EF70 /* buttonPlay@2x.png */,
 				767320F11A3CBDAD0057EF70 /* buttonReplayTut.png */,
 				763BCED51A33550000AF65DB /* buttonCredits.png */,
@@ -634,9 +672,6 @@
 				2DB352A919999D1B006BF15C /* Level-2@2x.png */,
 				764BF9A019A19A11007DABF8 /* arrowL@2x.png */,
 				764BF9A119A19A11007DABF8 /* arrowR@2x.png */,
-				76105BDA19F33EE600A3F242 /* Audio@2x.png */,
-				76105BD919F33EE600A3F242 /* Audio_press@2x.png */,
-				76105BD819F33EE600A3F242 /* Audio_off@2x.png */,
 				767320F01A3CBDAD0057EF70 /* buttonPressReplayTut.png */,
 				767320EF1A3CBDAD0057EF70 /* buttonPressPlay@2x.png */,
 				763BCED61A33550000AF65DB /* buttonPressCredits.png */,
@@ -646,6 +681,9 @@
 				2DB352731999940A006BF15C /* buttonPressStart.png */,
 				2DB352741999940A006BF15C /* buttonSettings.png */,
 				2DB352751999940A006BF15C /* buttonStart.png */,
+				2DA3A7111A7717880026BD54 /* vibrateButton_off@2x.png */,
+				2DA3A7121A7717880026BD54 /* vibrateButton_press@2x.png */,
+				2DA3A7131A7717880026BD54 /* vibrateButton@2x.png */,
 			);
 			name = Buttons;
 			sourceTree = "<group>";
@@ -744,7 +782,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				76B9E91719FB1BE8000EF044 /* ShipTrail.sks in Resources */,
-				76105BDC19F33EE600A3F242 /* Audio_press@2x.png in Resources */,
 				767321351A574CE00057EF70 /* ShieldCollision.caf in Resources */,
 				7673212D1A574CE00057EF70 /* AutoCannon-Spool.caf in Resources */,
 				2DB3528819999445006BF15C /* AOb-3@2x.png in Resources */,
@@ -752,8 +789,6 @@
 				767320F31A3CBDAD0057EF70 /* buttonPressReplayTut.png in Resources */,
 				2DB3528919999445006BF15C /* Pillar-1@2x.png in Resources */,
 				767321311A574CE00057EF70 /* Multiplier-Collection.caf in Resources */,
-				76105BDD19F33EE600A3F242 /* Audio@2x.png in Resources */,
-				76105BDB19F33EE600A3F242 /* Audio_off@2x.png in Resources */,
 				764BF9A319A19A11007DABF8 /* arrowR@2x.png in Resources */,
 				2DB3528A19999445006BF15C /* Pillar-2@2x.png in Resources */,
 				7673212F1A574CE00057EF70 /* Cannon-Hit-Explode.caf in Resources */,
@@ -777,7 +812,10 @@
 				2DB352AC19999D5A006BF15C /* SF Movie Poster.ttf in Resources */,
 				2DB352AA19999D1B006BF15C /* Level-2@2x.png in Resources */,
 				2DB3529219999485006BF15C /* Level-1-Floor@2x.png in Resources */,
+				2DA3A7141A7717880026BD54 /* vibrateButton_off@2x.png in Resources */,
 				2DB352AE1999A0C4006BF15C /* GameOver-BG@2x.png in Resources */,
+				760897B21A2A9A43002C28EB /* Shield@2x.png in Resources */,
+				2D9C37991A771F020083E283 /* Audio_press@2x.png in Resources */,
 				767320F41A3CBDAD0057EF70 /* buttonReplayTut.png in Resources */,
 				7651E8D519B0EC8900F7E9D0 /* Level-1-Music.m4a in Resources */,
 				76C6F15419A2CCB100B37331 /* Level-1@2x.png in Resources */,
@@ -811,6 +849,7 @@
 				767321331A574CE00057EF70 /* Shield-PowerUp.caf in Resources */,
 				7673212E1A574CE00057EF70 /* Button-Press.caf in Resources */,
 				2DB3528C19999445006BF15C /* Pillar-4@2x.png in Resources */,
+				2D9C379A1A771F020083E283 /* Audio@2x.png in Resources */,
 				2DB3523A19996B83006BF15C /* Images.xcassets in Resources */,
 				7640AFB819E06F9A00EFD3C5 /* 2xMulti@2x.png in Resources */,
 				2DB352761999940A006BF15C /* buttonLeaderboard.png in Resources */,
@@ -821,6 +860,7 @@
 				764BF9A619A2BC04007DABF8 /* Nova-L2@2x.png in Resources */,
 				2DB3527A1999940A006BF15C /* buttonSettings.png in Resources */,
 				2DB352791999940A006BF15C /* buttonPressStart.png in Resources */,
+				2DA3A7151A7717880026BD54 /* vibrateButton_press@2x.png in Resources */,
 				767321341A574CE00057EF70 /* ShieldBreak.caf in Resources */,
 				765DF28B19A928A700FBFB16 /* BlackHole@2x.png in Resources */,
 				2DB3523019996B83006BF15C /* Main.storyboard in Resources */,
@@ -829,6 +869,7 @@
 				767320ED1A3CBD8E0057EF70 /* Codex_Constr@2x.jpg in Resources */,
 				767321301A574CE00057EF70 /* Explosion.caf in Resources */,
 				765DF29119A9293100FBFB16 /* spark.png in Resources */,
+				2DA3A7161A7717880026BD54 /* vibrateButton@2x.png in Resources */,
 				767320F61A3CBDD70057EF70 /* buttonPlay@2x.png in Resources */,
 				767321371A574CE00057EF70 /* TinyNova-Collect.caf in Resources */,
 			);
