@@ -47,8 +47,7 @@
     NSArray *asteroid_Red;
     NSArray *ship_Fragment;
     NSArray *shield_Load;
-    NSArray *black_Hole;
-    //test
+    //NSArray *black_Hole;
 }
         //Preloading Sound Actions -> Properties Here
     @property (strong, nonatomic) SKAction* AutoCannonFire;
@@ -71,7 +70,7 @@
     @property (strong, nonatomic) SKTextureAtlas *Asteroid_Red_Atlas;
     @property (strong, nonatomic) SKTextureAtlas *Ship_Fragment_Atlas;
     @property (strong, nonatomic) SKTextureAtlas *Shield_Atlas;
-    @property (strong, nonatomic) SKTextureAtlas *Black_Hole_Atlas;
+    //@property (strong, nonatomic) SKTextureAtlas *Black_Hole_Atlas;
 
 @end
 
@@ -137,7 +136,7 @@ SKColor *wingmanLaserColorCast;
     self.Asteroid_Red_Atlas = [SKTextureAtlas atlasNamed:@"Asteroid-Red"];
     self.Ship_Fragment_Atlas = [SKTextureAtlas atlasNamed:@"Ship-Fragment"];
     self.Shield_Atlas = [SKTextureAtlas atlasNamed:@"Shield"];
-    self.Black_Hole_Atlas = [SKTextureAtlas atlasNamed:@"Black-Hole"];
+    //self.Black_Hole_Atlas = [SKTextureAtlas atlasNamed:@"Black-Hole"];
     
     [textureAtlases addObject:self.Asteroid_1_Atlas];
     [textureAtlases addObject:self.Asteroid_2_Atlas];
@@ -145,7 +144,7 @@ SKColor *wingmanLaserColorCast;
     [textureAtlases addObject:self.Asteroid_Red_Atlas];
     [textureAtlases addObject:self.Ship_Fragment_Atlas];
     [textureAtlases addObject:self.Shield_Atlas];
-    [textureAtlases addObject:self.Black_Hole_Atlas];
+    //[textureAtlases addObject:self.Black_Hole_Atlas];
     
     [SKTextureAtlas preloadTextureAtlases:textureAtlases withCompletionHandler:^{
         [self setUpScene];
@@ -202,13 +201,13 @@ SKColor *wingmanLaserColorCast;
     }
     shield_Load = Shield_Frames;
     
-    NSMutableArray *Black_Hole_Frames = [NSMutableArray array];
+    /*NSMutableArray *Black_Hole_Frames = [NSMutableArray array];
     for (int i=1; i <= _Black_Hole_Atlas.textureNames.count; i++) {
         NSString *textureName = [NSString stringWithFormat:@"Black-Hole-%d", i];
         SKTexture *temp = [_Black_Hole_Atlas textureNamed:textureName];
         [Black_Hole_Frames addObject:temp];
     }
-    black_Hole = Black_Hole_Frames;
+    black_Hole = Black_Hole_Frames;*/
     
     self.backgroundColor = [SKColor colorWithRed:0 green:0 blue:0 alpha:1];
     [loading removeFromParent];
@@ -309,18 +308,18 @@ SKColor *wingmanLaserColorCast;
 }
 
 -(void)createBlackHole {
-    SKTexture *temp = black_Hole[0];
-    blackHole = [SKSpriteNode spriteNodeWithTexture:temp];
-    blackHole.position = CGPointMake(self.size.width/2, -160);
-    blackHole.xScale = 0.7;
-    blackHole.yScale = 0.7;
+    //SKTexture *temp = black_Hole[0];
+    blackHole = [SKSpriteNode spriteNodeWithImageNamed:@"Black-Hole-1"];
+    blackHole.position = CGPointMake(self.size.width/2, -100);
+    //blackHole.xScale = 0.7;
+    //blackHole.yScale = 0.7;
     
     [self addChild:blackHole];
-    [blackHole runAction:[SKAction repeatActionForever:
+    /*[blackHole runAction:[SKAction repeatActionForever:
                          [SKAction animateWithTextures:black_Hole
                                           timePerFrame:0.06f
                                                 resize:NO
-                                               restore:YES]] withKey:@"Black Hole Animate"];
+                                               restore:YES]] withKey:@"Black Hole Animate"];*/
 }
 
 #pragma mark --Create Elements

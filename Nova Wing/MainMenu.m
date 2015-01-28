@@ -236,12 +236,12 @@ NSTimeInterval _dt;
 
 -(void)toggleAudio {
     if ([GameState sharedGameData].audioVolume == 1.0) {
-        musicToggle.texture = [SKTexture textureWithImageNamed:@"Audio_off"];
+        sfxToggle.texture = [SKTexture textureWithImageNamed:@"Audio_off"];
         [GameState sharedGameData].audioVolume = 0.0;
         [[NWAudioPlayer sharedAudioPlayer] bgPlayer].volume = [GameState sharedGameData].audioVolume;
         [[GameState sharedGameData] save];
     } else if ([GameState sharedGameData].audioVolume == 0.0) {
-        musicToggle.texture = [SKTexture textureWithImageNamed:@"Audio"];
+        sfxToggle.texture = [SKTexture textureWithImageNamed:@"Audio"];
         [GameState sharedGameData].audioVolume = 1.0;
         [[NWAudioPlayer sharedAudioPlayer] bgPlayer].volume = [GameState sharedGameData].audioVolume;
         [[GameState sharedGameData] save];

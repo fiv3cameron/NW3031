@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		2D3754181A788F660064CB10 /* Black-Hole-1@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 2D3754171A788F660064CB10 /* Black-Hole-1@2x.png */; };
 		2D4C0B9A19A6D29B00AD0717 /* Ships.m in Sources */ = {isa = PBXBuildFile; fileRef = 2D4C0B9919A6D29B00AD0717 /* Ships.m */; };
 		2D800FFA19AC14FC0067CAC1 /* Obstacles.m in Sources */ = {isa = PBXBuildFile; fileRef = 2D800FF919AC14FC0067CAC1 /* Obstacles.m */; };
 		2D99094A1A1EC09D00D9CDE8 /* Laser.png in Resources */ = {isa = PBXBuildFile; fileRef = 2D9909491A1EC09D00D9CDE8 /* Laser.png */; };
@@ -78,7 +79,6 @@
 		7651E8D519B0EC8900F7E9D0 /* Level-1-Music.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 7651E8D419B0EC8900F7E9D0 /* Level-1-Music.m4a */; };
 		7651E8D719B0FFA900F7E9D0 /* Level-2-Music.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 7651E8D619B0FFA900F7E9D0 /* Level-2-Music.m4a */; };
 		765C9BE11A2109860050C847 /* NWColor.m in Sources */ = {isa = PBXBuildFile; fileRef = 765C9BE01A2109860050C847 /* NWColor.m */; };
-		765DF28B19A928A700FBFB16 /* BlackHole@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 765DF28A19A928A700FBFB16 /* BlackHole@2x.png */; };
 		765DF28E19A9290F00FBFB16 /* LevelOne.m in Sources */ = {isa = PBXBuildFile; fileRef = 765DF28D19A9290F00FBFB16 /* LevelOne.m */; };
 		765DF29119A9293100FBFB16 /* spark.png in Resources */ = {isa = PBXBuildFile; fileRef = 765DF28F19A9293100FBFB16 /* spark.png */; };
 		765DF29219A9293100FBFB16 /* Stars-L1.sks in Resources */ = {isa = PBXBuildFile; fileRef = 765DF29019A9293100FBFB16 /* Stars-L1.sks */; };
@@ -125,7 +125,6 @@
 		76B9E91719FB1BE8000EF044 /* ShipTrail.sks in Resources */ = {isa = PBXBuildFile; fileRef = 76B9E91619FB1BE8000EF044 /* ShipTrail.sks */; };
 		76B9E91B19FBF04D000EF044 /* PowerUps.m in Sources */ = {isa = PBXBuildFile; fileRef = 76B9E91A19FBF04D000EF044 /* PowerUps.m */; };
 		76C6F15419A2CCB100B37331 /* Level-1@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 76C6F15319A2CCB100B37331 /* Level-1@2x.png */; };
-		76DFCC921A7455A100AB48E1 /* Black-Hole.atlas in Resources */ = {isa = PBXBuildFile; fileRef = 76DFCC911A7455A100AB48E1 /* Black-Hole.atlas */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -139,6 +138,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		2D3754171A788F660064CB10 /* Black-Hole-1@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Black-Hole-1@2x.png"; sourceTree = "<group>"; };
 		2D4C0B9819A6D29B00AD0717 /* Ships.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Ships.h; sourceTree = "<group>"; };
 		2D4C0B9919A6D29B00AD0717 /* Ships.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Ships.m; sourceTree = "<group>"; };
 		2D800FF819AC14FC0067CAC1 /* Obstacles.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Obstacles.h; sourceTree = "<group>"; };
@@ -230,7 +230,6 @@
 		7651E8D619B0FFA900F7E9D0 /* Level-2-Music.m4a */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Level-2-Music.m4a"; sourceTree = "<group>"; };
 		765C9BDF1A2109860050C847 /* NWColor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NWColor.h; sourceTree = "<group>"; };
 		765C9BE01A2109860050C847 /* NWColor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NWColor.m; sourceTree = "<group>"; };
-		765DF28A19A928A700FBFB16 /* BlackHole@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "BlackHole@2x.png"; sourceTree = "<group>"; };
 		765DF28C19A9290F00FBFB16 /* LevelOne.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LevelOne.h; sourceTree = "<group>"; };
 		765DF28D19A9290F00FBFB16 /* LevelOne.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LevelOne.m; sourceTree = "<group>"; };
 		765DF28F19A9293100FBFB16 /* spark.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = spark.png; sourceTree = "<group>"; };
@@ -281,7 +280,6 @@
 		76B9E91919FBF04D000EF044 /* PowerUps.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PowerUps.h; sourceTree = "<group>"; };
 		76B9E91A19FBF04D000EF044 /* PowerUps.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PowerUps.m; sourceTree = "<group>"; };
 		76C6F15319A2CCB100B37331 /* Level-1@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Level-1@2x.png"; sourceTree = "<group>"; };
-		76DFCC911A7455A100AB48E1 /* Black-Hole.atlas */ = {isa = PBXFileReference; lastKnownFileType = folder.skatlas; path = "Black-Hole.atlas"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -516,7 +514,7 @@
 		2DB352A119999575006BF15C /* Levels */ = {
 			isa = PBXGroup;
 			children = (
-				76DFCC911A7455A100AB48E1 /* Black-Hole.atlas */,
+				2D3754171A788F660064CB10 /* Black-Hole-1@2x.png */,
 				760C79C31A702B9700E58170 /* Shield.atlas */,
 				760C79C11A70281900E58170 /* Ship-Fragment.atlas */,
 				7673213B1A5C276A0057EF70 /* Asteroid-2.atlas */,
@@ -555,7 +553,6 @@
 			isa = PBXGroup;
 			children = (
 				765DF29719A9294B00FBFB16 /* GameOver-L1@2x.png */,
-				765DF28A19A928A700FBFB16 /* BlackHole@2x.png */,
 			);
 			name = "Level 1";
 			sourceTree = "<group>";
@@ -773,7 +770,6 @@
 				7651E8D719B0FFA900F7E9D0 /* Level-2-Music.m4a in Resources */,
 				2DB3522719996B83006BF15C /* InfoPlist.strings in Resources */,
 				7678881A19E1C43E009714A1 /* 4xMulti@2x.png in Resources */,
-				76DFCC921A7455A100AB48E1 /* Black-Hole.atlas in Resources */,
 				767320E51A3B96530057EF70 /* NovaWingIcon@3x.png in Resources */,
 				764BF9A719A2BC04007DABF8 /* Nova-L1@2x.png in Resources */,
 				763BCECD1A32B67600AF65DB /* buttonCodex.png in Resources */,
@@ -825,6 +821,7 @@
 				2D9C379A1A771F020083E283 /* Audio@2x.png in Resources */,
 				2DB3523A19996B83006BF15C /* Images.xcassets in Resources */,
 				7640AFB819E06F9A00EFD3C5 /* 2xMulti@2x.png in Resources */,
+				2D3754181A788F660064CB10 /* Black-Hole-1@2x.png in Resources */,
 				2DB352761999940A006BF15C /* buttonLeaderboard.png in Resources */,
 				764BF9A219A19A11007DABF8 /* arrowL@2x.png in Resources */,
 				760C79C41A702B9700E58170 /* Shield.atlas in Resources */,
@@ -835,7 +832,6 @@
 				2DB352791999940A006BF15C /* buttonPressStart.png in Resources */,
 				2DA3A7151A7717880026BD54 /* vibrateButton_press@2x.png in Resources */,
 				767321341A574CE00057EF70 /* ShieldBreak.caf in Resources */,
-				765DF28B19A928A700FBFB16 /* BlackHole@2x.png in Resources */,
 				2DB3523019996B83006BF15C /* Main.storyboard in Resources */,
 				7673212C1A574CE00057EF70 /* AutoCannon-Fire.caf in Resources */,
 				767320EE1A3CBD8E0057EF70 /* Codex_Constr@3x.jpg in Resources */,
