@@ -393,7 +393,7 @@ SKColor *wingmanLaserColorCast;
     obstacle.xScale = 0.4 + randScale;
     obstacle.yScale = 0.4 + randScale;
     
-    obstacle.physicsBody = [SKPhysicsBody bodyWithCircleOfRadius:obstacle.size.height/2];
+    obstacle.physicsBody = [SKPhysicsBody bodyWithCircleOfRadius:obstacle.size.width/2];
     [self objectPhysicsStandards: obstacle];
     
     [self addChild: obstacle];
@@ -415,22 +415,28 @@ SKColor *wingmanLaserColorCast;
     obstacle.anchorPoint = CGPointZero;
     obstacle.zPosition = 10;
     
-    int tempRand2 = arc4random()%100;
-    double randScale = (tempRand2)/1000.0;
-    obstacle.xScale = 0.3 + randScale;
-    obstacle.yScale = 0.3 + randScale;
+    //int tempRand2 = arc4random()%100;
+    //double randScale = (tempRand2)/1000.0;
+    obstacle.xScale = 0.33;// + randScale;
+    obstacle.yScale = 0.33;// + randScale;
     
     CGMutablePathRef path = CGPathCreateMutable();
     
-    CGPathMoveToPoint(path, NULL, 5, 5);
-    CGPathAddLineToPoint(path, NULL, 50, 5);
-    CGPathAddLineToPoint(path, NULL, 55, 15);
-    CGPathAddLineToPoint(path, NULL, 50, 25);
-    CGPathAddLineToPoint(path, NULL, 10, 25);
+    CGPathMoveToPoint(path, NULL, 17, 7);
+    CGPathAddLineToPoint(path, NULL, 65, 7);
+    CGPathAddLineToPoint(path, NULL, 72, 14);
+    CGPathAddLineToPoint(path, NULL, 72, 25);
+    CGPathAddLineToPoint(path, NULL, 65, 33);
+    CGPathAddLineToPoint(path, NULL, 16, 31);
+    CGPathAddLineToPoint(path, NULL, 7, 23);
+    CGPathAddLineToPoint(path, NULL, 7, 12);
     
     CGPathCloseSubpath(path);
     
     obstacle.physicsBody = [SKPhysicsBody bodyWithPolygonFromPath:path];
+    
+    CGPathRelease(path);
+    
     [self objectPhysicsStandards: obstacle];
     
     [self addChild: obstacle];
@@ -440,7 +446,6 @@ SKColor *wingmanLaserColorCast;
                                                 resize:NO
                                                restore:YES]] withKey:@"Asteroid 2 Animate"];
     [self moveAerialNode:obstacle allowsRotation:YES];
-    CGPathRelease(path);
 }
 
 -(void)asteroid3 {
@@ -458,7 +463,7 @@ SKColor *wingmanLaserColorCast;
     obstacle.xScale = 0.4 + randScale;
     obstacle.yScale = 0.4 + randScale;
     
-    obstacle.physicsBody = [SKPhysicsBody bodyWithCircleOfRadius:obstacle.size.height/2];
+    obstacle.physicsBody = [SKPhysicsBody bodyWithCircleOfRadius:obstacle.size.width/2];
     [self objectPhysicsStandards: obstacle];
     
     [self addChild: obstacle];
@@ -511,11 +516,11 @@ SKColor *wingmanLaserColorCast;
     
     CGMutablePathRef path = CGPathCreateMutable();
     
-    CGPathMoveToPoint(path, NULL, 10, 0);
-    CGPathAddLineToPoint(path, NULL, 50, 20);
-    CGPathAddLineToPoint(path, NULL, 60, 60);
-    CGPathAddLineToPoint(path, NULL, 50, 60);
-    CGPathAddLineToPoint(path, NULL, 10, 20);
+    CGPathMoveToPoint(path, NULL, 4, 22);
+    CGPathAddLineToPoint(path, NULL, 30, 3); //"Bottom" point
+    CGPathAddLineToPoint(path, NULL, 54, 45);
+    CGPathAddLineToPoint(path, NULL, 45, 55);
+    CGPathAddLineToPoint(path, NULL, 28, 55);
     
     CGPathCloseSubpath(path);
     
@@ -1194,16 +1199,16 @@ SKColor *wingmanLaserColorCast;
     shield.zPosition = 111;
     shield.alpha = 1.0;
     
-    CGFloat offsetX = (shield.frame.size.width * 1.2) * shield.anchorPoint.x;
-    CGFloat offsetY = (shield.frame.size.height * 1.2) * shield.anchorPoint.y;
+    CGFloat offsetX = (shield.frame.size.width * 1.1) + shield.anchorPoint.x;
+    CGFloat offsetY = (shield.frame.size.height * 1.1) + shield.anchorPoint.y;
     CGMutablePathRef path = CGPathCreateMutable();
     
-    CGPathMoveToPoint(path, NULL, 5 - offsetX, 45 - offsetY);
-    CGPathAddLineToPoint(path, NULL, 22 - offsetX, 13 - offsetY);
-    CGPathAddLineToPoint(path, NULL, 64 - offsetX, 3 - offsetY);
-    CGPathAddLineToPoint(path, NULL, 100 - offsetX, 23 - offsetY);
-    CGPathAddLineToPoint(path, NULL, 79 - offsetX, 61 - offsetY);
-    CGPathAddLineToPoint(path, NULL, 35 - offsetX, 70 - offsetY);
+    CGPathMoveToPoint(path, NULL, 4 - offsetX, 43 - offsetY);
+    CGPathAddLineToPoint(path, NULL, 20 - offsetX, 13 - offsetY);
+    CGPathAddLineToPoint(path, NULL, 61 - offsetX, 4 - offsetY);
+    CGPathAddLineToPoint(path, NULL, 89 - offsetX, 24 - offsetY);
+    CGPathAddLineToPoint(path, NULL, 74 - offsetX, 55 - offsetY);
+    CGPathAddLineToPoint(path, NULL, 34 - offsetX, 64 - offsetY);
     
     CGPathCloseSubpath(path);
     
