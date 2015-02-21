@@ -8,9 +8,10 @@
 
 #import "MainMenu.h"
 #import "LevelOne.h"
-
+#import "GameKitHelper.h"
 #import "NWCodex.h"
 #import "Tutorial.h"
+#import <UIKit/UIKit.h>
 
 static const float BG_VELOCITY = 10.0;
 
@@ -424,6 +425,32 @@ NSTimeInterval _dt;
     
 }
 
+#pragma mark --Game Center
+
+-(void)accessLeaderBoardAndAchievies: (BOOL)showLeaderboard {
+//Need to make sure this is correctly accessing leaderboards.  Check if game center is available first.
+    NSString *defaultLeaderBoardID = @"L1HS";
+    GKGameCenterViewController *leaderboardViewController = [[GKGameCenterViewController alloc] init];
+    
+    UIViewController *rootVC = [UIApplication sharedApplication].keyWindow.rootViewController;
+    if (leaderboardViewController != nil) {
+        leaderboardViewController.gameCenterDelegate = rootVC;
+        if (showLeaderboard) {
+            leaderboardViewController.viewState = GKGameCenterViewControllerStateLeaderboards;
+            leaderboardViewController.leaderboardIdentifier = defaultLeaderBoardID;
+        } else {
+            leaderboardViewController.viewState = GKGameCenterViewControllerStateAchievements;
+        }
+    }
+    
+    [rootVC presentViewController:leaderboardViewController animated:YES completion:nil];
+}
+
+-(void) gameCenterViewControllerDidFinish: (GKGameCenterViewController *)gameCenterViewController {
+    [gameCenterViewController.presentedViewController dismissViewControllerAnimated:YES completion:nil];
+    [gameCenterViewController.presentingViewController dismissViewControllerAnimated:YES completion:nil];
+}
+
 #pragma mark --Actions
 
 -(void)mainMenuAnimateOut {
@@ -501,8 +528,6 @@ NSTimeInterval _dt;
     
     [fadingNode runAction: fadeSequence];
 }
-
-
 
 #pragma mark --Touch Events
 -(void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event {
@@ -606,6 +631,8 @@ NSTimeInterval _dt;
         //SKTransition
         SKAction *createSound = [SKAction playSoundFileNamed:@"Button-Press.caf" waitForCompletion:NO];
         [self playSoundEffectsWithAction:createSound];
+        //Activate leaderboard.
+        [self accessLeaderBoardAndAchievies:YES];
     }
     
     if ([nodeLift.name isEqualToString:@"codexButton"]) {

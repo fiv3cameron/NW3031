@@ -10,7 +10,7 @@
 
 @interface GameState : NSObject <NSCoding>
 
-    @property (assign, nonatomic) long score;
+    @property (assign, nonatomic) int score;
     @property (assign, nonatomic) long highScoreL1;
     @property (assign, nonatomic) long highScoreL2;
     @property (nonatomic) long levelIndex;

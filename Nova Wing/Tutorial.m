@@ -321,7 +321,6 @@
     
     [rect addChild:[self skipButtonWithColor:@"black" andOffset:1]];
     [rect addChild:[self skipButtonWithColor:@"white" andOffset:0]];
-
     
     return rect;
 }
@@ -346,7 +345,7 @@
 
 -(void)scoreAdd {
     [GameState sharedGameData].score = [GameState sharedGameData].score + [GameState sharedGameData].scoreMultiplier;
-    _score.text = [NSString stringWithFormat:@"Score: %li", [GameState sharedGameData].score];
+    _score.text = [NSString stringWithFormat:@"Score: %i", [GameState sharedGameData].score];
 }
 
 -(void)scorePlus {

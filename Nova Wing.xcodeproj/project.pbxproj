@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		2D2410C21A89AF7800C47CB2 /* GameKitHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 2D2410C11A89AF7800C47CB2 /* GameKitHelper.m */; };
 		2D3754181A788F660064CB10 /* Black-Hole-1@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 2D3754171A788F660064CB10 /* Black-Hole-1@2x.png */; };
 		2D4C0B9A19A6D29B00AD0717 /* Ships.m in Sources */ = {isa = PBXBuildFile; fileRef = 2D4C0B9919A6D29B00AD0717 /* Ships.m */; };
 		2D800FFA19AC14FC0067CAC1 /* Obstacles.m in Sources */ = {isa = PBXBuildFile; fileRef = 2D800FF919AC14FC0067CAC1 /* Obstacles.m */; };
@@ -138,6 +139,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		2D2410C01A89AF7800C47CB2 /* GameKitHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GameKitHelper.h; sourceTree = "<group>"; };
+		2D2410C11A89AF7800C47CB2 /* GameKitHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GameKitHelper.m; sourceTree = "<group>"; };
 		2D3754171A788F660064CB10 /* Black-Hole-1@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Black-Hole-1@2x.png"; sourceTree = "<group>"; };
 		2D4C0B9819A6D29B00AD0717 /* Ships.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Ships.h; sourceTree = "<group>"; };
 		2D4C0B9919A6D29B00AD0717 /* Ships.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Ships.m; sourceTree = "<group>"; };
@@ -309,6 +312,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		2D2410BF1A89A34C00C47CB2 /* GameKit */ = {
+			isa = PBXGroup;
+			children = (
+				2D2410C01A89AF7800C47CB2 /* GameKitHelper.h */,
+				2D2410C11A89AF7800C47CB2 /* GameKitHelper.m */,
+			);
+			name = GameKit;
+			sourceTree = "<group>";
+		};
 		2DB3520E19996B83006BF15C = {
 			isa = PBXGroup;
 			children = (
@@ -421,6 +433,7 @@
 		2DB3525F19997295006BF15C /* Internal Classes */ = {
 			isa = PBXGroup;
 			children = (
+				2D2410BF1A89A34C00C47CB2 /* GameKit */,
 				76B9E91819FBF011000EF044 /* Game Objects */,
 				765C9BDF1A2109860050C847 /* NWColor.h */,
 				765C9BE01A2109860050C847 /* NWColor.m */,
@@ -877,6 +890,7 @@
 				2D4C0B9A19A6D29B00AD0717 /* Ships.m in Sources */,
 				2DB3526B19997A98006BF15C /* GameState.m in Sources */,
 				765DF28E19A9290F00FBFB16 /* LevelOne.m in Sources */,
+				2D2410C21A89AF7800C47CB2 /* GameKitHelper.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
