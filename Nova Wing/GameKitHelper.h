@@ -27,10 +27,16 @@ extern NSString *const PresentAuthenticationViewController;
 @property (nonatomic, readonly) UIViewController *authenticationViewController;
 @property (nonatomic, readonly) NSError *lastError;
 @property (assign, nonatomic) BOOL enableGameCenter;
+@property (nonatomic, retain) NSMutableDictionary *achievementsDictionary;
 
 +(instancetype)sharedGameKitHelper;
 -(void)authenticateLocalPlayer;
--(void) submitScore:(int64_t)score toLeader: (NSString*)leaderboard;
+//-(void)retrieveAchievementsToDictionary: (NSMutableDictionary *)achievementsDictionary;
+//-(GKAchievement *)getAchievementForIdentifier: (NSString *)identifier fromDictionary: (NSMutableDictionary *)achievementsDictionary;
+-(void)submitScore:(int64_t)score toLeader: (NSString*)leaderboard;
 -(UIViewController*) getRootViewController;
+//-(void) storeDictionaryToAchievementsDictionary: (NSMutableDictionary *)dictionary;
+//-(void)reportAchievementWithIdentifier: (NSString *)identifier percentComplete: (float) percent fromDictionary: (NSMutableDictionary *)dictionary;
+//-(NSMutableDictionary *) fillDictionaryFromAchievementsDictionary;
 
 @end

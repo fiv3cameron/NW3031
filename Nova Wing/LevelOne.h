@@ -16,6 +16,8 @@
     AVAudioPlayer *bgPlayer;
 }
 
+@property (nonatomic, retain) NSMutableDictionary *achievementsDictionary;
+
 @end
 
 SKSpriteNode *blackHole;

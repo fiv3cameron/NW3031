@@ -28,5 +28,7 @@ NSArray *levelTitles;
 //@property (nonatomic) PBParallaxBackgroundDirection direction;
 @property (nonatomic) AVAudioPlayer* bgPlayer;
 @property (nonatomic, assign) GKGameCenterViewController *gcManager;
+@property (nonatomic, retain) NSMutableDictionary *achievementsDictionary;
+@property (nonatomic, retain) GKAchievement *activeRank;
 
 @end

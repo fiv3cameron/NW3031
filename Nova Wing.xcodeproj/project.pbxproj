@@ -59,6 +59,17 @@
 		2DB352AA19999D1B006BF15C /* Level-2@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 2DB352A919999D1B006BF15C /* Level-2@2x.png */; };
 		2DB352AC19999D5A006BF15C /* SF Movie Poster.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 2DB352AB19999D5A006BF15C /* SF Movie Poster.ttf */; };
 		2DB352AE1999A0C4006BF15C /* GameOver-BG@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 2DB352AD1999A0C4006BF15C /* GameOver-BG@2x.png */; };
+		2DEBAC4C1A9C053500D45CD5 /* cadet@2x.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 2DEBAC411A9C053500D45CD5 /* cadet@2x.jpg */; };
+		2DEBAC4D1A9C053500D45CD5 /* commander@2x.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 2DEBAC421A9C053500D45CD5 /* commander@2x.jpg */; };
+		2DEBAC4E1A9C053500D45CD5 /* fleet_admiral@2x.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 2DEBAC431A9C053500D45CD5 /* fleet_admiral@2x.jpg */; };
+		2DEBAC4F1A9C053500D45CD5 /* fleet_general@2x.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 2DEBAC441A9C053500D45CD5 /* fleet_general@2x.jpg */; };
+		2DEBAC501A9C053500D45CD5 /* flight_commander@2x.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 2DEBAC451A9C053500D45CD5 /* flight_commander@2x.jpg */; };
+		2DEBAC511A9C053500D45CD5 /* flight_school_graduate@2x.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 2DEBAC461A9C053500D45CD5 /* flight_school_graduate@2x.jpg */; };
+		2DEBAC521A9C053500D45CD5 /* lieutenant_commander@2x.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 2DEBAC471A9C053500D45CD5 /* lieutenant_commander@2x.jpg */; };
+		2DEBAC531A9C053500D45CD5 /* private_I@2x.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 2DEBAC481A9C053500D45CD5 /* private_I@2x.jpg */; };
+		2DEBAC541A9C053500D45CD5 /* private_II@2x.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 2DEBAC491A9C053500D45CD5 /* private_II@2x.jpg */; };
+		2DEBAC551A9C053500D45CD5 /* sergeant_I@2x.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 2DEBAC4A1A9C053500D45CD5 /* sergeant_I@2x.jpg */; };
+		2DEBAC561A9C053500D45CD5 /* sergeant_II@2x.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 2DEBAC4B1A9C053500D45CD5 /* sergeant_II@2x.jpg */; };
 		760897AF1A24FBEA002C28EB /* Tutorial.m in Sources */ = {isa = PBXBuildFile; fileRef = 760897AE1A24FBEA002C28EB /* Tutorial.m */; };
 		760C79C21A70281900E58170 /* Ship-Fragment.atlas in Resources */ = {isa = PBXBuildFile; fileRef = 760C79C11A70281900E58170 /* Ship-Fragment.atlas */; };
 		760C79C41A702B9700E58170 /* Shield.atlas in Resources */ = {isa = PBXBuildFile; fileRef = 760C79C31A702B9700E58170 /* Shield.atlas */; };
@@ -205,6 +216,17 @@
 		2DB352A919999D1B006BF15C /* Level-2@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Level-2@2x.png"; sourceTree = "<group>"; };
 		2DB352AB19999D5A006BF15C /* SF Movie Poster.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SF Movie Poster.ttf"; sourceTree = "<group>"; };
 		2DB352AD1999A0C4006BF15C /* GameOver-BG@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "GameOver-BG@2x.png"; sourceTree = "<group>"; };
+		2DEBAC411A9C053500D45CD5 /* cadet@2x.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "cadet@2x.jpg"; sourceTree = "<group>"; };
+		2DEBAC421A9C053500D45CD5 /* commander@2x.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "commander@2x.jpg"; sourceTree = "<group>"; };
+		2DEBAC431A9C053500D45CD5 /* fleet_admiral@2x.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "fleet_admiral@2x.jpg"; sourceTree = "<group>"; };
+		2DEBAC441A9C053500D45CD5 /* fleet_general@2x.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "fleet_general@2x.jpg"; sourceTree = "<group>"; };
+		2DEBAC451A9C053500D45CD5 /* flight_commander@2x.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "flight_commander@2x.jpg"; sourceTree = "<group>"; };
+		2DEBAC461A9C053500D45CD5 /* flight_school_graduate@2x.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "flight_school_graduate@2x.jpg"; sourceTree = "<group>"; };
+		2DEBAC471A9C053500D45CD5 /* lieutenant_commander@2x.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "lieutenant_commander@2x.jpg"; sourceTree = "<group>"; };
+		2DEBAC481A9C053500D45CD5 /* private_I@2x.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "private_I@2x.jpg"; sourceTree = "<group>"; };
+		2DEBAC491A9C053500D45CD5 /* private_II@2x.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "private_II@2x.jpg"; sourceTree = "<group>"; };
+		2DEBAC4A1A9C053500D45CD5 /* sergeant_I@2x.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "sergeant_I@2x.jpg"; sourceTree = "<group>"; };
+		2DEBAC4B1A9C053500D45CD5 /* sergeant_II@2x.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "sergeant_II@2x.jpg"; sourceTree = "<group>"; };
 		760897AD1A24FBEA002C28EB /* Tutorial.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Tutorial.h; sourceTree = "<group>"; };
 		760897AE1A24FBEA002C28EB /* Tutorial.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Tutorial.m; sourceTree = "<group>"; };
 		760897B01A250594002C28EB /* NWCollisions.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = NWCollisions.h; sourceTree = "<group>"; };
@@ -470,6 +492,17 @@
 				76B9E92219FC2863000EF044 /* Icons */,
 				2DB3529A199994C0006BF15C /* Title.png */,
 				2DB35298199994B9006BF15C /* Stars-Seamless.jpg */,
+				2DEBAC411A9C053500D45CD5 /* cadet@2x.jpg */,
+				2DEBAC421A9C053500D45CD5 /* commander@2x.jpg */,
+				2DEBAC431A9C053500D45CD5 /* fleet_admiral@2x.jpg */,
+				2DEBAC441A9C053500D45CD5 /* fleet_general@2x.jpg */,
+				2DEBAC451A9C053500D45CD5 /* flight_commander@2x.jpg */,
+				2DEBAC461A9C053500D45CD5 /* flight_school_graduate@2x.jpg */,
+				2DEBAC471A9C053500D45CD5 /* lieutenant_commander@2x.jpg */,
+				2DEBAC481A9C053500D45CD5 /* private_I@2x.jpg */,
+				2DEBAC491A9C053500D45CD5 /* private_II@2x.jpg */,
+				2DEBAC4A1A9C053500D45CD5 /* sergeant_I@2x.jpg */,
+				2DEBAC4B1A9C053500D45CD5 /* sergeant_II@2x.jpg */,
 			);
 			name = Main;
 			sourceTree = "<group>";
@@ -767,6 +800,7 @@
 			files = (
 				76B9E91719FB1BE8000EF044 /* ShipTrail.sks in Resources */,
 				767321351A574CE00057EF70 /* ShieldCollision.caf in Resources */,
+				2DEBAC521A9C053500D45CD5 /* lieutenant_commander@2x.jpg in Resources */,
 				7673212D1A574CE00057EF70 /* AutoCannon-Spool.caf in Resources */,
 				2DB3528819999445006BF15C /* AOb-3@2x.png in Resources */,
 				765DF29919A9294B00FBFB16 /* GameOver-L1@2x.png in Resources */,
@@ -776,6 +810,7 @@
 				764BF9A319A19A11007DABF8 /* arrowR@2x.png in Resources */,
 				2DB3528A19999445006BF15C /* Pillar-2@2x.png in Resources */,
 				7673212F1A574CE00057EF70 /* Cannon-Hit-Explode.caf in Resources */,
+				2DEBAC551A9C053500D45CD5 /* sergeant_I@2x.jpg in Resources */,
 				7673213F1A5C276A0057EF70 /* Asteroid-3.atlas in Resources */,
 				7640AFB919E06F9A00EFD3C5 /* 3xMulti@2x.png in Resources */,
 				763BCED81A33550000AF65DB /* buttonPressCredits.png in Resources */,
@@ -787,6 +822,7 @@
 				764BF9A719A2BC04007DABF8 /* Nova-L1@2x.png in Resources */,
 				763BCECD1A32B67600AF65DB /* buttonCodex.png in Resources */,
 				2DB3529419999485006BF15C /* Level-1-Sky@2x.png in Resources */,
+				2DEBAC4F1A9C053500D45CD5 /* fleet_general@2x.jpg in Resources */,
 				767320E31A3B96530057EF70 /* NovaWingAppIcon-1024.jpg in Resources */,
 				2DB3529319999485006BF15C /* Level-1-Mid@2x.png in Resources */,
 				2DB35299199994B9006BF15C /* Stars-Seamless.jpg in Resources */,
@@ -797,12 +833,14 @@
 				2DB3529219999485006BF15C /* Level-1-Floor@2x.png in Resources */,
 				2DA3A7141A7717880026BD54 /* vibrateButton_off@2x.png in Resources */,
 				2DB352AE1999A0C4006BF15C /* GameOver-BG@2x.png in Resources */,
+				2DEBAC501A9C053500D45CD5 /* flight_commander@2x.jpg in Resources */,
 				2D9C37991A771F020083E283 /* Audio_press@2x.png in Resources */,
 				767320F41A3CBDAD0057EF70 /* buttonReplayTut.png in Resources */,
 				7651E8D519B0EC8900F7E9D0 /* Level-1-Music.m4a in Resources */,
 				76C6F15419A2CCB100B37331 /* Level-1@2x.png in Resources */,
 				2DB3529B199994C0006BF15C /* Title.png in Resources */,
 				760C79C21A70281900E58170 /* Ship-Fragment.atlas in Resources */,
+				2DEBAC511A9C053500D45CD5 /* flight_school_graduate@2x.jpg in Resources */,
 				76B9821419FC7A4E00F7E606 /* Autocannon@2x.png in Resources */,
 				76B9821619FC7A4F00F7E606 /* Wingman@2x.png in Resources */,
 				767321321A574CE00057EF70 /* Score-Collect.caf in Resources */,
@@ -812,6 +850,8 @@
 				767320E81A3B96530057EF70 /* NovaWingSpotlight@2x.png in Resources */,
 				767320E61A3B96530057EF70 /* NovaWingSettings@2x.png in Resources */,
 				2D99094A1A1EC09D00D9CDE8 /* Laser.png in Resources */,
+				2DEBAC4D1A9C053500D45CD5 /* commander@2x.jpg in Resources */,
+				2DEBAC561A9C053500D45CD5 /* sergeant_II@2x.jpg in Resources */,
 				767DE0051A0C72FF00E098DF /* TinyNova@2x.png in Resources */,
 				76B9821519FC7A4E00F7E606 /* Overshield@2x.png in Resources */,
 				767320E41A3B96530057EF70 /* NovaWingIcon@2x.png in Resources */,
@@ -822,6 +862,7 @@
 				2DB352771999940A006BF15C /* buttonPressLeaderboard.png in Resources */,
 				767321361A574CE00057EF70 /* Ship-Explode.caf in Resources */,
 				763BCEC91A32A8A500AF65DB /* buttonPressCodex.png in Resources */,
+				2DEBAC4E1A9C053500D45CD5 /* fleet_admiral@2x.jpg in Resources */,
 				767320E91A3B96530057EF70 /* NovaWingSpotlight@3x.png in Resources */,
 				763BCECF1A32BA2300AF65DB /* Settings.png in Resources */,
 				2DB3529119999485006BF15C /* Level-1-Far@2x.png in Resources */,
@@ -845,9 +886,12 @@
 				2DB352791999940A006BF15C /* buttonPressStart.png in Resources */,
 				2DA3A7151A7717880026BD54 /* vibrateButton_press@2x.png in Resources */,
 				767321341A574CE00057EF70 /* ShieldBreak.caf in Resources */,
+				2DEBAC541A9C053500D45CD5 /* private_II@2x.jpg in Resources */,
 				2DB3523019996B83006BF15C /* Main.storyboard in Resources */,
 				7673212C1A574CE00057EF70 /* AutoCannon-Fire.caf in Resources */,
+				2DEBAC4C1A9C053500D45CD5 /* cadet@2x.jpg in Resources */,
 				767320EE1A3CBD8E0057EF70 /* Codex_Constr@3x.jpg in Resources */,
+				2DEBAC531A9C053500D45CD5 /* private_I@2x.jpg in Resources */,
 				767320ED1A3CBD8E0057EF70 /* Codex_Constr@2x.jpg in Resources */,
 				767321301A574CE00057EF70 /* Explosion.caf in Resources */,
 				765DF29119A9293100FBFB16 /* spark.png in Resources */,

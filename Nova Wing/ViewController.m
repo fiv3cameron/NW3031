@@ -42,8 +42,7 @@
      name:PresentAuthenticationViewController
      object:nil];
     
-    [[GameKitHelper sharedGameKitHelper]
-     authenticateLocalPlayer];
+    [[GameKitHelper sharedGameKitHelper] authenticateLocalPlayer];
 }
 
 - (void)showAuthenticationViewController

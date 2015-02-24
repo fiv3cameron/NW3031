@@ -147,6 +147,9 @@ SKColor *wingmanLaserColorCast;
     [textureAtlases addObject:self.Shield_Atlas];
     //[textureAtlases addObject:self.Black_Hole_Atlas];
     
+    //Pass achievements from temp storage area.
+    _achievementsDictionary = [[GameKitHelper sharedGameKitHelper] achievementsDictionary];
+    
     [SKTextureAtlas preloadTextureAtlases:textureAtlases withCompletionHandler:^{
         [self setUpScene];
         isSceneLoading = NO;
@@ -707,11 +710,11 @@ SKColor *wingmanLaserColorCast;
     }
 }
 
--(void)gcAchievementChecks {
+/*-(void)gcAchievementChecks {
     if ([GameState sharedGameData].score>=100) {
-        
+        [[GameKitHelper alloc] reportAchievementWithIdentifier:@"flight_school_graduate" percentComplete:100.0 fromDictionary:_achievementsDictionary];
     }
-}
+}*/
 
 #pragma mark --Animate Obstacles
 
@@ -1372,9 +1375,6 @@ SKColor *wingmanLaserColorCast;
     if (wingmanParent.physicsBody.velocity.dy < 0) {
         [wingmanParent rotateNodeDownwards:wingmanParent];
     }
-    
-    [self gcAchievementChecks];
-   
 }
 
 #pragma mark --Game Over
@@ -1417,6 +1417,8 @@ SKColor *wingmanLaserColorCast;
     SKAction *wait = [SKAction waitForDuration:0.5];
     SKAction *gameOver = [SKAction runBlock:^{[self gameOverComplete];}];
     [self runAction:[SKAction sequence:@[wait,gameOver]]];
+    
+    //[self gcAchievementChecks];
 }
 
 -(void)gameOverComplete {
