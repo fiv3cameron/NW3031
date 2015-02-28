@@ -42,7 +42,7 @@
     curScore.fontSize = 60;
     curScore.horizontalAlignmentMode = SKLabelHorizontalAlignmentModeCenter;
     curScore.zPosition = 101;
-    curScore.text = [NSString stringWithFormat:@"SCORE: %li", [GameState sharedGameData].score];
+    curScore.text = [NSString stringWithFormat:@"SCORE: %i", [GameState sharedGameData].score];
     [self addChild:curScore];
 }
 

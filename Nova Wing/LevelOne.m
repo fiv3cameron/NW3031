@@ -14,6 +14,7 @@
 #import "Multipliers.h"
 #import "PowerUps.h"
 #import "MainMenu.h"
+#import "GameKitHelper.h"
 
 @interface LevelOne() <SKPhysicsContactDelegate>
 {
@@ -145,6 +146,9 @@ SKColor *wingmanLaserColorCast;
     [textureAtlases addObject:self.Ship_Fragment_Atlas];
     [textureAtlases addObject:self.Shield_Atlas];
     //[textureAtlases addObject:self.Black_Hole_Atlas];
+    
+    //Pass achievements from temp storage area.
+    _achievementsDictionary = [[GameKitHelper sharedGameKitHelper] achievementsDictionary];
     
     [SKTextureAtlas preloadTextureAtlases:textureAtlases withCompletionHandler:^{
         [self setUpScene];
@@ -605,7 +609,7 @@ SKColor *wingmanLaserColorCast;
 -(void)scoreAddWithMultiplier: (int)tempMultiplier {
     [self playSoundEffectsWithAction:_ScoreCollect];
     [GameState sharedGameData].score = [GameState sharedGameData].score + [GameState sharedGameData].scoreMultiplier*tempMultiplier;
-    _score.text = [NSString stringWithFormat:@"Score: %li", [GameState sharedGameData].score];
+    _score.text = [NSString stringWithFormat:@"Score: %i", [GameState sharedGameData].score];
 }
 
 -(void)scorePlusWithMultiplier: (int)tempMultiplier fromNode: (SKSpriteNode *)tempNode {
@@ -705,6 +709,12 @@ SKColor *wingmanLaserColorCast;
             break;
     }
 }
+
+/*-(void)gcAchievementChecks {
+    if ([GameState sharedGameData].score>=100) {
+        [[GameKitHelper alloc] reportAchievementWithIdentifier:@"flight_school_graduate" percentComplete:100.0 fromDictionary:_achievementsDictionary];
+    }
+}*/
 
 #pragma mark --Animate Obstacles
 
@@ -1365,24 +1375,16 @@ SKColor *wingmanLaserColorCast;
     if (wingmanParent.physicsBody.velocity.dy < 0) {
         [wingmanParent rotateNodeDownwards:wingmanParent];
     }
-    
-    /*if ([self childNodeWithName:@"aerial"].position.x < self.size.width / 2) {
-        [[self childNodeWithName:@"aerial"].physicsBody applyImpulse:CGVectorMake(0, -0.2)];
-    }
-    
-    if ([self childNodeWithName:@"aerial"].position.x < playerParent.position.x - playerParent.size.width && [self childNodeWithName:@"aerial"].position.x > 1)
-    {
-        [self childNodeWithName:@"aerial"].name = @"aerialClose";
-    }
-    
-    if ([self childNodeWithName:@"aerialClose"].position.x < -self.size.width / 2) {
-        [[self childNodeWithName:@"aerialClose"] removeFromParent];
-    }*/
 }
 
 #pragma mark --Game Over
 
 -(void)gameOver {
+    //Update leaderboard if necessary.
+    if ([GameState sharedGameData].score > [GameState sharedGameData].highScoreL1) {
+        [[GameKitHelper sharedGameKitHelper] submitScore:[GameState sharedGameData].score toLeader:@"L1HS"];
+    }
+    
     //Update GameState data & stats tracking.
     [GameState sharedGameData].highScoreL1 = MAX([GameState sharedGameData].score, [GameState sharedGameData].highScoreL1);
     [GameState sharedGameData].totalLaserHits = [GameState sharedGameData].totalLaserHits + localTotalLaserHits;
@@ -1415,6 +1417,8 @@ SKColor *wingmanLaserColorCast;
     SKAction *wait = [SKAction waitForDuration:0.5];
     SKAction *gameOver = [SKAction runBlock:^{[self gameOverComplete];}];
     [self runAction:[SKAction sequence:@[wait,gameOver]]];
+    
+    //[self gcAchievementChecks];
 }
 
 -(void)gameOverComplete {
@@ -1440,7 +1444,7 @@ SKColor *wingmanLaserColorCast;
     curScore.fontSize = 60;
     curScore.horizontalAlignmentMode = SKLabelHorizontalAlignmentModeCenter;
     curScore.zPosition = 101;
-    curScore.text = [NSString stringWithFormat:@"SCORE: %li", [GameState sharedGameData].score];
+    curScore.text = [NSString stringWithFormat:@"SCORE: %i", [GameState sharedGameData].score];
     [self addChild:curScore];
 }
 

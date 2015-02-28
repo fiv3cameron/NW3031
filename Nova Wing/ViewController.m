@@ -7,6 +7,7 @@
 //
 
 #import "ViewController.h"
+#import "GameKitHelper.h"
 #import "MainMenu.h"
 
 @implementation ViewController
@@ -32,6 +33,30 @@
     [skView presentScene:scene];
 }
 
+- (void)viewDidAppear:(BOOL)animated {
+    [super viewDidAppear:animated];
+    
+    [[NSNotificationCenter defaultCenter]
+     addObserver:self
+     selector:@selector(showAuthenticationViewController)
+     name:PresentAuthenticationViewController
+     object:nil];
+    
+    [[GameKitHelper sharedGameKitHelper] authenticateLocalPlayer];
+}
+
+- (void)showAuthenticationViewController
+{
+    GameKitHelper *gameKitHelper = [GameKitHelper sharedGameKitHelper];
+    UIViewController *vc = self.view.window.rootViewController;
+    [vc presentViewController: gameKitHelper.authenticationViewController animated:YES completion:nil];
+}
+
+- (void)dealloc
+{
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
+}
+
 - (BOOL)shouldAutorotate
 {
     return YES;
@@ -50,6 +75,10 @@
 {
     [super didReceiveMemoryWarning];
     // Release any cached data, images, etc that aren't in use.
+}
+
+-(void) gameCenterViewControllerDidFinish: (GKGameCenterViewController *)gameCenterViewController {
+    [gameCenterViewController dismissViewControllerAnimated:YES completion:nil];
 }
 
 @end
