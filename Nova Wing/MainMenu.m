@@ -60,6 +60,7 @@ NSTimeInterval _dt;
         [self addChild: [self settingsButtonNode]];
         [self addChild: [self highScoreLabel]];
         [self createAudio];
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"showAd" object:nil];
         levelTitles = @[@"Event Horizon", @"The Whispers", @"TempLevel3"];
     }
     return self;
@@ -558,6 +559,7 @@ NSTimeInterval _dt;
         SKAction *playSound = [SKAction runBlock:^{
             [self playSoundEffectsWithAction:createSound];
         }];
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"hideAd" object:nil];
         SKAction *menuAnimate = [SKAction runBlock:^{
             [self mainMenuAnimateOut];
         }];

@@ -23,7 +23,7 @@
         bgImg.position = CGPointMake(160.0f, 0.0f);
         
         [[GameState sharedGameData] save];
-        
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"showAd" object:nil];        
         
         [self addChild:bgImg];
         [self addChild:[self backToMenu]];
