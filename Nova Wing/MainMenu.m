@@ -78,7 +78,7 @@ NSTimeInterval _dt;
 -(void)loadTextures {
     audioTexture = [SKTexture textureWithImageNamed:@"Audio"];
     audioTexture_highlight = [SKTexture textureWithImageNamed:@"Audio_press"];
-    audioTexture_off = [SKTexture textureWithImageNamed:@"Audio_off"];
+    audioTexture_off = [SKTexture textureWithImageNamed:@"Audio_disengage"];
 }
 
 #pragma mark --Create Background
@@ -249,6 +249,7 @@ NSTimeInterval _dt;
 }
 
 #pragma mark --Create Audio
+
 -(void)createAudio
 {
     [[NWAudioPlayer sharedAudioPlayer] createAllMusicWithAudio:Menu_Music];
@@ -263,12 +264,12 @@ NSTimeInterval _dt;
 
 -(void)toggleAudio {
     if ([GameState sharedGameData].audioVolume == 1.0) {
-        sfxToggle.texture = audioTexture_off;
+        musicToggle.texture = audioTexture_off;
         [GameState sharedGameData].audioVolume = 0.0;
         [[NWAudioPlayer sharedAudioPlayer] bgPlayer].volume = [GameState sharedGameData].audioVolume;
         [[GameState sharedGameData] save];
     } else if ([GameState sharedGameData].audioVolume == 0.0) {
-        sfxToggle.texture = audioTexture;
+        musicToggle.texture = audioTexture;
         [GameState sharedGameData].audioVolume = 1.0;
         [[NWAudioPlayer sharedAudioPlayer] bgPlayer].volume = [GameState sharedGameData].audioVolume;
         [[GameState sharedGameData] save];
@@ -402,8 +403,6 @@ NSTimeInterval _dt;
         vibrationToggleButton = [SKSpriteNode spriteNodeWithImageNamed:@"vibrateButton_off"];
     }
     vibrationToggleButton.position = CGPointMake(self.size.width * 1.5, self.size.height * 0.5 - self.size.height * 5/6 + self.size.height * 0.75);
-    vibrationToggleButton.xScale = 0.5;
-    vibrationToggleButton.yScale = 0.5;
     vibrationToggleButton.name = @"vibrationToggleButton";
     
     [self addChild:vibrationToggleButton];
@@ -771,9 +770,9 @@ NSTimeInterval _dt;
     
     if (![nodeLift.name isEqualToString:@"musicToggle"]) {
         if ([GameState sharedGameData].audioVolume == 1.0) {
-            sfxToggle.texture = audioTexture;
+            musicToggle.texture = audioTexture;
         } else {
-            sfxToggle.texture = audioTexture_off;
+            musicToggle.texture = audioTexture_off;
         }
     }
     

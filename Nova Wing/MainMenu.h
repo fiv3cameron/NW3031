@@ -11,7 +11,6 @@
 //#import "PBParallaxScrolling.h"
 
 SKSpriteNode *musicToggle;
-SKSpriteNode *sfxToggle;
 SKSpriteNode *vibrationToggleButton;
 SKSpriteNode *titleImage;
 SKSpriteNode *levelThumb;

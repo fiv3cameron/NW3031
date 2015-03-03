@@ -31,7 +31,21 @@
     
         //Set Up Atlases...
     NSArray *asteroid_1;
+    NSArray *asteroid_2;
+    NSArray *asteroid_3;
+    NSArray *asteroid_Red;
+    NSArray *ship_Fragment;
+    NSArray *shield_Load;
 }
+
+    //Atlas Properties
+@property (strong, nonatomic) SKTextureAtlas *Asteroid_1_Atlas;
+@property (strong, nonatomic) SKTextureAtlas *Asteroid_2_Atlas;
+@property (strong, nonatomic) SKTextureAtlas *Asteroid_3_Atlas;
+@property (strong, nonatomic) SKTextureAtlas *Asteroid_Red_Atlas;
+@property (strong, nonatomic) SKTextureAtlas *Ship_Fragment_Atlas;
+@property (strong, nonatomic) SKTextureAtlas *Shield_Atlas;
+
 @end
 
 @implementation Tutorial
@@ -42,17 +56,54 @@
 -(id)initWithSize:(CGSize)size {
     if (self = [super initWithSize:size]) {
         
+        self.Asteroid_1_Atlas = [SKTextureAtlas atlasNamed:@"Asteroid-1"];
+        self.Asteroid_2_Atlas = [SKTextureAtlas atlasNamed:@"Asteroid-2"];
+        self.Asteroid_3_Atlas = [SKTextureAtlas atlasNamed:@"Asteroid-3"];
+        self.Asteroid_Red_Atlas = [SKTextureAtlas atlasNamed:@"Asteroid-Red"];
+        self.Ship_Fragment_Atlas = [SKTextureAtlas atlasNamed:@"Ship-Fragment"];
+        
         self.backgroundColor = [SKColor colorWithRed:0 green:0 blue:0 alpha:1];
         
             //Set up Arrays
         NSMutableArray *Asteroid_1_Frames = [NSMutableArray array];
-        SKTextureAtlas *Asteroid_1_Atlas = [SKTextureAtlas atlasNamed:@"Asteroid-1"];
-        for (int i=1; i <= Asteroid_1_Atlas.textureNames.count; i++) {
+        for (int i=1; i <= _Asteroid_1_Atlas.textureNames.count; i++) {
             NSString *textureName = [NSString stringWithFormat:@"Asteroid-1-%d", i];
-            SKTexture *temp = [Asteroid_1_Atlas textureNamed:textureName];
+            SKTexture *temp = [_Asteroid_1_Atlas textureNamed:textureName];
             [Asteroid_1_Frames addObject:temp];
         }
         asteroid_1 = Asteroid_1_Frames;
+        
+        NSMutableArray *Asteroid_2_Frames = [NSMutableArray array];
+        for (int i=1; i <= _Asteroid_2_Atlas.textureNames.count; i++) {
+            NSString *textureName = [NSString stringWithFormat:@"Asteroid-2-%d", i];
+            SKTexture *temp = [_Asteroid_2_Atlas textureNamed:textureName];
+            [Asteroid_2_Frames addObject:temp];
+        }
+        asteroid_2 = Asteroid_2_Frames;
+        
+        NSMutableArray *Asteroid_3_Frames = [NSMutableArray array];
+        for (int i=1; i <= _Asteroid_3_Atlas.textureNames.count; i++) {
+            NSString *textureName = [NSString stringWithFormat:@"Asteroid-3-%d", i];
+            SKTexture *temp = [_Asteroid_3_Atlas textureNamed:textureName];
+            [Asteroid_3_Frames addObject:temp];
+        }
+        asteroid_3 = Asteroid_3_Frames;
+        
+        NSMutableArray *Asteroid_Red_Frames = [NSMutableArray array];
+        for (int i=1; i <= _Asteroid_Red_Atlas.textureNames.count; i++) {
+            NSString *textureName = [NSString stringWithFormat:@"Asteroid-Red-%d", i];
+            SKTexture *temp = [_Asteroid_Red_Atlas textureNamed:textureName];
+            [Asteroid_Red_Frames addObject:temp];
+        }
+        asteroid_Red = Asteroid_Red_Frames;
+        
+        NSMutableArray *Ship_Fragment_Frames = [NSMutableArray array];
+        for (int i=1; i <= _Ship_Fragment_Atlas.textureNames.count; i++) {
+            NSString *textureName = [NSString stringWithFormat:@"Ship-Fragment-%d", i];
+            SKTexture *temp = [_Ship_Fragment_Atlas textureNamed:textureName];
+            [Ship_Fragment_Frames addObject:temp];
+        }
+        ship_Fragment = Ship_Fragment_Frames;
         
         self.physicsWorld.gravity = CGVectorMake(0.0f, -8.0f);
         self.physicsWorld.contactDelegate = self;
@@ -107,7 +158,7 @@
 }
 
 -(void)createBlackHole {
-    blackHole = [SKSpriteNode spriteNodeWithImageNamed:@"BlackHole"];
+    blackHole = [SKSpriteNode spriteNodeWithImageNamed:@"Black-Hole-1"];
     blackHole.position = CGPointMake(self.size.width/2, -160);
     blackHole.xScale = 1.4;
     blackHole.yScale = 1.4;
@@ -179,7 +230,8 @@
 }
 
 -(SKNode *)asteroid2 {
-    SKSpriteNode *obstacle = [SKSpriteNode spriteNodeWithImageNamed:@"L1-AOb-2"];
+    SKTexture *temp = asteroid_2[0];
+    SKSpriteNode *obstacle = [SKSpriteNode spriteNodeWithTexture:temp];
     
     obstacle.position = CGPointMake(self.size.width * 1.7, (self.size.height / 6) * 2);
     obstacle.anchorPoint = CGPointZero;
@@ -194,7 +246,8 @@
 }
 
 -(SKNode *)asteroid3 {
-    SKSpriteNode *obstacle = [SKSpriteNode spriteNodeWithImageNamed:@"L1-AOb-3"];
+    SKTexture *temp = asteroid_3[0];
+    SKSpriteNode *obstacle = [SKSpriteNode spriteNodeWithTexture:temp];
     
     obstacle.position = CGPointMake(self.size.width * 1.7, (self.size.height / 6) * 3);
     //obstacle.name = @"aerial";
@@ -212,7 +265,8 @@
 }
 
 -(SKNode *)asteroid4 {
-    SKSpriteNode *obstacle = [SKSpriteNode spriteNodeWithImageNamed:@"L1-AOb-4"];
+    SKTexture *temp = asteroid_Red[0];
+    SKSpriteNode *obstacle = [SKSpriteNode spriteNodeWithTexture:temp];
 
     obstacle.position = CGPointMake(self.size.width * 1.7, (self.size.height / 6) * 4);
     //obstacle.name = @"aerial";
@@ -231,7 +285,8 @@
 }
 
 -(SKNode *)shipChunk {
-    SKSpriteNode *obstacle = [SKSpriteNode spriteNodeWithImageNamed:@"Ship-Chunk-1"];
+    SKTexture *temp = ship_Fragment[0];
+    SKSpriteNode *obstacle = [SKSpriteNode spriteNodeWithTexture:temp];
     
     obstacle.position = CGPointMake(self.size.width * 1.7, (self.size.height / 6) * 5);
     obstacle.anchorPoint = CGPointZero;
