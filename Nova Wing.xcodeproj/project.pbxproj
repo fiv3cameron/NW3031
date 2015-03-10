@@ -136,6 +136,7 @@
 		76B9821619FC7A4F00F7E606 /* Wingman@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 76B9821319FC7A4E00F7E606 /* Wingman@2x.png */; };
 		76B9E91719FB1BE8000EF044 /* ShipTrail.sks in Resources */ = {isa = PBXBuildFile; fileRef = 76B9E91619FB1BE8000EF044 /* ShipTrail.sks */; };
 		76B9E91B19FBF04D000EF044 /* PowerUps.m in Sources */ = {isa = PBXBuildFile; fileRef = 76B9E91A19FBF04D000EF044 /* PowerUps.m */; };
+		76C2BC541AA54A87005F71A2 /* Audio_disengage@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 76C2BC531AA54A87005F71A2 /* Audio_disengage@2x.png */; };
 		76C6F15419A2CCB100B37331 /* Level-1@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 76C6F15319A2CCB100B37331 /* Level-1@2x.png */; };
 /* End PBXBuildFile section */
 
@@ -304,6 +305,7 @@
 		76B9E91619FB1BE8000EF044 /* ShipTrail.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = ShipTrail.sks; sourceTree = "<group>"; };
 		76B9E91919FBF04D000EF044 /* PowerUps.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PowerUps.h; sourceTree = "<group>"; };
 		76B9E91A19FBF04D000EF044 /* PowerUps.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PowerUps.m; sourceTree = "<group>"; };
+		76C2BC531AA54A87005F71A2 /* Audio_disengage@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Audio_disengage@2x.png"; sourceTree = "<group>"; };
 		76C6F15319A2CCB100B37331 /* Level-1@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Level-1@2x.png"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -676,6 +678,7 @@
 		76B9E91D19FC18A8000EF044 /* Buttons */ = {
 			isa = PBXGroup;
 			children = (
+				76C2BC531AA54A87005F71A2 /* Audio_disengage@2x.png */,
 				2D9C37951A771F020083E283 /* Audio_off@2x.png */,
 				2D9C37961A771F020083E283 /* Audio_press@2x.png */,
 				2D9C37971A771F020083E283 /* Audio@2x.png */,
@@ -800,6 +803,7 @@
 			files = (
 				76B9E91719FB1BE8000EF044 /* ShipTrail.sks in Resources */,
 				767321351A574CE00057EF70 /* ShieldCollision.caf in Resources */,
+				76C2BC541AA54A87005F71A2 /* Audio_disengage@2x.png in Resources */,
 				2DEBAC521A9C053500D45CD5 /* lieutenant_commander@2x.jpg in Resources */,
 				7673212D1A574CE00057EF70 /* AutoCannon-Spool.caf in Resources */,
 				2DB3528819999445006BF15C /* AOb-3@2x.png in Resources */,
@@ -1070,7 +1074,7 @@
 				INFOPLIST_FILE = "Nova Wing/Nova Wing-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 8;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE = "8f446e39-f7e2-4455-ab7d-291808e916db";
 				SPRITEKIT_TEXTURE_ATLAS_OUTPUT = YES;
 				WRAPPER_EXTENSION = app;
 			};
@@ -1088,7 +1092,7 @@
 				INFOPLIST_FILE = "Nova Wing/Nova Wing-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 8;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE = "8f446e39-f7e2-4455-ab7d-291808e916db";
 				SPRITEKIT_TEXTURE_ATLAS_OUTPUT = YES;
 				WRAPPER_EXTENSION = app;
 			};

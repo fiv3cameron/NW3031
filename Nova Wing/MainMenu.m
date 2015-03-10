@@ -32,6 +32,11 @@ static inline CGPoint CGPointMultiplyScalar(const CGPoint a, const CGFloat b)
     SKSpriteNode *settingsButton;
     SKSpriteNode *codexButton;
     SKSpriteNode *creditButton;
+    
+        //Textures
+    SKTexture *audioTexture;
+    SKTexture *audioTexture_off;
+    SKTexture *audioTexture_highlight;
 }
 @end
 
@@ -52,6 +57,7 @@ NSTimeInterval _dt;
         }
         
         [self initializeScrollingBackground];
+        [self loadTextures];
         
         [self addChild: [self addTitleNode]];
         [self addChild: [self startButtonNode]];
@@ -67,6 +73,12 @@ NSTimeInterval _dt;
         //[self achievementRetrievement];
     }
     return self;
+}
+
+-(void)loadTextures {
+    audioTexture = [SKTexture textureWithImageNamed:@"Audio"];
+    audioTexture_highlight = [SKTexture textureWithImageNamed:@"Audio_press"];
+    audioTexture_off = [SKTexture textureWithImageNamed:@"Audio_disengage"];
 }
 
 #pragma mark --Create Background
@@ -237,6 +249,7 @@ NSTimeInterval _dt;
 }
 
 #pragma mark --Create Audio
+
 -(void)createAudio
 {
     [[NWAudioPlayer sharedAudioPlayer] createAllMusicWithAudio:Menu_Music];
@@ -251,12 +264,12 @@ NSTimeInterval _dt;
 
 -(void)toggleAudio {
     if ([GameState sharedGameData].audioVolume == 1.0) {
-        sfxToggle.texture = [SKTexture textureWithImageNamed:@"Audio_off"];
+        musicToggle.texture = audioTexture_off;
         [GameState sharedGameData].audioVolume = 0.0;
         [[NWAudioPlayer sharedAudioPlayer] bgPlayer].volume = [GameState sharedGameData].audioVolume;
         [[GameState sharedGameData] save];
     } else if ([GameState sharedGameData].audioVolume == 0.0) {
-        sfxToggle.texture = [SKTexture textureWithImageNamed:@"Audio"];
+        musicToggle.texture = audioTexture;
         [GameState sharedGameData].audioVolume = 1.0;
         [[NWAudioPlayer sharedAudioPlayer] bgPlayer].volume = [GameState sharedGameData].audioVolume;
         [[GameState sharedGameData] save];
@@ -359,10 +372,10 @@ NSTimeInterval _dt;
 
 -(void)musicToggleButton {
     if ([[GameState sharedGameData] audioVolume] == 1.0) {
-    musicToggle = [SKSpriteNode spriteNodeWithTexture: [SKTexture textureWithImageNamed:@"Audio"]];
+    musicToggle = [SKSpriteNode spriteNodeWithTexture: audioTexture];
     }
     if ([[GameState sharedGameData] audioVolume] == 0.0) {
-        musicToggle = [SKSpriteNode spriteNodeWithTexture: [SKTexture textureWithImageNamed:@"Audio_off"]];
+        musicToggle = [SKSpriteNode spriteNodeWithTexture: audioTexture_off];
     }
     musicToggle.position = CGPointMake(self.size.width * 1.5, (self.size.height / 8) * 6);
     musicToggle.name = @"musicToggle";
@@ -385,13 +398,11 @@ NSTimeInterval _dt;
 
 -(void)vibrationToggleButtonCreate {
     if ([GameState sharedGameData].vibeOn == YES) {
-        vibrationToggleButton = [SKSpriteNode spriteNodeWithImageNamed:@"L1-AOb-2"];
+        vibrationToggleButton = [SKSpriteNode spriteNodeWithImageNamed:@"vibrateButton"];
     } else {
-        vibrationToggleButton = [SKSpriteNode spriteNodeWithImageNamed:@"L1-AOb-1"];
+        vibrationToggleButton = [SKSpriteNode spriteNodeWithImageNamed:@"vibrateButton_off"];
     }
     vibrationToggleButton.position = CGPointMake(self.size.width * 1.5, self.size.height * 0.5 - self.size.height * 5/6 + self.size.height * 0.75);
-    vibrationToggleButton.xScale = 0.5;
-    vibrationToggleButton.yScale = 0.5;
     vibrationToggleButton.name = @"vibrationToggleButton";
     
     [self addChild:vibrationToggleButton];
@@ -594,11 +605,7 @@ NSTimeInterval _dt;
     }
     
     if ([node.name isEqualToString:@"musicToggle"]) {
-        musicToggle.texture = [SKTexture textureWithImageNamed:@"Audio_press"];
-    }
-    
-    if ([node.name isEqualToString:@"sfxToggle"]) {
-        sfxToggle.texture = [SKTexture textureWithImageNamed:@"Audio_press"];
+        musicToggle.texture = audioTexture_highlight;
     }
     
     if ([node.name isEqualToString:@"vibrationToggleButton"]) {
@@ -763,9 +770,9 @@ NSTimeInterval _dt;
     
     if (![nodeLift.name isEqualToString:@"musicToggle"]) {
         if ([GameState sharedGameData].audioVolume == 1.0) {
-            sfxToggle.texture = [SKTexture textureWithImageNamed:@"Audio"];
+            musicToggle.texture = audioTexture;
         } else {
-            sfxToggle.texture = [SKTexture textureWithImageNamed:@"Audio_off"];
+            musicToggle.texture = audioTexture_off;
         }
     }
     
