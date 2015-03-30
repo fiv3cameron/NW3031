@@ -710,10 +710,51 @@ SKColor *wingmanLaserColorCast;
     }
 }
 
-/*-(void)gcAchievementChecks {
-    if ([GameState sharedGameData].score>=100) {
-        [[GameKitHelper alloc] reportAchievementWithIdentifier:@"flight_school_graduate" percentComplete:100.0 fromDictionary:_achievementsDictionary];
+-(void)checkAchievementsForRank {
+    if ([GameKitHelper sharedGameKitHelper].enableGameCenter) {
+        NSArray *rankStrings = @[@"flight_school_graduate", @"cadet", @"private_I", @"private_II", @"sergeant_I", @"sergeant_II", @"flight_commander", @"lieutenant_commander", @"commander", @"fleet_general", @"fleet_admiral"];
+        int currentScore = [GameState sharedGameData].score;
+        for (NSString *tempRankIdentifier in rankStrings) {
+            GKAchievement *tempAchievieForRank = [[GameKitHelper alloc] getAchievementForIdentifier:tempRankIdentifier fromDictionary:_achievementsDictionary];
+            if ([tempAchievieForRank.identifier isEqualToString:@"flight_school_graduate"] && tempAchievieForRank.percentComplete != 100.0 && currentScore>100) {
+                tempAchievieForRank.percentComplete = 100.0;  //Flight School Graduate set to 100% complete.
+            } else if ([tempAchievieForRank.identifier isEqualToString:@"cadet"] && tempAchievieForRank.percentComplete != 100.0 && currentScore>250) {
+                tempAchievieForRank.percentComplete = 100.0;
+            } else if ([tempAchievieForRank.identifier isEqualToString:@"private_I"] && tempAchievieForRank.percentComplete != 100.0 && currentScore>500) {
+                tempAchievieForRank.percentComplete = 100.0;
+            } else if ([tempAchievieForRank.identifier isEqualToString:@"private_II"] && tempAchievieForRank.percentComplete != 100.0 && currentScore>1000) {
+                tempAchievieForRank.percentComplete = 100.0;
+            } else if ([tempAchievieForRank.identifier isEqualToString:@"sergeant_I"] && tempAchievieForRank.percentComplete != 100.0 && currentScore>1500) {
+                tempAchievieForRank.percentComplete = 100.0;
+            } else if ([tempAchievieForRank.identifier isEqualToString:@"sergeant_II"] && tempAchievieForRank.percentComplete != 100.0 && currentScore>2000) {
+                tempAchievieForRank.percentComplete = 100.0;
+            } else if ([tempAchievieForRank.identifier isEqualToString:@"flight_commander"] && tempAchievieForRank.percentComplete != 100.0 && currentScore>2500) {
+                tempAchievieForRank.percentComplete = 100.0;
+            } else if ([tempAchievieForRank.identifier isEqualToString:@"lieutenant_commander"] && tempAchievieForRank.percentComplete != 100.0 && currentScore>3000) {
+                tempAchievieForRank.percentComplete = 100.0;
+            } else if ([tempAchievieForRank.identifier isEqualToString:@"commander"] && tempAchievieForRank.percentComplete != 100.0 && currentScore>4000) {
+                tempAchievieForRank.percentComplete = 100.0;
+            } else if ([tempAchievieForRank.identifier isEqualToString:@"fleet_general"] && tempAchievieForRank.percentComplete != 100.0 && currentScore>5000) {
+                tempAchievieForRank.percentComplete = 100.0;
+            } else if ([tempAchievieForRank.identifier isEqualToString:@"fleet_admiral"] && tempAchievieForRank.percentComplete != 100.0 && currentScore>10000) {
+                tempAchievieForRank.percentComplete = 100.0;
+            }
+            [_achievementsDictionary setObject:tempAchievieForRank forKey:tempAchievieForRank.identifier];
+        }
     }
+    
+}
+
+/*-(void)gcAchievementChecks {
+    if ([GameKitHelper sharedGameKitHelper].enableGameCenter) {
+        if ([GameState sharedGameData].score>=100) {
+            if ([_achievementsDictionary objectForKeyedSubscript:@"flight_school_graduate"]) {
+                //test
+            }
+            [[GameKitHelper alloc] reportAchievementWithIdentifier:@"flight_school_graduate" percentComplete:100.0 fromDictionary:_achievementsDictionary];
+        }
+    }
+    
 }*/
 
 #pragma mark --Animate Obstacles
@@ -1418,7 +1459,15 @@ SKColor *wingmanLaserColorCast;
     SKAction *gameOver = [SKAction runBlock:^{[self gameOverComplete];}];
     [self runAction:[SKAction sequence:@[wait,gameOver]]];
     
-    //[self gcAchievementChecks];
+    NSMutableArray *reportArray = [NSMutableArray init];
+    for (GKAchievement *tempAchievement in _achievementsDictionary) {
+        [reportArray addObject:tempAchievement];
+    }
+    [GKAchievement reportAchievements:reportArray withCompletionHandler:^(NSError *error) {
+        if (error != nil) {
+            NSLog(error);
+        }
+    }];
 }
 
 -(void)gameOverComplete {
@@ -1569,6 +1618,7 @@ SKColor *wingmanLaserColorCast;
             [self scorePlusWithMultiplier:1 fromNode:secondNode];
         }
         secondNode.physicsBody.categoryBitMask = 0;
+        [self checkAchievementsForRank];
     }
 }
 

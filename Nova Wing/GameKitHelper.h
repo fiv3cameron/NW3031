@@ -32,11 +32,11 @@ extern NSString *const PresentAuthenticationViewController;
 +(instancetype)sharedGameKitHelper;
 -(void)authenticateLocalPlayer;
 //-(void)retrieveAchievementsToDictionary: (NSMutableDictionary *)achievementsDictionary;
-//-(GKAchievement *)getAchievementForIdentifier: (NSString *)identifier fromDictionary: (NSMutableDictionary *)achievementsDictionary;
+-(GKAchievement *)getAchievementForIdentifier: (NSString *)identifier fromDictionary: (NSMutableDictionary *)achievementsDictionary;
 -(void)submitScore:(int64_t)score toLeader: (NSString*)leaderboard;
 -(UIViewController*) getRootViewController;
 //-(void) storeDictionaryToAchievementsDictionary: (NSMutableDictionary *)dictionary;
-//-(void)reportAchievementWithIdentifier: (NSString *)identifier percentComplete: (float) percent fromDictionary: (NSMutableDictionary *)dictionary;
+-(void)reportAchievementWithIdentifier: (NSString *)identifier percentComplete: (float) percent fromDictionary: (NSMutableDictionary *)dictionary;
 //-(NSMutableDictionary *) fillDictionaryFromAchievementsDictionary;
 
 @end

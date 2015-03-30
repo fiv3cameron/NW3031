@@ -70,6 +70,9 @@ NSTimeInterval _dt;
         levelTitles = @[@"Event Horizon", @"The Whispers", @"TempLevel3"];
         
         //Check achievements for rank.
+        if ([GameKitHelper sharedGameKitHelper].enableGameCenter) {
+            [self achievementRetrievement];
+        }
         //[self achievementRetrievement];
     }
     return self;
@@ -476,31 +479,47 @@ NSTimeInterval _dt;
     [gameCenterViewController.presentingViewController dismissViewControllerAnimated:YES completion:nil];
 }
 
-/*-(void)achievementRetrievement {
-    _achievementsDictionary = [[NSMutableDictionary alloc] init];
-    [[GameKitHelper sharedGameKitHelper] retrieveAchievementsToDictionary: _achievementsDictionary]; //Load all achievements.
-    //Test for rank achievements if _achievementsDictionary is NOT nil.
-        //Process rank achievements.
-    if (_achievementsDictionary != nil) {
-        //Do stuff.
-        NSArray *rankStrings = @[@"flight_school_graduate",@"cadet",@"private_I",@"private_II",@"sergeant_I",@"sergeant_II",@"flight_commander",@"lieutenant_commander",@"commander",@"fleet_general",@"fleet_admiral"];
-        //NSArray *rankTitles = @[@"Flight School Graduate", @"Cadet", @"Private, Rank I", @"Private, Rank II", @"Sergeant, Rank I", @"Sergeant, Rank II", @"Flight Commander", @"Lieutenant Commander", @"Commander", @"Fleet General", @"Fleet Admiral"];
-        int tempIndex = 0;
-        for (NSString *rankStringTemp in rankStrings) {
-            tempIndex = tempIndex + 1;
-            GKAchievement *tempRank = [[GameKitHelper sharedGameKitHelper] getAchievementForIdentifier:rankStringTemp fromDictionary:_achievementsDictionary];
-            if (tempRank.percentComplete == 0.0) {
-                if (tempIndex == 1) {
-                    _activeRank = [[GKAchievement alloc] initWithIdentifier:@"no_rank"];
-                } else {
-                    _activeRank = [[GameKitHelper sharedGameKitHelper] getAchievementForIdentifier:[rankStrings objectAtIndex:tempIndex - 1] fromDictionary:_achievementsDictionary];
+-(void)achievementRetrievement {
+    [GKAchievement loadAchievementsWithCompletionHandler:^(NSArray *achievements, NSError *error) {
+        if (error != nil) {
+            NSLog(@"Error in loading achievements.");
+        }
+        
+        if (achievements != nil) {
+            //Process achievements.
+            for (GKAchievement *temp in achievements) {
+                //temp
+                if ([temp.identifier isEqualToString: @"flight_school_graduate"] && temp.percentComplete == 100.0f) {
+                    _maxRank = 1;
+                }   else if ([temp.identifier isEqualToString: @"cadet"] && temp.percentComplete == 100.0f) {
+                    _maxRank = 2;
+                }   else if ([temp.identifier isEqualToString: @"private_I"] && temp.percentComplete == 100.0f) {
+                    _maxRank = 3;
+                }   else if ([temp.identifier isEqualToString: @"private_II"] && temp.percentComplete == 100.0f) {
+                    _maxRank = 4;
+                }   else if ([temp.identifier isEqualToString: @"sergeant_I"] && temp.percentComplete == 100.0f) {
+                    _maxRank = 5;
+                }   else if ([temp.identifier isEqualToString: @"sergeant_II"] && temp.percentComplete == 100.0f) {
+                    _maxRank = 6;
+                }   else if ([temp.identifier isEqualToString: @"flight_commander"] && temp.percentComplete == 100.0f) {
+                    _maxRank = 7;
+                }   else if ([temp.identifier isEqualToString: @"lieutenant_commander"] && temp.percentComplete == 100.0f) {
+                    _maxRank = 8;
+                }   else if ([temp.identifier isEqualToString: @"commander"] && temp.percentComplete == 100.0f) {
+                    _maxRank = 9;
+                }   else if ([temp.identifier isEqualToString: @"fleet_general"] && temp.percentComplete == 100.0f) {
+                    _maxRank = 10;
+                }   else if ([temp.identifier isEqualToString: @"fleet_admiral"] && temp.percentComplete == 100.0f) {
+                    _maxRank = 11;
                 }
-                return;
+                [_achievementsDictionary setObject:temp forKey:temp.identifier];
             }
         }
-    }
+    }];
+    
+    NSLog(@"Achievements Retrievemented");
 
-}*/
+}
 
 #pragma mark --Actions
 
