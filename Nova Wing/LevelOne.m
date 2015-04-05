@@ -73,6 +73,8 @@
     @property (strong, nonatomic) SKTextureAtlas *Shield_Atlas;
     //@property (strong, nonatomic) SKTextureAtlas *Black_Hole_Atlas;
 
+
+
 @end
 
 
@@ -124,6 +126,7 @@ SKColor *wingmanLaserColorCast;
         [self preloadSoundActions];
         
             //Set up Arrays
+        reportArray = [NSMutableArray array];
     }
     return self;
 }
@@ -718,6 +721,7 @@ SKColor *wingmanLaserColorCast;
             GKAchievement *tempAchievieForRank = [[GameKitHelper alloc] getAchievementForIdentifier:tempRankIdentifier fromDictionary:_achievementsDictionary];
             if ([tempAchievieForRank.identifier isEqualToString:@"flight_school_graduate"] && tempAchievieForRank.percentComplete != 100.0 && currentScore>100) {
                 tempAchievieForRank.percentComplete = 100.0;  //Flight School Graduate set to 100% complete.
+                NSLog(@"Rank Flight School Graduate achieved.");
             } else if ([tempAchievieForRank.identifier isEqualToString:@"cadet"] && tempAchievieForRank.percentComplete != 100.0 && currentScore>250) {
                 tempAchievieForRank.percentComplete = 100.0;
             } else if ([tempAchievieForRank.identifier isEqualToString:@"private_I"] && tempAchievieForRank.percentComplete != 100.0 && currentScore>500) {
@@ -742,20 +746,39 @@ SKColor *wingmanLaserColorCast;
             [_achievementsDictionary setObject:tempAchievieForRank forKey:tempAchievieForRank.identifier];
         }
     }
-    
 }
 
-/*-(void)gcAchievementChecks {
+-(void)checkAchievementsIsGameOver:(BOOL)gameIsOver {
+    
+    //This function only checks to see if the achievement is complete.  Qualification checks should be accomplished outside this function.
+    
     if ([GameKitHelper sharedGameKitHelper].enableGameCenter) {
-        if ([GameState sharedGameData].score>=100) {
-            if ([_achievementsDictionary objectForKeyedSubscript:@"flight_school_graduate"]) {
-                //test
+        NSArray *achievieStrings = @[@"bro_do_you_lift",@"charity_case",@"crash_dummy",@"equal_opp_destroyer",@"killing_spree",@"kill_streak",@"killpossible",@"shot_heart",@"killing_smalls",@"welcome_501st"];
+        for (NSString *tempString in achievieStrings) {
+            //Check non-rank achievements.
+            GKAchievement *tempAchievement = [[GameKitHelper alloc] getAchievementForIdentifier:tempString fromDictionary:_achievementsDictionary];
+            if ([tempAchievement.identifier isEqualToString:@"welcome_501st"] && tempAchievement.percentComplete != 100.0 && !gameIsOver) { //Identify as 501st AND achievement not yet complete AND game IS NOT over.
+                if (localTotalLaserHits == 0 && localTotalLasersFired == AUTOCANNON_SHOTS_FIRED) {//Check that achievement has been satisfied.
+                    tempAchievement.percentComplete = 100.0;
+                }
+            } else if ([tempAchievement.identifier isEqualToString:@"bro_do_you_lift"] && tempAchievement.percentComplete != 100.0 && gameIsOver) {//Identify as bro_do_you_lift AND achievement not yet complete AND game IS over.
+                if ([GameState sharedGameData].score == 0) { //Check that achievement has been satisfied.
+                    tempAchievement.percentComplete = 100.0;
+                }
+            } else if ([tempAchievement.identifier isEqualToString:@"charity_case"] && tempAchievement.percentComplete != 100.0 && gameIsOver) { //Identify as charity_case AND achievement not yet complete AND game IS over.
+                if ([GameState sharedGameData].score > 100 && [GameState sharedGameData].scoreMultiplier == 1) { //Check satisfy.
+                    tempAchievement.percentComplete = 100.0;
+                }
+            } else if ([tempAchievement.identifier isEqualToString:@"crash_dummy"] && tempAchievement.percentComplete != 100.0 && gameIsOver) {
+                if ([GameState sharedGameData].totalAsteroidDeaths >= 100) {
+                    tempAchievement.percentComplete = 100.0;
+                }
             }
-            [[GameKitHelper alloc] reportAchievementWithIdentifier:@"flight_school_graduate" percentComplete:100.0 fromDictionary:_achievementsDictionary];
+            
+            [_achievementsDictionary setObject:tempAchievement forKey:tempAchievement.identifier];
         }
     }
-    
-}*/
+}
 
 #pragma mark --Animate Obstacles
 
@@ -1237,6 +1260,8 @@ SKColor *wingmanLaserColorCast;
     if (!wingmanActive) {
         activePup = NO;
     }
+    [self checkAchievementsIsGameOver:NO];
+    
     [GameState sharedGameData].maxLaserHits = MAX([GameState sharedGameData].maxLaserHits, localLaserHits);
 }
 
@@ -1422,7 +1447,7 @@ SKColor *wingmanLaserColorCast;
 
 -(void)gameOver {
     //Update leaderboard if necessary.
-    if ([GameState sharedGameData].score > [GameState sharedGameData].highScoreL1) {
+    if ([GameKitHelper sharedGameKitHelper].enableGameCenter) {
         [[GameKitHelper sharedGameKitHelper] submitScore:[GameState sharedGameData].score toLeader:@"L1HS"];
     }
     
@@ -1437,6 +1462,8 @@ SKColor *wingmanLaserColorCast;
     [GameState sharedGameData].totalPoints = [GameState sharedGameData].totalPoints + [GameState sharedGameData].score;
     [GameState sharedGameData].allTimeAverageAccuracy = [GameState sharedGameData].totalLaserHits / [GameState sharedGameData].totalLasersFired;
     [GameState sharedGameData].allTimeAverageScore = [GameState sharedGameData].totalPoints / [GameState sharedGameData].totalGames;
+    
+    [self checkAchievementsIsGameOver:YES];
     
     //Remove all actions & children from the scene.
     [self removeAllActions];
@@ -1459,13 +1486,16 @@ SKColor *wingmanLaserColorCast;
     SKAction *gameOver = [SKAction runBlock:^{[self gameOverComplete];}];
     [self runAction:[SKAction sequence:@[wait,gameOver]]];
     
-    NSMutableArray *reportArray = [NSMutableArray init];
+    
     for (GKAchievement *tempAchievement in _achievementsDictionary) {
         [reportArray addObject:tempAchievement];
     }
     [GKAchievement reportAchievements:reportArray withCompletionHandler:^(NSError *error) {
         if (error != nil) {
-            NSLog(error);
+            [[GameKitHelper sharedGameKitHelper] setLastError:error];
+            NSLog(@"Error in reporting achievements.");
+        } else {
+            NSLog(@"Achievements reported.");
         }
     }];
 }

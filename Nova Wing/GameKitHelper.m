@@ -28,6 +28,7 @@ NSString *const PresentAuthenticationViewController = @"present_authentication_v
     self = [super init];
     if (self) {
         _enableGameCenter = YES;
+        [self achievementLoad];
     }
     return self;
 }
@@ -36,11 +37,6 @@ NSString *const PresentAuthenticationViewController = @"present_authentication_v
 {
     //1
     GKLocalPlayer *localPlayer = [GKLocalPlayer localPlayer];
-    
-    //2
-    //localPlayer.authenticateHandler =
-    
-    //https://developer.apple.com/library/ios/documentation/NetworkingInternet/Conceptual/GameKit_Guide/Users/Users.html
     
     localPlayer.authenticateHandler = ^(UIViewController *viewController, NSError *error) {
         //3
@@ -109,6 +105,27 @@ NSString *const PresentAuthenticationViewController = @"present_authentication_v
 /*-(void)retrieveAchievementsToDictionary: (NSMutableDictionary *)achievementsDictionary {
     managed under main menu "achievementRetrievement" function.
 }*/
+
+-(void)achievementLoad {
+    if (_enableGameCenter) {
+        [GKAchievement loadAchievementsWithCompletionHandler:^(NSArray *achievements, NSError *error) {
+            if (error != nil) {
+                NSLog(@"Error in loading achievements.");
+            }
+            if (achievements != nil) {
+                //Process achievements.
+                for (GKAchievement *temp in achievements) {
+                    //temp
+                    [[GameKitHelper sharedGameKitHelper].achievementsDictionary setObject:temp forKey:temp.identifier];
+                    //[_achievementsDictionary setObject:temp forKey:temp.identifier];
+                }
+                NSLog(@"Achievements Retrievemented");
+            }
+        }];
+    } else {
+        NSLog(@"Achievements not loaded");
+    }
+}
 
 -(GKAchievement *)getAchievementForIdentifier: (NSString *)identifier fromDictionary: (NSMutableDictionary *)achievementsDictionary {
     GKAchievement *achievement = [achievementsDictionary objectForKey:identifier];

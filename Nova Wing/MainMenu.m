@@ -71,6 +71,7 @@ NSTimeInterval _dt;
         
         //Check achievements for rank.
         if ([GameKitHelper sharedGameKitHelper].enableGameCenter) {
+            [[GameKitHelper alloc] achievementLoad];
             [self achievementRetrievement];
         }
         //[self achievementRetrievement];
@@ -480,45 +481,32 @@ NSTimeInterval _dt;
 }
 
 -(void)achievementRetrievement {
-    [GKAchievement loadAchievementsWithCompletionHandler:^(NSArray *achievements, NSError *error) {
-        if (error != nil) {
-            NSLog(@"Error in loading achievements.");
+    NSMutableDictionary *tempDictionary = [GameKitHelper sharedGameKitHelper].achievementsDictionary;
+    for (GKAchievement *temp in tempDictionary) {
+        if ([temp.identifier isEqualToString: @"flight_school_graduate"] && temp.percentComplete == 100.0f) {
+            _maxRank = 1;
+        }   else if ([temp.identifier isEqualToString: @"cadet"] && temp.percentComplete == 100.0f) {
+            _maxRank = 2;
+        }   else if ([temp.identifier isEqualToString: @"private_I"] && temp.percentComplete == 100.0f) {
+            _maxRank = 3;
+        }   else if ([temp.identifier isEqualToString: @"private_II"] && temp.percentComplete == 100.0f) {
+            _maxRank = 4;
+        }   else if ([temp.identifier isEqualToString: @"sergeant_I"] && temp.percentComplete == 100.0f) {
+            _maxRank = 5;
+        }   else if ([temp.identifier isEqualToString: @"sergeant_II"] && temp.percentComplete == 100.0f) {
+            _maxRank = 6;
+        }   else if ([temp.identifier isEqualToString: @"flight_commander"] && temp.percentComplete == 100.0f) {
+            _maxRank = 7;
+        }   else if ([temp.identifier isEqualToString: @"lieutenant_commander"] && temp.percentComplete == 100.0f) {
+            _maxRank = 8;
+        }   else if ([temp.identifier isEqualToString: @"commander"] && temp.percentComplete == 100.0f) {
+            _maxRank = 9;
+        }   else if ([temp.identifier isEqualToString: @"fleet_general"] && temp.percentComplete == 100.0f) {
+            _maxRank = 10;
+        }   else if ([temp.identifier isEqualToString: @"fleet_admiral"] && temp.percentComplete == 100.0f) {
+            _maxRank = 11;
         }
-        
-        if (achievements != nil) {
-            //Process achievements.
-            for (GKAchievement *temp in achievements) {
-                //temp
-                if ([temp.identifier isEqualToString: @"flight_school_graduate"] && temp.percentComplete == 100.0f) {
-                    _maxRank = 1;
-                }   else if ([temp.identifier isEqualToString: @"cadet"] && temp.percentComplete == 100.0f) {
-                    _maxRank = 2;
-                }   else if ([temp.identifier isEqualToString: @"private_I"] && temp.percentComplete == 100.0f) {
-                    _maxRank = 3;
-                }   else if ([temp.identifier isEqualToString: @"private_II"] && temp.percentComplete == 100.0f) {
-                    _maxRank = 4;
-                }   else if ([temp.identifier isEqualToString: @"sergeant_I"] && temp.percentComplete == 100.0f) {
-                    _maxRank = 5;
-                }   else if ([temp.identifier isEqualToString: @"sergeant_II"] && temp.percentComplete == 100.0f) {
-                    _maxRank = 6;
-                }   else if ([temp.identifier isEqualToString: @"flight_commander"] && temp.percentComplete == 100.0f) {
-                    _maxRank = 7;
-                }   else if ([temp.identifier isEqualToString: @"lieutenant_commander"] && temp.percentComplete == 100.0f) {
-                    _maxRank = 8;
-                }   else if ([temp.identifier isEqualToString: @"commander"] && temp.percentComplete == 100.0f) {
-                    _maxRank = 9;
-                }   else if ([temp.identifier isEqualToString: @"fleet_general"] && temp.percentComplete == 100.0f) {
-                    _maxRank = 10;
-                }   else if ([temp.identifier isEqualToString: @"fleet_admiral"] && temp.percentComplete == 100.0f) {
-                    _maxRank = 11;
-                }
-                [_achievementsDictionary setObject:temp forKey:temp.identifier];
-            }
-        }
-    }];
-    
-    NSLog(@"Achievements Retrievemented");
-
+    }
 }
 
 #pragma mark --Actions
