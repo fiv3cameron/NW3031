@@ -12,8 +12,10 @@ NSString *const PresentAuthenticationViewController = @"present_authentication_v
 
 @implementation GameKitHelper
 
+@synthesize enableGameCenter;
+
 //Singleton...apparently?
-+ (instancetype)sharedGameKitHelper
++ (id)sharedGameKitHelper
 {
     static GameKitHelper *sharedGameKitHelper;
     static dispatch_once_t onceToken;
@@ -25,36 +27,14 @@ NSString *const PresentAuthenticationViewController = @"present_authentication_v
 
 - (id)init
 {
-    self = [super init];
-    if (self) {
-        _enableGameCenter = YES;
-        [self achievementLoad];
+    if (self = [super init]) {
+        if ([[AppDelegate alloc] gameCenterEnabled]) {
+            enableGameCenter = YES;
+        } else {
+            enableGameCenter = NO;
+        }
     }
     return self;
-}
-
-- (void)authenticateLocalPlayer
-{
-    //1
-    GKLocalPlayer *localPlayer = [GKLocalPlayer localPlayer];
-    
-    localPlayer.authenticateHandler = ^(UIViewController *viewController, NSError *error) {
-        //3
-        [self setLastError:error];
-        
-        if(viewController != nil) {
-            //4
-            [self setAuthenticationViewController:viewController];
-        } else if([GKLocalPlayer localPlayer].isAuthenticated) {
-            //5
-            _enableGameCenter = YES;
-            NSLog(@"Successful");
-        } else {
-            //6
-            _enableGameCenter = NO;
-            NSLog(@"Failure");
-        }
-    };
 }
 
 -(UIViewController*) getRootViewController {
@@ -71,14 +51,7 @@ NSString *const PresentAuthenticationViewController = @"present_authentication_v
     }
 }
 
-- (void)setLastError:(NSError *)error
-{
-    _lastError = [error copy];
-    if (_lastError) {
-        NSLog(@"GameKitHelper ERROR: %@",
-              [[_lastError userInfo] description]);
-    }
-}
+
 
 -(void)submitScore: (int64_t)score toLeader: (NSString *)leaderboard {
     //If game center authentication failed, do nothing.  This must remain at top of this function!
@@ -93,11 +66,13 @@ NSString *const PresentAuthenticationViewController = @"present_authentication_v
     
     //Send the score to Game Center
     [GKScore reportScores:@[gkScore] withCompletionHandler:^(NSError *error) {
-        [self setLastError:error];
+        //[self setLastError:error];
         BOOL success = (error == nil);
         
         if ([_delegate respondsToSelector:@selector(onScoresSubmitted:)]) {
             [_delegate onScoresSubmitted:success];
+            UIResponder *temp = (UIResponder *)[[UIApplication sharedApplication] delegate];
+            
         }
     }];
 }
@@ -107,7 +82,7 @@ NSString *const PresentAuthenticationViewController = @"present_authentication_v
 }*/
 
 -(void)achievementLoad {
-    if (_enableGameCenter) {
+    if (enableGameCenter) {
         [GKAchievement loadAchievementsWithCompletionHandler:^(NSArray *achievements, NSError *error) {
             if (error != nil) {
                 NSLog(@"Error in loading achievements.");
@@ -116,7 +91,7 @@ NSString *const PresentAuthenticationViewController = @"present_authentication_v
                 //Process achievements.
                 for (GKAchievement *temp in achievements) {
                     //temp
-                    [[GameKitHelper sharedGameKitHelper].achievementsDictionary setObject:temp forKey:temp.identifier];
+                    //[[GameKitHelper sharedGameKitHelper].achievementsDictionary setObject:temp forKey:temp.identifier];
                     //[_achievementsDictionary setObject:temp forKey:temp.identifier];
                 }
                 NSLog(@"Achievements Retrievemented");
@@ -143,7 +118,7 @@ NSString *const PresentAuthenticationViewController = @"present_authentication_v
         achievement.percentComplete = percent;
         [GKAchievement reportAchievements:@[achievement] withCompletionHandler:^(NSError *error){
             if (error != nil) {
-                [self setLastError:error];
+                //[self setLastError:error];
             }
         }];
     }
@@ -152,7 +127,7 @@ NSString *const PresentAuthenticationViewController = @"present_authentication_v
 -(void)sendUpdateArrayToGameCenter: (NSArray *)incomingArray {
     [GKAchievement reportAchievements:incomingArray withCompletionHandler:^(NSError *error){
         if (error != nil) {
-            [self setLastError:error];
+            //[self setLastError:error];
         }
     }];
 }

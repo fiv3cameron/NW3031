@@ -7,7 +7,7 @@
 //
 
 #import "ViewController.h"
-#import "GameKitHelper.h"
+
 #import "MainMenu.h"
 
 @implementation ViewController
@@ -31,6 +31,7 @@
     
     // Present the scene.
     [skView presentScene:scene];
+    
 }
 
 - (void)viewDidAppear:(BOOL)animated {
@@ -41,8 +42,7 @@
      selector:@selector(showAuthenticationViewController)
      name:PresentAuthenticationViewController
      object:nil];
-    
-    [[GameKitHelper sharedGameKitHelper] authenticateLocalPlayer];
+
 }
 
 - (void)showAuthenticationViewController

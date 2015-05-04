@@ -6,11 +6,14 @@
 //  Copyright (c) 2015 FIV3 Interactive, LLC. All rights reserved.
 //
 
-@import GameKit;
+
 
 //   Protocol to notify external
 //   objects when Game Center events occur or
 //   when Game Center async tasks are completed
+
+#import <UIKit/UIKit.h>
+#import "AppDelegate.h"
 
 @protocol GCHelperProtocol <NSObject>
 
@@ -27,15 +30,13 @@ extern NSString *const PresentAuthenticationViewController;
 @property (nonatomic, readonly) UIViewController *authenticationViewController;
 @property (nonatomic, readonly) NSError *lastError;
 @property (assign, nonatomic) BOOL enableGameCenter;
-@property (nonatomic, retain) NSMutableDictionary *achievementsDictionary;
+
 
 +(instancetype)sharedGameKitHelper;
--(void)authenticateLocalPlayer;
 -(GKAchievement *)getAchievementForIdentifier: (NSString *)identifier fromDictionary: (NSMutableDictionary *)achievementsDictionary;
 -(void)submitScore:(int64_t)score toLeader: (NSString*)leaderboard;
 -(UIViewController*) getRootViewController;
 -(void)reportAchievementWithIdentifier: (NSString *)identifier percentComplete: (float) percent fromDictionary: (NSMutableDictionary *)dictionary;
-- (void)setLastError:(NSError *)error;
 -(void)achievementLoad;
 
 @end

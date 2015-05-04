@@ -151,7 +151,7 @@ SKColor *wingmanLaserColorCast;
     //[textureAtlases addObject:self.Black_Hole_Atlas];
     
     //Pass achievements from temp storage area.
-    _achievementsDictionary = [[GameKitHelper sharedGameKitHelper] achievementsDictionary];
+    //_achievementsDictionary = [[GameKitHelper sharedGameKitHelper] achievementsDictionary];
     
     [SKTextureAtlas preloadTextureAtlases:textureAtlases withCompletionHandler:^{
         [self setUpScene];

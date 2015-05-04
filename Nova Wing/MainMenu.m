@@ -71,10 +71,12 @@ NSTimeInterval _dt;
         
         //Check achievements for rank.
         if ([GameKitHelper sharedGameKitHelper].enableGameCenter) {
-            [[GameKitHelper alloc] achievementLoad];
+
             [self achievementRetrievement];
         }
         //[self achievementRetrievement];
+        NSLog(@"high score %ld",[GameState sharedGameData].highScoreL1);
+        NSLog(@"asteroid deaths %d",[GameState sharedGameData].totalAsteroidDeaths);
     }
     return self;
 }
@@ -481,8 +483,8 @@ NSTimeInterval _dt;
 }
 
 -(void)achievementRetrievement {
-    NSMutableDictionary *tempDictionary = [GameKitHelper sharedGameKitHelper].achievementsDictionary;
-    for (GKAchievement *temp in tempDictionary) {
+    //NSMutableDictionary *tempDictionary = [GameKitHelper sharedGameKitHelper].achievementsDictionary;
+    /*for (GKAchievement *temp in tempDictionary) {
         if ([temp.identifier isEqualToString: @"flight_school_graduate"] && temp.percentComplete == 100.0f) {
             _maxRank = 1;
         }   else if ([temp.identifier isEqualToString: @"cadet"] && temp.percentComplete == 100.0f) {
@@ -506,7 +508,7 @@ NSTimeInterval _dt;
         }   else if ([temp.identifier isEqualToString: @"fleet_admiral"] && temp.percentComplete == 100.0f) {
             _maxRank = 11;
         }
-    }
+    }*/
 }
 
 #pragma mark --Actions

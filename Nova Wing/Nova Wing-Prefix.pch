@@ -17,4 +17,5 @@
     #import "NWAudioPlayer.h"
     #import "NWColor.h"
     #import "NWCollisions.h"
+    #import <GameKit/GameKit.h>
 #endif
