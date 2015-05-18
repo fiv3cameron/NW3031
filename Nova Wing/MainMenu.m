@@ -51,6 +51,13 @@ NSTimeInterval _dt;
         /* Setup your scene here */
         [GameState sharedGameData].levelIndex = 0;
         [GameState sharedGameData].lvlIndexMax = 2;
+        NSMutableDictionary *tempDictionary = [[GameState sharedGameData] achievementsDictionary];
+        for (GKAchievement *tempAchievement in tempDictionary) {
+            if (![tempAchievement.identifier isEqualToString:@"flight_school_graduate"]) {
+                [GameState sharedGameData].rankAchieved = 0;
+                [[GameState sharedGameData] save];
+            }
+        }
         
         if ([GameState sharedGameData].highScoreL1 < 1) {
             [GameState sharedGameData].audioVolume = 1.0;

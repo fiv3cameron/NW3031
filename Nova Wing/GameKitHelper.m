@@ -15,9 +15,9 @@ NSString *const PresentAuthenticationViewController = @"present_authentication_v
 @synthesize enableGameCenter;
 
 //Singleton...apparently?
-+ (id)sharedGameKitHelper
++ (instancetype)sharedGameKitHelper
 {
-    static GameKitHelper *sharedGameKitHelper;
+    static GameKitHelper *sharedGameKitHelper = nil;
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
         sharedGameKitHelper = [[GameKitHelper alloc] init];
@@ -25,7 +25,7 @@ NSString *const PresentAuthenticationViewController = @"present_authentication_v
     return sharedGameKitHelper;
 }
 
-- (id)init
+- (instancetype)init
 {
     if (self = [super init]) {
         if ([[AppDelegate alloc] gameCenterEnabled]) {
@@ -71,7 +71,7 @@ NSString *const PresentAuthenticationViewController = @"present_authentication_v
         
         if ([_delegate respondsToSelector:@selector(onScoresSubmitted:)]) {
             [_delegate onScoresSubmitted:success];
-            UIResponder *temp = (UIResponder *)[[UIApplication sharedApplication] delegate];
+            //UIResponder *temp = (UIResponder *)[[UIApplication sharedApplication] delegate];
             
         }
     }];

@@ -31,6 +31,8 @@
     @property (assign, nonatomic) int totalDebrisDeaths;
     @property (assign, nonatomic) float allTimeAverageScore;
     @property (assign, nonatomic) float allTimeAverageAccuracy;
+    @property (assign, nonatomic) NSDictionary *achievementsDictionary;
+    @property (assign, nonatomic) int rankAchieved;
 
 +(instancetype)sharedGameData;
 -(void)reset;
