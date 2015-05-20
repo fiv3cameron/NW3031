@@ -137,6 +137,7 @@
 		76B9E91719FB1BE8000EF044 /* ShipTrail.sks in Resources */ = {isa = PBXBuildFile; fileRef = 76B9E91619FB1BE8000EF044 /* ShipTrail.sks */; };
 		76B9E91B19FBF04D000EF044 /* PowerUps.m in Sources */ = {isa = PBXBuildFile; fileRef = 76B9E91A19FBF04D000EF044 /* PowerUps.m */; };
 		76C2BC541AA54A87005F71A2 /* Audio_disengage@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 76C2BC531AA54A87005F71A2 /* Audio_disengage@2x.png */; };
+		76C2BC521A89820A005F71A2 /* iAd.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 76C2BC511A89820A005F71A2 /* iAd.framework */; };
 		76C6F15419A2CCB100B37331 /* Level-1@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 76C6F15319A2CCB100B37331 /* Level-1@2x.png */; };
 /* End PBXBuildFile section */
 
@@ -306,6 +307,7 @@
 		76B9E91919FBF04D000EF044 /* PowerUps.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PowerUps.h; sourceTree = "<group>"; };
 		76B9E91A19FBF04D000EF044 /* PowerUps.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PowerUps.m; sourceTree = "<group>"; };
 		76C2BC531AA54A87005F71A2 /* Audio_disengage@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Audio_disengage@2x.png"; sourceTree = "<group>"; };
+		76C2BC511A89820A005F71A2 /* iAd.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = iAd.framework; path = System/Library/Frameworks/iAd.framework; sourceTree = SDKROOT; };
 		76C6F15319A2CCB100B37331 /* Level-1@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Level-1@2x.png"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -314,6 +316,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				76C2BC521A89820A005F71A2 /* iAd.framework in Frameworks */,
 				2DB352A619999942006BF15C /* AudioToolbox.framework in Frameworks */,
 				2DB352A4199998BA006BF15C /* AVFoundation.framework in Frameworks */,
 				2DB3521D19996B83006BF15C /* CoreGraphics.framework in Frameworks */,
@@ -367,6 +370,7 @@
 		2DB3521919996B83006BF15C /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				76C2BC511A89820A005F71A2 /* iAd.framework */,
 				2DB352A519999942006BF15C /* AudioToolbox.framework */,
 				2DB352A3199998BA006BF15C /* AVFoundation.framework */,
 				2DB3521A19996B83006BF15C /* Foundation.framework */,
