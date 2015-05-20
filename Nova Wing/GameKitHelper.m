@@ -79,7 +79,7 @@ NSString *const PresentAuthenticationViewController = @"present_authentication_v
 
 /*-(void)retrieveAchievementsToDictionary: (NSMutableDictionary *)achievementsDictionary {
     managed under main menu "achievementRetrievement" function.
-}*/
+}
 
 -(void)achievementLoad {
     if (enableGameCenter) {
@@ -100,7 +100,7 @@ NSString *const PresentAuthenticationViewController = @"present_authentication_v
     } else {
         NSLog(@"Achievements not loaded");
     }
-}
+}*/
 
 -(GKAchievement *)getAchievementForIdentifier: (NSString *)identifier fromDictionary: (NSMutableDictionary *)achievementsDictionary {
     GKAchievement *achievement = [achievementsDictionary objectForKey:identifier];

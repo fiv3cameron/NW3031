@@ -81,7 +81,7 @@
                         for (GKAchievement *loopAchievie in achievements) {
                             //Set GameState dictionary.
                             [[GameState sharedGameData].achievementsDictionary setValue:loopAchievie forKey:loopAchievie.identifier];
-                            NSLog(loopAchievie.identifier);
+                            //NSLog(loopAchievie.identifier);
                         }
                         [[GameState sharedGameData] save];
                     }
@@ -113,7 +113,7 @@
                             //Set GameState dictionary.
                             [[GameState sharedGameData].achievementsDictionary setValue:loopAchievie forKey:loopAchievie.identifier];
                             
-                            NSLog(loopAchievie.identifier);
+                            //NSLog(loopAchievie.identifier);
                         }
                         [[GameState sharedGameData] save];
                     }

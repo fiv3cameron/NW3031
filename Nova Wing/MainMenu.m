@@ -215,7 +215,7 @@ NSTimeInterval _dt;
 
 -(SKLabelNode *)highScoreLabel {
     SKLabelNode *highScore = [[SKLabelNode alloc] initWithFontNamed:@"SF Movie Poster"];
-    highScore.position = CGPointMake(self.size.width+175, self.size.height - 42);
+    highScore.position = CGPointMake(self.size.width+175, self.size.height - 40);
     highScore.fontColor = [SKColor whiteColor];
     highScore.fontSize = 30;
     highScore.horizontalAlignmentMode = SKLabelHorizontalAlignmentModeLeft;
@@ -491,50 +491,49 @@ NSTimeInterval _dt;
 }
 
 -(void)createRankInsignia {
-    NSString *insigniaString = [NSString alloc];
+    NSString *insigniaString = [[NSString alloc] init];
     if (!([GameState sharedGameData].rankAchieved == 0)) {
         switch ([GameState sharedGameData].rankAchieved) {
-            case 1:
-                insigniaString = @"FlightSchoolGraduate.png";
+            case 1: 
+                insigniaString = @"FlightSchoolGraduate";
                 break;
             case 2:
-                insigniaString = @"Cadet.png";
+                insigniaString = @"Cadet";
                 break;
             case 3:
-                insigniaString = @"Private-1.png";
+                insigniaString = @"Private-1";
                 break;
             case 4:
-                insigniaString = @"Private-2.png";
+                insigniaString = @"Private-2";
                 break;
             case 5:
-                insigniaString = @"Sergeant-1.png";
+                insigniaString = @"Sergeant-1";
                 break;
             case 6:
-                insigniaString = @"Sergeant-2.png";
+                insigniaString = @"Sergeant-2";
                 break;
             case 7:
-                insigniaString = @"FlightCommander.png";
+                insigniaString = @"FlightCommander";
                 break;
             case 8:
-                insigniaString = @"LTCommander.png";
+                insigniaString = @"LTCommander";
                 break;
             case 9:
-                insigniaString = @"Commander.png";
+                insigniaString = @"Commander";
                 break;
             case 10:
-                insigniaString = @"FleetGeneral.png";
+                insigniaString = @"FleetGeneral";
                 break;
             case 11:
-                insigniaString = @"FleetAdmiral.png";
+                insigniaString = @"FleetAdmiral";
                 break;
             default:
                 break;
         }
     }
     SKSpriteNode *insigniaNode = [SKSpriteNode spriteNodeWithImageNamed:insigniaString];
-    insigniaNode.scale = 0.05;
     insigniaNode.zPosition = 5;
-    insigniaNode.position = CGPointMake(self.size.width+130, self.size.height-30);
+    insigniaNode.position = CGPointMake(self.size.width+142, self.size.height-30);
     
     SKAction *wait = [SKAction waitForDuration:.75];
     SKAction *move = [SKAction moveByX:-(rankScoreMoveDist) y:0 duration:0.5];

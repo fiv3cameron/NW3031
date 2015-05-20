@@ -37,6 +37,6 @@ extern NSString *const PresentAuthenticationViewController;
 -(void)submitScore:(int64_t)score toLeader: (NSString*)leaderboard;
 -(UIViewController*) getRootViewController;
 -(void)reportAchievementWithIdentifier: (NSString *)identifier percentComplete: (float) percent fromDictionary: (NSMutableDictionary *)dictionary;
--(void)achievementLoad;
+//-(void)achievementLoad;
 
 @end

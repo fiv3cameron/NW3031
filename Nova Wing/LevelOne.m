@@ -28,6 +28,11 @@
     BOOL wingmanActive;
     BOOL isSceneLoading;
     BOOL tinyActive;
+    BOOL asteroid1Shot;
+    BOOL asteroid2Shot;
+    BOOL asteroid3Shot;
+    BOOL redAsteroidShot;
+    BOOL shipFragmentShot;
     SKPhysicsJointSpring *wingmanSpring;
     SKLabelNode *loading;
     
@@ -112,6 +117,11 @@ SKColor *wingmanLaserColorCast;
         wingmanActive = NO;
         isSceneLoading = YES;
         tinyActive = NO;
+        asteroid1Shot = NO;
+        asteroid2Shot = NO;
+        asteroid3Shot = NO;
+        redAsteroidShot = NO;
+        shipFragmentShot = NO;
         
         multiKey = @"multiKey";
         objectCreateKey = @"objectCreateKey";
