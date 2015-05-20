@@ -27,6 +27,7 @@
     BOOL activePup;
     BOOL wingmanActive;
     BOOL isSceneLoading;
+    BOOL tinyActive;
     SKPhysicsJointSpring *wingmanSpring;
     SKLabelNode *loading;
     
@@ -110,6 +111,7 @@ SKColor *wingmanLaserColorCast;
         activePup = NO;
         wingmanActive = NO;
         isSceneLoading = YES;
+        tinyActive = NO;
         
         multiKey = @"multiKey";
         objectCreateKey = @"objectCreateKey";
@@ -714,82 +716,124 @@ SKColor *wingmanLaserColorCast;
 }
 
 -(void)checkAchievementsForRank {
-        /*NSArray *rankStrings = @[@"flight_school_graduate", @"cadet", @"private_I", @"private_II", @"sergeant_I", @"sergeant_II", @"flight_commander", @"lieutenant_commander", @"commander", @"fleet_general", @"fleet_admiral"];
-        int currentScore = [GameState sharedGameData].score;
-        for (NSString *tempRankIdentifier in rankStrings) {
-            GKAchievement *tempAchievieForRank = [[GameKitHelper alloc] getAchievementForIdentifier:tempRankIdentifier fromDictionary:_achievementsDictionary];
-            if ([tempAchievieForRank.identifier isEqualToString:@"flight_school_graduate"] && tempAchievieForRank.percentComplete != 100.0 && currentScore>100) {
-                tempAchievieForRank.percentComplete = 100.0;  //Flight School Graduate set to 100% complete.
-                NSLog(@"Rank Flight School Graduate achieved.");
-            } else if ([tempAchievieForRank.identifier isEqualToString:@"cadet"] && tempAchievieForRank.percentComplete != 100.0 && currentScore>250) {
-                tempAchievieForRank.percentComplete = 100.0;
-            } else if ([tempAchievieForRank.identifier isEqualToString:@"private_I"] && tempAchievieForRank.percentComplete != 100.0 && currentScore>500) {
-                tempAchievieForRank.percentComplete = 100.0;
-            } else if ([tempAchievieForRank.identifier isEqualToString:@"private_II"] && tempAchievieForRank.percentComplete != 100.0 && currentScore>1000) {
-                tempAchievieForRank.percentComplete = 100.0;
-            } else if ([tempAchievieForRank.identifier isEqualToString:@"sergeant_I"] && tempAchievieForRank.percentComplete != 100.0 && currentScore>1500) {
-                tempAchievieForRank.percentComplete = 100.0;
-            } else if ([tempAchievieForRank.identifier isEqualToString:@"sergeant_II"] && tempAchievieForRank.percentComplete != 100.0 && currentScore>2000) {
-                tempAchievieForRank.percentComplete = 100.0;
-            } else if ([tempAchievieForRank.identifier isEqualToString:@"flight_commander"] && tempAchievieForRank.percentComplete != 100.0 && currentScore>2500) {
-                tempAchievieForRank.percentComplete = 100.0;
-            } else if ([tempAchievieForRank.identifier isEqualToString:@"lieutenant_commander"] && tempAchievieForRank.percentComplete != 100.0 && currentScore>3000) {
-                tempAchievieForRank.percentComplete = 100.0;
-            } else if ([tempAchievieForRank.identifier isEqualToString:@"commander"] && tempAchievieForRank.percentComplete != 100.0 && currentScore>4000) {
-                tempAchievieForRank.percentComplete = 100.0;
-            } else if ([tempAchievieForRank.identifier isEqualToString:@"fleet_general"] && tempAchievieForRank.percentComplete != 100.0 && currentScore>5000) {
-                tempAchievieForRank.percentComplete = 100.0;
-            } else if ([tempAchievieForRank.identifier isEqualToString:@"fleet_admiral"] && tempAchievieForRank.percentComplete != 100.0 && currentScore>10000) {
-                tempAchievieForRank.percentComplete = 100.0;
-            }
-            [_achievementsDictionary setObject:tempAchievieForRank forKey:tempAchievieForRank.identifier];
-        }*/
-        int currentScore = [GameState sharedGameData].score;
-        GKLocalPlayer *tempLocalPlayer = [GKLocalPlayer localPlayer];
-    int tempInt = [GameState sharedGameData].rankAchieved;
-    //NSLog(@"%i",[GameState sharedGameData].rankAchieved);
-        if (currentScore>=100 && ([GameState sharedGameData].rankAchieved == 0)) {
-            GKAchievement *tempRankAchievement = [[GKAchievement alloc] initWithIdentifier:@"flight_school_graduate" player:tempLocalPlayer];
-            tempRankAchievement.percentComplete = 100.0;
-            NSLog(tempRankAchievement.identifier);
-            [reportArray addObject:tempRankAchievement];
-            [GameState sharedGameData].rankAchieved = 1;
-            [[GameState sharedGameData] save];
-        }
+
+    int currentScore = [GameState sharedGameData].score;
+    GKLocalPlayer *tempLocalPlayer = [GKLocalPlayer localPlayer];
+    
+    if (currentScore>=100 && ([GameState sharedGameData].rankAchieved == 0)) {
+        GKAchievement *tempRankAchievement = [[GKAchievement alloc] initWithIdentifier:@"flight_school_graduate" player:tempLocalPlayer];
+        tempRankAchievement.percentComplete = 100.0;
+        [reportArray addObject:tempRankAchievement];
+        [GameState sharedGameData].rankAchieved = 1;
+        [[GameState sharedGameData] save];
+    } else if (currentScore >= 250 && ([GameState sharedGameData].rankAchieved == 1)) {
+        GKAchievement *tempRankAchievement = [[GKAchievement alloc] initWithIdentifier:@"cadet" player:tempLocalPlayer];
+        tempRankAchievement.percentComplete = 100.0;
+        [reportArray addObject:tempRankAchievement];
+        [GameState sharedGameData].rankAchieved = 2;
+        [[GameState sharedGameData] save];
+    } else if (currentScore >= 500 && ([GameState sharedGameData].rankAchieved == 2)) {
+        GKAchievement *tempRankAchievement = [[GKAchievement alloc] initWithIdentifier:@"private_I" player:tempLocalPlayer];
+        tempRankAchievement.percentComplete = 100.0;
+        [reportArray addObject:tempRankAchievement];
+        [GameState sharedGameData].rankAchieved = 3;
+        [[GameState sharedGameData] save];
+    } else if (currentScore >= 1000 && ([GameState sharedGameData].rankAchieved == 3)) {
+        GKAchievement *tempRankAchievement = [[GKAchievement alloc] initWithIdentifier:@"private_II" player:tempLocalPlayer];
+        tempRankAchievement.percentComplete = 100.0;
+        [reportArray addObject:tempRankAchievement];
+        [GameState sharedGameData].rankAchieved = 4;
+        [[GameState sharedGameData] save];
+    } else if (currentScore >= 1500 && ([GameState sharedGameData].rankAchieved == 4)) {
+        GKAchievement *tempRankAchievement = [[GKAchievement alloc] initWithIdentifier:@"sergeant_I" player:tempLocalPlayer];
+        tempRankAchievement.percentComplete = 100.0;
+        [reportArray addObject:tempRankAchievement];
+        [GameState sharedGameData].rankAchieved = 5;
+        [[GameState sharedGameData] save];
+    } else if (currentScore >= 2000 && ([GameState sharedGameData].rankAchieved == 5)) {
+        GKAchievement *tempRankAchievement = [[GKAchievement alloc] initWithIdentifier:@"sergeant_II" player:tempLocalPlayer];
+        tempRankAchievement.percentComplete = 100.0;
+        [reportArray addObject:tempRankAchievement];
+        [GameState sharedGameData].rankAchieved = 6;
+        [[GameState sharedGameData] save];
+    } else if (currentScore >= 2500 && ([GameState sharedGameData].rankAchieved == 6)) {
+        GKAchievement *tempRankAchievement = [[GKAchievement alloc] initWithIdentifier:@"flight_commander" player:tempLocalPlayer];
+        tempRankAchievement.percentComplete = 100.0;
+        [reportArray addObject:tempRankAchievement];
+        [GameState sharedGameData].rankAchieved = 7;
+        [[GameState sharedGameData] save];
+    } else if (currentScore >= 3000 && ([GameState sharedGameData].rankAchieved == 7)) {
+        GKAchievement *tempRankAchievement = [[GKAchievement alloc] initWithIdentifier:@"lieutenant_commander" player:tempLocalPlayer];
+        tempRankAchievement.percentComplete = 100.0;
+        [reportArray addObject:tempRankAchievement];
+        [GameState sharedGameData].rankAchieved = 8;
+        [[GameState sharedGameData] save];
+    } else if (currentScore >= 4000 && ([GameState sharedGameData].rankAchieved == 8)) {
+        GKAchievement *tempRankAchievement = [[GKAchievement alloc] initWithIdentifier:@"commander" player:tempLocalPlayer];
+        tempRankAchievement.percentComplete = 100.0;
+        [reportArray addObject:tempRankAchievement];
+        [GameState sharedGameData].rankAchieved = 9;
+        [[GameState sharedGameData] save];
+    } else if (currentScore >= 5000 && ([GameState sharedGameData].rankAchieved == 9)) {
+        GKAchievement *tempRankAchievement = [[GKAchievement alloc] initWithIdentifier:@"fleet_general" player:tempLocalPlayer];
+        tempRankAchievement.percentComplete = 100.0;
+        [reportArray addObject:tempRankAchievement];
+        [GameState sharedGameData].rankAchieved = 10;
+        [[GameState sharedGameData] save];
+    } else if (currentScore >= 10000 && ([GameState sharedGameData].rankAchieved == 10)) {
+        GKAchievement *tempRankAchievement = [[GKAchievement alloc] initWithIdentifier:@"fleed_admiral" player:tempLocalPlayer];
+        tempRankAchievement.percentComplete = 100.0;
+        [reportArray addObject:tempRankAchievement];
+        [GameState sharedGameData].rankAchieved = 11;
+        [[GameState sharedGameData] save];
+    }
+    
 }
 
 -(void)checkAchievementsIsGameOver:(BOOL)gameIsOver {
-    
-    //This function only checks to see if the achievement is complete.  Qualification checks should be accomplished outside this function.
-    
-    if ([GameKitHelper sharedGameKitHelper].enableGameCenter) {
-        NSArray *achievieStrings = @[@"bro_do_you_lift",@"charity_case",@"crash_dummy",@"equal_opp_destroyer",@"killing_spree",@"kill_streak",@"killpossible",@"shot_heart",@"killing_smalls",@"welcome_501st"];
-        for (NSString *tempString in achievieStrings) {
-            //Check non-rank achievements.
-            GKAchievement *tempAchievement = [[GameKitHelper alloc] getAchievementForIdentifier:tempString fromDictionary:_achievementsDictionary];
-            if ([tempAchievement.identifier isEqualToString:@"welcome_501st"] && tempAchievement.percentComplete != 100.0 && !gameIsOver) { //Identify as 501st AND achievement not yet complete AND game IS NOT over.
-                if (localTotalLaserHits == 0 && localTotalLasersFired == AUTOCANNON_SHOTS_FIRED) {//Check that achievement has been satisfied.
-                    tempAchievement.percentComplete = 100.0;
-                    [reportArray addObject:tempAchievement];
-                }
-            } else if ([tempAchievement.identifier isEqualToString:@"bro_do_you_lift"] && tempAchievement.percentComplete != 100.0 && gameIsOver) {//Identify as bro_do_you_lift AND achievement not yet complete AND game IS over.
-                if ([GameState sharedGameData].score == 0) { //Check that achievement has been satisfied.
-                    tempAchievement.percentComplete = 100.0;
-                    [reportArray addObject:tempAchievement];
-                }
-            } else if ([tempAchievement.identifier isEqualToString:@"charity_case"] && tempAchievement.percentComplete != 100.0 && gameIsOver) { //Identify as charity_case AND achievement not yet complete AND game IS over.
-                if ([GameState sharedGameData].score > 100 && [GameState sharedGameData].scoreMultiplier == 1) { //Check satisfy.
-                    tempAchievement.percentComplete = 100.0;
-                    [reportArray addObject:tempAchievement];
-                }
-            } else if ([tempAchievement.identifier isEqualToString:@"crash_dummy"] && tempAchievement.percentComplete != 100.0 && gameIsOver) {
-                if ([GameState sharedGameData].totalAsteroidDeaths >= 100) {
-                    tempAchievement.percentComplete = 100.0;
-                    [reportArray addObject:tempAchievement];
-                }
+    GKLocalPlayer *localPlayer = [GKLocalPlayer localPlayer];
+    NSArray *achievieStrings = @[@"bro_do_you_lift",@"charity_case",@"crash_dummy",@"equal_opp_destroyer",@"killing_spree",@"kill_streak",@"killpossible",@"shot_heart",@"killing_smalls",@"welcome_501st"];
+    for (NSString *tempString in achievieStrings) {
+        //Check non-rank achievements.
+        if ([tempString isEqualToString:@"welcome_501st"] && !gameIsOver) { //Identify as 501st AND game IS NOT over.
+            if (localTotalLaserHits == 0 && localTotalLasersFired == AUTOCANNON_SHOTS_FIRED) {//Check that achievement has been satisfied.
+                GKAchievement *tempAchievement = [[GKAchievement alloc] initWithIdentifier:tempString player:localPlayer];
+                tempAchievement.percentComplete = 100.0;
+                [reportArray addObject:tempAchievement];
             }
+        } else if ([tempString isEqualToString:@"bro_do_you_lift"] && gameIsOver) {//Identify as bro_do_you_lift AND game IS over.
+            if ([GameState sharedGameData].score == 0) { //Check that achievement has been satisfied.
+                GKAchievement *tempAchievement = [[GKAchievement alloc] initWithIdentifier:tempString player:localPlayer];
+                tempAchievement.percentComplete = 100.0;
+                [reportArray addObject:tempAchievement];
+            }
+        } else if ([tempString isEqualToString:@"charity_case"] && gameIsOver) { //Identify as charity_case AND game IS over.
+            if ([GameState sharedGameData].score > 100 && [GameState sharedGameData].scoreMultiplier == 1) { //Check satisfy.
+                GKAchievement *tempAchievement = [[GKAchievement alloc] initWithIdentifier:tempString player:localPlayer];
+                tempAchievement.percentComplete = 100.0;
+                [reportArray addObject:tempAchievement];
+            }
+        } else if ([tempString isEqualToString:@"crash_dummy"] && gameIsOver) {
+            GKAchievement *tempAchievement = [[GKAchievement alloc] initWithIdentifier:tempString player:localPlayer];
+            float tempMin = MIN([GameState sharedGameData].totalAsteroidDeaths, 100);
+            tempAchievement.percentComplete = tempMin;
+            [reportArray addObject:tempAchievement];
+        } else if ([tempString isEqualToString:@"equal_opp_destroyer"] && gameIsOver) {
             
-            [_achievementsDictionary setObject:tempAchievement forKey:tempAchievement.identifier];
+        } else if ([tempString isEqualToString:@"killing_spree"] && gameIsOver) {
+            
+        } else if ([tempString isEqualToString:@"kill_streak"] && gameIsOver) {
+            
+        } else if ([tempString isEqualToString:@"killpossible"] && gameIsOver) {
+            
+        } else if ([tempString isEqualToString:@"shot_heart"] && gameIsOver) {
+            
+        } else if ([tempString isEqualToString:@"killing_smalls"] && gameIsOver) {
+            if (tinyActive && gameIsOver) {
+                GKAchievement *tempAchievement = [[GKAchievement alloc] initWithIdentifier:tempString player:localPlayer];
+                tempAchievement.percentComplete = 100.0;
+                [reportArray addObject:tempAchievement];
+            }
         }
     }
 }
@@ -1206,11 +1250,13 @@ SKColor *wingmanLaserColorCast;
     [self playSoundEffectsWithAction:_TinyNovaCollect];
     [playerNode logicTinyNova];
     activePup = YES;
+    tinyActive = YES;
     
     SKAction *wait = [SKAction waitForDuration:10.0];
     SKAction *closeTinyNova = [SKAction runBlock:^{
         [playerNode closeTinyNova];
         activePup = NO;
+        tinyActive = NO;
     }];
     [self runAction:[SKAction sequence:@[wait,closeTinyNova]]];
 }

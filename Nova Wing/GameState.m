@@ -19,6 +19,9 @@ static NSString* const SSGameDataVibeState = @"vibrationState";
 static NSString* const SSGameDataAchievementsKey = @"achievementsKey";
 static NSString* const SSGameDataStats = @"statsKey";
 static NSString* const SSGameDataRankKey = @"rankKey";
+static NSString* const SSGameDataTotalLaserHitsKey = @"totalLaserHitsKey";
+static NSString* const SSGameDataTotalLasersFiredKey = @"totalLasersFiredKey";
+static NSString* const SSGameDataTotalAsteroidsDestroyedKey = @"totalAsteroidsDestroyed";
 
 -(void)encodeWithCoder:(NSCoder *)encoder {
     [encoder encodeDouble:self.highScoreL1 forKey:SSGameDataHighScoreL1Key];
@@ -27,6 +30,9 @@ static NSString* const SSGameDataRankKey = @"rankKey";
     [encoder encodeInt:self.vibeOn forKey:SSGameDataVibeState];
     [encoder encodeObject:self.achievementsDictionary forKey:SSGameDataAchievementsKey];
     [encoder encodeInt:self.rankAchieved forKey:SSGameDataRankKey];
+    [encoder encodeInt:self.totalLaserHits forKey:SSGameDataTotalLaserHitsKey];
+    [encoder encodeInt:self.totalLasersFired forKey:SSGameDataTotalLasersFiredKey];
+    [encoder encodeInt:self.totalAsteroidsDestroyed forKey:SSGameDataTotalAsteroidsDestroyedKey];
 }
 
 -(instancetype)initWithCoder:(NSCoder *)decoder {
@@ -37,7 +43,10 @@ static NSString* const SSGameDataRankKey = @"rankKey";
         _audioVolume = [decoder decodeDoubleForKey:SSGameDataAudioVolume];
         _vibeOn = [decoder decodeIntForKey:SSGameDataVibeState];
         _achievementsDictionary = [decoder decodeObjectForKey:SSGameDataAchievementsKey];
-        _rankAchieved = [decoder decodeObjectForKey:SSGameDataRankKey];
+        _rankAchieved = [decoder decodeIntForKey:SSGameDataRankKey];
+        _totalLaserHits = [decoder decodeIntForKey:SSGameDataTotalLaserHitsKey];
+        _totalLasersFired = [decoder decodeIntForKey:SSGameDataTotalLasersFiredKey];
+        _totalAsteroidsDestroyed = [decoder decodeIntForKey:SSGameDataTotalAsteroidsDestroyedKey];
     }
     
     return self;

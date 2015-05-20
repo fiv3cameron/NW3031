@@ -32,6 +32,7 @@ static inline CGPoint CGPointMultiplyScalar(const CGPoint a, const CGFloat b)
     SKSpriteNode *settingsButton;
     SKSpriteNode *codexButton;
     SKSpriteNode *creditButton;
+    float rankScoreMoveDist;
     
         //Textures
     SKTexture *audioTexture;
@@ -51,13 +52,13 @@ NSTimeInterval _dt;
         /* Setup your scene here */
         [GameState sharedGameData].levelIndex = 0;
         [GameState sharedGameData].lvlIndexMax = 2;
-        NSMutableDictionary *tempDictionary = [[GameState sharedGameData] achievementsDictionary];
+        /*NSMutableDictionary *tempDictionary = [[GameState sharedGameData] achievementsDictionary];
         for (GKAchievement *tempAchievement in tempDictionary) {
             if (![tempAchievement.identifier isEqualToString:@"flight_school_graduate"]) {
                 [GameState sharedGameData].rankAchieved = 0;
                 [[GameState sharedGameData] save];
             }
-        }
+        }*/
         
         if ([GameState sharedGameData].highScoreL1 < 1) {
             [GameState sharedGameData].audioVolume = 1.0;
@@ -77,13 +78,12 @@ NSTimeInterval _dt;
         levelTitles = @[@"Event Horizon", @"The Whispers", @"TempLevel3"];
         
         //Check achievements for rank.
-        if ([GameKitHelper sharedGameKitHelper].enableGameCenter) {
-
-            [self achievementRetrievement];
-        }
+        [self createRankInsignia];
+        
         //[self achievementRetrievement];
         NSLog(@"high score %ld",[GameState sharedGameData].highScoreL1);
         NSLog(@"asteroid deaths %d",[GameState sharedGameData].totalAsteroidDeaths);
+        NSLog(@"rank %i",[GameState sharedGameData].rankAchieved);
     }
     return self;
 }
@@ -215,7 +215,7 @@ NSTimeInterval _dt;
 
 -(SKLabelNode *)highScoreLabel {
     SKLabelNode *highScore = [[SKLabelNode alloc] initWithFontNamed:@"SF Movie Poster"];
-    highScore.position = CGPointMake(self.size.width, self.size.height - 30);
+    highScore.position = CGPointMake(self.size.width+175, self.size.height - 42);
     highScore.fontColor = [SKColor whiteColor];
     highScore.fontSize = 30;
     highScore.horizontalAlignmentMode = SKLabelHorizontalAlignmentModeLeft;
@@ -223,7 +223,8 @@ NSTimeInterval _dt;
     highScore.text = [NSString stringWithFormat:@"HIGH SCORE: %li  ", [GameState sharedGameData].highScoreL1];
     
     SKAction *wait = [SKAction waitForDuration:.75];
-    SKAction *move = [SKAction moveByX:-(highScore.frame.size.width + 10) y:0 duration:0.5];
+    rankScoreMoveDist = highScore.frame.size.width + 175;
+    SKAction *move = [SKAction moveByX:-(rankScoreMoveDist + 10) y:0 duration:0.5];
     move.timingMode = SKActionTimingEaseIn;
     SKAction *sequence = [SKAction sequence:@[wait, move]];
     [highScore runAction: sequence];
@@ -489,33 +490,63 @@ NSTimeInterval _dt;
     [gameCenterViewController.presentingViewController dismissViewControllerAnimated:YES completion:nil];
 }
 
--(void)achievementRetrievement {
-    //NSMutableDictionary *tempDictionary = [GameKitHelper sharedGameKitHelper].achievementsDictionary;
-    /*for (GKAchievement *temp in tempDictionary) {
-        if ([temp.identifier isEqualToString: @"flight_school_graduate"] && temp.percentComplete == 100.0f) {
-            _maxRank = 1;
-        }   else if ([temp.identifier isEqualToString: @"cadet"] && temp.percentComplete == 100.0f) {
-            _maxRank = 2;
-        }   else if ([temp.identifier isEqualToString: @"private_I"] && temp.percentComplete == 100.0f) {
-            _maxRank = 3;
-        }   else if ([temp.identifier isEqualToString: @"private_II"] && temp.percentComplete == 100.0f) {
-            _maxRank = 4;
-        }   else if ([temp.identifier isEqualToString: @"sergeant_I"] && temp.percentComplete == 100.0f) {
-            _maxRank = 5;
-        }   else if ([temp.identifier isEqualToString: @"sergeant_II"] && temp.percentComplete == 100.0f) {
-            _maxRank = 6;
-        }   else if ([temp.identifier isEqualToString: @"flight_commander"] && temp.percentComplete == 100.0f) {
-            _maxRank = 7;
-        }   else if ([temp.identifier isEqualToString: @"lieutenant_commander"] && temp.percentComplete == 100.0f) {
-            _maxRank = 8;
-        }   else if ([temp.identifier isEqualToString: @"commander"] && temp.percentComplete == 100.0f) {
-            _maxRank = 9;
-        }   else if ([temp.identifier isEqualToString: @"fleet_general"] && temp.percentComplete == 100.0f) {
-            _maxRank = 10;
-        }   else if ([temp.identifier isEqualToString: @"fleet_admiral"] && temp.percentComplete == 100.0f) {
-            _maxRank = 11;
+-(void)createRankInsignia {
+    NSString *insigniaString = [NSString alloc];
+    if (!([GameState sharedGameData].rankAchieved == 0)) {
+        switch ([GameState sharedGameData].rankAchieved) {
+            case 1:
+                insigniaString = @"FlightSchoolGraduate.png";
+                break;
+            case 2:
+                insigniaString = @"Cadet.png";
+                break;
+            case 3:
+                insigniaString = @"Private-1.png";
+                break;
+            case 4:
+                insigniaString = @"Private-2.png";
+                break;
+            case 5:
+                insigniaString = @"Sergeant-1.png";
+                break;
+            case 6:
+                insigniaString = @"Sergeant-2.png";
+                break;
+            case 7:
+                insigniaString = @"FlightCommander.png";
+                break;
+            case 8:
+                insigniaString = @"LTCommander.png";
+                break;
+            case 9:
+                insigniaString = @"Commander.png";
+                break;
+            case 10:
+                insigniaString = @"FleetGeneral.png";
+                break;
+            case 11:
+                insigniaString = @"FleetAdmiral.png";
+                break;
+            default:
+                break;
         }
-    }*/
+    }
+    SKSpriteNode *insigniaNode = [SKSpriteNode spriteNodeWithImageNamed:insigniaString];
+    insigniaNode.scale = 0.05;
+    insigniaNode.zPosition = 5;
+    insigniaNode.position = CGPointMake(self.size.width+130, self.size.height-30);
+    
+    SKAction *wait = [SKAction waitForDuration:.75];
+    SKAction *move = [SKAction moveByX:-(rankScoreMoveDist) y:0 duration:0.5];
+    move.timingMode = SKActionTimingEaseIn;
+    SKAction *sequence = [SKAction sequence:@[wait, move]];
+    [insigniaNode runAction: sequence];
+    
+    [self addChild:insigniaNode];
+}
+
+-(NSString *)insigniaString:(NSString *)inputString {
+    return inputString;
 }
 
 #pragma mark --Actions
