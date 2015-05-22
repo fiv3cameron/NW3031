@@ -10,10 +10,6 @@
 #import "GameKitHelper.h"
 #import "MainMenu.h"
 
-@interface ViewController () <ADBannerViewDelegate>
-    @property (nonatomic, strong) ADBannerView *theBanner;
-@end
-
 @implementation ViewController
 
 - (BOOL) prefersStatusBarHidden
@@ -43,6 +39,16 @@
     
     // Present the scene.
     [skView presentScene:scene];
+    self.canDisplayBannerAds = YES;
+    
+    theBanner = [[ADBannerView alloc] initWithFrame:CGRectZero];
+        //theBanner.frame = CGRectOffset(theBanner.frame, 0, theBanner.frame.size.height);
+    theBanner.frame = CGRectMake(0, skView.bounds.size.height - theBanner.frame.size.height, theBanner.frame.size.width, theBanner.frame.size.height);
+    theBanner.delegate = self;
+    [self.view addSubview:theBanner];
+    
+        //self.bannerIsVisible = NO;
+    
 }
 
 - (void)viewDidAppear:(BOOL)animated {
@@ -70,32 +76,44 @@
 }
 
 -(void)bannerView:(ADBannerView *)banner didFailToReceiveAdWithError:(NSError *)error {
-    if (banner.isBannerLoaded) {
+    if (!self.bannerIsVisible) {
         [UIView beginAnimations:@"animateAdBannerOff" context:NULL];
         banner.frame = CGRectOffset(banner.frame, 0, banner.frame.size.height);
         [UIView commitAnimations];
+        self.bannerIsVisible = NO;
     }
 }
 
 -(void)bannerViewDidLoadAd:(ADBannerView *)banner {
-    if (!banner.isBannerLoaded) {
+    if (!self.bannerIsVisible) {
         [UIView beginAnimations:@"animateAdBannerOn" context:NULL];
         banner.frame = CGRectOffset(banner.frame, 0, -banner.frame.size.height);
+        [theBanner setAlpha:0.0];
         [UIView commitAnimations];
+        self.bannerIsVisible = YES;
     }
 }
 
 -(void)handleNotification: (NSNotification *)notification {
     if ([notification.name isEqualToString:@"showAd"]) {
-        NSLog(@"this should show twice..");
-        self.theBanner = [[ADBannerView alloc] initWithFrame:CGRectZero];
-        self.theBanner.delegate = self;
-        [self.theBanner sizeToFit];
-        self.canDisplayBannerAds = YES;
+        NSLog(@"Show Ad Notification received");
+        [self showsBanner];
     } else if ([notification.name isEqualToString:@"hideAd"]) {
-        self.theBanner.delegate = nil;
-        self.canDisplayBannerAds =  NO;
+        NSLog(@"Hide Ad Notification received");
+        [self hidesBanner];
     }
+}
+
+-(void)hidesBanner {
+    NSLog(@"Hiding Banner");
+    [theBanner setAlpha:0.0];
+    self.bannerIsVisible = NO;
+}
+
+-(void)showsBanner {
+    NSLog(@"Showing Banner");
+    [theBanner setAlpha:1.0];
+    self.bannerIsVisible = YES;
 }
 
 - (BOOL)shouldAutorotate

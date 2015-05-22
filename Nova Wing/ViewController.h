@@ -11,6 +11,11 @@
 #import "GameKitHelper.h"
 #import <iAd/iAd.h>
 
-@interface ViewController : UIViewController
+@interface ViewController : UIViewController <ADBannerViewDelegate>
+{
+        ADBannerView *theBanner;
+}
+
+@property (nonatomic) BOOL bannerIsVisible;
 
 @end

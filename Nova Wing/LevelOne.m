@@ -1336,6 +1336,7 @@ SKColor *wingmanLaserColorCast;
     if ([nodeLift.name isEqualToString:@"playButton"]) {
         
         [[GameState sharedGameData] reset];
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"hideAd" object:nil];
         
         playAgain.texture = [SKTexture textureWithImageNamed:@"buttonPlay"];
         SKColor *fadeColor = [SKColor colorWithRed:0 green:0 blue:0 alpha:1];
@@ -1417,6 +1418,7 @@ SKColor *wingmanLaserColorCast;
     SKAction *wait = [SKAction waitForDuration:0.5];
     SKAction *gameOver = [SKAction runBlock:^{[self gameOverComplete];}];
     [self runAction:[SKAction sequence:@[wait,gameOver]]];
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"showAd" object:nil];
     
     //[self gcAchievementChecks];
 }

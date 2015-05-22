@@ -188,12 +188,12 @@ NSTimeInterval _dt;
 -(SKSpriteNode *)settingsButtonNode
 {
     settingsButton = [SKSpriteNode spriteNodeWithImageNamed:@"Settings"];
-    settingsButton.position = CGPointMake(settingsButton.size.width, -settingsButton.size.height);
+    settingsButton.position = CGPointMake(-settingsButton.size.width, self.size.height);
     settingsButton.xScale = 0.5;
     settingsButton.yScale = 0.5;
     settingsButton.name = @"_settingsButton";
     SKAction *buttonWait = [SKAction waitForDuration:1.5];
-    SKAction *buttonShift = [SKAction moveTo:CGPointMake(settingsButton.size.width, settingsButton.size.height) duration:0.5];
+    SKAction *buttonShift = [SKAction moveTo:CGPointMake(settingsButton.size.width, self.size.height - 30) duration:0.5];
     buttonShift.timingMode = SKActionTimingEaseInEaseOut;
     SKAction *buttonSequence = [SKAction sequence:@[buttonWait,buttonShift]];
     [settingsButton runAction: buttonSequence];
@@ -511,7 +511,7 @@ NSTimeInterval _dt;
     SKAction *leaderButtonRemoved = [SKAction moveTo:CGPointMake(self.size.width/2-300, BUTTON_HEIGHT - BUTTON_OFFSET)  duration:0.75];
     SKAction *codexButtonRemoved = [SKAction moveTo:CGPointMake(self.size.width/2-300, BUTTON_HEIGHT - (BUTTON_OFFSET * 2)) duration:0.75];
     SKAction *creditButtonRemoved = [SKAction moveTo:CGPointMake(self.size.width/2-300, BUTTON_HEIGHT - (BUTTON_OFFSET * 3)) duration:0.75];
-    SKAction *settingsButtonRemoved = [SKAction moveTo:CGPointMake(settingsButton.size.width, -settingsButton.size.width)  duration:0.5];
+    SKAction *settingsButtonRemoved = [SKAction moveTo:CGPointMake(-settingsButton.size.width, self.size.height)  duration:0.5];
     
     // Title Image Removal.
     SKAction *titleRemoval = [SKAction moveTo:CGPointMake(self.size.width/2, 700) duration:0.75];
