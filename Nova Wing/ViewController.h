@@ -8,7 +8,6 @@
 
 #import <UIKit/UIKit.h>
 #import <SpriteKit/SpriteKit.h>
-#import "GameKitHelper.h"
 #import <iAd/iAd.h>
 
 @interface ViewController : UIViewController <ADBannerViewDelegate>
