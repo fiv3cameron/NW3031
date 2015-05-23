@@ -14,7 +14,6 @@
 #import "Multipliers.h"
 #import "PowerUps.h"
 #import "MainMenu.h"
-#import "GameKitHelper.h"
 
 @interface LevelOne() <SKPhysicsContactDelegate>
 {
@@ -27,12 +26,20 @@
     BOOL activePup;
     BOOL wingmanActive;
     BOOL isSceneLoading;
+    BOOL tinyActive;
+    BOOL asteroid1Shot;
+    BOOL asteroid2Shot;
+    BOOL asteroid3Shot;
+    BOOL redAsteroidShot;
+    BOOL shipFragmentShot;
+    int laserHitsThisRound;
     SKPhysicsJointSpring *wingmanSpring;
     SKLabelNode *loading;
     
         //Game Over ivars
     SKLabelNode *backToMain;
     SKSpriteNode *playAgain;
+    SKSpriteNode *trophyButton;
     
         //Strings for Action Keys (To ensure safety)
     NSString *multiKey;
@@ -73,6 +80,8 @@
     @property (strong, nonatomic) SKTextureAtlas *Shield_Atlas;
     //@property (strong, nonatomic) SKTextureAtlas *Black_Hole_Atlas;
 
+
+
 @end
 
 
@@ -108,6 +117,12 @@ SKColor *wingmanLaserColorCast;
         activePup = NO;
         wingmanActive = NO;
         isSceneLoading = YES;
+        tinyActive = NO;
+        asteroid1Shot = NO;
+        asteroid2Shot = NO;
+        asteroid3Shot = NO;
+        redAsteroidShot = NO;
+        shipFragmentShot = NO;
         
         multiKey = @"multiKey";
         objectCreateKey = @"objectCreateKey";
@@ -119,11 +134,13 @@ SKColor *wingmanLaserColorCast;
         localTotalAsteroidHits = 0;
         localTotalDebrisHits = 0;
         localChallengePoints = 0;
+        laserHitsThisRound = 0;
         
         //Preload Sound Actions
         [self preloadSoundActions];
         
             //Set up Arrays
+        reportArray = [NSMutableArray array];
     }
     return self;
 }
@@ -148,7 +165,7 @@ SKColor *wingmanLaserColorCast;
     //[textureAtlases addObject:self.Black_Hole_Atlas];
     
     //Pass achievements from temp storage area.
-    _achievementsDictionary = [[GameKitHelper sharedGameKitHelper] achievementsDictionary];
+    //_achievementsDictionary = [[GameKitHelper sharedGameKitHelper] achievementsDictionary];
     
     [SKTextureAtlas preloadTextureAtlases:textureAtlases withCompletionHandler:^{
         [self setUpScene];
@@ -389,7 +406,7 @@ SKColor *wingmanLaserColorCast;
     int tempRand = arc4random()%80;
     double randYPosition = (tempRand+10)/100.0;
     obstacle.position = CGPointMake(self.size.width+obstacle.size.width, self.size.height*randYPosition);
-    //obstacle.name = @"aerial";
+    obstacle.name = @"asteroid1";
     obstacle.zPosition = 10;
     
     int tempRand2 = arc4random()%200;
@@ -418,6 +435,7 @@ SKColor *wingmanLaserColorCast;
     obstacle.position = CGPointMake(self.size.width+obstacle.size.width, self.size.height*randYPosition);
     obstacle.anchorPoint = CGPointZero;
     obstacle.zPosition = 10;
+    obstacle.name = @"asteroid2";
     
     //int tempRand2 = arc4random()%100;
     //double randScale = (tempRand2)/1000.0;
@@ -459,7 +477,7 @@ SKColor *wingmanLaserColorCast;
     int tempRand = arc4random()%80;
     double randYPosition = (tempRand+10)/100.0;
     obstacle.position = CGPointMake(self.size.width+obstacle.size.width, self.size.height*randYPosition);
-    //obstacle.name = @"aerial";
+    obstacle.name = @"asteroid3";
     obstacle.zPosition = 10;
     
     int tempRand2 = arc4random()%100;
@@ -486,7 +504,7 @@ SKColor *wingmanLaserColorCast;
     int tempRand = arc4random()%80;
     double randYPosition = (tempRand+10)/100.0;
     obstacle.position = CGPointMake(self.size.width+obstacle.size.width, self.size.height*randYPosition);
-    //obstacle.name = @"aerial";
+    obstacle.name = @"redAsteroid";
     obstacle.zPosition = 10;
     
     int tempRand2 = arc4random()%100;
@@ -517,6 +535,7 @@ SKColor *wingmanLaserColorCast;
     obstacle.zPosition = 10;
     obstacle.xScale = 0.5;
     obstacle.yScale = 0.5;
+    obstacle.name = @"shipChunk";
     
     CGMutablePathRef path = CGPathCreateMutable();
     
@@ -550,8 +569,6 @@ SKColor *wingmanLaserColorCast;
     object.physicsBody.restitution = 0.0f;
     object.physicsBody.linearDamping = 0.0;
     object.physicsBody.allowsRotation = YES;
-    
-    object.name = @"aerial";
 }
 
 -(void)bottomCollide {
@@ -710,11 +727,138 @@ SKColor *wingmanLaserColorCast;
     }
 }
 
-/*-(void)gcAchievementChecks {
-    if ([GameState sharedGameData].score>=100) {
-        [[GameKitHelper alloc] reportAchievementWithIdentifier:@"flight_school_graduate" percentComplete:100.0 fromDictionary:_achievementsDictionary];
+-(void)checkAchievementsForRank {
+
+    int currentScore = [GameState sharedGameData].highScoreL1;
+    GKLocalPlayer *tempLocalPlayer = [GKLocalPlayer localPlayer];
+    
+    if (currentScore>=100 && ([GameState sharedGameData].rankAchieved == 0)) {
+        GKAchievement *tempRankAchievement = [[GKAchievement alloc] initWithIdentifier:@"flight_school_graduate" player:tempLocalPlayer];
+        tempRankAchievement.percentComplete = 100.0;
+        [reportArray addObject:tempRankAchievement];
+        [GameState sharedGameData].rankAchieved = 1;
+    } else if (currentScore >= 250 && ([GameState sharedGameData].rankAchieved == 1)) {
+        GKAchievement *tempRankAchievement = [[GKAchievement alloc] initWithIdentifier:@"cadet" player:tempLocalPlayer];
+        tempRankAchievement.percentComplete = 100.0;
+        [reportArray addObject:tempRankAchievement];
+        [GameState sharedGameData].rankAchieved = 2;
+    } else if (currentScore >= 500 && ([GameState sharedGameData].rankAchieved == 2)) {
+        GKAchievement *tempRankAchievement = [[GKAchievement alloc] initWithIdentifier:@"private_I" player:tempLocalPlayer];
+        tempRankAchievement.percentComplete = 100.0;
+        [reportArray addObject:tempRankAchievement];
+        [GameState sharedGameData].rankAchieved = 3;
+    } else if (currentScore >= 1000 && ([GameState sharedGameData].rankAchieved == 3)) {
+        GKAchievement *tempRankAchievement = [[GKAchievement alloc] initWithIdentifier:@"private_II" player:tempLocalPlayer];
+        tempRankAchievement.percentComplete = 100.0;
+        [reportArray addObject:tempRankAchievement];
+        [GameState sharedGameData].rankAchieved = 4;
+    } else if (currentScore >= 1500 && ([GameState sharedGameData].rankAchieved == 4)) {
+        GKAchievement *tempRankAchievement = [[GKAchievement alloc] initWithIdentifier:@"sergeant_I" player:tempLocalPlayer];
+        tempRankAchievement.percentComplete = 100.0;
+        [reportArray addObject:tempRankAchievement];
+        [GameState sharedGameData].rankAchieved = 5;
+    } else if (currentScore >= 2000 && ([GameState sharedGameData].rankAchieved == 5)) {
+        GKAchievement *tempRankAchievement = [[GKAchievement alloc] initWithIdentifier:@"sergeant_II" player:tempLocalPlayer];
+        tempRankAchievement.percentComplete = 100.0;
+        [reportArray addObject:tempRankAchievement];
+        [GameState sharedGameData].rankAchieved = 6;
+    } else if (currentScore >= 2500 && ([GameState sharedGameData].rankAchieved == 6)) {
+        GKAchievement *tempRankAchievement = [[GKAchievement alloc] initWithIdentifier:@"flight_commander" player:tempLocalPlayer];
+        tempRankAchievement.percentComplete = 100.0;
+        [reportArray addObject:tempRankAchievement];
+        [GameState sharedGameData].rankAchieved = 7;
+    } else if (currentScore >= 3000 && ([GameState sharedGameData].rankAchieved == 7)) {
+        GKAchievement *tempRankAchievement = [[GKAchievement alloc] initWithIdentifier:@"lieutenant_commander" player:tempLocalPlayer];
+        tempRankAchievement.percentComplete = 100.0;
+        [reportArray addObject:tempRankAchievement];
+        [GameState sharedGameData].rankAchieved = 8;
+    } else if (currentScore >= 4000 && ([GameState sharedGameData].rankAchieved == 8)) {
+        GKAchievement *tempRankAchievement = [[GKAchievement alloc] initWithIdentifier:@"commander" player:tempLocalPlayer];
+        tempRankAchievement.percentComplete = 100.0;
+        [reportArray addObject:tempRankAchievement];
+        [GameState sharedGameData].rankAchieved = 9;
+    } else if (currentScore >= 5000 && ([GameState sharedGameData].rankAchieved == 9)) {
+        GKAchievement *tempRankAchievement = [[GKAchievement alloc] initWithIdentifier:@"fleet_general" player:tempLocalPlayer];
+        tempRankAchievement.percentComplete = 100.0;
+        [reportArray addObject:tempRankAchievement];
+        [GameState sharedGameData].rankAchieved = 10;
+    } else if (currentScore >= 10000 && ([GameState sharedGameData].rankAchieved == 10)) {
+        GKAchievement *tempRankAchievement = [[GKAchievement alloc] initWithIdentifier:@"fleed_admiral" player:tempLocalPlayer];
+        tempRankAchievement.percentComplete = 100.0;
+        [reportArray addObject:tempRankAchievement];
+        [GameState sharedGameData].rankAchieved = 11;
     }
-}*/
+    
+    [[GameState sharedGameData] save];
+}
+
+-(void)checkAchievementsIsGameOver:(BOOL)gameIsOver {
+    GKLocalPlayer *localPlayer = [GKLocalPlayer localPlayer];
+    NSArray *achievieStrings = @[@"bro_do_you_lift",@"charity_case",@"crash_dummy",@"equal_opp_destroyer",@"killing_spree",@"kill_streak",@"killpossible",@"shot_heart",@"killing_smalls",@"welcome_501st"];
+    for (NSString *tempString in achievieStrings) {
+        //Check non-rank achievements.
+        if ([tempString isEqualToString:@"welcome_501st"] && !gameIsOver) { //Identify as 501st AND game IS NOT over.
+            if (laserHitsThisRound == 0 && localTotalLasersFired == AUTOCANNON_SHOTS_FIRED) {//Check that achievement has been satisfied.
+                GKAchievement *tempAchievement = [[GKAchievement alloc] initWithIdentifier:tempString player:localPlayer];
+                tempAchievement.percentComplete = 100.0;
+                [reportArray addObject:tempAchievement];
+            }
+        } else if ([tempString isEqualToString:@"bro_do_you_lift"] && gameIsOver) {//Identify as bro_do_you_lift AND game IS over.
+            if ([GameState sharedGameData].score == 0) { //Check that achievement has been satisfied.
+                GKAchievement *tempAchievement = [[GKAchievement alloc] initWithIdentifier:tempString player:localPlayer];
+                tempAchievement.percentComplete = 100.0;
+                [reportArray addObject:tempAchievement];
+            }
+        } else if ([tempString isEqualToString:@"charity_case"] && gameIsOver) { //Identify as charity_case AND game IS over.
+            if ([GameState sharedGameData].score > 100 && [GameState sharedGameData].scoreMultiplier == 1) { //Check satisfy.
+                GKAchievement *tempAchievement = [[GKAchievement alloc] initWithIdentifier:tempString player:localPlayer];
+                tempAchievement.percentComplete = 100.0;
+                [reportArray addObject:tempAchievement];
+            }
+        } else if ([tempString isEqualToString:@"crash_dummy"] && gameIsOver) {
+            GKAchievement *tempAchievement = [[GKAchievement alloc] initWithIdentifier:tempString player:localPlayer];
+            float tempMin = MIN([GameState sharedGameData].totalAsteroidDeaths, 100.0);
+            tempAchievement.percentComplete = tempMin;
+            [reportArray addObject:tempAchievement];
+        } else if ([tempString isEqualToString:@"equal_opp_destroyer"] && !gameIsOver) {
+            if (asteroid1Shot && asteroid2Shot && asteroid3Shot && redAsteroidShot && shipFragmentShot && !wingmanActive) {
+                GKAchievement *tempAchievement = [[GKAchievement alloc] initWithIdentifier:tempString player:localPlayer];
+                tempAchievement.percentComplete = 100.0;
+                [reportArray addObject:tempAchievement];
+            }
+        } else if ([tempString isEqualToString:@"kill_streak"] && gameIsOver) {
+            if (!wingmanActive && (laserHitsThisRound >= 3)) {
+                GKAchievement *tempAchievement = [[GKAchievement alloc] initWithIdentifier:tempString player:localPlayer];
+                tempAchievement.percentComplete = 100.0;
+                [reportArray addObject:tempAchievement];
+            }
+        } else if ([tempString isEqualToString:@"killing_spree"] && gameIsOver) {
+            if (!wingmanActive && (laserHitsThisRound >= 5)) {
+                GKAchievement *tempAchievement = [[GKAchievement alloc] initWithIdentifier:tempString player:localPlayer];
+                tempAchievement.percentComplete = 100.0;
+                [reportArray addObject:tempAchievement];
+            }
+        } else if ([tempString isEqualToString:@"killpossible"] && gameIsOver) {
+            if (!wingmanActive && (laserHitsThisRound >= 10)) {
+                GKAchievement *tempAchievement = [[GKAchievement alloc] initWithIdentifier:tempString player:localPlayer];
+                tempAchievement.percentComplete = 100.0;
+                [reportArray addObject:tempAchievement];
+            }
+        } else if ([tempString isEqualToString:@"shot_heart"] && gameIsOver) {
+            if (!wingmanActive && (laserHitsThisRound >= 1)) {
+                GKAchievement *tempAchievement = [[GKAchievement alloc] initWithIdentifier:tempString player:localPlayer];
+                tempAchievement.percentComplete = 100.0;
+                [reportArray addObject:tempAchievement];
+            }
+        } else if ([tempString isEqualToString:@"killing_smalls"] && gameIsOver) {
+            if (tinyActive && gameIsOver) {
+                GKAchievement *tempAchievement = [[GKAchievement alloc] initWithIdentifier:tempString player:localPlayer];
+                tempAchievement.percentComplete = 100.0;
+                [reportArray addObject:tempAchievement];
+            }
+        }
+    }
+}
 
 #pragma mark --Animate Obstacles
 
@@ -1128,17 +1272,19 @@ SKColor *wingmanLaserColorCast;
     [self playSoundEffectsWithAction:_TinyNovaCollect];
     [playerNode logicTinyNova];
     activePup = YES;
+    tinyActive = YES;
     
     SKAction *wait = [SKAction waitForDuration:10.0];
     SKAction *closeTinyNova = [SKAction runBlock:^{
         [playerNode closeTinyNova];
         activePup = NO;
+        tinyActive = NO;
     }];
     [self runAction:[SKAction sequence:@[wait,closeTinyNova]]];
 }
 
 -(void)autoCannonRunFromPlayer: (Ships *)tempPlayer withColor: (SKColor *)tempColor withKey: (NSString *)tempKey {
-    localLaserHits = 0;
+    laserHitsThisRound = 0;
     
     [self playSoundEffectsWithAction:_AutoCannonSpool];
     
@@ -1190,12 +1336,22 @@ SKColor *wingmanLaserColorCast;
     [firstNodeToRemove removeFromParent];
     [secondNodeToRemove removeFromParent];
     localLaserHits = localLaserHits + 1;
+    laserHitsThisRound = laserHitsThisRound + 1;
 }
 
 -(void)autoCannonFinish {
+    [self checkAchievementsIsGameOver:NO];
+    
     if (!wingmanActive) {
         activePup = NO;
     }
+    
+    asteroid1Shot = NO;
+    asteroid2Shot = NO;
+    asteroid3Shot = NO;
+    redAsteroidShot = NO;
+    shipFragmentShot = NO;
+    
     [GameState sharedGameData].maxLaserHits = MAX([GameState sharedGameData].maxLaserHits, localLaserHits);
 }
 
@@ -1315,6 +1471,10 @@ SKColor *wingmanLaserColorCast;
     if ([node.name isEqualToString:@"playButton"]) {
         playAgain.texture = [SKTexture textureWithImageNamed:@"buttonPressPlay"];
     }
+    
+    if ([node.name isEqualToString:@"trophyButton"]) {
+        trophyButton.texture = [SKTexture textureWithImageNamed:@"Trophy_Button_press"];
+    }
 }
 
 -(void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event {
@@ -1354,6 +1514,29 @@ SKColor *wingmanLaserColorCast;
         [levelOneView presentScene:levelOneScene transition:levelOneTrans];
     }
     
+    if (![nodeLift.name isEqualToString:@"playButton"]) {
+        playAgain.texture = [SKTexture textureWithImageNamed:@"buttonPlay"];
+    }
+    
+    if ([nodeLift.name isEqualToString:@"trophyButton"]) {
+        trophyButton.texture = [SKTexture textureWithImageNamed:@"Trophy_Button"];
+        NSString *defaultLeaderBoardID = @"L1HS";
+        GKGameCenterViewController *leaderboardViewController = [[GKGameCenterViewController alloc] init];
+        
+        UIViewController *rootVC = [UIApplication sharedApplication].keyWindow.rootViewController;
+        if (leaderboardViewController != nil) {
+            leaderboardViewController.gameCenterDelegate = rootVC;
+            leaderboardViewController.viewState = GKGameCenterViewControllerStateLeaderboards;
+            leaderboardViewController.leaderboardIdentifier = defaultLeaderBoardID;
+        }
+        
+        [rootVC presentViewController:leaderboardViewController animated:YES completion:nil];
+    }
+    
+    if (![nodeLift.name isEqualToString:@"trophyButton"]) {
+        trophyButton.texture = [SKTexture textureWithImageNamed:@"Trophy_Button"];
+    }
+    
 }
 
 -(void)update:(NSTimeInterval)currentTime {
@@ -1382,7 +1565,8 @@ SKColor *wingmanLaserColorCast;
 
 -(void)gameOver {
     //Update leaderboard if necessary.
-    if ([GameState sharedGameData].score > [GameState sharedGameData].highScoreL1) {
+    GKLocalPlayer *tempLocalPlayer = [GKLocalPlayer localPlayer];
+    if (tempLocalPlayer.isAuthenticated) {
         [[GameKitHelper sharedGameKitHelper] submitScore:[GameState sharedGameData].score toLeader:@"L1HS"];
     }
     
@@ -1397,6 +1581,9 @@ SKColor *wingmanLaserColorCast;
     [GameState sharedGameData].totalPoints = [GameState sharedGameData].totalPoints + [GameState sharedGameData].score;
     [GameState sharedGameData].allTimeAverageAccuracy = [GameState sharedGameData].totalLaserHits / [GameState sharedGameData].totalLasersFired;
     [GameState sharedGameData].allTimeAverageScore = [GameState sharedGameData].totalPoints / [GameState sharedGameData].totalGames;
+    
+    [self checkAchievementsIsGameOver:YES];
+    [self checkAchievementsForRank];
     
     //Remove all actions & children from the scene.
     [self removeAllActions];
@@ -1420,7 +1607,17 @@ SKColor *wingmanLaserColorCast;
     [self runAction:[SKAction sequence:@[wait,gameOver]]];
     [[NSNotificationCenter defaultCenter] postNotificationName:@"showAd" object:nil];
     
-    //[self gcAchievementChecks];
+    if (tempLocalPlayer.isAuthenticated) {
+        [GKAchievement reportAchievements:reportArray withCompletionHandler:^(NSError *error) {
+            if (error != nil) {
+                //[[GameKitHelper sharedGameKitHelper] setLastError:error];
+                NSLog(@"Error in reporting achievements.");
+            } else {
+                NSLog(@"Achievements reported.");
+                //[reportArray removeAllObjects];
+            }
+        }];
+    }
 }
 
 -(void)gameOverComplete {
@@ -1429,6 +1626,7 @@ SKColor *wingmanLaserColorCast;
     [self createCurrentScore];
     [self createHighScore];
     [self playAgainButton];
+    [self leaderboardTrophy];
 }
 
 -(void)createBackgroundWithIndex: (CGFloat)index {
@@ -1485,6 +1683,18 @@ SKColor *wingmanLaserColorCast;
     return backToMain;
 }
 
+-(void)leaderboardTrophy {
+    trophyButton = [SKSpriteNode spriteNodeWithTexture:[SKTexture textureWithImageNamed:@"Trophy_Button"]];
+    trophyButton.position = CGPointMake(playAgain.position.x-playAgain.size.width/2+trophyButton.size.width/2, playAgain.position.y + playAgain.size.height + 25);
+    trophyButton.name = @"trophyButton";
+    trophyButton.alpha = 0.0;
+    
+    SKAction *wait = [SKAction waitForDuration:0.1];
+    SKAction *move = [SKAction fadeAlphaTo:1.0 duration:0.5];
+    [trophyButton runAction:[SKAction sequence:@[wait,move]]];
+    
+    [self addChild:trophyButton];
+}
 
 -(void)didBeginContact:(SKPhysicsContact *)contact {
     
@@ -1544,12 +1754,28 @@ SKColor *wingmanLaserColorCast;
         [self laserContactRemove:firstNode andRemove:secondNode];
         localTotalLaserHits = localTotalLaserHits + 1;
         
-        if ([secondNode.name isEqualToString:@"asteroid"]) {
+        if ([secondNode.name isEqualToString:@"asteroid1"] || [secondNode.name isEqualToString:@"asteroid2"] || [secondNode.name isEqualToString:@"asteroid3"] || [secondNode.name isEqualToString:@"redAsteroid"]) {
             localTotalAsteroidHits = localTotalAsteroidHits + 1;
         } else if ([secondNode.name isEqualToString:@"debris"]) {
             localTotalDebrisHits = localTotalDebrisHits + 1;
         } else if ([secondNode.name isEqualToString:@"red_asteroid"]) {
             localChallengePoints = localChallengePoints + 1;
+        }
+        
+        if ([secondNode.name isEqualToString:@"asteroid1"]) {
+            asteroid1Shot = YES;
+        }
+        if ([secondNode.name isEqualToString:@"asteroid2"]) {
+            asteroid2Shot = YES;
+        }
+        if ([secondNode.name isEqualToString:@"asteroid3"]) {
+            asteroid3Shot = YES;
+        }
+        if ([secondNode.name isEqualToString:@"redAsteroid"]) {
+            redAsteroidShot = YES;
+        }
+        if ([secondNode.name isEqualToString:@"shipChunk"]) {
+            shipFragmentShot = YES;
         }
         
     }

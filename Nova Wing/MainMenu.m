@@ -8,7 +8,6 @@
 
 #import "MainMenu.h"
 #import "LevelOne.h"
-#import "GameKitHelper.h"
 #import "NWCodex.h"
 #import "Tutorial.h"
 #import <UIKit/UIKit.h>
@@ -32,6 +31,7 @@ static inline CGPoint CGPointMultiplyScalar(const CGPoint a, const CGFloat b)
     SKSpriteNode *settingsButton;
     SKSpriteNode *codexButton;
     SKSpriteNode *creditButton;
+    float rankScoreMoveDist;
     
         //Textures
     SKTexture *audioTexture;
@@ -51,6 +51,7 @@ NSTimeInterval _dt;
         /* Setup your scene here */
         [GameState sharedGameData].levelIndex = 0;
         [GameState sharedGameData].lvlIndexMax = 2;
+
         
         if ([GameState sharedGameData].highScoreL1 < 1) {
             [GameState sharedGameData].audioVolume = 1.0;
@@ -65,13 +66,20 @@ NSTimeInterval _dt;
         [self addChild: [self codexButtonNode]];
         [self addChild: [self creditsButtonNode]];
         [self addChild: [self settingsButtonNode]];
-        [self addChild: [self highScoreLabel]];
+        [self updateRank];
+        [self createRankInsignia];
+        
         [self createAudio];
         [[NSNotificationCenter defaultCenter] postNotificationName:@"showAd" object:nil];
         levelTitles = @[@"Event Horizon", @"The Whispers", @"TempLevel3"];
         
         //Check achievements for rank.
+        
+        
         //[self achievementRetrievement];
+        NSLog(@"high score %ld",[GameState sharedGameData].highScoreL1);
+        NSLog(@"asteroid deaths %d",[GameState sharedGameData].totalAsteroidDeaths);
+        NSLog(@"rank %i",[GameState sharedGameData].rankAchieved);
     }
     return self;
 }
@@ -203,7 +211,7 @@ NSTimeInterval _dt;
 
 -(SKLabelNode *)highScoreLabel {
     SKLabelNode *highScore = [[SKLabelNode alloc] initWithFontNamed:@"SF Movie Poster"];
-    highScore.position = CGPointMake(self.size.width, self.size.height - 30);
+    highScore.position = CGPointMake(self.size.width+175, self.size.height - 40);
     highScore.fontColor = [SKColor whiteColor];
     highScore.fontSize = 30;
     highScore.horizontalAlignmentMode = SKLabelHorizontalAlignmentModeLeft;
@@ -211,7 +219,8 @@ NSTimeInterval _dt;
     highScore.text = [NSString stringWithFormat:@"HIGH SCORE: %li  ", [GameState sharedGameData].highScoreL1];
     
     SKAction *wait = [SKAction waitForDuration:.75];
-    SKAction *move = [SKAction moveByX:-(highScore.frame.size.width + 10) y:0 duration:0.5];
+    rankScoreMoveDist = highScore.frame.size.width + 175;
+    SKAction *move = [SKAction moveByX:-(rankScoreMoveDist + 10) y:0 duration:0.5];
     move.timingMode = SKActionTimingEaseIn;
     SKAction *sequence = [SKAction sequence:@[wait, move]];
     [highScore runAction: sequence];
@@ -219,17 +228,6 @@ NSTimeInterval _dt;
     return highScore;
 }
 
--(void)rankNode {
-    if (![_activeRank.identifier isEqualToString:@"no_rank"]) {
-        SKSpriteNode *tempRankNode = [SKSpriteNode spriteNodeWithImageNamed:_activeRank.identifier];
-        tempRankNode.position = CGPointMake(self.size.width - 60, self.size.height-50);
-        [self addChild:tempRankNode];
-    } else {
-        SKSpriteNode *tempRankNode = [SKSpriteNode node];
-        tempRankNode.position = CGPointMake(self.size.width - 60, self.size.height-50);
-        [self addChild:tempRankNode];
-    }
-}
 
 -(SKLabelNode *)backToMainButton
 {
@@ -477,31 +475,96 @@ NSTimeInterval _dt;
     [gameCenterViewController.presentingViewController dismissViewControllerAnimated:YES completion:nil];
 }
 
-/*-(void)achievementRetrievement {
-    _achievementsDictionary = [[NSMutableDictionary alloc] init];
-    [[GameKitHelper sharedGameKitHelper] retrieveAchievementsToDictionary: _achievementsDictionary]; //Load all achievements.
-    //Test for rank achievements if _achievementsDictionary is NOT nil.
-        //Process rank achievements.
-    if (_achievementsDictionary != nil) {
-        //Do stuff.
-        NSArray *rankStrings = @[@"flight_school_graduate",@"cadet",@"private_I",@"private_II",@"sergeant_I",@"sergeant_II",@"flight_commander",@"lieutenant_commander",@"commander",@"fleet_general",@"fleet_admiral"];
-        //NSArray *rankTitles = @[@"Flight School Graduate", @"Cadet", @"Private, Rank I", @"Private, Rank II", @"Sergeant, Rank I", @"Sergeant, Rank II", @"Flight Commander", @"Lieutenant Commander", @"Commander", @"Fleet General", @"Fleet Admiral"];
-        int tempIndex = 0;
-        for (NSString *rankStringTemp in rankStrings) {
-            tempIndex = tempIndex + 1;
-            GKAchievement *tempRank = [[GameKitHelper sharedGameKitHelper] getAchievementForIdentifier:rankStringTemp fromDictionary:_achievementsDictionary];
-            if (tempRank.percentComplete == 0.0) {
-                if (tempIndex == 1) {
-                    _activeRank = [[GKAchievement alloc] initWithIdentifier:@"no_rank"];
-                } else {
-                    _activeRank = [[GameKitHelper sharedGameKitHelper] getAchievementForIdentifier:[rankStrings objectAtIndex:tempIndex - 1] fromDictionary:_achievementsDictionary];
-                }
-                return;
-            }
+-(void)createRankInsignia {
+    NSString *insigniaString = [[NSString alloc] init];
+    if ([GameState sharedGameData].rankAchieved == 0) {
+        return;}
+    else {
+        switch ([GameState sharedGameData].rankAchieved) {
+            case 1: 
+                insigniaString = @"FlightSchoolGraduate";
+                break;
+            case 2:
+                insigniaString = @"Cadet";
+                break;
+            case 3:
+                insigniaString = @"Private-1";
+                break;
+            case 4:
+                insigniaString = @"Private-2";
+                break;
+            case 5:
+                insigniaString = @"Sergeant-1";
+                break;
+            case 6:
+                insigniaString = @"Sergeant-2";
+                break;
+            case 7:
+                insigniaString = @"FlightCommander";
+                break;
+            case 8:
+                insigniaString = @"LTCommander";
+                break;
+            case 9:
+                insigniaString = @"Commander";
+                break;
+            case 10:
+                insigniaString = @"FleetGeneral";
+                break;
+            case 11:
+                insigniaString = @"FleetAdmiral";
+                break;
+            default:
+                break;
         }
+        
+        SKSpriteNode *insigniaNode = [SKSpriteNode spriteNodeWithImageNamed:insigniaString];
+        insigniaNode.zPosition = 5;
+        insigniaNode.position = CGPointMake(self.size.width + 142, self.size.height-30);
+        
+        SKAction *wait = [SKAction waitForDuration:.75];
+        SKAction *move = [SKAction moveByX:-(rankScoreMoveDist) y:0 duration:0.5];
+        move.timingMode = SKActionTimingEaseIn;
+        SKAction *sequence = [SKAction sequence:@[wait, move]];
+        [insigniaNode runAction: sequence];
+        
+        //CAN'T GET THIS TO SHOW UP!!!!!
+        
+        [self addChild:insigniaNode];
     }
+}
 
-}*/
+-(void) updateRank {
+            int tempScoreForRank = [GameState sharedGameData].highScoreL1;
+    
+            if (tempScoreForRank < 100) {
+                [GameState sharedGameData].rankAchieved = 0;
+            } else if (tempScoreForRank>=100 && tempScoreForRank < 250) {
+                [GameState sharedGameData].rankAchieved = 1;
+            } else if (tempScoreForRank>=250 && tempScoreForRank < 500) {
+                [GameState sharedGameData].rankAchieved = 2;
+            } else if (tempScoreForRank>=500 && tempScoreForRank < 1000) {
+                [GameState sharedGameData].rankAchieved = 3;
+            } else if (tempScoreForRank>=1000 && tempScoreForRank < 1500) {
+                [GameState sharedGameData].rankAchieved = 4;
+            } else if (tempScoreForRank>=1500 && tempScoreForRank < 2000) {
+                [GameState sharedGameData].rankAchieved = 5;
+            } else if (tempScoreForRank>=2000 && tempScoreForRank < 2500) {
+                [GameState sharedGameData].rankAchieved = 6;
+            } else if (tempScoreForRank>=2500 && tempScoreForRank < 3000) {
+                [GameState sharedGameData].rankAchieved = 7;
+            } else if (tempScoreForRank>=3000 && tempScoreForRank < 4000) {
+                [GameState sharedGameData].rankAchieved = 8;
+            } else if (tempScoreForRank>=4000 && tempScoreForRank < 5000) {
+                [GameState sharedGameData].rankAchieved = 9;
+            } else if (tempScoreForRank>=5000 && tempScoreForRank < 10000) {
+                [GameState sharedGameData].rankAchieved = 10;
+            } else if (tempScoreForRank>=10000) {
+                [GameState sharedGameData].rankAchieved = 11;
+            }
+            [[GameState sharedGameData] save];
+            [self addChild: [self highScoreLabel]];
+}
 
 #pragma mark --Actions
 

@@ -36,3 +36,4 @@ int localTotalLasersFired;
 int localTotalAsteroidHits;
 int localTotalDebrisHits;
 int localChallengePoints;
+NSMutableArray *reportArray;

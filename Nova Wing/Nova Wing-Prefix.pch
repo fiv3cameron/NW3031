@@ -14,7 +14,9 @@
     #import <UIKit/UIKit.h>
     #import <Foundation/Foundation.h>
     #import "GameState.h"
+    #import "GameKitHelper.h"
     #import "NWAudioPlayer.h"
     #import "NWColor.h"
     #import "NWCollisions.h"
+    #import <GameKit/GameKit.h>
 #endif

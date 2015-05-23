@@ -7,7 +7,7 @@
 //
 
 #import "ViewController.h"
-#import "GameKitHelper.h"
+
 #import "MainMenu.h"
 
 @implementation ViewController
@@ -59,8 +59,7 @@
      selector:@selector(showAuthenticationViewController)
      name:PresentAuthenticationViewController
      object:nil];
-    
-    [[GameKitHelper sharedGameKitHelper] authenticateLocalPlayer];
+
 }
 
 - (void)showAuthenticationViewController

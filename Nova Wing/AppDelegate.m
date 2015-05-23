@@ -13,6 +13,7 @@
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
     // Override point for customization after application launch.
+    [self authenticateLocalPlayer];
     return YES;
 }
 							
@@ -36,11 +37,111 @@
 - (void)applicationDidBecomeActive:(UIApplication *)application
 {
     // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
+    [self authenticateLocalPlayer];
 }
 
 - (void)applicationWillTerminate:(UIApplication *)application
 {
+    [[GameState sharedGameData] save];
     // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
+}
+
+#pragma mark --Game Center
+
+//authenticateLocalPlayer authenticates the local player <-- this should happen first.
+- (void)authenticateLocalPlayer
+{
+    //Create local player record.
+    GKLocalPlayer *localPlayer = [GKLocalPlayer localPlayer];
+    
+    localPlayer.authenticateHandler = ^(UIViewController *viewController, NSError *error) {
+        //[GameState sharedGameData].achievementsDictionary = dictionary;
+        //[[GameState sharedGameData] save];
+        if (viewController != nil) {
+            // Use root view controller to present new Game Center Authentication view.
+            [[UIApplication sharedApplication].keyWindow.rootViewController presentViewController: viewController animated: YES completion: ^{
+                //LOAD ACHIEVEMENTS USING COMPLETION HANDLER HERE.
+                [[GKLocalPlayer localPlayer] loadDefaultLeaderboardIdentifierWithCompletionHandler: ^(NSString *leaderboardIdentifier, NSError *error) {
+                    
+                    if (error != nil) {
+                        NSLog(@"%@", [error localizedDescription]);
+                    } else {
+                        _leaderboardIdentifier = leaderboardIdentifier;
+                    }
+                }];
+                [GKAchievement loadAchievementsWithCompletionHandler:^(NSArray *achievements, NSError *error) {
+                    if (error != nil) {
+                        //[self setLastError: error];
+                        NSLog(@"Error in loading achievements.");
+                    }
+                    if (achievements != nil) {
+                        for (GKAchievement *loopAchievie in achievements) {
+                            //Set GameState dictionary.
+                            [[GameState sharedGameData].achievementsDictionary setValue:loopAchievie forKey:loopAchievie.identifier];
+                            //NSLog(loopAchievie.identifier);
+                        }
+                        [[GameState sharedGameData] save];
+                    }
+                }];
+                
+                GKLocalPlayer *tempLocalPlayer = [GKLocalPlayer localPlayer];
+                GKLeaderboard *tempLeader = [[GKLeaderboard alloc] initWithPlayers:@[tempLocalPlayer]];
+                tempLeader.identifier = @"L1HS";
+                
+                [tempLeader loadScoresWithCompletionHandler:^(NSArray *tempHighScoreArray, NSError *error) {
+                    GKScore *tempScore = [tempHighScoreArray firstObject];
+                    NSLog(@"loaded score %li", (long)tempScore.value);
+                    if ((tempScore.value > [GameState sharedGameData].highScoreL1) ){
+                        [GameState sharedGameData].highScoreL1 = (long)tempScore.value;
+                    } else if ((tempScore.value < [GameState sharedGameData].highScoreL1)) {
+                        //report highscore to GameCenter
+                        [[GameKitHelper sharedGameKitHelper] submitScore:[GameState sharedGameData].highScoreL1 toLeader: tempLeader.identifier];
+                    }
+                }];
+            }];
+        } else {
+            if ([GKLocalPlayer localPlayer].isAuthenticated) {
+                //Get default leaderboard ID after authentication is true.
+                [[GKLocalPlayer localPlayer] loadDefaultLeaderboardIdentifierWithCompletionHandler: ^(NSString *leaderboardIdentifier, NSError *error) {
+                    
+                    if (error != nil) {
+                        NSLog(@"%@", [error localizedDescription]);
+                    } else {
+                        _leaderboardIdentifier = leaderboardIdentifier;
+                    }
+                }];
+                
+                [GKAchievement loadAchievementsWithCompletionHandler:^(NSArray *achievements, NSError *error) {
+                    if (error != nil) {
+                        //[self setLastError: error];
+                        NSLog(@"Error in loading achievements.");
+                    }
+                    if (achievements != nil) {
+                        for (GKAchievement *loopAchievie in achievements) {
+                            //Set GameState dictionary.
+                            [[GameState sharedGameData].achievementsDictionary setValue:loopAchievie forKey:loopAchievie.identifier];
+                            
+                            //NSLog(loopAchievie.identifier);
+                        }
+                        [[GameState sharedGameData] save];
+                    }
+                }];
+                //LOAD ACHIEVEMENTS HERE.
+            } else {
+                //Local player was not already authenticated.
+            }
+        }
+    };
+}
+
+//setLastError creates an NSLog of the error inputted.
+- (void)setLastError:(NSError *)error
+{
+    _lastError = [error copy];
+    if (_lastError) {
+        NSLog(@"GameKitHelper ERROR: %@",
+              [[_lastError userInfo] description]);
+    }
 }
 
 @end

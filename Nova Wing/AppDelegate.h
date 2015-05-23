@@ -8,8 +8,15 @@
 
 #import <UIKit/UIKit.h>
 
+
+
 @interface AppDelegate : UIResponder <UIApplicationDelegate>
 
+-(void)authenticateLocalPlayer;
+
 @property (strong, nonatomic) UIWindow *window;
+@property (nonatomic, retain) NSMutableDictionary *achievementsDictionary;
+@property (nonatomic, retain) NSString* leaderboardIdentifier;
+@property (nonatomic, retain) NSError* lastError;
 
 @end
