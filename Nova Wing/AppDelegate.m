@@ -83,6 +83,21 @@
                         [[GameState sharedGameData] save];
                     }
                 }];
+                
+                GKLocalPlayer *tempLocalPlayer = [GKLocalPlayer localPlayer];
+                GKLeaderboard *tempLeader = [[GKLeaderboard alloc] initWithPlayers:@[tempLocalPlayer]];
+                tempLeader.identifier = @"L1HS";
+                
+                [tempLeader loadScoresWithCompletionHandler:^(NSArray *tempHighScoreArray, NSError *error) {
+                    GKScore *tempScore = [tempHighScoreArray firstObject];
+                    NSLog(@"loaded score %li", (long)tempScore.value);
+                    if ((tempScore.value > [GameState sharedGameData].highScoreL1) ){
+                        [GameState sharedGameData].highScoreL1 = (long)tempScore.value;
+                    } else if ((tempScore.value < [GameState sharedGameData].highScoreL1)) {
+                        //report highscore to GameCenter
+                        [[GameKitHelper sharedGameKitHelper] submitScore:[GameState sharedGameData].highScoreL1 toLeader: tempLeader.identifier];
+                    }
+                }];
             }];
         } else {
             if ([GKLocalPlayer localPlayer].isAuthenticated) {
@@ -111,7 +126,6 @@
                         [[GameState sharedGameData] save];
                     }
                 }];
-                
                 //LOAD ACHIEVEMENTS HERE.
             } else {
                 //Local player was not already authenticated.

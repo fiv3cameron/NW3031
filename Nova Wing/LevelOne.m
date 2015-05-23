@@ -14,7 +14,6 @@
 #import "Multipliers.h"
 #import "PowerUps.h"
 #import "MainMenu.h"
-#import "GameKitHelper.h"
 
 @interface LevelOne() <SKPhysicsContactDelegate>
 {
@@ -40,6 +39,7 @@
         //Game Over ivars
     SKLabelNode *backToMain;
     SKSpriteNode *playAgain;
+    SKSpriteNode *trophyButton;
     
         //Strings for Action Keys (To ensure safety)
     NSString *multiKey;
@@ -729,7 +729,7 @@ SKColor *wingmanLaserColorCast;
 
 -(void)checkAchievementsForRank {
 
-    int currentScore = [GameState sharedGameData].score;
+    int currentScore = [GameState sharedGameData].highScoreL1;
     GKLocalPlayer *tempLocalPlayer = [GKLocalPlayer localPlayer];
     
     if (currentScore>=100 && ([GameState sharedGameData].rankAchieved == 0)) {
@@ -737,69 +737,59 @@ SKColor *wingmanLaserColorCast;
         tempRankAchievement.percentComplete = 100.0;
         [reportArray addObject:tempRankAchievement];
         [GameState sharedGameData].rankAchieved = 1;
-        [[GameState sharedGameData] save];
     } else if (currentScore >= 250 && ([GameState sharedGameData].rankAchieved == 1)) {
         GKAchievement *tempRankAchievement = [[GKAchievement alloc] initWithIdentifier:@"cadet" player:tempLocalPlayer];
         tempRankAchievement.percentComplete = 100.0;
         [reportArray addObject:tempRankAchievement];
         [GameState sharedGameData].rankAchieved = 2;
-        [[GameState sharedGameData] save];
     } else if (currentScore >= 500 && ([GameState sharedGameData].rankAchieved == 2)) {
         GKAchievement *tempRankAchievement = [[GKAchievement alloc] initWithIdentifier:@"private_I" player:tempLocalPlayer];
         tempRankAchievement.percentComplete = 100.0;
         [reportArray addObject:tempRankAchievement];
         [GameState sharedGameData].rankAchieved = 3;
-        [[GameState sharedGameData] save];
     } else if (currentScore >= 1000 && ([GameState sharedGameData].rankAchieved == 3)) {
         GKAchievement *tempRankAchievement = [[GKAchievement alloc] initWithIdentifier:@"private_II" player:tempLocalPlayer];
         tempRankAchievement.percentComplete = 100.0;
         [reportArray addObject:tempRankAchievement];
         [GameState sharedGameData].rankAchieved = 4;
-        [[GameState sharedGameData] save];
     } else if (currentScore >= 1500 && ([GameState sharedGameData].rankAchieved == 4)) {
         GKAchievement *tempRankAchievement = [[GKAchievement alloc] initWithIdentifier:@"sergeant_I" player:tempLocalPlayer];
         tempRankAchievement.percentComplete = 100.0;
         [reportArray addObject:tempRankAchievement];
         [GameState sharedGameData].rankAchieved = 5;
-        [[GameState sharedGameData] save];
     } else if (currentScore >= 2000 && ([GameState sharedGameData].rankAchieved == 5)) {
         GKAchievement *tempRankAchievement = [[GKAchievement alloc] initWithIdentifier:@"sergeant_II" player:tempLocalPlayer];
         tempRankAchievement.percentComplete = 100.0;
         [reportArray addObject:tempRankAchievement];
         [GameState sharedGameData].rankAchieved = 6;
-        [[GameState sharedGameData] save];
     } else if (currentScore >= 2500 && ([GameState sharedGameData].rankAchieved == 6)) {
         GKAchievement *tempRankAchievement = [[GKAchievement alloc] initWithIdentifier:@"flight_commander" player:tempLocalPlayer];
         tempRankAchievement.percentComplete = 100.0;
         [reportArray addObject:tempRankAchievement];
         [GameState sharedGameData].rankAchieved = 7;
-        [[GameState sharedGameData] save];
     } else if (currentScore >= 3000 && ([GameState sharedGameData].rankAchieved == 7)) {
         GKAchievement *tempRankAchievement = [[GKAchievement alloc] initWithIdentifier:@"lieutenant_commander" player:tempLocalPlayer];
         tempRankAchievement.percentComplete = 100.0;
         [reportArray addObject:tempRankAchievement];
         [GameState sharedGameData].rankAchieved = 8;
-        [[GameState sharedGameData] save];
     } else if (currentScore >= 4000 && ([GameState sharedGameData].rankAchieved == 8)) {
         GKAchievement *tempRankAchievement = [[GKAchievement alloc] initWithIdentifier:@"commander" player:tempLocalPlayer];
         tempRankAchievement.percentComplete = 100.0;
         [reportArray addObject:tempRankAchievement];
         [GameState sharedGameData].rankAchieved = 9;
-        [[GameState sharedGameData] save];
     } else if (currentScore >= 5000 && ([GameState sharedGameData].rankAchieved == 9)) {
         GKAchievement *tempRankAchievement = [[GKAchievement alloc] initWithIdentifier:@"fleet_general" player:tempLocalPlayer];
         tempRankAchievement.percentComplete = 100.0;
         [reportArray addObject:tempRankAchievement];
         [GameState sharedGameData].rankAchieved = 10;
-        [[GameState sharedGameData] save];
     } else if (currentScore >= 10000 && ([GameState sharedGameData].rankAchieved == 10)) {
         GKAchievement *tempRankAchievement = [[GKAchievement alloc] initWithIdentifier:@"fleed_admiral" player:tempLocalPlayer];
         tempRankAchievement.percentComplete = 100.0;
         [reportArray addObject:tempRankAchievement];
         [GameState sharedGameData].rankAchieved = 11;
-        [[GameState sharedGameData] save];
     }
     
+    [[GameState sharedGameData] save];
 }
 
 -(void)checkAchievementsIsGameOver:(BOOL)gameIsOver {
@@ -1481,6 +1471,10 @@ SKColor *wingmanLaserColorCast;
     if ([node.name isEqualToString:@"playButton"]) {
         playAgain.texture = [SKTexture textureWithImageNamed:@"buttonPressPlay"];
     }
+    
+    if ([node.name isEqualToString:@"trophyButton"]) {
+        trophyButton.texture = [SKTexture textureWithImageNamed:@"Trophy_Button_press"];
+    }
 }
 
 -(void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event {
@@ -1517,6 +1511,29 @@ SKColor *wingmanLaserColorCast;
         
             // Present the scene.
         [levelOneView presentScene:levelOneScene transition:levelOneTrans];
+    }
+    
+    if (![nodeLift.name isEqualToString:@"playButton"]) {
+        playAgain.texture = [SKTexture textureWithImageNamed:@"buttonPlay"];
+    }
+    
+    if ([nodeLift.name isEqualToString:@"trophyButton"]) {
+        trophyButton.texture = [SKTexture textureWithImageNamed:@"Trophy_Button"];
+        NSString *defaultLeaderBoardID = @"L1HS";
+        GKGameCenterViewController *leaderboardViewController = [[GKGameCenterViewController alloc] init];
+        
+        UIViewController *rootVC = [UIApplication sharedApplication].keyWindow.rootViewController;
+        if (leaderboardViewController != nil) {
+            leaderboardViewController.gameCenterDelegate = rootVC;
+            leaderboardViewController.viewState = GKGameCenterViewControllerStateLeaderboards;
+            leaderboardViewController.leaderboardIdentifier = defaultLeaderBoardID;
+        }
+        
+        [rootVC presentViewController:leaderboardViewController animated:YES completion:nil];
+    }
+    
+    if (![nodeLift.name isEqualToString:@"trophyButton"]) {
+        trophyButton.texture = [SKTexture textureWithImageNamed:@"Trophy_Button"];
     }
     
 }
@@ -1565,6 +1582,7 @@ SKColor *wingmanLaserColorCast;
     [GameState sharedGameData].allTimeAverageScore = [GameState sharedGameData].totalPoints / [GameState sharedGameData].totalGames;
     
     [self checkAchievementsIsGameOver:YES];
+    [self checkAchievementsForRank];
     
     //Remove all actions & children from the scene.
     [self removeAllActions];
@@ -1606,6 +1624,7 @@ SKColor *wingmanLaserColorCast;
     [self createCurrentScore];
     [self createHighScore];
     [self playAgainButton];
+    [self leaderboardTrophy];
 }
 
 -(void)createBackgroundWithIndex: (CGFloat)index {
@@ -1662,6 +1681,18 @@ SKColor *wingmanLaserColorCast;
     return backToMain;
 }
 
+-(void)leaderboardTrophy {
+    trophyButton = [SKSpriteNode spriteNodeWithTexture:[SKTexture textureWithImageNamed:@"Trophy_Button"]];
+    trophyButton.position = CGPointMake(playAgain.position.x-playAgain.size.width/2+trophyButton.size.width/2, playAgain.position.y + playAgain.size.height + 25);
+    trophyButton.name = @"trophyButton";
+    trophyButton.alpha = 0.0;
+    
+    SKAction *wait = [SKAction waitForDuration:0.1];
+    SKAction *move = [SKAction fadeAlphaTo:1.0 duration:0.5];
+    [trophyButton runAction:[SKAction sequence:@[wait,move]]];
+    
+    [self addChild:trophyButton];
+}
 
 -(void)didBeginContact:(SKPhysicsContact *)contact {
     
@@ -1764,7 +1795,6 @@ SKColor *wingmanLaserColorCast;
             [self scorePlusWithMultiplier:1 fromNode:secondNode];
         }
         secondNode.physicsBody.categoryBitMask = 0;
-        [self checkAchievementsForRank];
     }
 }
 

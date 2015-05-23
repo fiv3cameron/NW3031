@@ -14,6 +14,7 @@
 
 #import <UIKit/UIKit.h>
 #import "AppDelegate.h"
+#import <GameKit/GameKit.h>
 
 @protocol GCHelperProtocol <NSObject>
 

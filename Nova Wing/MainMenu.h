@@ -7,7 +7,6 @@
 //
 
 #import <SpriteKit/SpriteKit.h>
-#import "GameKitHelper.h"
 
 SKSpriteNode *musicToggle;
 SKSpriteNode *vibrationToggleButton;

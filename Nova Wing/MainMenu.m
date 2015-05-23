@@ -8,7 +8,6 @@
 
 #import "MainMenu.h"
 #import "LevelOne.h"
-#import "GameKitHelper.h"
 #import "NWCodex.h"
 #import "Tutorial.h"
 #import <UIKit/UIKit.h>
@@ -52,13 +51,7 @@ NSTimeInterval _dt;
         /* Setup your scene here */
         [GameState sharedGameData].levelIndex = 0;
         [GameState sharedGameData].lvlIndexMax = 2;
-        /*NSMutableDictionary *tempDictionary = [[GameState sharedGameData] achievementsDictionary];
-        for (GKAchievement *tempAchievement in tempDictionary) {
-            if (![tempAchievement.identifier isEqualToString:@"flight_school_graduate"]) {
-                [GameState sharedGameData].rankAchieved = 0;
-                [[GameState sharedGameData] save];
-            }
-        }*/
+
         
         if ([GameState sharedGameData].highScoreL1 < 1) {
             [GameState sharedGameData].audioVolume = 1.0;
@@ -73,12 +66,14 @@ NSTimeInterval _dt;
         [self addChild: [self codexButtonNode]];
         [self addChild: [self creditsButtonNode]];
         [self addChild: [self settingsButtonNode]];
-        [self addChild: [self highScoreLabel]];
+        [self updateRank];
+        [self createRankInsignia];
+        
         [self createAudio];
         levelTitles = @[@"Event Horizon", @"The Whispers", @"TempLevel3"];
         
         //Check achievements for rank.
-        [self createRankInsignia];
+        
         
         //[self achievementRetrievement];
         NSLog(@"high score %ld",[GameState sharedGameData].highScoreL1);
@@ -232,17 +227,6 @@ NSTimeInterval _dt;
     return highScore;
 }
 
--(void)rankNode {
-    if (![_activeRank.identifier isEqualToString:@"no_rank"]) {
-        SKSpriteNode *tempRankNode = [SKSpriteNode spriteNodeWithImageNamed:_activeRank.identifier];
-        tempRankNode.position = CGPointMake(self.size.width - 60, self.size.height-50);
-        [self addChild:tempRankNode];
-    } else {
-        SKSpriteNode *tempRankNode = [SKSpriteNode node];
-        tempRankNode.position = CGPointMake(self.size.width - 60, self.size.height-50);
-        [self addChild:tempRankNode];
-    }
-}
 
 -(SKLabelNode *)backToMainButton
 {
@@ -492,7 +476,9 @@ NSTimeInterval _dt;
 
 -(void)createRankInsignia {
     NSString *insigniaString = [[NSString alloc] init];
-    if (!([GameState sharedGameData].rankAchieved == 0)) {
+    if ([GameState sharedGameData].rankAchieved == 0) {
+        return;}
+    else {
         switch ([GameState sharedGameData].rankAchieved) {
             case 1: 
                 insigniaString = @"FlightSchoolGraduate";
@@ -530,22 +516,53 @@ NSTimeInterval _dt;
             default:
                 break;
         }
+        
+        SKSpriteNode *insigniaNode = [SKSpriteNode spriteNodeWithImageNamed:insigniaString];
+        insigniaNode.zPosition = 5;
+        insigniaNode.position = CGPointMake(self.size.width + 142, self.size.height-30);
+        
+        SKAction *wait = [SKAction waitForDuration:.75];
+        SKAction *move = [SKAction moveByX:-(rankScoreMoveDist) y:0 duration:0.5];
+        move.timingMode = SKActionTimingEaseIn;
+        SKAction *sequence = [SKAction sequence:@[wait, move]];
+        [insigniaNode runAction: sequence];
+        
+        //CAN'T GET THIS TO SHOW UP!!!!!
+        
+        [self addChild:insigniaNode];
     }
-    SKSpriteNode *insigniaNode = [SKSpriteNode spriteNodeWithImageNamed:insigniaString];
-    insigniaNode.zPosition = 5;
-    insigniaNode.position = CGPointMake(self.size.width+142, self.size.height-30);
-    
-    SKAction *wait = [SKAction waitForDuration:.75];
-    SKAction *move = [SKAction moveByX:-(rankScoreMoveDist) y:0 duration:0.5];
-    move.timingMode = SKActionTimingEaseIn;
-    SKAction *sequence = [SKAction sequence:@[wait, move]];
-    [insigniaNode runAction: sequence];
-    
-    [self addChild:insigniaNode];
 }
 
--(NSString *)insigniaString:(NSString *)inputString {
-    return inputString;
+-(void) updateRank {
+            int tempScoreForRank = [GameState sharedGameData].highScoreL1;
+    
+            if (tempScoreForRank < 100) {
+                [GameState sharedGameData].rankAchieved = 0;
+            } else if (tempScoreForRank>=100 && tempScoreForRank < 250) {
+                [GameState sharedGameData].rankAchieved = 1;
+            } else if (tempScoreForRank>=250 && tempScoreForRank < 500) {
+                [GameState sharedGameData].rankAchieved = 2;
+            } else if (tempScoreForRank>=500 && tempScoreForRank < 1000) {
+                [GameState sharedGameData].rankAchieved = 3;
+            } else if (tempScoreForRank>=1000 && tempScoreForRank < 1500) {
+                [GameState sharedGameData].rankAchieved = 4;
+            } else if (tempScoreForRank>=1500 && tempScoreForRank < 2000) {
+                [GameState sharedGameData].rankAchieved = 5;
+            } else if (tempScoreForRank>=2000 && tempScoreForRank < 2500) {
+                [GameState sharedGameData].rankAchieved = 6;
+            } else if (tempScoreForRank>=2500 && tempScoreForRank < 3000) {
+                [GameState sharedGameData].rankAchieved = 7;
+            } else if (tempScoreForRank>=3000 && tempScoreForRank < 4000) {
+                [GameState sharedGameData].rankAchieved = 8;
+            } else if (tempScoreForRank>=4000 && tempScoreForRank < 5000) {
+                [GameState sharedGameData].rankAchieved = 9;
+            } else if (tempScoreForRank>=5000 && tempScoreForRank < 10000) {
+                [GameState sharedGameData].rankAchieved = 10;
+            } else if (tempScoreForRank>=10000) {
+                [GameState sharedGameData].rankAchieved = 11;
+            }
+            [[GameState sharedGameData] save];
+            [self addChild: [self highScoreLabel]];
 }
 
 #pragma mark --Actions

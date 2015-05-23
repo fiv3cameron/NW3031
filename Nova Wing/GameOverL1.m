@@ -30,7 +30,7 @@
         [self createCurrentScore];
         [self createHighScore];
         [self playAgainButton];
-        [self leaderboardTrophy];
+        
         
     }
     return self;
@@ -75,10 +75,6 @@
     backToMain.text = @"BACK to MAIN";
     
     return backToMain;
-}
-
--(void)leaderboardTrophy {
-    SKSpriteNode *trophy = [SKSpriteNode spriteNodeWithImageNamed:@"trophyImg"];
 }
 
 -(void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event {

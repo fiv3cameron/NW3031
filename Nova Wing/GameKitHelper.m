@@ -57,13 +57,13 @@ NSString *const PresentAuthenticationViewController = @"present_authentication_v
     //Send the score to Game Center
     [GKScore reportScores:@[gkScore] withCompletionHandler:^(NSError *error) {
         //[self setLastError:error];
-        BOOL success = (error == nil);
+        /*BOOL success = (error == nil);
         
         if ([_delegate respondsToSelector:@selector(onScoresSubmitted:)]) {
             [_delegate onScoresSubmitted:success];
             //UIResponder *temp = (UIResponder *)[[UIApplication sharedApplication] delegate];
             
-        }
+        }*/
     }];
 }
 

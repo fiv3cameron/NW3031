@@ -52,24 +52,14 @@
 		2DB352791999940A006BF15C /* buttonPressStart.png in Resources */ = {isa = PBXBuildFile; fileRef = 2DB352731999940A006BF15C /* buttonPressStart.png */; };
 		2DB3527A1999940A006BF15C /* buttonSettings.png in Resources */ = {isa = PBXBuildFile; fileRef = 2DB352741999940A006BF15C /* buttonSettings.png */; };
 		2DB3527B1999940A006BF15C /* buttonStart.png in Resources */ = {isa = PBXBuildFile; fileRef = 2DB352751999940A006BF15C /* buttonStart.png */; };
-		2DB3528619999445006BF15C /* AOb-1@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 2DB3527F19999445006BF15C /* AOb-1@2x.png */; };
-		2DB3528719999445006BF15C /* AOb-2@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 2DB3528019999445006BF15C /* AOb-2@2x.png */; };
-		2DB3528819999445006BF15C /* AOb-3@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 2DB3528119999445006BF15C /* AOb-3@2x.png */; };
-		2DB3528919999445006BF15C /* Pillar-1@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 2DB3528219999445006BF15C /* Pillar-1@2x.png */; };
-		2DB3528A19999445006BF15C /* Pillar-2@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 2DB3528319999445006BF15C /* Pillar-2@2x.png */; };
-		2DB3528B19999445006BF15C /* Pillar-3@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 2DB3528419999445006BF15C /* Pillar-3@2x.png */; };
-		2DB3528C19999445006BF15C /* Pillar-4@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 2DB3528519999445006BF15C /* Pillar-4@2x.png */; };
-		2DB3529119999485006BF15C /* Level-1-Far@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 2DB3528D19999485006BF15C /* Level-1-Far@2x.png */; };
-		2DB3529219999485006BF15C /* Level-1-Floor@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 2DB3528E19999485006BF15C /* Level-1-Floor@2x.png */; };
-		2DB3529319999485006BF15C /* Level-1-Mid@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 2DB3528F19999485006BF15C /* Level-1-Mid@2x.png */; };
-		2DB3529419999485006BF15C /* Level-1-Sky@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 2DB3529019999485006BF15C /* Level-1-Sky@2x.png */; };
 		2DB35299199994B9006BF15C /* Stars-Seamless.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 2DB35298199994B9006BF15C /* Stars-Seamless.jpg */; };
 		2DB3529B199994C0006BF15C /* Title.png in Resources */ = {isa = PBXBuildFile; fileRef = 2DB3529A199994C0006BF15C /* Title.png */; };
 		2DB352A4199998BA006BF15C /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2DB352A3199998BA006BF15C /* AVFoundation.framework */; };
 		2DB352A619999942006BF15C /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2DB352A519999942006BF15C /* AudioToolbox.framework */; };
 		2DB352AA19999D1B006BF15C /* Level-2@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 2DB352A919999D1B006BF15C /* Level-2@2x.png */; };
 		2DB352AC19999D5A006BF15C /* SF Movie Poster.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 2DB352AB19999D5A006BF15C /* SF Movie Poster.ttf */; };
-		2DB352AE1999A0C4006BF15C /* GameOver-BG@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 2DB352AD1999A0C4006BF15C /* GameOver-BG@2x.png */; };
+		2DD7ABE41B10170300596605 /* Trophy_Button_press@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 2DD7ABE21B10170300596605 /* Trophy_Button_press@2x.png */; };
+		2DD7ABE51B10170300596605 /* Trophy_Button@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 2DD7ABE31B10170300596605 /* Trophy_Button@2x.png */; };
 		760897AF1A24FBEA002C28EB /* Tutorial.m in Sources */ = {isa = PBXBuildFile; fileRef = 760897AE1A24FBEA002C28EB /* Tutorial.m */; };
 		760C79C21A70281900E58170 /* Ship-Fragment.atlas in Resources */ = {isa = PBXBuildFile; fileRef = 760C79C11A70281900E58170 /* Ship-Fragment.atlas */; };
 		760C79C41A702B9700E58170 /* Shield.atlas in Resources */ = {isa = PBXBuildFile; fileRef = 760C79C31A702B9700E58170 /* Shield.atlas */; };
@@ -210,24 +200,14 @@
 		2DB352731999940A006BF15C /* buttonPressStart.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = buttonPressStart.png; sourceTree = "<group>"; };
 		2DB352741999940A006BF15C /* buttonSettings.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = buttonSettings.png; sourceTree = "<group>"; };
 		2DB352751999940A006BF15C /* buttonStart.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = buttonStart.png; sourceTree = "<group>"; };
-		2DB3527F19999445006BF15C /* AOb-1@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "AOb-1@2x.png"; sourceTree = "<group>"; };
-		2DB3528019999445006BF15C /* AOb-2@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "AOb-2@2x.png"; sourceTree = "<group>"; };
-		2DB3528119999445006BF15C /* AOb-3@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "AOb-3@2x.png"; sourceTree = "<group>"; };
-		2DB3528219999445006BF15C /* Pillar-1@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Pillar-1@2x.png"; sourceTree = "<group>"; };
-		2DB3528319999445006BF15C /* Pillar-2@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Pillar-2@2x.png"; sourceTree = "<group>"; };
-		2DB3528419999445006BF15C /* Pillar-3@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Pillar-3@2x.png"; sourceTree = "<group>"; };
-		2DB3528519999445006BF15C /* Pillar-4@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Pillar-4@2x.png"; sourceTree = "<group>"; };
-		2DB3528D19999485006BF15C /* Level-1-Far@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Level-1-Far@2x.png"; sourceTree = "<group>"; };
-		2DB3528E19999485006BF15C /* Level-1-Floor@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Level-1-Floor@2x.png"; sourceTree = "<group>"; };
-		2DB3528F19999485006BF15C /* Level-1-Mid@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Level-1-Mid@2x.png"; sourceTree = "<group>"; };
-		2DB3529019999485006BF15C /* Level-1-Sky@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Level-1-Sky@2x.png"; sourceTree = "<group>"; };
 		2DB35298199994B9006BF15C /* Stars-Seamless.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "Stars-Seamless.jpg"; sourceTree = "<group>"; };
 		2DB3529A199994C0006BF15C /* Title.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Title.png; sourceTree = "<group>"; };
 		2DB352A3199998BA006BF15C /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
 		2DB352A519999942006BF15C /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
 		2DB352A919999D1B006BF15C /* Level-2@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Level-2@2x.png"; sourceTree = "<group>"; };
 		2DB352AB19999D5A006BF15C /* SF Movie Poster.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SF Movie Poster.ttf"; sourceTree = "<group>"; };
-		2DB352AD1999A0C4006BF15C /* GameOver-BG@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "GameOver-BG@2x.png"; sourceTree = "<group>"; };
+		2DD7ABE21B10170300596605 /* Trophy_Button_press@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Trophy_Button_press@2x.png"; sourceTree = "<group>"; };
+		2DD7ABE31B10170300596605 /* Trophy_Button@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Trophy_Button@2x.png"; sourceTree = "<group>"; };
 		760897AD1A24FBEA002C28EB /* Tutorial.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Tutorial.h; sourceTree = "<group>"; };
 		760897AE1A24FBEA002C28EB /* Tutorial.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Tutorial.m; sourceTree = "<group>"; };
 		760897B01A250594002C28EB /* NWCollisions.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = NWCollisions.h; sourceTree = "<group>"; };
@@ -509,20 +489,6 @@
 			name = Main;
 			sourceTree = "<group>";
 		};
-		2DB3527E1999942C006BF15C /* GameObjects */ = {
-			isa = PBXGroup;
-			children = (
-				2DB3527F19999445006BF15C /* AOb-1@2x.png */,
-				2DB3528019999445006BF15C /* AOb-2@2x.png */,
-				2DB3528119999445006BF15C /* AOb-3@2x.png */,
-				2DB3528219999445006BF15C /* Pillar-1@2x.png */,
-				2DB3528319999445006BF15C /* Pillar-2@2x.png */,
-				2DB3528419999445006BF15C /* Pillar-3@2x.png */,
-				2DB3528519999445006BF15C /* Pillar-4@2x.png */,
-			);
-			name = GameObjects;
-			sourceTree = "<group>";
-		};
 		2DB352951999948F006BF15C /* Ships */ = {
 			isa = PBXGroup;
 			children = (
@@ -570,22 +536,8 @@
 				7673213D1A5C276A0057EF70 /* Asteroid-Red.atlas */,
 				767321391A5B66870057EF70 /* Asteroid-1.atlas */,
 				765DF28819A9286700FBFB16 /* Level 1 */,
-				2DB352A21999957A006BF15C /* Level 2 */,
 			);
 			name = Levels;
-			sourceTree = "<group>";
-		};
-		2DB352A21999957A006BF15C /* Level 2 */ = {
-			isa = PBXGroup;
-			children = (
-				2DB352AD1999A0C4006BF15C /* GameOver-BG@2x.png */,
-				2DB3527E1999942C006BF15C /* GameObjects */,
-				2DB3528D19999485006BF15C /* Level-1-Far@2x.png */,
-				2DB3528E19999485006BF15C /* Level-1-Floor@2x.png */,
-				2DB3528F19999485006BF15C /* Level-1-Mid@2x.png */,
-				2DB3529019999485006BF15C /* Level-1-Sky@2x.png */,
-			);
-			name = "Level 2";
 			sourceTree = "<group>";
 		};
 		760897AA1A24FB80002C28EB /* Tutorial */ = {
@@ -601,6 +553,8 @@
 			isa = PBXGroup;
 			children = (
 				765DF29719A9294B00FBFB16 /* GameOver-L1@2x.png */,
+				2DD7ABE21B10170300596605 /* Trophy_Button_press@2x.png */,
+				2DD7ABE31B10170300596605 /* Trophy_Button@2x.png */,
 			);
 			name = "Level 1";
 			sourceTree = "<group>";
@@ -807,13 +761,10 @@
 				76C2BC541AA54A87005F71A2 /* Audio_disengage@2x.png in Resources */,
 				2D5060881B0C0DC200A73DD6 /* Commander@2x.png in Resources */,
 				7673212D1A574CE00057EF70 /* AutoCannon-Spool.caf in Resources */,
-				2DB3528819999445006BF15C /* AOb-3@2x.png in Resources */,
 				765DF29919A9294B00FBFB16 /* GameOver-L1@2x.png in Resources */,
 				767320F31A3CBDAD0057EF70 /* buttonPressReplayTut.png in Resources */,
-				2DB3528919999445006BF15C /* Pillar-1@2x.png in Resources */,
 				767321311A574CE00057EF70 /* Multiplier-Collection.caf in Resources */,
 				764BF9A319A19A11007DABF8 /* arrowR@2x.png in Resources */,
-				2DB3528A19999445006BF15C /* Pillar-2@2x.png in Resources */,
 				7673212F1A574CE00057EF70 /* Cannon-Hit-Explode.caf in Resources */,
 				7673213F1A5C276A0057EF70 /* Asteroid-3.atlas in Resources */,
 				7640AFB919E06F9A00EFD3C5 /* 3xMulti@2x.png in Resources */,
@@ -825,19 +776,15 @@
 				767320E51A3B96530057EF70 /* NovaWingIcon@3x.png in Resources */,
 				764BF9A719A2BC04007DABF8 /* Nova-L1@2x.png in Resources */,
 				763BCECD1A32B67600AF65DB /* buttonCodex.png in Resources */,
-				2DB3529419999485006BF15C /* Level-1-Sky@2x.png in Resources */,
 				767320E31A3B96530057EF70 /* NovaWingAppIcon-1024.jpg in Resources */,
-				2DB3529319999485006BF15C /* Level-1-Mid@2x.png in Resources */,
 				2DB35299199994B9006BF15C /* Stars-Seamless.jpg in Resources */,
-				2DB3528719999445006BF15C /* AOb-2@2x.png in Resources */,
 				7673213A1A5B66870057EF70 /* Asteroid-1.atlas in Resources */,
 				2D5060861B0C0DC200A73DD6 /* LTCommander@2x.png in Resources */,
 				2DB352AC19999D5A006BF15C /* SF Movie Poster.ttf in Resources */,
 				2DB352AA19999D1B006BF15C /* Level-2@2x.png in Resources */,
-				2DB3529219999485006BF15C /* Level-1-Floor@2x.png in Resources */,
 				2DA3A7141A7717880026BD54 /* vibrateButton_off@2x.png in Resources */,
-				2DB352AE1999A0C4006BF15C /* GameOver-BG@2x.png in Resources */,
 				2D9C37991A771F020083E283 /* Audio_press@2x.png in Resources */,
+				2DD7ABE51B10170300596605 /* Trophy_Button@2x.png in Resources */,
 				767320F41A3CBDAD0057EF70 /* buttonReplayTut.png in Resources */,
 				7651E8D519B0EC8900F7E9D0 /* Level-1-Music.m4a in Resources */,
 				76C6F15419A2CCB100B37331 /* Level-1@2x.png in Resources */,
@@ -854,6 +801,7 @@
 				767320E81A3B96530057EF70 /* NovaWingSpotlight@2x.png in Resources */,
 				767320E61A3B96530057EF70 /* NovaWingSettings@2x.png in Resources */,
 				2D99094A1A1EC09D00D9CDE8 /* Laser.png in Resources */,
+				2DD7ABE41B10170300596605 /* Trophy_Button_press@2x.png in Resources */,
 				767DE0051A0C72FF00E098DF /* TinyNova@2x.png in Resources */,
 				2D50608C1B0C0DC200A73DD6 /* FlightSchoolGraduate@2x.png in Resources */,
 				76B9821519FC7A4E00F7E606 /* Overshield@2x.png in Resources */,
@@ -861,21 +809,17 @@
 				765DF29219A9293100FBFB16 /* Stars-L1.sks in Resources */,
 				767320F21A3CBDAD0057EF70 /* buttonPressPlay@2x.png in Resources */,
 				767321401A5C276A0057EF70 /* Asteroid-Red.atlas in Resources */,
-				2DB3528B19999445006BF15C /* Pillar-3@2x.png in Resources */,
 				2DB352771999940A006BF15C /* buttonPressLeaderboard.png in Resources */,
 				767321361A574CE00057EF70 /* Ship-Explode.caf in Resources */,
 				763BCEC91A32A8A500AF65DB /* buttonPressCodex.png in Resources */,
 				767320E91A3B96530057EF70 /* NovaWingSpotlight@3x.png in Resources */,
 				763BCECF1A32BA2300AF65DB /* Settings.png in Resources */,
 				2D50608D1B0C0DC200A73DD6 /* Private-1@2x.png in Resources */,
-				2DB3529119999485006BF15C /* Level-1-Far@2x.png in Resources */,
 				2D5060901B0C0DC200A73DD6 /* Sergeant-2@2x.png in Resources */,
 				2DB352781999940A006BF15C /* buttonPressSettings.png in Resources */,
 				767321381A574CE00057EF70 /* Wingman-Collect.caf in Resources */,
-				2DB3528619999445006BF15C /* AOb-1@2x.png in Resources */,
 				767321331A574CE00057EF70 /* Shield-PowerUp.caf in Resources */,
 				7673212E1A574CE00057EF70 /* Button-Press.caf in Resources */,
-				2DB3528C19999445006BF15C /* Pillar-4@2x.png in Resources */,
 				2D50608F1B0C0DC200A73DD6 /* Sergeant-1@2x.png in Resources */,
 				2D9C379A1A771F020083E283 /* Audio@2x.png in Resources */,
 				2D50608B1B0C0DC200A73DD6 /* FlightCommander@2x.png in Resources */,
