@@ -29,7 +29,6 @@ extern NSString *const PresentAuthenticationViewController;
 
 @property (nonatomic, readonly) UIViewController *authenticationViewController;
 @property (nonatomic, readonly) NSError *lastError;
-@property (assign, nonatomic) BOOL enableGameCenter;
 
 
 +(instancetype)sharedGameKitHelper;

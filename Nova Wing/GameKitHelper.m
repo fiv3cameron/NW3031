@@ -12,8 +12,6 @@ NSString *const PresentAuthenticationViewController = @"present_authentication_v
 
 @implementation GameKitHelper
 
-@synthesize enableGameCenter;
-
 //Singleton...apparently?
 + (instancetype)sharedGameKitHelper
 {
@@ -28,11 +26,6 @@ NSString *const PresentAuthenticationViewController = @"present_authentication_v
 - (instancetype)init
 {
     if (self = [super init]) {
-        if ([[AppDelegate alloc] gameCenterEnabled]) {
-            enableGameCenter = YES;
-        } else {
-            enableGameCenter = NO;
-        }
     }
     return self;
 }
@@ -54,13 +47,10 @@ NSString *const PresentAuthenticationViewController = @"present_authentication_v
 
 
 -(void)submitScore: (int64_t)score toLeader: (NSString *)leaderboard {
-    //If game center authentication failed, do nothing.  This must remain at top of this function!
-    if (![GameKitHelper sharedGameKitHelper].enableGameCenter) {
-        return;
-    }
+    GKLocalPlayer *tempLocalPlayer = [GKLocalPlayer localPlayer];
     
     //Create game center score object.
-    GKScore* gkScore = [[GKScore alloc] initWithLeaderboardIdentifier:leaderboard player:[GKLocalPlayer localPlayer]];
+    GKScore* gkScore = [[GKScore alloc] initWithLeaderboardIdentifier:leaderboard player:tempLocalPlayer];
     gkScore.value = score;
     gkScore.leaderboardIdentifier = leaderboard;
     
@@ -76,31 +66,6 @@ NSString *const PresentAuthenticationViewController = @"present_authentication_v
         }
     }];
 }
-
-/*-(void)retrieveAchievementsToDictionary: (NSMutableDictionary *)achievementsDictionary {
-    managed under main menu "achievementRetrievement" function.
-}
-
--(void)achievementLoad {
-    if (enableGameCenter) {
-        [GKAchievement loadAchievementsWithCompletionHandler:^(NSArray *achievements, NSError *error) {
-            if (error != nil) {
-                NSLog(@"Error in loading achievements.");
-            }
-            if (achievements != nil) {
-                //Process achievements.
-                for (GKAchievement *temp in achievements) {
-                    //temp
-                    //[[GameKitHelper sharedGameKitHelper].achievementsDictionary setObject:temp forKey:temp.identifier];
-                    //[_achievementsDictionary setObject:temp forKey:temp.identifier];
-                }
-                NSLog(@"Achievements Retrievemented");
-            }
-        }];
-    } else {
-        NSLog(@"Achievements not loaded");
-    }
-}*/
 
 -(GKAchievement *)getAchievementForIdentifier: (NSString *)identifier fromDictionary: (NSMutableDictionary *)achievementsDictionary {
     GKAchievement *achievement = [achievementsDictionary objectForKey:identifier];

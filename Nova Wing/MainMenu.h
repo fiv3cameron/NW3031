@@ -8,7 +8,6 @@
 
 #import <SpriteKit/SpriteKit.h>
 #import "GameKitHelper.h"
-//#import "PBParallaxScrolling.h"
 
 SKSpriteNode *musicToggle;
 SKSpriteNode *vibrationToggleButton;
@@ -24,7 +23,6 @@ NSArray *levelTitles;
 {
 }
 
-//@property (nonatomic) PBParallaxBackgroundDirection direction;
 @property (nonatomic) AVAudioPlayer* bgPlayer;
 @property (nonatomic, assign) GKGameCenterViewController *gcManager;
 @property (nonatomic, retain) NSMutableDictionary *achievementsDictionary;

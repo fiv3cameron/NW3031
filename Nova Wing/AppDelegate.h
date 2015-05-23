@@ -15,7 +15,6 @@
 -(void)authenticateLocalPlayer;
 
 @property (strong, nonatomic) UIWindow *window;
-@property (nonatomic, assign) BOOL gameCenterEnabled;
 @property (nonatomic, retain) NSMutableDictionary *achievementsDictionary;
 @property (nonatomic, retain) NSString* leaderboardIdentifier;
 @property (nonatomic, retain) NSError* lastError;
