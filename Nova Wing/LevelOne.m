@@ -285,6 +285,7 @@ SKColor *wingmanLaserColorCast;
     [self tapToPlay];
     _score.text = @"Score: 0";
     
+    [self addAltimeter];
 }
 
 -(void)preloadSoundActions {
@@ -591,6 +592,90 @@ SKColor *wingmanLaserColorCast;
     tapPlay.text = @"Tap the screen to play!";
     
     [self addChild:tapPlay];
+}
+
+-(void)addAltimeter {
+    //Create main parent altimeter node.
+    masterAltimeter = [SKSpriteNode node];
+    masterAltimeter.anchorPoint = CGPointZero;
+    masterAltimeter.position = CGPointMake(0, self.size.height*3/8);
+    masterAltimeter.zPosition = 15;
+    CGSize tempMasterSize = CGSizeMake(self.size.width/20, self.size.height/4);
+    masterAltimeter.size = tempMasterSize;
+    [self addChild:masterAltimeter];
+    
+    //Create tick marks.
+    CGSize tempMajorSize = CGSizeMake(6, 2);
+    SKSpriteNode *majorTick = [SKSpriteNode spriteNodeWithColor:[UIColor colorWithWhite:1 alpha:1] size:tempMajorSize];
+    majorTick.anchorPoint = CGPointMake(0, 0.5);
+    majorTick.zPosition = 0;
+    
+    CGSize tempMinorSize = CGSizeMake(2, 1);
+    SKSpriteNode *minorTick = [SKSpriteNode spriteNodeWithColor:[UIColor colorWithWhite:1 alpha:1] size:tempMinorSize];
+    minorTick.anchorPoint = CGPointMake(0, 0.5);
+    majorTick.zPosition = 0;
+    
+    for (int tempTickCount=0; tempTickCount<=20; tempTickCount++) {
+        if (tempTickCount == 4 || tempTickCount == 5 || tempTickCount == 6) {
+            minorTick.color = [NWColor NWYellow];
+        } else if (tempTickCount == 1 || tempTickCount == 2 || tempTickCount == 3) {
+            minorTick.color = [NWColor NWRed];
+        } else {
+            minorTick.color = [UIColor colorWithWhite:1 alpha:1];
+        }
+        
+        if (tempTickCount == 0 || tempTickCount == 10 || tempTickCount == 20) {
+            majorTick.position = CGPointMake(0, masterAltimeter.size.height*tempTickCount/20);
+            [masterAltimeter addChild:[majorTick copy]];
+        } else {
+            minorTick.position = CGPointMake(0, masterAltimeter.size.height*tempTickCount/20);
+            [masterAltimeter addChild:[minorTick copy]];
+        }
+    }
+    
+    //Create indicator.
+    SKShapeNode *altimeterIndicator = [SKShapeNode node];
+    altimeterIndicator.zPosition = 1;
+    CGMutablePathRef tempIndicatorPath = CGPathCreateMutable();
+    CGPathMoveToPoint(tempIndicatorPath, NULL, 3, 0);
+    CGPathAddLineToPoint(tempIndicatorPath, NULL, 3, 0);
+    CGPathAddLineToPoint(tempIndicatorPath, NULL, 5, -2);
+    CGPathAddLineToPoint(tempIndicatorPath, NULL, 12, -2);
+    CGPathAddLineToPoint(tempIndicatorPath, NULL, 12, 2);
+    CGPathAddLineToPoint(tempIndicatorPath, NULL, 5, 2);
+    CGPathCloseSubpath(tempIndicatorPath);
+    [altimeterIndicator setPath:tempIndicatorPath];
+    CGPathRelease(tempIndicatorPath);
+    [altimeterIndicator setStrokeColor:[UIColor colorWithWhite:1 alpha:1]];
+    [altimeterIndicator setFillColor:[NWColor NWRed]];
+    altimeterIndicator.name = @"indicator";
+    
+    [masterAltimeter addChild:altimeterIndicator];
+}
+
+-(void)wingmanIndicator {
+    SKShapeNode *wingmanIndicator = [SKShapeNode node];
+    wingmanIndicator.zPosition = 1;
+    CGMutablePathRef tempIndicatorPath = CGPathCreateMutable();
+    CGPathMoveToPoint(tempIndicatorPath, NULL, 3, 0);
+    CGPathAddLineToPoint(tempIndicatorPath, NULL, 3, 0);
+    CGPathAddLineToPoint(tempIndicatorPath, NULL, 5, -2);
+    CGPathAddLineToPoint(tempIndicatorPath, NULL, 12, -2);
+    CGPathAddLineToPoint(tempIndicatorPath, NULL, 12, 2);
+    CGPathAddLineToPoint(tempIndicatorPath, NULL, 5, 2);
+    CGPathCloseSubpath(tempIndicatorPath);
+    /*CGFloat dashPattern[2];
+    dashPattern[0] = 1.0;
+    dashPattern[1] = 1.0;
+    CGPathRef dashedPath = CGPathCreateCopyByDashingPath(tempIndicatorPath, NULL, 0, dashPattern, 2);*/
+    [wingmanIndicator setPath:tempIndicatorPath];
+    CGPathRelease(tempIndicatorPath);
+    //CGPathRelease(dashedPath);
+    [wingmanIndicator setStrokeColor:[UIColor colorWithWhite:1 alpha:1]];
+    [wingmanIndicator setFillColor:wingmanLaserColorCast];
+    wingmanIndicator.name = @"wingmanIndicator";
+    
+    [masterAltimeter addChild:wingmanIndicator];
 }
 
 #pragma mark --Create Audio
@@ -1098,6 +1183,9 @@ SKColor *wingmanLaserColorCast;
         [wingmanNode addChild:wingmanTrail];
     }
     
+    //Add wingman to altimeter.
+    [self wingmanIndicator];
+    
     //Create spring joint & add to physicsWorld.
     //Physics Joint
     SKPhysicsJointFixed *test = [SKPhysicsJointFixed jointWithBodyA:wingmanParent.physicsBody bodyB:wingmanNode.physicsBody anchor:CGPointMake(wingmanParent.position.x+50, wingmanParent.position.y+50)];
@@ -1199,6 +1287,7 @@ SKColor *wingmanLaserColorCast;
         [self makePlayerNodeActive:wingmanNode];
     }];
     [self runAction:[SKAction sequence:@[wait, activate]]];
+    [[masterAltimeter childNodeWithName:@"wingmanIndicator"] removeFromParent];
 }
 
 -(void)wingmanRemoveCollideWithBottom {
@@ -1266,6 +1355,7 @@ SKColor *wingmanLaserColorCast;
         //[self makePlayerNodeActive:wingmanNode];
     }];
     [self runAction:[SKAction sequence:@[wait, activate]]];
+    [[masterAltimeter childNodeWithName:@"wingmanIndicator"] removeFromParent];
 }
 
 -(void)tinyNova {
@@ -1558,6 +1648,12 @@ SKColor *wingmanLaserColorCast;
     
     if (wingmanParent.physicsBody.velocity.dy < 0) {
         [wingmanParent rotateNodeDownwards:wingmanParent];
+    }
+    
+    //Altimeter updates.
+    [masterAltimeter childNodeWithName:@"indicator"].position = CGPointMake(0, masterAltimeter.size.height/2 + (playerParent.position.y-self.size.height/2)*(masterAltimeter.size.height / self.size.height));
+    if (wingmanActive) {
+        [masterAltimeter childNodeWithName:@"wingmanIndicator"].position = CGPointMake(0, masterAltimeter.size.height/2 + (wingmanParent.position.y-self.size.height/2)*(masterAltimeter.size.height / self.size.height));
     }
 }
 

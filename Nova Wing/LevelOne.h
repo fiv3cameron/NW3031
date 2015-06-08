@@ -37,3 +37,4 @@ int localTotalAsteroidHits;
 int localTotalDebrisHits;
 int localChallengePoints;
 NSMutableArray *reportArray;
+SKSpriteNode *masterAltimeter;
