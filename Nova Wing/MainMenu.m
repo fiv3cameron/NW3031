@@ -210,7 +210,7 @@ NSTimeInterval _dt;
 
 
 -(SKLabelNode *)highScoreLabel {
-    SKLabelNode *highScore = [[SKLabelNode alloc] initWithFontNamed:@"SF Movie Poster"];
+    highScore = [[SKLabelNode alloc] initWithFontNamed:@"SF Movie Poster"];
     highScore.position = CGPointMake(self.size.width+175, self.size.height - 40);
     highScore.fontColor = [SKColor whiteColor];
     highScore.fontSize = 30;
@@ -518,7 +518,7 @@ NSTimeInterval _dt;
                 break;
         }
         
-        SKSpriteNode *insigniaNode = [SKSpriteNode spriteNodeWithImageNamed:insigniaString];
+        insigniaNode = [SKSpriteNode spriteNodeWithImageNamed:insigniaString];
         insigniaNode.zPosition = 5;
         insigniaNode.position = CGPointMake(self.size.width + 142, self.size.height-30);
         
@@ -528,14 +528,12 @@ NSTimeInterval _dt;
         SKAction *sequence = [SKAction sequence:@[wait, move]];
         [insigniaNode runAction: sequence];
         
-        //CAN'T GET THIS TO SHOW UP!!!!!
-        
         [self addChild:insigniaNode];
     }
 }
 
 -(void) updateRank {
-            int tempScoreForRank = [GameState sharedGameData].highScoreL1;
+            long tempScoreForRank = [GameState sharedGameData].highScoreL1;
     
             if (tempScoreForRank < 100) {
                 [GameState sharedGameData].rankAchieved = 0;
@@ -575,6 +573,7 @@ NSTimeInterval _dt;
     SKAction *codexButtonRemoved = [SKAction moveTo:CGPointMake(self.size.width/2-300, BUTTON_HEIGHT - (BUTTON_OFFSET * 2)) duration:0.75];
     SKAction *creditButtonRemoved = [SKAction moveTo:CGPointMake(self.size.width/2-300, BUTTON_HEIGHT - (BUTTON_OFFSET * 3)) duration:0.75];
     SKAction *settingsButtonRemoved = [SKAction moveTo:CGPointMake(-settingsButton.size.width, self.size.height)  duration:0.5];
+    SKAction *highScoreRemoved = [SKAction moveBy:CGVectorMake(self.size.width/2, 0) duration:0.5];
     
     // Title Image Removal.
     SKAction *titleRemoval = [SKAction moveTo:CGPointMake(self.size.width/2, 700) duration:0.75];
@@ -598,6 +597,8 @@ NSTimeInterval _dt;
     SKAction *codexSequence = [SKAction sequence:@[codexWait,codexButtonRemoved,unload]];
     SKAction *creditSequence = [SKAction sequence:@[creditButtonRemoved,unload]];
     SKAction *titleSequence = [SKAction sequence:@[titleWait,titleRemoval,unload]];
+    SKAction *insigniaSequence = [SKAction sequence:@[highScoreRemoved,unload]];
+    SKAction *highScoreSequence = [SKAction sequence:@[highScoreRemoved, unload]];
     
     [startButton runAction: startSequence];
     [leaderButton runAction: leaderSequence];
@@ -605,6 +606,8 @@ NSTimeInterval _dt;
     [creditButton runAction: creditSequence];
     [settingsButton runAction: settingsSequence];
     [titleImage runAction: titleSequence];
+    [insigniaNode runAction:insigniaSequence];
+    [highScore runAction:highScoreSequence];
 }
 
 -(void)animateLeft: (SKNode *)levelNode withDelay: (double)delayTime

@@ -17,6 +17,8 @@ SKSpriteNode *rightArrow;
 SKSpriteNode *leftArrow;
 SKLabelNode *GDReset;
 NSArray *levelTitles;
+SKLabelNode *highScore;
+SKSpriteNode *insigniaNode;
 
 @interface MainMenu : SKScene
 {
