@@ -22,6 +22,13 @@ static NSString* const SSGameDataRankKey = @"rankKey";
 static NSString* const SSGameDataTotalLaserHitsKey = @"totalLaserHitsKey";
 static NSString* const SSGameDataTotalLasersFiredKey = @"totalLasersFiredKey";
 static NSString* const SSGameDataTotalAsteroidsDestroyedKey = @"totalAsteroidsDestroyed";
+static NSString* const SSGameDataTotalDebrisDestroyed = @"totalDebrisDestroyed";
+static NSString* const SSGameDataTotalChallengePoints = @"totalChallengePoints";
+static NSString* const SSGameDataTotalPoints = @"totalPoints";
+static NSString* const SSGameDataTotalGames = @"totalGames";
+static NSString* const SSGameDataTotalBlackHoleDeaths = @"totalBlackHoleDeaths";
+static NSString* const SSGameDataTotalAsteroidDeaths = @"totalAsteroidDeaths";
+static NSString* const SSGameDataTotalDebrisDeaths = @"totalDebrisDeaths";
 
 -(void)encodeWithCoder:(NSCoder *)encoder {
     [encoder encodeDouble:self.highScoreL1 forKey:SSGameDataHighScoreL1Key];
@@ -33,6 +40,13 @@ static NSString* const SSGameDataTotalAsteroidsDestroyedKey = @"totalAsteroidsDe
     [encoder encodeInt:self.totalLaserHits forKey:SSGameDataTotalLaserHitsKey];
     [encoder encodeInt:self.totalLasersFired forKey:SSGameDataTotalLasersFiredKey];
     [encoder encodeInt:self.totalAsteroidsDestroyed forKey:SSGameDataTotalAsteroidsDestroyedKey];
+    [encoder encodeInt:self.totalDebrisDestroyed forKey:SSGameDataTotalDebrisDestroyed];
+    [encoder encodeInt:self.totalChallengePoints forKey:SSGameDataTotalChallengePoints];
+    [encoder encodeDouble:self.totalPoints forKey:SSGameDataTotalPoints];
+    [encoder encodeInt:self.totalGames forKey:SSGameDataTotalGames];
+    [encoder encodeInt:self.totalBlackHoleDeaths forKey:SSGameDataTotalBlackHoleDeaths];
+    [encoder encodeInt:self.totalAsteroidDeaths forKey:SSGameDataTotalAsteroidDeaths];
+    [encoder encodeInt:self.totalDebrisDeaths forKey:SSGameDataTotalDebrisDeaths];
 }
 
 -(instancetype)initWithCoder:(NSCoder *)decoder {
@@ -47,6 +61,13 @@ static NSString* const SSGameDataTotalAsteroidsDestroyedKey = @"totalAsteroidsDe
         _totalLaserHits = [decoder decodeIntForKey:SSGameDataTotalLaserHitsKey];
         _totalLasersFired = [decoder decodeIntForKey:SSGameDataTotalLasersFiredKey];
         _totalAsteroidsDestroyed = [decoder decodeIntForKey:SSGameDataTotalAsteroidsDestroyedKey];
+        _totalDebrisDestroyed = [decoder decodeIntForKey:SSGameDataTotalDebrisDestroyed];
+        _totalChallengePoints = [decoder decodeIntForKey:SSGameDataTotalChallengePoints];
+        _totalPoints = [decoder decodeDoubleForKey:SSGameDataTotalPoints];
+        _totalGames = [decoder decodeIntForKey:SSGameDataTotalGames];
+        _totalBlackHoleDeaths = [decoder decodeIntForKey:SSGameDataTotalBlackHoleDeaths];
+        _totalAsteroidDeaths = [decoder decodeIntForKey:SSGameDataTotalAsteroidDeaths];
+        _totalDebrisDeaths = [decoder decodeIntForKey:SSGameDataTotalDebrisDeaths];
     }
     
     return self;

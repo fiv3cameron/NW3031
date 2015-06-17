@@ -97,6 +97,28 @@
                         //report highscore to GameCenter
                         [[GameKitHelper sharedGameKitHelper] submitScore:[GameState sharedGameData].highScoreL1 toLeader: tempLeader.identifier];
                     }
+                    long tempTotalScore = [GameState sharedGameData].totalPoints;
+                    [tempLocalPlayer fetchSavedGamesWithCompletionHandler:^(NSArray *savedGames, NSError *error) {
+                        if (error == nil) {
+                            GKSavedGame *tempSavedGame = [savedGames firstObject]; //<----THIS LINE IS IMPORTANT FOR SAVING FUTURE DATA!!!
+                            [tempSavedGame loadDataWithCompletionHandler:^(NSData *loadedData, NSError *error) {
+                                if (error == nil) {
+                                    long loadedTotalScore;
+                                    [loadedData getBytes:&loadedTotalScore length:sizeof(loadedTotalScore)];
+                                    
+                                    if (loadedTotalScore > tempTotalScore) {
+                                        [GameState sharedGameData].totalPoints = loadedTotalScore;
+                                    } else if (loadedTotalScore < tempTotalScore) {
+                                        long tempTotalScore = [GameState sharedGameData].totalPoints;
+                                        NSData *tempData = [NSData dataWithBytes: &tempTotalScore length:sizeof(tempTotalScore)];
+                                        [tempLocalPlayer saveGameData:tempData withName:@"totalScore" completionHandler:nil];
+                                    } else {
+                                        //do nothing because scores are equal.
+                                    }
+                                }
+                            }];
+                        }
+                    }];
                 }];
             }];
         } else {
@@ -126,7 +148,43 @@
                         [[GameState sharedGameData] save];
                     }
                 }];
-                //LOAD ACHIEVEMENTS HERE.
+                
+                GKLocalPlayer *tempLocalPlayer = [GKLocalPlayer localPlayer];
+                GKLeaderboard *tempLeader = [[GKLeaderboard alloc] initWithPlayers:@[tempLocalPlayer]];
+                tempLeader.identifier = @"L1HS";
+                
+                [tempLeader loadScoresWithCompletionHandler:^(NSArray *tempHighScoreArray, NSError *error) {
+                    GKScore *tempScore = [tempHighScoreArray firstObject];
+                    NSLog(@"loaded score %li", (long)tempScore.value);
+                    if ((tempScore.value > [GameState sharedGameData].highScoreL1) ){
+                        [GameState sharedGameData].highScoreL1 = (long)tempScore.value;
+                    } else if ((tempScore.value < [GameState sharedGameData].highScoreL1)) {
+                        //report highscore to GameCenter
+                        [[GameKitHelper sharedGameKitHelper] submitScore:[GameState sharedGameData].highScoreL1 toLeader: tempLeader.identifier];
+                    }
+                    long tempTotalScore = [GameState sharedGameData].totalPoints;
+                    [tempLocalPlayer fetchSavedGamesWithCompletionHandler:^(NSArray *savedGames, NSError *error) {
+                        if (error == nil) {
+                            GKSavedGame *tempSavedGame = [savedGames firstObject]; //<----THIS LINE IS IMPORTANT FOR SAVING FUTURE DATA!!!
+                            [tempSavedGame loadDataWithCompletionHandler:^(NSData *loadedData, NSError *error) {
+                                if (error == nil) {
+                                    long loadedTotalScore;
+                                    [loadedData getBytes:&loadedTotalScore length:sizeof(loadedTotalScore)];
+                                    
+                                    if (loadedTotalScore > tempTotalScore) {
+                                        [GameState sharedGameData].totalPoints = loadedTotalScore;
+                                    } else if (loadedTotalScore < tempTotalScore) {
+                                        long tempTotalScore = [GameState sharedGameData].totalPoints;
+                                        NSData *tempData = [NSData dataWithBytes: &tempTotalScore length:sizeof(tempTotalScore)];
+                                        [tempLocalPlayer saveGameData:tempData withName:@"totalScore" completionHandler:nil];
+                                    } else {
+                                        //do nothing because scores are equal.
+                                    }
+                                }
+                            }];
+                        }
+                    }];
+                }];
             } else {
                 //Local player was not already authenticated.
             }

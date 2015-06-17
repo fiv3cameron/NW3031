@@ -533,31 +533,31 @@ NSTimeInterval _dt;
 }
 
 -(void) updateRank {
-            long tempScoreForRank = [GameState sharedGameData].highScoreL1;
+            long tempScoreForRank = [GameState sharedGameData].totalPoints;
     
-            if (tempScoreForRank < 100) {
+            if (tempScoreForRank < 500) {
                 [GameState sharedGameData].rankAchieved = 0;
-            } else if (tempScoreForRank>=100 && tempScoreForRank < 250) {
-                [GameState sharedGameData].rankAchieved = 1;
-            } else if (tempScoreForRank>=250 && tempScoreForRank < 500) {
-                [GameState sharedGameData].rankAchieved = 2;
             } else if (tempScoreForRank>=500 && tempScoreForRank < 1000) {
+                [GameState sharedGameData].rankAchieved = 1;
+            } else if (tempScoreForRank>=1000 && tempScoreForRank < 2500) {
+                [GameState sharedGameData].rankAchieved = 2;
+            } else if (tempScoreForRank>=2500 && tempScoreForRank < 5000) {
                 [GameState sharedGameData].rankAchieved = 3;
-            } else if (tempScoreForRank>=1000 && tempScoreForRank < 1500) {
+            } else if (tempScoreForRank>=5000 && tempScoreForRank < 7500) {
                 [GameState sharedGameData].rankAchieved = 4;
-            } else if (tempScoreForRank>=1500 && tempScoreForRank < 2000) {
+            } else if (tempScoreForRank>=7500 && tempScoreForRank < 10000) {
                 [GameState sharedGameData].rankAchieved = 5;
-            } else if (tempScoreForRank>=2000 && tempScoreForRank < 2500) {
+            } else if (tempScoreForRank>=10000 && tempScoreForRank < 25000) {
                 [GameState sharedGameData].rankAchieved = 6;
-            } else if (tempScoreForRank>=2500 && tempScoreForRank < 3000) {
+            } else if (tempScoreForRank>=25000 && tempScoreForRank < 50000) {
                 [GameState sharedGameData].rankAchieved = 7;
-            } else if (tempScoreForRank>=3000 && tempScoreForRank < 4000) {
+            } else if (tempScoreForRank>=50000 && tempScoreForRank < 75000) {
                 [GameState sharedGameData].rankAchieved = 8;
-            } else if (tempScoreForRank>=4000 && tempScoreForRank < 5000) {
+            } else if (tempScoreForRank>=75000 && tempScoreForRank < 100000) {
                 [GameState sharedGameData].rankAchieved = 9;
-            } else if (tempScoreForRank>=5000 && tempScoreForRank < 10000) {
+            } else if (tempScoreForRank>=100000 && tempScoreForRank < 250000) {
                 [GameState sharedGameData].rankAchieved = 10;
-            } else if (tempScoreForRank>=10000) {
+            } else if (tempScoreForRank>=250000) {
                 [GameState sharedGameData].rankAchieved = 11;
             }
             [[GameState sharedGameData] save];
