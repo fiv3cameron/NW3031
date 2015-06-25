@@ -606,12 +606,12 @@ SKColor *wingmanLaserColorCast;
     
     //Create tick marks.
     CGSize tempMajorSize = CGSizeMake(6, 2);
-    SKSpriteNode *majorTick = [SKSpriteNode spriteNodeWithColor:[UIColor colorWithWhite:1 alpha:1] size:tempMajorSize];
+    SKSpriteNode *majorTick = [SKSpriteNode spriteNodeWithColor:[NWColor NWBlue] size:tempMajorSize];
     majorTick.anchorPoint = CGPointMake(0, 0.5);
     majorTick.zPosition = 0;
     
     CGSize tempMinorSize = CGSizeMake(2, 1);
-    SKSpriteNode *minorTick = [SKSpriteNode spriteNodeWithColor:[UIColor colorWithWhite:1 alpha:1] size:tempMinorSize];
+    SKSpriteNode *minorTick = [SKSpriteNode spriteNodeWithColor:[NWColor NWBlue] size:tempMinorSize];
     minorTick.anchorPoint = CGPointMake(0, 0.5);
     majorTick.zPosition = 0;
     
@@ -646,8 +646,8 @@ SKColor *wingmanLaserColorCast;
     CGPathCloseSubpath(tempIndicatorPath);
     [altimeterIndicator setPath:tempIndicatorPath];
     CGPathRelease(tempIndicatorPath);
-    [altimeterIndicator setStrokeColor:[UIColor colorWithWhite:1 alpha:1]];
-    [altimeterIndicator setFillColor:[NWColor NWRed]];
+    [altimeterIndicator setStrokeColor:[UIColor colorWithWhite:1 alpha:0]];
+    [altimeterIndicator setFillColor:[NWColor NWGreen]];
     altimeterIndicator.name = @"indicator";
     
     [masterAltimeter addChild:altimeterIndicator];
