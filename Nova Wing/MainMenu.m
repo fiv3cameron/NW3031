@@ -8,6 +8,7 @@
 
 #import "MainMenu.h"
 #import "LevelOne.h"
+#import "Credits.h"
 #import "NWCodex.h"
 #import "Tutorial.h"
 #import <UIKit/UIKit.h>
@@ -693,9 +694,6 @@ NSTimeInterval _dt;
     //Start Button
     if ([nodeLift.name isEqualToString:@"_startButton"]) {
         
-        //Pass Achievements into temp storage area.
-        //[[GameKitHelper sharedGameKitHelper] storeDictionaryToAchievementsDictionary:_achievementsDictionary];
-        
         SKAction *createSound = [SKAction playSoundFileNamed:@"Button-Press.caf" waitForCompletion:NO];
         SKAction *playSound = [SKAction runBlock:^{
             [self playSoundEffectsWithAction:createSound];
@@ -722,8 +720,8 @@ NSTimeInterval _dt;
             } else {
                 //Load Level 1
                 SKView * levelOneView = (SKView *)self.view;
-                levelOneView.showsFPS = YES;
-                levelOneView.showsNodeCount = YES;
+                //levelOneView.showsFPS = YES;
+                //levelOneView.showsNodeCount = YES;
                 //levelOneView.showsPhysics = YES;
                 
                 // Create and configure the scene.
@@ -734,13 +732,8 @@ NSTimeInterval _dt;
                 // Present the scene.
                 [levelOneView presentScene:levelOneScene transition:levelOneTrans];
                 
-                // Load level select area
-                /*[GameState sharedGameData].levelIndex = 1;
-                 [self addChild:[self levelThumbWithPositionModifier:1.5]];
-                 [self animateLeft:levelThumb withDelay:0.5];
-                 [self addChild:[self createRightArrowWithWait:0.5]];
-                 [self addChild:[self backToMainButton]];*/ }
-            }];
+            }
+        }];
         [self runAction:[SKAction sequence:@[playSound,menuAnimate,wait,Scene]]];
     }
     
@@ -775,6 +768,35 @@ NSTimeInterval _dt;
             
             // Present the scene.
             [codexView presentScene:codexScene transition:tutTrans];
+        }];
+        [self runAction:[SKAction sequence:@[playSound,menuAnimate,wait,Scene]]];
+    }
+    
+    if ([nodeLift.name isEqualToString:@"creditsButton"]) {
+        
+        SKAction *createSound = [SKAction playSoundFileNamed:@"Button-Press.caf" waitForCompletion:NO];
+        SKAction *playSound = [SKAction runBlock:^{
+            [self playSoundEffectsWithAction:createSound];
+        }];
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"hideAd" object:nil];
+        SKAction *menuAnimate = [SKAction runBlock:^{
+            [self mainMenuAnimateOut];
+        }];
+        SKAction *wait = [SKAction waitForDuration:1.25];
+        SKAction *Scene = [SKAction runBlock:^{
+            //Load Level 1
+            SKView * creditsView = (SKView *)self.view;
+            //levelOneView.showsFPS = YES;
+            //levelOneView.showsNodeCount = YES;
+            //creditsView.showsPhysics = YES;
+            
+            // Create and configure the scene.
+            SKScene * creditsScene = [[Credits alloc] initWithSize:creditsView.bounds.size];
+            creditsScene.scaleMode = SKSceneScaleModeAspectFill;
+            SKTransition *creditsTransition = [SKTransition fadeWithColor:fadeColor duration:levelFadeDuration];
+            
+            // Present the scene.
+            [creditsView presentScene:creditsScene transition:creditsTransition];
         }];
         [self runAction:[SKAction sequence:@[playSound,menuAnimate,wait,Scene]]];
     }
