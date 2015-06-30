@@ -788,6 +788,7 @@ NSTimeInterval _dt;
             SKView * creditsView = (SKView *)self.view;
             //levelOneView.showsFPS = YES;
             //levelOneView.showsNodeCount = YES;
+            //creditsView.showsPhysics = YES;
             
             // Create and configure the scene.
             SKScene * creditsScene = [[Credits alloc] initWithSize:creditsView.bounds.size];
