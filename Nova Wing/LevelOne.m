@@ -671,7 +671,7 @@ SKColor *wingmanLaserColorCast;
     [wingmanIndicator setPath:tempIndicatorPath];
     CGPathRelease(tempIndicatorPath);
     //CGPathRelease(dashedPath);
-    [wingmanIndicator setStrokeColor:[UIColor colorWithWhite:1 alpha:1]];
+    [wingmanIndicator setStrokeColor:[UIColor colorWithWhite:1 alpha:0]];
     [wingmanIndicator setFillColor:wingmanLaserColorCast];
     wingmanIndicator.name = @"wingmanIndicator";
     

@@ -74,6 +74,7 @@
 		763BCED81A33550000AF65DB /* buttonPressCredits.png in Resources */ = {isa = PBXBuildFile; fileRef = 763BCED61A33550000AF65DB /* buttonPressCredits.png */; };
 		7640AFB819E06F9A00EFD3C5 /* 2xMulti@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 7640AFB619E06F9A00EFD3C5 /* 2xMulti@2x.png */; };
 		7640AFB919E06F9A00EFD3C5 /* 3xMulti@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 7640AFB719E06F9A00EFD3C5 /* 3xMulti@2x.png */; };
+		764B97F31B46F670002EA191 /* Credits.plist in Resources */ = {isa = PBXBuildFile; fileRef = 764B97F21B46F670002EA191 /* Credits.plist */; };
 		764BF94D199EBC3F007DABF8 /* KeychainWrapper.m in Sources */ = {isa = PBXBuildFile; fileRef = 764BF94C199EBC3F007DABF8 /* KeychainWrapper.m */; };
 		764BF9A219A19A11007DABF8 /* arrowL@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 764BF9A019A19A11007DABF8 /* arrowL@2x.png */; };
 		764BF9A319A19A11007DABF8 /* arrowR@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 764BF9A119A19A11007DABF8 /* arrowR@2x.png */; };
@@ -230,6 +231,7 @@
 		763BCED61A33550000AF65DB /* buttonPressCredits.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = buttonPressCredits.png; sourceTree = "<group>"; };
 		7640AFB619E06F9A00EFD3C5 /* 2xMulti@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "2xMulti@2x.png"; sourceTree = "<group>"; };
 		7640AFB719E06F9A00EFD3C5 /* 3xMulti@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "3xMulti@2x.png"; sourceTree = "<group>"; };
+		764B97F21B46F670002EA191 /* Credits.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Credits.plist; sourceTree = "<group>"; };
 		764BF94B199EBC3F007DABF8 /* KeychainWrapper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KeychainWrapper.h; sourceTree = "<group>"; };
 		764BF94C199EBC3F007DABF8 /* KeychainWrapper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KeychainWrapper.m; sourceTree = "<group>"; };
 		764BF9A019A19A11007DABF8 /* arrowL@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "arrowL@2x.png"; sourceTree = "<group>"; };
@@ -395,6 +397,7 @@
 				2DB3522519996B83006BF15C /* InfoPlist.strings */,
 				2DB3522819996B83006BF15C /* main.m */,
 				2DB3522A19996B83006BF15C /* Nova Wing-Prefix.pch */,
+				764B97F21B46F670002EA191 /* Credits.plist */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
@@ -850,6 +853,7 @@
 				767320E71A3B96530057EF70 /* NovaWingSettings@3x.png in Resources */,
 				2D5060891B0C0DC200A73DD6 /* FleetAdmiral@2x.png in Resources */,
 				764BF9A619A2BC04007DABF8 /* Nova-L2@2x.png in Resources */,
+				764B97F31B46F670002EA191 /* Credits.plist in Resources */,
 				2DB3527A1999940A006BF15C /* buttonSettings.png in Resources */,
 				2DB352791999940A006BF15C /* buttonPressStart.png in Resources */,
 				2DA3A7151A7717880026BD54 /* vibrateButton_press@2x.png in Resources */,

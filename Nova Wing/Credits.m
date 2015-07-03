@@ -197,11 +197,13 @@ int _totalCreditsHits;
 }
 
 -(void)rollCredits {
-    NSArray *devs = @[@"Cameron Frank", @"Bryan Todd"];
-    NSArray *devsSorted = [devs sortedArrayUsingSelector:@selector(localizedCaseInsensitiveCompare:)];
-    
-    NSArray *betas = @[@"Lacey Arocha",@"Cesar Arocha",@"Kristen Bennett",@"Colby Bennett",@"Dusty Bradley",@"Chelsi Brown",@"Josh Campbell",@"Simon Collard",@"Wes Combs",@"Dalton Conn",@"Weston Dearman",@"Gavin Edwards",@"Tom Edwards",@"Remi Emre",@"Hailee Frank",@"Jessica Todd",@"Marco Gallaga",@"Justin Hettler",@"Craig Jackson",@"Bonnie Keels",@"Baylee Keels",@"Brelin Keels",@"Jeremy Koehn",@"Matthew Loftis",@"Bailey Loftis",@"Jonathon Lozano",@"Tye Magnuson",@"Eli Marsh",@"Rachel Martin",@"Stephen McLemore",@"CJ Monroe",@"Ashley Moore",@"Beejay Morgan",@"Blake Murray",@"Levi Murray",@"Taylor Myers",@"Brad O'Neal",@"Ryan Reynolds",@"Devyn Schuetz",@"Kory Spargur",@"Aaron Spears",@"Kevin Stump",@"Bryan Stump",@"Ryan Vier",@"Justin Voris",@"Maurice Wessel",@"Justin Wessel",@"Robin Wessel",@"Adam Wheeler",@"Robert Vier"];
-    NSArray *betasSorted = [betas sortedArrayUsingSelector:@selector(localizedCaseInsensitiveCompare:)];
+        //Set Up Dictionary
+    NSString *path = [[NSBundle mainBundle] pathForResource:@"Credits" ofType:@"plist"];
+    NSMutableDictionary *dict = [[NSMutableDictionary alloc] initWithContentsOfFile:path];
+    NSMutableArray *devsDict = [dict objectForKey:@"Devs"];
+    NSMutableArray *betaDict = [dict objectForKey:@"Betas"];
+    NSArray *devsSorted = [devsDict sortedArrayUsingSelector:@selector(localizedCaseInsensitiveCompare:)];
+    NSArray *betasSorted = [betaDict sortedArrayUsingSelector:@selector(localizedCaseInsensitiveCompare:)];
     int matrixSize = (int)[betasSorted count];
     _totalCreditsHits = matrixSize + (int)[devsSorted count];
     
@@ -312,7 +314,7 @@ int _totalCreditsHits;
 }
 
 -(void)addAltimeter {
-    //Create main parent altimeter node.
+        //Create main parent altimeter node.
     masterAltimeter = [SKSpriteNode node];
     masterAltimeter.anchorPoint = CGPointZero;
     masterAltimeter.position = CGPointMake(0, self.size.height*3/8);
@@ -321,14 +323,14 @@ int _totalCreditsHits;
     masterAltimeter.size = tempMasterSize;
     [self addChild:masterAltimeter];
     
-    //Create tick marks.
+        //Create tick marks.
     CGSize tempMajorSize = CGSizeMake(6, 2);
-    SKSpriteNode *majorTick = [SKSpriteNode spriteNodeWithColor:[UIColor colorWithWhite:1 alpha:1] size:tempMajorSize];
+    SKSpriteNode *majorTick = [SKSpriteNode spriteNodeWithColor:[NWColor NWBlue] size:tempMajorSize];
     majorTick.anchorPoint = CGPointMake(0, 0.5);
     majorTick.zPosition = 0;
     
     CGSize tempMinorSize = CGSizeMake(2, 1);
-    SKSpriteNode *minorTick = [SKSpriteNode spriteNodeWithColor:[UIColor colorWithWhite:1 alpha:1] size:tempMinorSize];
+    SKSpriteNode *minorTick = [SKSpriteNode spriteNodeWithColor:[NWColor NWBlue] size:tempMinorSize];
     minorTick.anchorPoint = CGPointMake(0, 0.5);
     majorTick.zPosition = 0;
     
@@ -350,7 +352,7 @@ int _totalCreditsHits;
         }
     }
     
-    //Create indicator.
+        //Create indicator.
     SKShapeNode *altimeterIndicator = [SKShapeNode node];
     altimeterIndicator.zPosition = 1;
     CGMutablePathRef tempIndicatorPath = CGPathCreateMutable();
@@ -363,12 +365,13 @@ int _totalCreditsHits;
     CGPathCloseSubpath(tempIndicatorPath);
     [altimeterIndicator setPath:tempIndicatorPath];
     CGPathRelease(tempIndicatorPath);
-    [altimeterIndicator setStrokeColor:[UIColor colorWithWhite:1 alpha:1]];
-    [altimeterIndicator setFillColor:[NWColor NWRed]];
+    [altimeterIndicator setStrokeColor:[UIColor colorWithWhite:1 alpha:0]];
+    [altimeterIndicator setFillColor:[NWColor NWGreen]];
     altimeterIndicator.name = @"indicator";
     
     [masterAltimeter addChild:altimeterIndicator];
 }
+
 
 #pragma mark --Create Audio
 -(void)createAudio

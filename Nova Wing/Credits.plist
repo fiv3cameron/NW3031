@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>Betas</key>
+	<array>
+		<string>Lacey Arocha</string>
+		<string>Cesar Arocha</string>
+		<string>Kristen Bennett</string>
+		<string>Colby Bennett</string>
+		<string>Dusty Bradley</string>
+		<string>Gavin Edwards</string>
+		<string>Weston Dearman</string>
+		<string>Dalton Conn</string>
+		<string>Wes Combs</string>
+		<string>Simon Collard</string>
+		<string>Josh Campbell</string>
+		<string>Chelsi Brown</string>
+		<string>Blake Murray</string>
+		<string>Beejay Morgan</string>
+		<string>Ashley Moore</string>
+		<string>CJ Monroe</string>
+		<string>Stephen McLemore</string>
+		<string>Rachel Martin</string>
+		<string>Eli Marsh</string>
+		<string>Tye Magnuson</string>
+		<string>Jonathon Lozano</string>
+		<string>Bailey Loftis</string>
+		<string>Matthew Loftis</string>
+		<string>Jeremy Koehn</string>
+		<string>Brelin Keels</string>
+		<string>Baylee Keels</string>
+		<string>Bonnie Keels</string>
+		<string>Craig Jackson</string>
+		<string>Justin Hettler</string>
+		<string>Marco Gallaga</string>
+		<string>Jessica Todd</string>
+		<string>Hailee Frank</string>
+		<string>Remi Emre</string>
+		<string>Tom Edwards</string>
+		<string>Levi Murray</string>
+		<string>Brad O&apos;Neal</string>
+		<string>Kory Spargur</string>
+		<string>Robert Vier</string>
+		<string>Adam Wheeler</string>
+		<string>Robin Wessel</string>
+		<string>Justin Wessel</string>
+		<string>Maurice Wessel</string>
+		<string>Justin Voris</string>
+		<string>Ryan Vier</string>
+		<string>Bryan Stump</string>
+		<string>Kevin Stump</string>
+		<string>Aaron Spears</string>
+		<string>Devyn Schuetz</string>
+		<string>Ryan Reynolds</string>
+		<string>Taylor Myers</string>
+	</array>
+	<key>Devs</key>
+	<array>
+		<string>Cameron Frank</string>
+		<string>Bryan Todd</string>
+	</array>
+</dict>
+</plist>
