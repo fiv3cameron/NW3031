@@ -42,7 +42,6 @@
     self.canDisplayBannerAds = YES;
     
     theBanner = [[ADBannerView alloc] initWithFrame:CGRectZero];
-        //theBanner.frame = CGRectOffset(theBanner.frame, 0, theBanner.frame.size.height);
     theBanner.frame = CGRectMake(0, skView.bounds.size.height - theBanner.frame.size.height, theBanner.frame.size.width, theBanner.frame.size.height);
     theBanner.delegate = self;
     [self.view addSubview:theBanner];
@@ -86,7 +85,7 @@
 -(void)bannerViewDidLoadAd:(ADBannerView *)banner {
     if (!self.bannerIsVisible) {
         [UIView beginAnimations:@"animateAdBannerOn" context:NULL];
-        banner.frame = CGRectOffset(banner.frame, 0, -banner.frame.size.height);
+        banner.frame = CGRectOffset(banner.frame, 0, 0);
         [theBanner setAlpha:0.0];
         [UIView commitAnimations];
         self.bannerIsVisible = YES;

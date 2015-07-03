@@ -38,6 +38,7 @@ static inline CGPoint CGPointMultiplyScalar(const CGPoint a, const CGFloat b)
     SKTexture *audioTexture_off;
     SKTexture *audioTexture_highlight;
 }
+
 @end
 
 
