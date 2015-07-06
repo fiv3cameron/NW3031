@@ -557,11 +557,8 @@ NSTimeInterval _dt;
 }
 
 -(SKSpriteNode *)largeRankNodes {
-    NSArray *totalScoreCheckArray = @[@0,@500,@1000,@2500,@5000,@7500,@10000,@25000,@50000,@75000,@100000,@250000];
-    
     int nextRank = [GameState sharedGameData].rankAchieved + 1;
-    NSNumber *nextScoreNumber = [totalScoreCheckArray objectAtIndex:nextRank];
-    int nextScore = nextScoreNumber.intValue ;
+    int nextScore = [self pullRankFromDictWithIndex:nextRank];
     long toNextScore = nextScore - [GameState sharedGameData].totalPoints;
     
     _largeRankNode = [SKSpriteNode node];
@@ -611,32 +608,44 @@ NSTimeInterval _dt;
     _largeRankIsActive = NO;
 }
 
+-(int)pullRankFromDictWithIndex: (int)index {
+    NSString *path = [[NSBundle mainBundle] pathForResource:@"Ranks" ofType:@"plist"];
+    NSDictionary *rankDict = [[NSDictionary alloc] initWithContentsOfFile:path];
+    NSArray *totalScoreCheckArray = [rankDict objectForKey:@"Ranks"];
+    
+    NSNumber *nextScoreNumber = [totalScoreCheckArray objectAtIndex:index];
+    int rankScore = nextScoreNumber.intValue ;
+    
+    return rankScore;
+}
+
 -(void) updateRank {
+    
             long tempScoreForRank = [GameState sharedGameData].totalPoints;
     
-            if (tempScoreForRank < 500) {
+            if (tempScoreForRank < [self pullRankFromDictWithIndex:1]) {
                 [GameState sharedGameData].rankAchieved = 0;
-            } else if (tempScoreForRank>=500 && tempScoreForRank < 1000) {
+            } else if (tempScoreForRank>=[self pullRankFromDictWithIndex:1] && tempScoreForRank < [self pullRankFromDictWithIndex:2]) {
                 [GameState sharedGameData].rankAchieved = 1;
-            } else if (tempScoreForRank>=1000 && tempScoreForRank < 2500) {
+            } else if (tempScoreForRank>=[self pullRankFromDictWithIndex:2] && tempScoreForRank < [self pullRankFromDictWithIndex:3]) {
                 [GameState sharedGameData].rankAchieved = 2;
-            } else if (tempScoreForRank>=2500 && tempScoreForRank < 5000) {
+            } else if (tempScoreForRank>=[self pullRankFromDictWithIndex:3] && tempScoreForRank < [self pullRankFromDictWithIndex:4]) {
                 [GameState sharedGameData].rankAchieved = 3;
-            } else if (tempScoreForRank>=5000 && tempScoreForRank < 7500) {
+            } else if (tempScoreForRank>=[self pullRankFromDictWithIndex:4] && tempScoreForRank < [self pullRankFromDictWithIndex:5]) {
                 [GameState sharedGameData].rankAchieved = 4;
-            } else if (tempScoreForRank>=7500 && tempScoreForRank < 10000) {
+            } else if (tempScoreForRank>=[self pullRankFromDictWithIndex:5] && tempScoreForRank < [self pullRankFromDictWithIndex:6]) {
                 [GameState sharedGameData].rankAchieved = 5;
-            } else if (tempScoreForRank>=10000 && tempScoreForRank < 25000) {
+            } else if (tempScoreForRank>=[self pullRankFromDictWithIndex:6] && tempScoreForRank < [self pullRankFromDictWithIndex:7]) {
                 [GameState sharedGameData].rankAchieved = 6;
-            } else if (tempScoreForRank>=25000 && tempScoreForRank < 50000) {
+            } else if (tempScoreForRank>=[self pullRankFromDictWithIndex:7] && tempScoreForRank < [self pullRankFromDictWithIndex:8]) {
                 [GameState sharedGameData].rankAchieved = 7;
-            } else if (tempScoreForRank>=50000 && tempScoreForRank < 75000) {
+            } else if (tempScoreForRank>=[self pullRankFromDictWithIndex:8] && tempScoreForRank < [self pullRankFromDictWithIndex:9]) {
                 [GameState sharedGameData].rankAchieved = 8;
-            } else if (tempScoreForRank>=75000 && tempScoreForRank < 100000) {
+            } else if (tempScoreForRank>=[self pullRankFromDictWithIndex:9] && tempScoreForRank < [self pullRankFromDictWithIndex:10]) {
                 [GameState sharedGameData].rankAchieved = 9;
-            } else if (tempScoreForRank>=100000 && tempScoreForRank < 250000) {
+            } else if (tempScoreForRank>=[self pullRankFromDictWithIndex:10] && tempScoreForRank < [self pullRankFromDictWithIndex:11]) {
                 [GameState sharedGameData].rankAchieved = 10;
-            } else if (tempScoreForRank>=250000) {
+            } else if (tempScoreForRank>=[self pullRankFromDictWithIndex:11]) {
                 [GameState sharedGameData].rankAchieved = 11;
             }
             [[GameState sharedGameData] save];

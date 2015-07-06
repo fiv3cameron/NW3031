@@ -10,6 +10,14 @@
 
 #import "MainMenu.h"
 
+@interface ViewController () {
+
+}
+
+@property (nonatomic) BOOL allowsBanner;
+
+@end
+
 @implementation ViewController
 
 - (BOOL) prefersStatusBarHidden
@@ -46,6 +54,7 @@
     theBanner.frame = CGRectMake(0, skView.bounds.size.height - theBanner.frame.size.height, theBanner.frame.size.width, theBanner.frame.size.height);
     theBanner.delegate = self;
     [self.view addSubview:theBanner];
+    self.allowsBanner = YES;
     
         //self.bannerIsVisible = NO;
     
@@ -84,9 +93,9 @@
 }
 
 -(void)bannerViewDidLoadAd:(ADBannerView *)banner {
-    if (!self.bannerIsVisible) {
+    if (!self.bannerIsVisible && self.allowsBanner) {
         [UIView beginAnimations:@"animateAdBannerOn" context:NULL];
-        banner.frame = CGRectOffset(banner.frame, 0, -banner.frame.size.height);
+        banner.frame = CGRectOffset(banner.frame, 0, 0);
         [theBanner setAlpha:0.0];
         [UIView commitAnimations];
         self.bannerIsVisible = YES;
@@ -107,12 +116,14 @@
     NSLog(@"Hiding Banner");
     [theBanner setAlpha:0.0];
     self.bannerIsVisible = NO;
+    self.allowsBanner = NO;
 }
 
 -(void)showsBanner {
     NSLog(@"Showing Banner");
     [theBanner setAlpha:1.0];
     self.bannerIsVisible = YES;
+    self.allowsBanner = YES;
 }
 
 - (BOOL)shouldAutorotate

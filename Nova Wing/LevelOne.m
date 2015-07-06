@@ -817,7 +817,10 @@ SKColor *wingmanLaserColorCast;
     long totalScore = [GameState sharedGameData].totalPoints;
     GKLocalPlayer *tempLocalPlayer = [GKLocalPlayer localPlayer];
     
-    NSArray *totalScoreCheckArray = @[@0,@500,@1000,@2500,@5000,@7500,@10000,@25000,@50000,@75000,@100000,@250000];
+    NSString *path = [[NSBundle mainBundle] pathForResource:@"Ranks" ofType:@"plist"];
+    NSDictionary *rankDict = [[NSDictionary alloc] initWithContentsOfFile:path];
+        //    NSArray *totalScoreCheckArray = @[@0,@500,@1000,@2500,@5000,@7500,@10000,@25000,@50000,@75000,@100000,@250000];
+    NSArray *totalScoreCheckArray = [rankDict objectForKey:@"Ranks"];
     NSArray *achievementNames = @[@"NO_GKACHIEVEMENT",@"flight_school_graduate",@"cadet",@"private_I",@"private_II",@"sergeant_I",@"sergeant_II",@"flight_commander",@"lieutenant_commander",@"commander",@"fleet_general",@"fleet_admiral"];
     
     for (int tempRankCounter = 0; tempRankCounter <= 11; tempRankCounter++) {
@@ -1820,6 +1823,7 @@ SKColor *wingmanLaserColorCast;
     
     if (firstBody.categoryBitMask == CollisionCategoryLaser && secondBody.categoryBitMask == CollisionCategoryObject) {
         [self scorePlusLaser: secondNode];
+        [self scoreAddWithMultiplier:1];
         [self laserContactRemove:firstNode andRemove:secondNode];
         localTotalLaserHits = localTotalLaserHits + 1;
         
