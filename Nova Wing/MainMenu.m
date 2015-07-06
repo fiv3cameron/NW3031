@@ -39,6 +39,11 @@ static inline CGPoint CGPointMultiplyScalar(const CGPoint a, const CGFloat b)
     SKTexture *audioTexture_off;
     SKTexture *audioTexture_highlight;
 }
+
+@property (nonatomic) SKSpriteNode* largeRank;
+@property (nonatomic) SKSpriteNode *largeRankNode;
+@property (nonatomic) BOOL largeRankIsActive;
+
 @end
 
 
@@ -74,13 +79,9 @@ NSTimeInterval _dt;
         [[NSNotificationCenter defaultCenter] postNotificationName:@"showAd" object:nil];
         levelTitles = @[@"Event Horizon", @"The Whispers", @"TempLevel3"];
         
-        //Check achievements for rank.
-        
-        
-        //[self achievementRetrievement];
-        NSLog(@"high score %ld",[GameState sharedGameData].highScoreL1);
-        NSLog(@"asteroid deaths %d",[GameState sharedGameData].totalAsteroidDeaths);
-        NSLog(@"rank %i",[GameState sharedGameData].rankAchieved);
+        _largeRankIsActive = NO;
+
+
     }
     return self;
 }
@@ -476,6 +477,8 @@ NSTimeInterval _dt;
     [gameCenterViewController.presentingViewController dismissViewControllerAnimated:YES completion:nil];
 }
 
+#pragma mark --Rank
+
 -(void)createRankInsignia {
     NSString *insigniaString = [[NSString alloc] init];
     if ([GameState sharedGameData].rankAchieved == 0) {
@@ -484,36 +487,47 @@ NSTimeInterval _dt;
         switch ([GameState sharedGameData].rankAchieved) {
             case 1: 
                 insigniaString = @"FlightSchoolGraduate";
+                [self createLargeRankWithImage:[SKTexture textureWithImageNamed:@"FSG-Large.png"]];
                 break;
             case 2:
                 insigniaString = @"Cadet";
+                [self createLargeRankWithImage:[SKTexture textureWithImageNamed:@"Cadet-Large.png"]];
                 break;
             case 3:
                 insigniaString = @"Private-1";
+                [self createLargeRankWithImage:[SKTexture textureWithImageNamed:@"Private-1-Large.png"]];
                 break;
             case 4:
                 insigniaString = @"Private-2";
+                [self createLargeRankWithImage:[SKTexture textureWithImageNamed:@"Private-2-Large.png"]];
                 break;
             case 5:
                 insigniaString = @"Sergeant-1";
+                [self createLargeRankWithImage:[SKTexture textureWithImageNamed:@"Sergeant-1-Large.png"]];
                 break;
             case 6:
                 insigniaString = @"Sergeant-2";
+                [self createLargeRankWithImage:[SKTexture textureWithImageNamed:@"Sergeant-2-Large.png"]];
                 break;
             case 7:
                 insigniaString = @"FlightCommander";
+                [self createLargeRankWithImage:[SKTexture textureWithImageNamed:@"FlightCommander-Large.png"]];
                 break;
             case 8:
                 insigniaString = @"LTCommander";
+                [self createLargeRankWithImage:[SKTexture textureWithImageNamed:@"LT-Commander-Large.png"]];
                 break;
             case 9:
                 insigniaString = @"Commander";
+                [self createLargeRankWithImage:[SKTexture textureWithImageNamed:@"Commander-Large.png"]];
                 break;
             case 10:
                 insigniaString = @"FleetGeneral";
+                [self createLargeRankWithImage:[SKTexture textureWithImageNamed:@"FleetGeneral-Large.png"]];
                 break;
             case 11:
                 insigniaString = @"FleetAdmiral";
+                [self createLargeRankWithImage:[SKTexture textureWithImageNamed:@"FleetAdmiral-Large.png"]];
                 break;
             default:
                 break;
@@ -522,6 +536,7 @@ NSTimeInterval _dt;
         insigniaNode = [SKSpriteNode spriteNodeWithImageNamed:insigniaString];
         insigniaNode.zPosition = 5;
         insigniaNode.position = CGPointMake(self.size.width + 142, self.size.height-30);
+        insigniaNode.name = @"rankInsignia";
         
         SKAction *wait = [SKAction waitForDuration:.75];
         SKAction *move = [SKAction moveByX:-(rankScoreMoveDist) y:0 duration:0.5];
@@ -531,6 +546,69 @@ NSTimeInterval _dt;
         
         [self addChild:insigniaNode];
     }
+}
+
+#define LARGE_RANK_SIZE self.size.width*0.8
+
+-(void)createLargeRankWithImage: (SKTexture *)texture {
+    _largeRank = [SKSpriteNode spriteNodeWithTexture:texture size:CGSizeMake(LARGE_RANK_SIZE, LARGE_RANK_SIZE)];
+        //_largeRank.position = CGPointMake(self.size.width / 2, self.size.height / 2);
+    _largeRank.name = @"largeRankInsignia";
+}
+
+-(SKSpriteNode *)largeRankNodes {
+    NSArray *totalScoreCheckArray = @[@0,@500,@1000,@2500,@5000,@7500,@10000,@25000,@50000,@75000,@100000,@250000];
+    
+    int nextRank = [GameState sharedGameData].rankAchieved + 1;
+    NSNumber *nextScoreNumber = [totalScoreCheckArray objectAtIndex:nextRank];
+    int nextScore = nextScoreNumber.intValue ;
+    long toNextScore = nextScore - [GameState sharedGameData].totalPoints;
+    
+    _largeRankNode = [SKSpriteNode node];
+    _largeRankNode.position = CGPointMake(self.size.width / 2, self.size.height / 2);
+    _largeRankNode.xScale = 0.1;
+    _largeRankNode.yScale = 0.1;
+
+    SKAction *scale = [SKAction scaleXTo:1.0 y:1.0 duration:0.2];
+    [_largeRankNode runAction:scale];
+    
+    SKLabelNode *totalScore = [[SKLabelNode alloc] initWithFontNamed:@"SF Movie Poster"];
+    totalScore.text = [NSString stringWithFormat:@"Lifetime Score: %ld", [GameState sharedGameData].totalPoints];
+    totalScore.position = CGPointMake(0, -160);
+    totalScore.zPosition = 6;
+    
+    SKLabelNode *nextScoreLabel = [[SKLabelNode alloc] initWithFontNamed:@"SF Movie Poster"];
+    nextScoreLabel.text = [NSString stringWithFormat:@"Score to next Rank: %ld", toNextScore];
+    nextScoreLabel.position = CGPointMake(0, totalScore.position.y - 30);
+    nextScoreLabel.zPosition = 6;
+    
+    CGRect rect = CGRectMake(-self.size.width / 2, -50, self.size.width, -150);
+    SKShapeNode *blackStripe = [SKShapeNode shapeNodeWithRect:rect];
+    blackStripe.fillColor = [UIColor colorWithRed:0.0 green:0.0 blue:0.0 alpha:0.9];
+    blackStripe.strokeColor = [UIColor colorWithRed:0.0 green:0.0 blue:0.0 alpha:0.0];
+    
+    
+    [_largeRankNode addChild:blackStripe];
+    [_largeRankNode addChild:totalScore];
+    [_largeRankNode addChild:nextScoreLabel];
+    [_largeRankNode addChild:_largeRank];
+    
+    return _largeRankNode;
+}
+
+-(void)showLargeRank {
+    [self addChild: [self largeRankNodes]];
+    _largeRankIsActive = YES;
+}
+
+-(void)hideLargeRank {
+    SKAction *scale = [SKAction scaleXTo:0.1 y:0.1 duration:0.2];
+    SKAction *remove = [SKAction removeFromParent];
+    SKAction *seq = [SKAction sequence:@[scale, remove]];
+    
+    [_largeRankNode runAction:seq];
+    
+    _largeRankIsActive = NO;
 }
 
 -(void) updateRank {
@@ -678,6 +756,11 @@ NSTimeInterval _dt;
     
     if ([node.name isEqualToString:@"vibrationToggleButton"]) {
         vibrationToggleButton.texture = [SKTexture textureWithImageNamed:@"vibrateButton_press"];
+    }
+    
+    if ([node.name isEqualToString:@"rankInsignia"]) {
+        insigniaNode.xScale = 0.9;
+        insigniaNode.yScale = 0.9;
     }
 }
 
@@ -848,6 +931,8 @@ NSTimeInterval _dt;
         leaderButton.texture = [SKTexture textureWithImageNamed:@"buttonLeaderboard.png"];
         codexButton.texture = [SKTexture textureWithImageNamed:@"buttonCodex.png"];
         creditButton.texture = [SKTexture textureWithImageNamed:@"buttonCredits.png"];
+        insigniaNode.xScale = 1.0;
+        insigniaNode.yScale = 1.0;
     }
     
     if (![nodeLift.name isEqualToString:@"vibrationToggleButton"]) {
@@ -893,6 +978,16 @@ NSTimeInterval _dt;
         [self addChild:[self levelThumbWithPositionModifier: -0.5]];
         [self animateRight:[self childNodeWithName: [NSString stringWithFormat: @"_level%li",[GameState sharedGameData].levelIndex]] withDelay:0.0];
 
+    }
+    
+    if ([nodeLift.name isEqualToString:@"rankInsignia"]) {
+        if (!_largeRankIsActive) {
+            [self showLargeRank];
+        }
+    }
+    
+    if ([nodeLift.name isEqualToString:@"largeRankInsignia"]) {
+        [self hideLargeRank];
     }
 
 #pragma mark --Level 1
