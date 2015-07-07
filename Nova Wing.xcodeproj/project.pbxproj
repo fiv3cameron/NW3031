@@ -22,6 +22,7 @@
 		2D50608F1B0C0DC200A73DD6 /* Sergeant-1@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 2D5060841B0C0DC200A73DD6 /* Sergeant-1@2x.png */; };
 		2D5060901B0C0DC200A73DD6 /* Sergeant-2@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 2D5060851B0C0DC200A73DD6 /* Sergeant-2@2x.png */; };
 		2D800FFA19AC14FC0067CAC1 /* Obstacles.m in Sources */ = {isa = PBXBuildFile; fileRef = 2D800FF919AC14FC0067CAC1 /* Obstacles.m */; };
+		2D94365A1B47064E00726F5F /* Codex.plist in Resources */ = {isa = PBXBuildFile; fileRef = 2D9436591B47064E00726F5F /* Codex.plist */; };
 		2D99094A1A1EC09D00D9CDE8 /* Laser.png in Resources */ = {isa = PBXBuildFile; fileRef = 2D9909491A1EC09D00D9CDE8 /* Laser.png */; };
 		2D9C37991A771F020083E283 /* Audio_press@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 2D9C37961A771F020083E283 /* Audio_press@2x.png */; };
 		2D9C379A1A771F020083E283 /* Audio@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 2D9C37971A771F020083E283 /* Audio@2x.png */; };
@@ -164,6 +165,7 @@
 		2D5060851B0C0DC200A73DD6 /* Sergeant-2@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Sergeant-2@2x.png"; sourceTree = "<group>"; };
 		2D800FF819AC14FC0067CAC1 /* Obstacles.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Obstacles.h; sourceTree = "<group>"; };
 		2D800FF919AC14FC0067CAC1 /* Obstacles.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Obstacles.m; sourceTree = "<group>"; };
+		2D9436591B47064E00726F5F /* Codex.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Codex.plist; sourceTree = "<group>"; };
 		2D9909491A1EC09D00D9CDE8 /* Laser.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Laser.png; sourceTree = "<group>"; };
 		2D9C37951A771F020083E283 /* Audio_off@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Audio_off@2x.png"; sourceTree = "<group>"; };
 		2D9C37961A771F020083E283 /* Audio_press@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Audio_press@2x.png"; sourceTree = "<group>"; };
@@ -400,6 +402,7 @@
 				2DB3522519996B83006BF15C /* InfoPlist.strings */,
 				2DB3522819996B83006BF15C /* main.m */,
 				2DB3522A19996B83006BF15C /* Nova Wing-Prefix.pch */,
+				2D9436591B47064E00726F5F /* Codex.plist */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
@@ -797,6 +800,7 @@
 				763BCECD1A32B67600AF65DB /* buttonCodex.png in Resources */,
 				767320E31A3B96530057EF70 /* NovaWingAppIcon-1024.jpg in Resources */,
 				2DB35299199994B9006BF15C /* Stars-Seamless.jpg in Resources */,
+				2D94365A1B47064E00726F5F /* Codex.plist in Resources */,
 				7673213A1A5B66870057EF70 /* Asteroid-1.atlas in Resources */,
 				2D5060861B0C0DC200A73DD6 /* LTCommander@2x.png in Resources */,
 				2DB352AC19999D5A006BF15C /* SF Movie Poster.ttf in Resources */,

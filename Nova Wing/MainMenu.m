@@ -569,24 +569,24 @@ NSTimeInterval _dt;
 
 -(void)mainMenuAnimateOut {
     // Button Node Removal.
-    SKAction *startButtonRemoved = [SKAction moveTo:CGPointMake(self.size.width/2-300, BUTTON_HEIGHT)  duration:0.75];
-    SKAction *leaderButtonRemoved = [SKAction moveTo:CGPointMake(self.size.width/2-300, BUTTON_HEIGHT - BUTTON_OFFSET)  duration:0.75];
-    SKAction *codexButtonRemoved = [SKAction moveTo:CGPointMake(self.size.width/2-300, BUTTON_HEIGHT - (BUTTON_OFFSET * 2)) duration:0.75];
-    SKAction *creditButtonRemoved = [SKAction moveTo:CGPointMake(self.size.width/2-300, BUTTON_HEIGHT - (BUTTON_OFFSET * 3)) duration:0.75];
+    SKAction *startButtonRemoved = [SKAction moveTo:CGPointMake(self.size.width/2-300, BUTTON_HEIGHT)  duration:0.5];
+    SKAction *leaderButtonRemoved = [SKAction moveTo:CGPointMake(self.size.width/2-300, BUTTON_HEIGHT - BUTTON_OFFSET)  duration:0.5];
+    SKAction *codexButtonRemoved = [SKAction moveTo:CGPointMake(self.size.width/2-300, BUTTON_HEIGHT - (BUTTON_OFFSET * 2)) duration:0.5];
+    SKAction *creditButtonRemoved = [SKAction moveTo:CGPointMake(self.size.width/2-300, BUTTON_HEIGHT - (BUTTON_OFFSET * 3)) duration:0.5];
     SKAction *settingsButtonRemoved = [SKAction moveTo:CGPointMake(-settingsButton.size.width, self.size.height)  duration:0.5];
     SKAction *highScoreRemoved = [SKAction moveBy:CGVectorMake(self.size.width/2, 0) duration:0.5];
     
     // Title Image Removal.
-    SKAction *titleRemoval = [SKAction moveTo:CGPointMake(self.size.width/2, 700) duration:0.75];
+    SKAction *titleRemoval = [SKAction moveTo:CGPointMake(self.size.width/2, 700) duration:0.5];
     
     // Group & Sequence Removal.
     SKAction *unload = [SKAction removeFromParent];
     
     // Delays.
-    SKAction *titleWait = [SKAction waitForDuration:0.5];
-    SKAction *startWait = [SKAction waitForDuration:0.75];
-    SKAction *leaderWait = [SKAction waitForDuration:0.5];
-    SKAction *codexWait = [SKAction waitForDuration:0.25];
+    SKAction *titleWait = [SKAction waitForDuration:0.4];
+    SKAction *startWait = [SKAction waitForDuration:0.6];
+    SKAction *leaderWait = [SKAction waitForDuration:0.4];
+    SKAction *codexWait = [SKAction waitForDuration:0.2];
     
     // Button Texture Change.
     startButton.texture = [SKTexture textureWithImageNamed:@"buttonStart.png"];
@@ -705,7 +705,7 @@ NSTimeInterval _dt;
         SKAction *menuAnimate = [SKAction runBlock:^{
             [self mainMenuAnimateOut];
         }];
-        SKAction *wait = [SKAction waitForDuration:1.25];
+        SKAction *wait = [SKAction waitForDuration:1.1];
         SKAction *Scene = [SKAction runBlock:^{
             if ([GameState sharedGameData].highScoreL1 == 0) {
                 //Start Tutorial
@@ -762,7 +762,7 @@ NSTimeInterval _dt;
         SKAction *menuAnimate = [SKAction runBlock:^{
             [self mainMenuAnimateOut];
         }];
-        SKAction *wait = [SKAction waitForDuration:1.25];
+        SKAction *wait = [SKAction waitForDuration:1.1];
         SKAction *Scene = [SKAction runBlock:^{
             SKView * codexView = (SKView *)self.view;
             codexView.showsFPS = YES;
