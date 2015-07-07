@@ -127,8 +127,8 @@ NSTimeInterval _dt;
 {
     titleImage = [SKSpriteNode spriteNodeWithImageNamed:@"Title.png"];
     titleImage.position = CGPointMake(self.size.width/2, 400);
-    titleImage.xScale = 0.5;
-    titleImage.yScale = 0.5;
+    titleImage.xScale = 0.6;
+    titleImage.yScale = 0.6;
     return titleImage;
 }
 
@@ -990,12 +990,16 @@ NSTimeInterval _dt;
     }
     
     if ([nodeLift.name isEqualToString:@"rankInsignia"]) {
+        SKAction *sound = [SKAction playSoundFileNamed:@"Button-Press.caf" waitForCompletion:NO];
+        [self playSoundEffectsWithAction:sound];
         if (!_largeRankIsActive) {
             [self showLargeRank];
         }
     }
     
     if ([nodeLift.name isEqualToString:@"largeRankInsignia"]) {
+        SKAction *sound = [SKAction playSoundFileNamed:@"Button-Press.caf" waitForCompletion:NO];
+        [self playSoundEffectsWithAction:sound];
         [self hideLargeRank];
     }
 
