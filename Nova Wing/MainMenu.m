@@ -531,6 +531,7 @@ NSTimeInterval _dt;
                 break;
             default:
                 break;
+                
         }
         
         insigniaNode = [SKSpriteNode spriteNodeWithImageNamed:insigniaString];
