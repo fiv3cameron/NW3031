@@ -58,6 +58,7 @@
         [self createCodexParent];
         [self createMask];
         [self createCodex];
+        [self fadeNodeInWithNode:codexParent];
         
     }
     return self;
@@ -118,16 +119,33 @@
 -(void)toggleButtonLogic {
     if (_codexIsActive) {
         _toggleButton.texture = [SKTexture textureWithImageNamed:codexButton];
+        [self fadeNodeOutWithNode:codexParent];
+        [self addChild:[self createStats]];
+        [self fadeNodeInWithNode:_statsPage];
         _codexIsActive = NO;
             //Logic for transitioning to stats page goes here
         
     } else {
         _toggleButton.texture = [SKTexture textureWithImageNamed:statsButton];
+        [self fadeNodeOutWithNode:_statsPage];
+        [self fadeNodeInWithNode:codexParent];
         _codexIsActive = YES;
             //Logic for transitioning to codex page goes here
         
     }
     
+}
+
+-(void)fadeNodeInWithNode: (SKSpriteNode *)node {
+    SKAction *fade = [SKAction fadeInWithDuration:0.75];
+    [node runAction:fade];
+}
+
+-(void)fadeNodeOutWithNode: (SKSpriteNode *)node {
+    SKAction *fade = [SKAction fadeOutWithDuration:0.75];
+        //SKAction *remove = [SKAction removeFromParent];
+        //[node runAction:[SKAction sequence:@[fade, remove]]];
+    [node runAction:fade];
 }
 
 #pragma mark --Content Creation
@@ -137,6 +155,7 @@
     codexParent = [[SKSpriteNode alloc] init];
     codexParent.position = codexPointStart;
     codexParent.anchorPoint = CGPointMake(0, 1.0);
+    codexParent.alpha = 0.0;
     
     //Add animation lines here.
     [self addChild:codexParent];
@@ -248,10 +267,49 @@
     
 }
 
+#define STATS_LINE_SPACING 1.0
+#define STATS_FONT_SIZE 28
+
 -(SKSpriteNode *)createStats {
     _statsPage = [SKSpriteNode node];
+    _statsPage.alpha = 0.0;
         //stats page stuff here
+    NSString *highScore = [NSString stringWithFormat:@"%ld", [GameState sharedGameData].highScoreL1];
+    NSString *totalLaserHits = [NSString stringWithFormat:@"%d", [GameState sharedGameData].totalLaserHits];
+    NSString *totalLasersFired = [NSString stringWithFormat:@"%d", [GameState sharedGameData].totalLasersFired];
+    NSString *totalAsteroidsDestroyed = [NSString stringWithFormat:@"%d", [GameState sharedGameData].totalAsteroidsDestroyed];
+        //NSString *totalDebrisDestroyed = [NSString stringWithFormat:@"%d", [GameState sharedGameData].totalDebrisDestroyed];
+        //NSString *totalChallengePoints = [NSString stringWithFormat:@"%d", [GameState sharedGameData].totalChallengePoints];
+    NSString *totalGames = [NSString stringWithFormat:@"%d", [GameState sharedGameData].totalGames];
+    NSString *totalBlackHoleDeaths = [NSString stringWithFormat:@"%d", [GameState sharedGameData].totalBlackHoleDeaths];
+    NSString *totalAsteroidDeaths = [NSString stringWithFormat:@"%d", [GameState sharedGameData].totalAsteroidDeaths];
+        //NSString *totalDebrisDeaths = [NSString stringWithFormat:@"%d", [GameState sharedGameData].totalDebrisDeaths];
+    NSString *averageScore = [NSString stringWithFormat:@"%f", [GameState sharedGameData].allTimeAverageScore];
+    NSString *accuracy = [NSString stringWithFormat:@"%f", [GameState sharedGameData].allTimeAverageAccuracy];
+    NSArray *infoStrings = [[NSArray alloc] initWithObjects:highScore, totalLaserHits, totalLasersFired, totalAsteroidsDestroyed, totalGames, totalBlackHoleDeaths, totalAsteroidDeaths, averageScore, accuracy, nil];
+    NSString *statsInfoText = [infoStrings componentsJoinedByString:@"\n"];
     
+    NSString *statsDescriptorsText = @"High Score:\nTotal Laser Hits:\nTotal Lasers Fired:\nTotal Asteroids Destroyed:\nTotal Games:\nTotal Black Hole Deaths:\nTotal Asteroid Deaths:\nAll Time Average Score:\nAll Time Average Accuracy:";
+    SKNode *blackSquare = [self childNodeWithName:@"black_square"];
+    
+    NORLabelNode *statsDescriptors = [[NORLabelNode alloc] initWithFontNamed:@"SF Movie Poster"];
+    [statsDescriptors setFontSize:STATS_FONT_SIZE];
+    [statsDescriptors setLineSpacing:STATS_LINE_SPACING];
+    [statsDescriptors setHorizontalAlignmentMode:SKLabelHorizontalAlignmentModeLeft];
+    [statsDescriptors setVerticalAlignmentMode:SKLabelVerticalAlignmentModeTop];
+    [statsDescriptors setText:statsDescriptorsText];
+    [statsDescriptors setPosition:CGPointMake((self.size.width /2)-([blackSquare childNodeWithName:@"black_shape"].frame.size.width / 2), (self.size.height / 2) + ([blackSquare childNodeWithName:@"black_shape"].frame.size.height / 2))];
+    
+    NORLabelNode *statsInfo = [[NORLabelNode alloc] initWithFontNamed:@"SF Movie Poster"];
+    [statsInfo setFontSize:STATS_FONT_SIZE];
+    [statsInfo setLineSpacing:STATS_LINE_SPACING];
+    [statsInfo setHorizontalAlignmentMode:SKLabelHorizontalAlignmentModeRight];
+    [statsInfo setVerticalAlignmentMode:SKLabelVerticalAlignmentModeTop];
+    [statsInfo setText:statsInfoText];
+    [statsInfo setPosition:CGPointMake((self.size.width /2)+([blackSquare childNodeWithName:@"black_shape"].frame.size.width / 2), statsDescriptors.position.y)];
+    
+    [_statsPage addChild:statsInfo];
+    [_statsPage addChild:statsDescriptors];
     return _statsPage;
 }
 
