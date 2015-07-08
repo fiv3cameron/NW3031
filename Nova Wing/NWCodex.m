@@ -56,7 +56,6 @@
         [self addChild: [self playTutorialButton]];
         [self addChild: [self toggleButton]];
         [self createCodexParent];
-        [self createMask];
         [self createCodex];
         [self fadeNodeInWithNode:codexParent];
         
@@ -69,12 +68,6 @@
     background.anchorPoint = CGPointZero;
     background.position = CGPointMake(0, 0);
     return background;
-}
-
--(void)createMask {
-    codexMask = [[SKCropNode alloc] init];
-    codexMask.maskNode = [[self codexPopBackground] copy];
-    [codexParent addChild:codexMask];
 }
 
 #define POP_RoundRect 10
@@ -284,8 +277,8 @@
     NSString *totalBlackHoleDeaths = [NSString stringWithFormat:@"%d", [GameState sharedGameData].totalBlackHoleDeaths];
     NSString *totalAsteroidDeaths = [NSString stringWithFormat:@"%d", [GameState sharedGameData].totalAsteroidDeaths];
         //NSString *totalDebrisDeaths = [NSString stringWithFormat:@"%d", [GameState sharedGameData].totalDebrisDeaths];
-    NSString *averageScore = [NSString stringWithFormat:@"%f", [GameState sharedGameData].allTimeAverageScore];
-    NSString *accuracy = [NSString stringWithFormat:@"%f", [GameState sharedGameData].allTimeAverageAccuracy];
+    NSString *averageScore = [NSString stringWithFormat:@"%f", (float)[GameState sharedGameData].allTimeAverageScore];
+    NSString *accuracy = [NSString stringWithFormat:@"%f%%", (float)[GameState sharedGameData].allTimeAverageAccuracy*100];
     NSArray *infoStrings = [[NSArray alloc] initWithObjects:highScore, totalLaserHits, totalLasersFired, totalAsteroidsDestroyed, totalGames, totalBlackHoleDeaths, totalAsteroidDeaths, averageScore, accuracy, nil];
     NSString *statsInfoText = [infoStrings componentsJoinedByString:@"\n"];
     
@@ -298,7 +291,7 @@
     [statsDescriptors setHorizontalAlignmentMode:SKLabelHorizontalAlignmentModeLeft];
     [statsDescriptors setVerticalAlignmentMode:SKLabelVerticalAlignmentModeTop];
     [statsDescriptors setText:statsDescriptorsText];
-    [statsDescriptors setPosition:CGPointMake((self.size.width /2)-([blackSquare childNodeWithName:@"black_shape"].frame.size.width / 2), (self.size.height / 2) + ([blackSquare childNodeWithName:@"black_shape"].frame.size.height / 2))];
+    [statsDescriptors setPosition:CGPointMake(codexPointStart.x,codexPointStart.y-([blackSquare childNodeWithName:@"black_shape"].frame.size.height/20))];
     
     NORLabelNode *statsInfo = [[NORLabelNode alloc] initWithFontNamed:@"SF Movie Poster"];
     [statsInfo setFontSize:STATS_FONT_SIZE];
@@ -306,7 +299,7 @@
     [statsInfo setHorizontalAlignmentMode:SKLabelHorizontalAlignmentModeRight];
     [statsInfo setVerticalAlignmentMode:SKLabelVerticalAlignmentModeTop];
     [statsInfo setText:statsInfoText];
-    [statsInfo setPosition:CGPointMake((self.size.width /2)+([blackSquare childNodeWithName:@"black_shape"].frame.size.width / 2), statsDescriptors.position.y)];
+    [statsInfo setPosition:CGPointMake([blackSquare childNodeWithName:@"black_shape"].frame.size.width, codexPointStart.y-([blackSquare childNodeWithName:@"black_shape"].frame.size.height/20))];
     
     [_statsPage addChild:statsInfo];
     [_statsPage addChild:statsDescriptors];
@@ -417,7 +410,7 @@
     int swipeAllowed;
     
     //Codex functions.
-    if ((currentCodexIndex == 0 && swipeDirection > 0) || (currentCodexIndex == 17 && swipeDirection < 0)) {
+    if ((currentCodexIndex == 0 && swipeDirection > 0) || (currentCodexIndex == 17 && swipeDirection < 0) || !(_codexIsActive)) {
         //Attempted swipe left at index zero or swipe right at index 17 should return to initial codex position.  Do nothing.
         swipeAllowed = 0;
     } else {
