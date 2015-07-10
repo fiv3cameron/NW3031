@@ -13,7 +13,6 @@
 
 static NSString* const SSGameDataChecksumKey = @"SSGameDataChecksumKey";
 static NSString* const SSGameDataHighScoreL1Key = @"highScoreL1";
-static NSString* const SSGameDataHighScoreL2Key = @"highScoreL2";
 static NSString* const SSGameDataAudioVolume = @"audioVolume";
 static NSString* const SSGameDataVibeState = @"vibrationState";
 static NSString* const SSGameDataAchievementsKey = @"achievementsKey";
@@ -29,10 +28,11 @@ static NSString* const SSGameDataTotalGames = @"totalGames";
 static NSString* const SSGameDataTotalBlackHoleDeaths = @"totalBlackHoleDeaths";
 static NSString* const SSGameDataTotalAsteroidDeaths = @"totalAsteroidDeaths";
 static NSString* const SSGameDataTotalDebrisDeaths = @"totalDebrisDeaths";
+static NSString* const SSGameDataAllTimeAverageScore = @"allTimeAverageScore";
+static NSString* const SSGameDataAllTimeAverageAccuracy = @"allTimeAverageAccuracy";
 
 -(void)encodeWithCoder:(NSCoder *)encoder {
     [encoder encodeDouble:self.highScoreL1 forKey:SSGameDataHighScoreL1Key];
-    [encoder encodeDouble:self.highScoreL2 forKey:SSGameDataHighScoreL2Key];
     [encoder encodeDouble:self.audioVolume forKey:SSGameDataAudioVolume];
     [encoder encodeInt:self.vibeOn forKey:SSGameDataVibeState];
     [encoder encodeObject:self.achievementsDictionary forKey:SSGameDataAchievementsKey];
@@ -47,13 +47,14 @@ static NSString* const SSGameDataTotalDebrisDeaths = @"totalDebrisDeaths";
     [encoder encodeInt:self.totalBlackHoleDeaths forKey:SSGameDataTotalBlackHoleDeaths];
     [encoder encodeInt:self.totalAsteroidDeaths forKey:SSGameDataTotalAsteroidDeaths];
     [encoder encodeInt:self.totalDebrisDeaths forKey:SSGameDataTotalDebrisDeaths];
+    [encoder encodeFloat:self.allTimeAverageScore forKey:SSGameDataAllTimeAverageScore];
+    [encoder encodeFloat:self.allTimeAverageAccuracy forKey:SSGameDataAllTimeAverageAccuracy];
 }
 
 -(instancetype)initWithCoder:(NSCoder *)decoder {
     self = [self init];
     if (self) {
         _highScoreL1 = [decoder decodeDoubleForKey:SSGameDataHighScoreL1Key];
-        _highScoreL2 = [decoder decodeDoubleForKey:SSGameDataHighScoreL2Key];
         _audioVolume = [decoder decodeDoubleForKey:SSGameDataAudioVolume];
         _vibeOn = [decoder decodeIntForKey:SSGameDataVibeState];
         _achievementsDictionary = [decoder decodeObjectForKey:SSGameDataAchievementsKey];
@@ -68,6 +69,8 @@ static NSString* const SSGameDataTotalDebrisDeaths = @"totalDebrisDeaths";
         _totalBlackHoleDeaths = [decoder decodeIntForKey:SSGameDataTotalBlackHoleDeaths];
         _totalAsteroidDeaths = [decoder decodeIntForKey:SSGameDataTotalAsteroidDeaths];
         _totalDebrisDeaths = [decoder decodeIntForKey:SSGameDataTotalDebrisDeaths];
+        _allTimeAverageScore = [decoder decodeFloatForKey:SSGameDataAllTimeAverageScore];
+        _allTimeAverageAccuracy = [decoder decodeFloatForKey:SSGameDataAllTimeAverageAccuracy];
     }
     
     return self;
@@ -92,7 +95,6 @@ static NSString* const SSGameDataTotalDebrisDeaths = @"totalDebrisDeaths";
 -(void)resetAll {
     self.score = 0;
     self.highScoreL1 = 0;
-    self.highScoreL2 = 0;
 }
 
 +(NSString*)filePath {

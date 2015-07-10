@@ -12,7 +12,6 @@
 
     @property (assign, nonatomic) int score;
     @property (assign, nonatomic) long highScoreL1;
-    @property (assign, nonatomic) long highScoreL2;
     @property (nonatomic) long levelIndex;
     @property (nonatomic) long lvlIndexMax;
     @property (assign, nonatomic) int scoreMultiplier;

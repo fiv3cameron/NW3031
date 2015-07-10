@@ -4,11 +4,8 @@
 //
 //  Created by Cameron Frank on 8/19/14.
 //  Copyright (c) 2014 FIV3 Interactive, LLC. All rights reserved.
-//  test
-//  So incredibly annoying.
 
 #import <AudioToolbox/AudioToolbox.h>
-
 #import "LevelOne.h"
 #import "Obstacles.h"
 #import "Multipliers.h"
@@ -1647,8 +1644,10 @@ SKColor *wingmanLaserColorCast;
     [GameState sharedGameData].totalChallengePoints = [GameState sharedGameData].totalChallengePoints + localChallengePoints;
     [GameState sharedGameData].totalGames = [GameState sharedGameData].totalGames + 1;
     [GameState sharedGameData].totalPoints = [GameState sharedGameData].totalPoints + [GameState sharedGameData].score;
-    [GameState sharedGameData].allTimeAverageAccuracy = [GameState sharedGameData].totalLaserHits / [GameState sharedGameData].totalLasersFired;
-    [GameState sharedGameData].allTimeAverageScore = [GameState sharedGameData].totalPoints / [GameState sharedGameData].totalGames;
+    [GameState sharedGameData].allTimeAverageAccuracy = (float)[GameState sharedGameData].totalLaserHits / (float)[GameState sharedGameData].totalLasersFired;
+    [GameState sharedGameData].allTimeAverageScore = (float)[GameState sharedGameData].totalPoints / (float)[GameState sharedGameData].totalGames;
+    
+    [[GameState sharedGameData] save];
     
     [self checkAchievementsIsGameOver:YES];
     [self checkAchievementsForRank];
@@ -1657,7 +1656,6 @@ SKColor *wingmanLaserColorCast;
     [self removeAllActions];
     [self removeAllChildren];
     
-    [[GameState sharedGameData] save];
     [self playSoundEffectsWithAction:_ShipExplode];
     [self createBackgroundWithIndex:0];
         //Pop color.
@@ -1783,6 +1781,7 @@ SKColor *wingmanLaserColorCast;
     SKSpriteNode *firstNode = (SKSpriteNode *)firstBody.node;
     SKSpriteNode *secondNode = (SKSpriteNode *)secondBody.node;
 
+    //Player collides with objects.
     if (firstBody.categoryBitMask == CollisionCategoryPlayer && secondBody.categoryBitMask == CollisionCategoryObject) {
         [self vibrate];
         [self playSoundEffectsWithAction:_ShipExplode];
@@ -1800,6 +1799,7 @@ SKColor *wingmanLaserColorCast;
         
     }
     
+    //Player collides with black hole.
     if (firstBody.categoryBitMask == CollisionCategoryPlayer && secondBody.categoryBitMask == CollisionCategoryBottom) {
         [self vibrate];
         [self playSoundEffectsWithAction:_ShipExplode];
@@ -1812,14 +1812,17 @@ SKColor *wingmanLaserColorCast;
         [GameState sharedGameData].totalBlackHoleDeaths = [GameState sharedGameData].totalBlackHoleDeaths + 1;
     }
     
+    //Player collects multiplier.
     if (firstBody.categoryBitMask == CollisionCategoryPlayer && secondBody.categoryBitMask == CollisionCategoryMulti) {
         [self scoreMulti];
         }
     
+    //Player collects powerup.
     if (firstBody.categoryBitMask == CollisionCategoryPlayer && secondBody.categoryBitMask == CollisionCategoryPup) {
         [self checkPup];
     }
     
+    //Laser collides with object.
     if (firstBody.categoryBitMask == CollisionCategoryLaser && secondBody.categoryBitMask == CollisionCategoryObject) {
         [self scorePlusLaser: secondNode];
         [self scoreAddWithMultiplier:1];
@@ -1852,6 +1855,7 @@ SKColor *wingmanLaserColorCast;
         
     }
     
+    //Shield collides with object.
     if (firstBody.categoryBitMask == CollisionCategoryShield && secondBody.categoryBitMask == CollisionCategoryObject) {
         [self vibrate];
         [self collideOvershieldandRemove: secondNode];
@@ -1859,6 +1863,7 @@ SKColor *wingmanLaserColorCast;
         [self scorePlusWithMultiplier:1 fromNode:secondNode];
     }
     
+    //Object collides with score node.
     if (firstBody.categoryBitMask == CollisionCategoryScore && secondBody.categoryBitMask == CollisionCategoryObject) {
         //Object has passed scoring threshold.  Run score function.
         if (wingmanActive) {

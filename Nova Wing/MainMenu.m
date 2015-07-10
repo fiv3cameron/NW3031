@@ -46,7 +46,6 @@ static inline CGPoint CGPointMultiplyScalar(const CGPoint a, const CGFloat b)
 
 @end
 
-
 @implementation MainMenu
 
 NSTimeInterval _lastUpdateTime;
@@ -77,10 +76,8 @@ NSTimeInterval _dt;
         
         [self createAudio];
         [[NSNotificationCenter defaultCenter] postNotificationName:@"showAd" object:nil];
-        levelTitles = @[@"Event Horizon", @"The Whispers", @"TempLevel3"];
         
         _largeRankIsActive = NO;
-
 
     }
     return self;
@@ -656,24 +653,24 @@ NSTimeInterval _dt;
 
 -(void)mainMenuAnimateOut {
     // Button Node Removal.
-    SKAction *startButtonRemoved = [SKAction moveTo:CGPointMake(self.size.width/2-300, BUTTON_HEIGHT)  duration:0.75];
-    SKAction *leaderButtonRemoved = [SKAction moveTo:CGPointMake(self.size.width/2-300, BUTTON_HEIGHT - BUTTON_OFFSET)  duration:0.75];
-    SKAction *codexButtonRemoved = [SKAction moveTo:CGPointMake(self.size.width/2-300, BUTTON_HEIGHT - (BUTTON_OFFSET * 2)) duration:0.75];
-    SKAction *creditButtonRemoved = [SKAction moveTo:CGPointMake(self.size.width/2-300, BUTTON_HEIGHT - (BUTTON_OFFSET * 3)) duration:0.75];
+    SKAction *startButtonRemoved = [SKAction moveTo:CGPointMake(self.size.width/2-300, BUTTON_HEIGHT)  duration:0.5];
+    SKAction *leaderButtonRemoved = [SKAction moveTo:CGPointMake(self.size.width/2-300, BUTTON_HEIGHT - BUTTON_OFFSET)  duration:0.5];
+    SKAction *codexButtonRemoved = [SKAction moveTo:CGPointMake(self.size.width/2-300, BUTTON_HEIGHT - (BUTTON_OFFSET * 2)) duration:0.5];
+    SKAction *creditButtonRemoved = [SKAction moveTo:CGPointMake(self.size.width/2-300, BUTTON_HEIGHT - (BUTTON_OFFSET * 3)) duration:0.5];
     SKAction *settingsButtonRemoved = [SKAction moveTo:CGPointMake(-settingsButton.size.width, self.size.height)  duration:0.5];
     SKAction *highScoreRemoved = [SKAction moveBy:CGVectorMake(self.size.width/2, 0) duration:0.5];
     
     // Title Image Removal.
-    SKAction *titleRemoval = [SKAction moveTo:CGPointMake(self.size.width/2, 700) duration:0.75];
+    SKAction *titleRemoval = [SKAction moveTo:CGPointMake(self.size.width/2, 700) duration:0.5];
     
     // Group & Sequence Removal.
     SKAction *unload = [SKAction removeFromParent];
     
     // Delays.
-    SKAction *titleWait = [SKAction waitForDuration:0.5];
-    SKAction *startWait = [SKAction waitForDuration:0.75];
-    SKAction *leaderWait = [SKAction waitForDuration:0.5];
-    SKAction *codexWait = [SKAction waitForDuration:0.25];
+    SKAction *titleWait = [SKAction waitForDuration:0.4];
+    SKAction *startWait = [SKAction waitForDuration:0.6];
+    SKAction *leaderWait = [SKAction waitForDuration:0.4];
+    SKAction *codexWait = [SKAction waitForDuration:0.2];
     
     // Button Texture Change.
     startButton.texture = [SKTexture textureWithImageNamed:@"buttonStart.png"];
@@ -794,13 +791,13 @@ NSTimeInterval _dt;
         SKAction *menuAnimate = [SKAction runBlock:^{
             [self mainMenuAnimateOut];
         }];
-        SKAction *wait = [SKAction waitForDuration:1.25];
+        SKAction *wait = [SKAction waitForDuration:1.1];
         SKAction *Scene = [SKAction runBlock:^{
             if ([GameState sharedGameData].highScoreL1 == 0) {
                 //Start Tutorial
                 SKView * tutView = (SKView *)self.view;
-                tutView.showsFPS = YES;
-                tutView.showsNodeCount = YES;
+                //tutView.showsFPS = YES;
+                //tutView.showsNodeCount = YES;
                 
                 // Create and configure the scene.
                 SKScene * tutScene = [[Tutorial alloc] initWithSize:tutView.bounds.size];
@@ -823,7 +820,6 @@ NSTimeInterval _dt;
                 
                 // Present the scene.
                 [levelOneView presentScene:levelOneScene transition:levelOneTrans];
-                
             }
         }];
         [self runAction:[SKAction sequence:@[playSound,menuAnimate,wait,Scene]]];
@@ -846,11 +842,11 @@ NSTimeInterval _dt;
         SKAction *menuAnimate = [SKAction runBlock:^{
             [self mainMenuAnimateOut];
         }];
-        SKAction *wait = [SKAction waitForDuration:1.25];
+        SKAction *wait = [SKAction waitForDuration:1.1];
         SKAction *Scene = [SKAction runBlock:^{
             SKView * codexView = (SKView *)self.view;
-            codexView.showsFPS = YES;
-            codexView.showsNodeCount = YES;
+            //codexView.showsFPS = YES;
+            //codexView.showsNodeCount = YES;
             //levelOneView.showsPhysics = YES;
             
             // Create and configure the scene.
@@ -874,7 +870,7 @@ NSTimeInterval _dt;
         SKAction *menuAnimate = [SKAction runBlock:^{
             [self mainMenuAnimateOut];
         }];
-        SKAction *wait = [SKAction waitForDuration:1.25];
+        SKAction *wait = [SKAction waitForDuration:1.1];
         SKAction *Scene = [SKAction runBlock:^{
             //Load Level 1
             SKView * creditsView = (SKView *)self.view;
@@ -1008,9 +1004,9 @@ NSTimeInterval _dt;
         // Transition to Level One Scene
         // Configure the developer view.
         SKView * levelOneView = (SKView *)self.view;
-        levelOneView.showsFPS = YES;
-        levelOneView.showsNodeCount = YES;
-        levelOneView.showsPhysics = YES;
+        //levelOneView.showsFPS = YES;
+        //levelOneView.showsNodeCount = YES;
+        //levelOneView.showsPhysics = YES;
         
         // Create and configure the scene.
         SKScene * levelOneScene = [[LevelOne alloc] initWithSize:levelOneView.bounds.size];
@@ -1025,9 +1021,9 @@ NSTimeInterval _dt;
     if ([nodeLift.name isEqualToString:@"_level2"]) {
         // Transition to Level One Scene
         // Configure the developer view.
-        SKView * levelTwoView = (SKView *)self.view;
-        levelTwoView.showsFPS = YES;
-        levelTwoView.showsNodeCount = YES;
+        //SKView * levelTwoView = (SKView *)self.view;
+        //levelTwoView.showsFPS = YES;
+        //levelTwoView.showsNodeCount = YES;
         //levelTwoView.showsPhysics = YES;
         
         // Create and configure the scene.
