@@ -1640,19 +1640,15 @@ SKColor *wingmanLaserColorCast;
     
     //Update GameState data & stats tracking.
     [GameState sharedGameData].highScoreL1 = MAX([GameState sharedGameData].score, [GameState sharedGameData].highScoreL1);
-    int newLaserHitCount = [GameState sharedGameData].totalLaserHits + localTotalLaserHits;
-    [GameState sharedGameData].totalLaserHits = newLaserHitCount;
-    int newLaserFireCount = [GameState sharedGameData].totalLasersFired + localTotalLasersFired;
-    [GameState sharedGameData].totalLasersFired = newLaserFireCount;
+    [GameState sharedGameData].totalLaserHits = [GameState sharedGameData].totalLaserHits + localTotalLaserHits;
+    [GameState sharedGameData].totalLasersFired = [GameState sharedGameData].totalLasersFired + localTotalLasersFired;
     [GameState sharedGameData].totalAsteroidsDestroyed = [GameState sharedGameData].totalAsteroidsDestroyed + localTotalAsteroidHits;
     [GameState sharedGameData].totalDebrisDestroyed = [GameState sharedGameData].totalDebrisDestroyed + localTotalDebrisHits;
     [GameState sharedGameData].totalChallengePoints = [GameState sharedGameData].totalChallengePoints + localChallengePoints;
     [GameState sharedGameData].totalGames = [GameState sharedGameData].totalGames + 1;
     [GameState sharedGameData].totalPoints = [GameState sharedGameData].totalPoints + [GameState sharedGameData].score;
-    [GameState sharedGameData].allTimeAverageAccuracy = (float)newLaserHitCount / (float)newLaserFireCount;
-    [GameState sharedGameData].allTimeAverageScore = (float)[GameState sharedGameData].totalPoints / (float)[GameState sharedGameData].totalGames;
-    
-    [[GameState sharedGameData] save];
+    [GameState sharedGameData].allTimeAverageAccuracy = [GameState sharedGameData].totalLaserHits / [GameState sharedGameData].totalLasersFired;
+    [GameState sharedGameData].allTimeAverageScore = [GameState sharedGameData].totalPoints / [GameState sharedGameData].totalGames;
     
     [self checkAchievementsIsGameOver:YES];
     [self checkAchievementsForRank];
@@ -1661,6 +1657,7 @@ SKColor *wingmanLaserColorCast;
     [self removeAllActions];
     [self removeAllChildren];
     
+    [[GameState sharedGameData] save];
     [self playSoundEffectsWithAction:_ShipExplode];
     [self createBackgroundWithIndex:0];
         //Pop color.
@@ -1795,12 +1792,10 @@ SKColor *wingmanLaserColorCast;
             } else {
                 [self gameOver];
             }
-        if ([secondNode.name isEqualToString:@"asteroid1"] || [secondNode.name isEqualToString:@"asteroid2"] || [secondNode.name isEqualToString:@"asteroid3"] || [secondNode.name isEqualToString:@"redAsteroid"]) {
+        if ([secondNode.name isEqualToString:@"asteroid"] || [secondNode.name isEqualToString:@"red_asteroid"]) {
             [GameState sharedGameData].totalAsteroidDeaths = [GameState sharedGameData].totalAsteroidDeaths + 1;
-            [[GameState sharedGameData] save];
         } else if ([secondNode.name isEqualToString:@"debris"]) {
             [GameState sharedGameData].totalDebrisDeaths = [GameState sharedGameData].totalDebrisDeaths + 1;
-            [[GameState sharedGameData] save];
         }
         
     }
@@ -1829,13 +1824,13 @@ SKColor *wingmanLaserColorCast;
         [self scorePlusLaser: secondNode];
         [self scoreAddWithMultiplier:1];
         [self laserContactRemove:firstNode andRemove:secondNode];
-        localTotalLaserHits = localTotalLaserHits + 1; //Not duplicate scoring.  I promise.
+        localTotalLaserHits = localTotalLaserHits + 1;
         
         if ([secondNode.name isEqualToString:@"asteroid1"] || [secondNode.name isEqualToString:@"asteroid2"] || [secondNode.name isEqualToString:@"asteroid3"] || [secondNode.name isEqualToString:@"redAsteroid"]) {
             localTotalAsteroidHits = localTotalAsteroidHits + 1;
         } else if ([secondNode.name isEqualToString:@"debris"]) {
             localTotalDebrisHits = localTotalDebrisHits + 1;
-        } else if ([secondNode.name isEqualToString:@"redAsteroid"]) {
+        } else if ([secondNode.name isEqualToString:@"red_asteroid"]) {
             localChallengePoints = localChallengePoints + 1;
         }
         

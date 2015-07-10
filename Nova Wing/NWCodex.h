@@ -7,7 +7,6 @@
 //
 
 #import <SpriteKit/SpriteKit.h>
-#import "NORLabelNode.h"
 
 @interface NWCodex : SKScene
 

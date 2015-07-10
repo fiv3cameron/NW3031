@@ -22,7 +22,6 @@
 		2D50608F1B0C0DC200A73DD6 /* Sergeant-1@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 2D5060841B0C0DC200A73DD6 /* Sergeant-1@2x.png */; };
 		2D5060901B0C0DC200A73DD6 /* Sergeant-2@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 2D5060851B0C0DC200A73DD6 /* Sergeant-2@2x.png */; };
 		2D800FFA19AC14FC0067CAC1 /* Obstacles.m in Sources */ = {isa = PBXBuildFile; fileRef = 2D800FF919AC14FC0067CAC1 /* Obstacles.m */; };
-		2D94365A1B47064E00726F5F /* Codex.plist in Resources */ = {isa = PBXBuildFile; fileRef = 2D9436591B47064E00726F5F /* Codex.plist */; };
 		2D99094A1A1EC09D00D9CDE8 /* Laser.png in Resources */ = {isa = PBXBuildFile; fileRef = 2D9909491A1EC09D00D9CDE8 /* Laser.png */; };
 		2D9C37991A771F020083E283 /* Audio_press@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 2D9C37961A771F020083E283 /* Audio_press@2x.png */; };
 		2D9C379A1A771F020083E283 /* Audio@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 2D9C37971A771F020083E283 /* Audio@2x.png */; };
@@ -67,8 +66,6 @@
 		760C79C41A702B9700E58170 /* Shield.atlas in Resources */ = {isa = PBXBuildFile; fileRef = 760C79C31A702B9700E58170 /* Shield.atlas */; };
 		76105BD119E5B3D400A3F242 /* Multipliers.m in Sources */ = {isa = PBXBuildFile; fileRef = 76105BD019E5B3D400A3F242 /* Multipliers.m */; };
 		76105BD719F1DB1300A3F242 /* NWAudioPlayer.m in Sources */ = {isa = PBXBuildFile; fileRef = 76105BD619F1DB1300A3F242 /* NWAudioPlayer.m */; };
-		762F148E1B42076D0080A863 /* CodexBG@2x.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 762F148C1B42076D0080A863 /* CodexBG@2x.jpg */; };
-		762F148F1B42076D0080A863 /* CodexBG@3x.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 762F148D1B42076D0080A863 /* CodexBG@3x.jpg */; };
 		763BCEC91A32A8A500AF65DB /* buttonPressCodex.png in Resources */ = {isa = PBXBuildFile; fileRef = 763BCEC71A32A8A500AF65DB /* buttonPressCodex.png */; };
 		763BCECD1A32B67600AF65DB /* buttonCodex.png in Resources */ = {isa = PBXBuildFile; fileRef = 763BCECC1A32B67600AF65DB /* buttonCodex.png */; };
 		763BCECF1A32BA2300AF65DB /* Settings.png in Resources */ = {isa = PBXBuildFile; fileRef = 763BCECE1A32BA2300AF65DB /* Settings.png */; };
@@ -77,8 +74,19 @@
 		763BCED81A33550000AF65DB /* buttonPressCredits.png in Resources */ = {isa = PBXBuildFile; fileRef = 763BCED61A33550000AF65DB /* buttonPressCredits.png */; };
 		7640AFB819E06F9A00EFD3C5 /* 2xMulti@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 7640AFB619E06F9A00EFD3C5 /* 2xMulti@2x.png */; };
 		7640AFB919E06F9A00EFD3C5 /* 3xMulti@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 7640AFB719E06F9A00EFD3C5 /* 3xMulti@2x.png */; };
-		764B97F01B461B77002EA191 /* buttonPressStats.png in Resources */ = {isa = PBXBuildFile; fileRef = 764B97EE1B461B77002EA191 /* buttonPressStats.png */; };
-		764B97F11B461B77002EA191 /* buttonStats.png in Resources */ = {isa = PBXBuildFile; fileRef = 764B97EF1B461B77002EA191 /* buttonStats.png */; };
+		764B97F31B46F670002EA191 /* Credits.plist in Resources */ = {isa = PBXBuildFile; fileRef = 764B97F21B46F670002EA191 /* Credits.plist */; };
+		764B98031B4AEF5D002EA191 /* Cadet-Large@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 764B97F81B4AEF5D002EA191 /* Cadet-Large@2x.png */; };
+		764B98041B4AEF5D002EA191 /* Commander-Large@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 764B97F91B4AEF5D002EA191 /* Commander-Large@2x.png */; };
+		764B98051B4AEF5D002EA191 /* FleetAdmiral-Large@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 764B97FA1B4AEF5D002EA191 /* FleetAdmiral-Large@2x.png */; };
+		764B98061B4AEF5D002EA191 /* FleetGeneral-Large@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 764B97FB1B4AEF5D002EA191 /* FleetGeneral-Large@2x.png */; };
+		764B98071B4AEF5D002EA191 /* FlightCommander-Large@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 764B97FC1B4AEF5D002EA191 /* FlightCommander-Large@2x.png */; };
+		764B98081B4AEF5D002EA191 /* FSG-Large@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 764B97FD1B4AEF5D002EA191 /* FSG-Large@2x.png */; };
+		764B98091B4AEF5D002EA191 /* LT-Commander-Large@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 764B97FE1B4AEF5D002EA191 /* LT-Commander-Large@2x.png */; };
+		764B980A1B4AEF5D002EA191 /* Private-1-Large@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 764B97FF1B4AEF5D002EA191 /* Private-1-Large@2x.png */; };
+		764B980B1B4AEF5D002EA191 /* Private-2-Large@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 764B98001B4AEF5D002EA191 /* Private-2-Large@2x.png */; };
+		764B980C1B4AEF5D002EA191 /* Sergeant-1-Large@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 764B98011B4AEF5D002EA191 /* Sergeant-1-Large@2x.png */; };
+		764B980D1B4AEF5D002EA191 /* Sergeant-2-Large@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 764B98021B4AEF5D002EA191 /* Sergeant-2-Large@2x.png */; };
+		764B980F1B4B151C002EA191 /* Ranks.plist in Resources */ = {isa = PBXBuildFile; fileRef = 764B980E1B4B151C002EA191 /* Ranks.plist */; };
 		764BF94D199EBC3F007DABF8 /* KeychainWrapper.m in Sources */ = {isa = PBXBuildFile; fileRef = 764BF94C199EBC3F007DABF8 /* KeychainWrapper.m */; };
 		764BF9A219A19A11007DABF8 /* arrowL@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 764BF9A019A19A11007DABF8 /* arrowL@2x.png */; };
 		764BF9A319A19A11007DABF8 /* arrowR@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 764BF9A119A19A11007DABF8 /* arrowR@2x.png */; };
@@ -166,7 +174,6 @@
 		2D5060851B0C0DC200A73DD6 /* Sergeant-2@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Sergeant-2@2x.png"; sourceTree = "<group>"; };
 		2D800FF819AC14FC0067CAC1 /* Obstacles.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Obstacles.h; sourceTree = "<group>"; };
 		2D800FF919AC14FC0067CAC1 /* Obstacles.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Obstacles.m; sourceTree = "<group>"; };
-		2D9436591B47064E00726F5F /* Codex.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Codex.plist; sourceTree = "<group>"; };
 		2D9909491A1EC09D00D9CDE8 /* Laser.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Laser.png; sourceTree = "<group>"; };
 		2D9C37951A771F020083E283 /* Audio_off@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Audio_off@2x.png"; sourceTree = "<group>"; };
 		2D9C37961A771F020083E283 /* Audio_press@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Audio_press@2x.png"; sourceTree = "<group>"; };
@@ -227,8 +234,6 @@
 		76105BD019E5B3D400A3F242 /* Multipliers.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Multipliers.m; sourceTree = "<group>"; };
 		76105BD519F1DB1300A3F242 /* NWAudioPlayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NWAudioPlayer.h; sourceTree = "<group>"; };
 		76105BD619F1DB1300A3F242 /* NWAudioPlayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NWAudioPlayer.m; sourceTree = "<group>"; };
-		762F148C1B42076D0080A863 /* CodexBG@2x.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "CodexBG@2x.jpg"; sourceTree = "<group>"; };
-		762F148D1B42076D0080A863 /* CodexBG@3x.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "CodexBG@3x.jpg"; sourceTree = "<group>"; };
 		763BCEC71A32A8A500AF65DB /* buttonPressCodex.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = buttonPressCodex.png; sourceTree = "<group>"; };
 		763BCECC1A32B67600AF65DB /* buttonCodex.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = buttonCodex.png; sourceTree = "<group>"; };
 		763BCECE1A32BA2300AF65DB /* Settings.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Settings.png; sourceTree = "<group>"; };
@@ -251,8 +256,6 @@
 		764B98011B4AEF5D002EA191 /* Sergeant-1-Large@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Sergeant-1-Large@2x.png"; sourceTree = "<group>"; };
 		764B98021B4AEF5D002EA191 /* Sergeant-2-Large@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Sergeant-2-Large@2x.png"; sourceTree = "<group>"; };
 		764B980E1B4B151C002EA191 /* Ranks.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Ranks.plist; sourceTree = "<group>"; };
-		764B97EE1B461B77002EA191 /* buttonPressStats.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = buttonPressStats.png; sourceTree = "<group>"; };
-		764B97EF1B461B77002EA191 /* buttonStats.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = buttonStats.png; sourceTree = "<group>"; };
 		764BF94B199EBC3F007DABF8 /* KeychainWrapper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KeychainWrapper.h; sourceTree = "<group>"; };
 		764BF94C199EBC3F007DABF8 /* KeychainWrapper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KeychainWrapper.m; sourceTree = "<group>"; };
 		764BF9A019A19A11007DABF8 /* arrowL@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "arrowL@2x.png"; sourceTree = "<group>"; };
@@ -420,7 +423,6 @@
 				2DB3522A19996B83006BF15C /* Nova Wing-Prefix.pch */,
 				764B97F21B46F670002EA191 /* Credits.plist */,
 				764B980E1B4B151C002EA191 /* Ranks.plist */,
-				2D9436591B47064E00726F5F /* Codex.plist */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
@@ -647,8 +649,6 @@
 		767320EA1A3CBD810057EF70 /* Backgrounds */ = {
 			isa = PBXGroup;
 			children = (
-				762F148C1B42076D0080A863 /* CodexBG@2x.jpg */,
-				762F148D1B42076D0080A863 /* CodexBG@3x.jpg */,
 				767320EB1A3CBD8E0057EF70 /* Codex_Constr@2x.jpg */,
 				767320EC1A3CBD8E0057EF70 /* Codex_Constr@3x.jpg */,
 			);
@@ -704,8 +704,6 @@
 		76B9E91D19FC18A8000EF044 /* Buttons */ = {
 			isa = PBXGroup;
 			children = (
-				764B97EE1B461B77002EA191 /* buttonPressStats.png */,
-				764B97EF1B461B77002EA191 /* buttonStats.png */,
 				76C2BC531AA54A87005F71A2 /* Audio_disengage@2x.png */,
 				2D9C37951A771F020083E283 /* Audio_off@2x.png */,
 				2D9C37961A771F020083E283 /* Audio_press@2x.png */,
@@ -837,20 +835,17 @@
 				2D5060881B0C0DC200A73DD6 /* Commander@2x.png in Resources */,
 				7673212D1A574CE00057EF70 /* AutoCannon-Spool.caf in Resources */,
 				765DF29919A9294B00FBFB16 /* GameOver-L1@2x.png in Resources */,
-				762F148F1B42076D0080A863 /* CodexBG@3x.jpg in Resources */,
 				767320F31A3CBDAD0057EF70 /* buttonPressReplayTut.png in Resources */,
 				767321311A574CE00057EF70 /* Multiplier-Collection.caf in Resources */,
 				764BF9A319A19A11007DABF8 /* arrowR@2x.png in Resources */,
 				764B980D1B4AEF5D002EA191 /* Sergeant-2-Large@2x.png in Resources */,
 				7673212F1A574CE00057EF70 /* Cannon-Hit-Explode.caf in Resources */,
 				7673213F1A5C276A0057EF70 /* Asteroid-3.atlas in Resources */,
-				762F148E1B42076D0080A863 /* CodexBG@2x.jpg in Resources */,
 				7640AFB919E06F9A00EFD3C5 /* 3xMulti@2x.png in Resources */,
 				764B98071B4AEF5D002EA191 /* FlightCommander-Large@2x.png in Resources */,
 				763BCED81A33550000AF65DB /* buttonPressCredits.png in Resources */,
 				2DB3527B1999940A006BF15C /* buttonStart.png in Resources */,
 				7651E8D719B0FFA900F7E9D0 /* Level-2-Music.m4a in Resources */,
-				764B97F11B461B77002EA191 /* buttonStats.png in Resources */,
 				2DB3522719996B83006BF15C /* InfoPlist.strings in Resources */,
 				7678881A19E1C43E009714A1 /* 4xMulti@2x.png in Resources */,
 				764B980F1B4B151C002EA191 /* Ranks.plist in Resources */,
@@ -859,7 +854,6 @@
 				763BCECD1A32B67600AF65DB /* buttonCodex.png in Resources */,
 				767320E31A3B96530057EF70 /* NovaWingAppIcon-1024.jpg in Resources */,
 				2DB35299199994B9006BF15C /* Stars-Seamless.jpg in Resources */,
-				2D94365A1B47064E00726F5F /* Codex.plist in Resources */,
 				7673213A1A5B66870057EF70 /* Asteroid-1.atlas in Resources */,
 				2D5060861B0C0DC200A73DD6 /* LTCommander@2x.png in Resources */,
 				2DB352AC19999D5A006BF15C /* SF Movie Poster.ttf in Resources */,
@@ -913,7 +907,6 @@
 				2D50608B1B0C0DC200A73DD6 /* FlightCommander@2x.png in Resources */,
 				2DB3523A19996B83006BF15C /* Images.xcassets in Resources */,
 				7640AFB819E06F9A00EFD3C5 /* 2xMulti@2x.png in Resources */,
-				764B97F01B461B77002EA191 /* buttonPressStats.png in Resources */,
 				2D3754181A788F660064CB10 /* Black-Hole-1@2x.png in Resources */,
 				2DB352761999940A006BF15C /* buttonLeaderboard.png in Resources */,
 				764BF9A219A19A11007DABF8 /* arrowL@2x.png in Resources */,
