@@ -55,8 +55,7 @@
     GKLocalPlayer *localPlayer = [GKLocalPlayer localPlayer];
     
     localPlayer.authenticateHandler = ^(UIViewController *viewController, NSError *error) {
-        //[GameState sharedGameData].achievementsDictionary = dictionary;
-        //[[GameState sharedGameData] save];
+
         if (viewController != nil) {
             // Use root view controller to present new Game Center Authentication view.
             [[UIApplication sharedApplication].keyWindow.rootViewController presentViewController: viewController animated: YES completion: ^{

@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>Leaderboard Keys</key>
+	<dict>
+		<key>defaultLeaderboardKey</key>
+		<string>L1HS</string>
+		<key>alltimeLeaderboardKey</key>
+		<string>AllTimeHighScore</string>
+	</dict>
+	<key>Rank Achievement IDs</key>
+	<array>
+		<string>flight_school_graduate</string>
+		<string>cadet</string>
+		<string>private_I</string>
+		<string>private_II</string>
+		<string>sergeant_I</string>
+		<string>sergeant_II</string>
+		<string>flight_commander</string>
+		<string>lieutenant_commander</string>
+		<string>commander</string>
+		<string>fleet_general</string>
+		<string>fleet_admiral</string>
+	</array>
+	<key>Non-Rank Achievement IDs</key>
+	<array>
+		<string>bro_do_you_lift</string>
+		<string>charity_case</string>
+		<string>crash_dummy</string>
+		<string>equal_opp_destroyer</string>
+		<string>killing_spree</string>
+		<string>kill_streak</string>
+		<string>killpossible</string>
+		<string>shot_heart</string>
+		<string>killing_smalls</string>
+		<string>welcome_501st</string>
+	</array>
+</dict>
+</plist>

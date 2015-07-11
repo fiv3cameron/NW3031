@@ -30,7 +30,6 @@
     }
     
     return pupTemp;
-    
 }
 
 -(pupType)powerUpTypes {

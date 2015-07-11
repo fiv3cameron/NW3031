@@ -50,14 +50,10 @@
     self.canDisplayBannerAds = YES;
     
     theBanner = [[ADBannerView alloc] initWithFrame:CGRectZero];
-    //theBanner.frame = CGRectOffset(theBanner.frame, 0, theBanner.frame.size.height);
     theBanner.frame = CGRectMake(0, skView.bounds.size.height - theBanner.frame.size.height, theBanner.frame.size.width, theBanner.frame.size.height);
     theBanner.delegate = self;
     [self.view addSubview:theBanner];
     self.allowsBanner = YES;
-    
-    //self.bannerIsVisible = NO;
-    
 }
 
 - (void)viewDidAppear:(BOOL)animated {

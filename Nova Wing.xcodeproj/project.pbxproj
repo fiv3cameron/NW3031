@@ -26,10 +26,10 @@
 		2D50608E1B0C0DC200A73DD6 /* Private-2@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 2D5060831B0C0DC200A73DD6 /* Private-2@2x.png */; };
 		2D50608F1B0C0DC200A73DD6 /* Sergeant-1@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 2D5060841B0C0DC200A73DD6 /* Sergeant-1@2x.png */; };
 		2D5060901B0C0DC200A73DD6 /* Sergeant-2@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 2D5060851B0C0DC200A73DD6 /* Sergeant-2@2x.png */; };
-		2D800FFA19AC14FC0067CAC1 /* Obstacles.m in Sources */ = {isa = PBXBuildFile; fileRef = 2D800FF919AC14FC0067CAC1 /* Obstacles.m */; };
 		2D99094A1A1EC09D00D9CDE8 /* Laser.png in Resources */ = {isa = PBXBuildFile; fileRef = 2D9909491A1EC09D00D9CDE8 /* Laser.png */; };
 		2D9C37991A771F020083E283 /* Audio_press@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 2D9C37961A771F020083E283 /* Audio_press@2x.png */; };
 		2D9C379A1A771F020083E283 /* Audio@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 2D9C37971A771F020083E283 /* Audio@2x.png */; };
+		2D9EA70A1B518BAD003EEEA3 /* GameCenter.plist in Resources */ = {isa = PBXBuildFile; fileRef = 2D9EA7091B518BAD003EEEA3 /* GameCenter.plist */; };
 		2DA3A7141A7717880026BD54 /* vibrateButton_off@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 2DA3A7111A7717880026BD54 /* vibrateButton_off@2x.png */; };
 		2DA3A7151A7717880026BD54 /* vibrateButton_press@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 2DA3A7121A7717880026BD54 /* vibrateButton_press@2x.png */; };
 		2DA3A7161A7717880026BD54 /* vibrateButton@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 2DA3A7131A7717880026BD54 /* vibrateButton@2x.png */; };
@@ -49,7 +49,6 @@
 		2DB3524319996B83006BF15C /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2DB3521E19996B83006BF15C /* UIKit.framework */; };
 		2DB3524B19996B83006BF15C /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 2DB3524919996B83006BF15C /* InfoPlist.strings */; };
 		2DB3524D19996B83006BF15C /* Nova_WingTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 2DB3524C19996B83006BF15C /* Nova_WingTests.m */; };
-		2DB35262199972CD006BF15C /* GameObjects.m in Sources */ = {isa = PBXBuildFile; fileRef = 2DB35261199972CD006BF15C /* GameObjects.m */; };
 		2DB3526B19997A98006BF15C /* GameState.m in Sources */ = {isa = PBXBuildFile; fileRef = 2DB3526A19997A98006BF15C /* GameState.m */; };
 		2DB352761999940A006BF15C /* buttonLeaderboard.png in Resources */ = {isa = PBXBuildFile; fileRef = 2DB352701999940A006BF15C /* buttonLeaderboard.png */; };
 		2DB352771999940A006BF15C /* buttonPressLeaderboard.png in Resources */ = {isa = PBXBuildFile; fileRef = 2DB352711999940A006BF15C /* buttonPressLeaderboard.png */; };
@@ -95,17 +94,14 @@
 		764BF94D199EBC3F007DABF8 /* KeychainWrapper.m in Sources */ = {isa = PBXBuildFile; fileRef = 764BF94C199EBC3F007DABF8 /* KeychainWrapper.m */; };
 		764BF9A219A19A11007DABF8 /* arrowL@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 764BF9A019A19A11007DABF8 /* arrowL@2x.png */; };
 		764BF9A319A19A11007DABF8 /* arrowR@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 764BF9A119A19A11007DABF8 /* arrowR@2x.png */; };
-		764BF9A619A2BC04007DABF8 /* Nova-L2@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 764BF9A419A2BC04007DABF8 /* Nova-L2@2x.png */; };
 		764BF9A719A2BC04007DABF8 /* Nova-L1@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 764BF9A519A2BC04007DABF8 /* Nova-L1@2x.png */; };
 		7651E8D519B0EC8900F7E9D0 /* Level-1-Music.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 7651E8D419B0EC8900F7E9D0 /* Level-1-Music.m4a */; };
-		7651E8D719B0FFA900F7E9D0 /* Level-2-Music.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 7651E8D619B0FFA900F7E9D0 /* Level-2-Music.m4a */; };
 		765C9BE11A2109860050C847 /* NWColor.m in Sources */ = {isa = PBXBuildFile; fileRef = 765C9BE01A2109860050C847 /* NWColor.m */; };
 		765DF28E19A9290F00FBFB16 /* LevelOne.m in Sources */ = {isa = PBXBuildFile; fileRef = 765DF28D19A9290F00FBFB16 /* LevelOne.m */; };
 		765DF29119A9293100FBFB16 /* spark.png in Resources */ = {isa = PBXBuildFile; fileRef = 765DF28F19A9293100FBFB16 /* spark.png */; };
 		765DF29219A9293100FBFB16 /* Stars-L1.sks in Resources */ = {isa = PBXBuildFile; fileRef = 765DF29019A9293100FBFB16 /* Stars-L1.sks */; };
 		765DF29519A9293D00FBFB16 /* NORLabelNode.m in Sources */ = {isa = PBXBuildFile; fileRef = 765DF29419A9293D00FBFB16 /* NORLabelNode.m */; };
 		765DF29919A9294B00FBFB16 /* GameOver-L1@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 765DF29719A9294B00FBFB16 /* GameOver-L1@2x.png */; };
-		765DF29C19A9295800FBFB16 /* GameOverL1.m in Sources */ = {isa = PBXBuildFile; fileRef = 765DF29B19A9295800FBFB16 /* GameOverL1.m */; };
 		765DF29E19A9298900FBFB16 /* menuMusic.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 765DF29D19A9298900FBFB16 /* menuMusic.m4a */; };
 		767320E31A3B96530057EF70 /* NovaWingAppIcon-1024.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 767320DC1A3B96530057EF70 /* NovaWingAppIcon-1024.jpg */; };
 		767320E41A3B96530057EF70 /* NovaWingIcon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 767320DD1A3B96530057EF70 /* NovaWingIcon@2x.png */; };
@@ -180,12 +176,11 @@
 		2D5060831B0C0DC200A73DD6 /* Private-2@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Private-2@2x.png"; sourceTree = "<group>"; };
 		2D5060841B0C0DC200A73DD6 /* Sergeant-1@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Sergeant-1@2x.png"; sourceTree = "<group>"; };
 		2D5060851B0C0DC200A73DD6 /* Sergeant-2@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Sergeant-2@2x.png"; sourceTree = "<group>"; };
-		2D800FF819AC14FC0067CAC1 /* Obstacles.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Obstacles.h; sourceTree = "<group>"; };
-		2D800FF919AC14FC0067CAC1 /* Obstacles.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Obstacles.m; sourceTree = "<group>"; };
 		2D9909491A1EC09D00D9CDE8 /* Laser.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Laser.png; sourceTree = "<group>"; };
 		2D9C37951A771F020083E283 /* Audio_off@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Audio_off@2x.png"; sourceTree = "<group>"; };
 		2D9C37961A771F020083E283 /* Audio_press@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Audio_press@2x.png"; sourceTree = "<group>"; };
 		2D9C37971A771F020083E283 /* Audio@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Audio@2x.png"; sourceTree = "<group>"; };
+		2D9EA7091B518BAD003EEEA3 /* GameCenter.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = GameCenter.plist; sourceTree = "<group>"; };
 		2DA3A7111A7717880026BD54 /* vibrateButton_off@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "vibrateButton_off@2x.png"; sourceTree = "<group>"; };
 		2DA3A7121A7717880026BD54 /* vibrateButton_press@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "vibrateButton_press@2x.png"; sourceTree = "<group>"; };
 		2DA3A7131A7717880026BD54 /* vibrateButton@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "vibrateButton@2x.png"; sourceTree = "<group>"; };
@@ -211,10 +206,6 @@
 		2DB3524819996B83006BF15C /* Nova WingTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Nova WingTests-Info.plist"; sourceTree = "<group>"; };
 		2DB3524A19996B83006BF15C /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		2DB3524C19996B83006BF15C /* Nova_WingTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Nova_WingTests.m; sourceTree = "<group>"; };
-		2DB3525C19996D6D006BF15C /* PBParallaxScrolling.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PBParallaxScrolling.h; sourceTree = "<group>"; };
-		2DB3525D19996D6D006BF15C /* PBParallaxScrolling.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = PBParallaxScrolling.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
-		2DB35260199972CD006BF15C /* GameObjects.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GameObjects.h; sourceTree = "<group>"; };
-		2DB35261199972CD006BF15C /* GameObjects.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GameObjects.m; sourceTree = "<group>"; };
 		2DB3526919997A98006BF15C /* GameState.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GameState.h; sourceTree = "<group>"; };
 		2DB3526A19997A98006BF15C /* GameState.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GameState.m; sourceTree = "<group>"; };
 		2DB352701999940A006BF15C /* buttonLeaderboard.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = buttonLeaderboard.png; sourceTree = "<group>"; };
@@ -268,10 +259,8 @@
 		764BF94C199EBC3F007DABF8 /* KeychainWrapper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = KeychainWrapper.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		764BF9A019A19A11007DABF8 /* arrowL@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "arrowL@2x.png"; sourceTree = "<group>"; };
 		764BF9A119A19A11007DABF8 /* arrowR@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "arrowR@2x.png"; sourceTree = "<group>"; };
-		764BF9A419A2BC04007DABF8 /* Nova-L2@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Nova-L2@2x.png"; sourceTree = "<group>"; };
 		764BF9A519A2BC04007DABF8 /* Nova-L1@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Nova-L1@2x.png"; sourceTree = "<group>"; };
 		7651E8D419B0EC8900F7E9D0 /* Level-1-Music.m4a */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Level-1-Music.m4a"; sourceTree = "<group>"; };
-		7651E8D619B0FFA900F7E9D0 /* Level-2-Music.m4a */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Level-2-Music.m4a"; sourceTree = "<group>"; };
 		765C9BDF1A2109860050C847 /* NWColor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NWColor.h; sourceTree = "<group>"; };
 		765C9BE01A2109860050C847 /* NWColor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NWColor.m; sourceTree = "<group>"; };
 		765DF28C19A9290F00FBFB16 /* LevelOne.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LevelOne.h; sourceTree = "<group>"; };
@@ -281,8 +270,6 @@
 		765DF29319A9293D00FBFB16 /* NORLabelNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NORLabelNode.h; sourceTree = "<group>"; };
 		765DF29419A9293D00FBFB16 /* NORLabelNode.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NORLabelNode.m; sourceTree = "<group>"; };
 		765DF29719A9294B00FBFB16 /* GameOver-L1@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "GameOver-L1@2x.png"; sourceTree = "<group>"; };
-		765DF29A19A9295800FBFB16 /* GameOverL1.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GameOverL1.h; sourceTree = "<group>"; };
-		765DF29B19A9295800FBFB16 /* GameOverL1.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GameOverL1.m; sourceTree = "<group>"; };
 		765DF29D19A9298900FBFB16 /* menuMusic.m4a */ = {isa = PBXFileReference; lastKnownFileType = file; path = menuMusic.m4a; sourceTree = "<group>"; };
 		767320DC1A3B96530057EF70 /* NovaWingAppIcon-1024.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "NovaWingAppIcon-1024.jpg"; sourceTree = "<group>"; };
 		767320DD1A3B96530057EF70 /* NovaWingIcon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "NovaWingIcon@2x.png"; sourceTree = "<group>"; };
@@ -430,6 +417,7 @@
 				2DB3522A19996B83006BF15C /* Nova Wing-Prefix.pch */,
 				764B97F21B46F670002EA191 /* Credits.plist */,
 				764B980E1B4B151C002EA191 /* Ranks.plist */,
+				2D9EA7091B518BAD003EEEA3 /* GameCenter.plist */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
@@ -471,8 +459,6 @@
 				765DF29419A9293D00FBFB16 /* NORLabelNode.m */,
 				764BF94B199EBC3F007DABF8 /* KeychainWrapper.h */,
 				764BF94C199EBC3F007DABF8 /* KeychainWrapper.m */,
-				2DB3525C19996D6D006BF15C /* PBParallaxScrolling.h */,
-				2DB3525D19996D6D006BF15C /* PBParallaxScrolling.m */,
 			);
 			name = "External Classes";
 			sourceTree = "<group>";
@@ -486,14 +472,10 @@
 				765C9BE01A2109860050C847 /* NWColor.m */,
 				76105BD519F1DB1300A3F242 /* NWAudioPlayer.h */,
 				76105BD619F1DB1300A3F242 /* NWAudioPlayer.m */,
-				2DB35260199972CD006BF15C /* GameObjects.h */,
-				2DB35261199972CD006BF15C /* GameObjects.m */,
 				2DB3526919997A98006BF15C /* GameState.h */,
 				2DB3526A19997A98006BF15C /* GameState.m */,
 				2D4C0B9819A6D29B00AD0717 /* Ships.h */,
 				2D4C0B9919A6D29B00AD0717 /* Ships.m */,
-				2D800FF819AC14FC0067CAC1 /* Obstacles.h */,
-				2D800FF919AC14FC0067CAC1 /* Obstacles.m */,
 			);
 			name = "Internal Classes";
 			sourceTree = "<group>";
@@ -527,7 +509,6 @@
 			isa = PBXGroup;
 			children = (
 				764BF9A519A2BC04007DABF8 /* Nova-L1@2x.png */,
-				764BF9A419A2BC04007DABF8 /* Nova-L2@2x.png */,
 			);
 			name = Ships;
 			sourceTree = "<group>";
@@ -553,7 +534,6 @@
 		2DB3529E19999516006BF15C /* Levels */ = {
 			isa = PBXGroup;
 			children = (
-				7651E8D619B0FFA900F7E9D0 /* Level-2-Music.m4a */,
 				7651E8D419B0EC8900F7E9D0 /* Level-1-Music.m4a */,
 			);
 			name = Levels;
@@ -647,8 +627,6 @@
 				2D9909491A1EC09D00D9CDE8 /* Laser.png */,
 				765DF28C19A9290F00FBFB16 /* LevelOne.h */,
 				765DF28D19A9290F00FBFB16 /* LevelOne.m */,
-				765DF29A19A9295800FBFB16 /* GameOverL1.h */,
-				765DF29B19A9295800FBFB16 /* GameOverL1.m */,
 			);
 			name = "Level 1: Event Horizon";
 			sourceTree = "<group>";
@@ -854,9 +832,9 @@
 				764B98071B4AEF5D002EA191 /* FlightCommander-Large@2x.png in Resources */,
 				763BCED81A33550000AF65DB /* buttonPressCredits.png in Resources */,
 				2DB3527B1999940A006BF15C /* buttonStart.png in Resources */,
-				7651E8D719B0FFA900F7E9D0 /* Level-2-Music.m4a in Resources */,
 				2DB3522719996B83006BF15C /* InfoPlist.strings in Resources */,
 				7678881A19E1C43E009714A1 /* 4xMulti@2x.png in Resources */,
+				2D9EA70A1B518BAD003EEEA3 /* GameCenter.plist in Resources */,
 				764B980F1B4B151C002EA191 /* Ranks.plist in Resources */,
 				767320E51A3B96530057EF70 /* NovaWingIcon@3x.png in Resources */,
 				764BF9A719A2BC04007DABF8 /* Nova-L1@2x.png in Resources */,
@@ -928,7 +906,6 @@
 				7673213E1A5C276A0057EF70 /* Asteroid-2.atlas in Resources */,
 				767320E71A3B96530057EF70 /* NovaWingSettings@3x.png in Resources */,
 				2D5060891B0C0DC200A73DD6 /* FleetAdmiral@2x.png in Resources */,
-				764BF9A619A2BC04007DABF8 /* Nova-L2@2x.png in Resources */,
 				764B97F31B46F670002EA191 /* Credits.plist in Resources */,
 				2DB3527A1999940A006BF15C /* buttonSettings.png in Resources */,
 				2DB352791999940A006BF15C /* buttonPressStart.png in Resources */,
@@ -967,12 +944,9 @@
 				2DE20BB71B311D0700A78F6F /* Credits.m in Sources */,
 				2DB3523319996B83006BF15C /* ViewController.m in Sources */,
 				760897AF1A24FBEA002C28EB /* Tutorial.m in Sources */,
-				2DB35262199972CD006BF15C /* GameObjects.m in Sources */,
 				765C9BE11A2109860050C847 /* NWColor.m in Sources */,
 				763BCED41A334F0000AF65DB /* NWCodex.m in Sources */,
-				2D800FFA19AC14FC0067CAC1 /* Obstacles.m in Sources */,
 				76105BD719F1DB1300A3F242 /* NWAudioPlayer.m in Sources */,
-				765DF29C19A9295800FBFB16 /* GameOverL1.m in Sources */,
 				765DF29519A9293D00FBFB16 /* NORLabelNode.m in Sources */,
 				2DB3522D19996B83006BF15C /* AppDelegate.m in Sources */,
 				764BF94D199EBC3F007DABF8 /* KeychainWrapper.m in Sources */,

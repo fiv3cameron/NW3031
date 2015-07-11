@@ -17,15 +17,3 @@
 @property (nonatomic, retain) NSMutableDictionary *achievementsDictionary;
 
 @end
-
-SKSpriteNode *blackHole;
-SKLabelNode *tapPlay;
-NORLabelNode *introduction;
-SKSpriteNode *storyBadge;
-bool storymodeL1;
-bool levelComplete;
-SKSpriteNode *bottom;
-AVAudioPlayer *Explosion;
-SKEmitterNode *trail;
-NSMutableArray *reportArray;
-SKSpriteNode *masterAltimeter;

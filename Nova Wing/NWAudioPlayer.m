@@ -34,9 +34,6 @@
         case Level_1:
             [self playMusicWithString:@"Level-1-Music" ofTitle:audio];
             break;
-        case Level_2:
-            [self playMusicWithString:@"Level-2-Music" ofTitle:audio];
-            break;
         case Game_Over:
             break;
         default:

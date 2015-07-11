@@ -33,6 +33,12 @@ static inline CGPoint CGPointMultiplyScalar(const CGPoint a, const CGFloat b)
     SKSpriteNode *codexButton;
     SKSpriteNode *creditButton;
     float rankScoreMoveDist;
+    SKSpriteNode *musicToggle;
+    SKSpriteNode *vibrationToggleButton;
+    SKSpriteNode *titleImage;
+    SKLabelNode *GDReset;
+    SKLabelNode *highScore;
+    SKSpriteNode *insigniaNode;
     
         //Textures
     SKTexture *audioTexture;
@@ -395,7 +401,7 @@ NSTimeInterval _dt;
     if (leaderboardViewController != nil) {
         leaderboardViewController.gameCenterDelegate = rootVC;
         if (showLeaderboard) {
-            leaderboardViewController.viewState = GKGameCenterViewControllerStateLeaderboards;
+            leaderboardViewController.viewState = GKGameCenterViewControllerStateDefault;
             leaderboardViewController.leaderboardIdentifier = defaultLeaderBoardID;
         } else {
             leaderboardViewController.viewState = GKGameCenterViewControllerStateAchievements;
@@ -716,6 +722,11 @@ NSTimeInterval _dt;
     SKColor *fadeColor = [SKColor colorWithRed:0 green:0 blue:0 alpha:1];
     static double levelFadeDuration = 0.5;
     
+    SKAction *removals = [SKAction runBlock:^{
+        [self removeAllActions];
+        [self removeAllChildren];
+    }];
+    
     //Start Button
     if ([nodeLift.name isEqualToString:@"_startButton"]) {
         
@@ -758,7 +769,7 @@ NSTimeInterval _dt;
                 [levelOneView presentScene:levelOneScene transition:levelOneTrans];
             }
         }];
-        [self runAction:[SKAction sequence:@[playSound,menuAnimate,wait,Scene]]];
+        [self runAction:[SKAction sequence:@[playSound,menuAnimate,wait,Scene,removals]]];
     }
     
     //Leaderboard Button
@@ -793,7 +804,7 @@ NSTimeInterval _dt;
             // Present the scene.
             [codexView presentScene:codexScene transition:tutTrans];
         }];
-        [self runAction:[SKAction sequence:@[playSound,menuAnimate,wait,Scene]]];
+        [self runAction:[SKAction sequence:@[playSound,menuAnimate,wait,Scene,removals]]];
     }
     
     if ([nodeLift.name isEqualToString:@"creditsButton"]) {
@@ -822,7 +833,7 @@ NSTimeInterval _dt;
             // Present the scene.
             [creditsView presentScene:creditsScene transition:creditsTransition];
         }];
-        [self runAction:[SKAction sequence:@[playSound,menuAnimate,wait,Scene]]];
+        [self runAction:[SKAction sequence:@[playSound,menuAnimate,wait,Scene,removals]]];
     }
     
 #pragma mark -- Settings Action Buttons

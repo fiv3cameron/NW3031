@@ -8,8 +8,6 @@
 
 #import "LevelOne.h"
 #import "Tutorial.h"
-#import "GameOverL1.h"
-#import "Obstacles.h"
 #import "Multipliers.h"
 #import "PowerUps.h"
 
@@ -419,7 +417,6 @@
     
     SKAction *group = [SKAction group:@[scale,moveUp,fade]];
     [plusOne runAction:group];
-    
 }
 
 #pragma mark --Tutorial Stages
@@ -539,7 +536,6 @@
         Pup.zPosition = 11;
         
         return Pup;
-        
 }
 
 -(void)createPupTitleWithText: (NSString *)title {
@@ -579,13 +575,7 @@ static const float duration = 0.7;
     [node runAction:[SKAction sequence:@[wait, move]]];
 }
 
-
 #pragma mark --User Interface
-
--(void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event {
-    
-    
-}
 
 -(void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event {
     UITouch *touchLift = [touches anyObject];
@@ -630,7 +620,6 @@ static const float duration = 0.7;
                 break;
         }
         tutorialStage ++;
-    
 }
 
 -(void)update:(NSTimeInterval)currentTime {
@@ -649,33 +638,6 @@ static const float duration = 0.7;
     if (playerParent.physicsBody.velocity.dy < 0) {
         [playerParent rotateNodeDownwards:playerParent];
     }
-    
-    /*if ([self childNodeWithName:@"aerial"].position.x < self.size.width / 2) {
-     [[self childNodeWithName:@"aerial"].physicsBody applyImpulse:CGVectorMake(0, -0.2)];
-     }*/
-
-    
-}
-
--(void)gameOver {
-    [GameState sharedGameData].highScoreL1 = MAX([GameState sharedGameData].score, [GameState sharedGameData].highScoreL1);
-    [playerNode removeAllChildren];
-    SKView *gameOverView = (SKView *)self.view;
-    
-    SKScene *gameOverScene = [[GameOverL1 alloc] initWithSize:gameOverView.bounds.size];
-    
-    SKColor *fadeColor = [SKColor colorWithRed:1 green:1 blue:1 alpha:1];
-    SKTransition *gameOverTransition = [SKTransition fadeWithColor:fadeColor duration:.25];
-    [gameOverView presentScene:gameOverScene transition:gameOverTransition];
-}
-
--(void)didBeginContact:(SKPhysicsContact *)contact {
-
-    
-    //SKSpriteNode *firstNode = (SKSpriteNode *)firstBody.node;
-    //SKSpriteNode *secondNode = (SKSpriteNode *)secondBody.node;
-
-    
 }
 
 @end

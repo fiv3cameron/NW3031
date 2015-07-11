@@ -7,7 +7,6 @@
 
 #import <AudioToolbox/AudioToolbox.h>
 #import "LevelOne.h"
-#import "Obstacles.h"
 #import "Multipliers.h"
 #import "PowerUps.h"
 #import "MainMenu.h"
@@ -32,6 +31,23 @@
     int laserHitsThisRound;
     SKPhysicsJointSpring *wingmanSpring;
     SKLabelNode *loading;
+    SKSpriteNode *blackHole;
+    SKLabelNode *tapPlay;
+    NORLabelNode *introduction;
+    SKSpriteNode *storyBadge;
+    bool storymodeL1;
+    bool levelComplete;
+    SKSpriteNode *bottom;
+
+    SKEmitterNode *trail;
+    SKEmitterNode *wingmanTrail;
+    int localLaserHits;
+    int localTotalLaserHits;
+    int localTotalLasersFired;
+    int localTotalAsteroidHits;
+    int localTotalDebrisHits;
+    int localChallengePoints;
+    SKSpriteNode *masterAltimeter;
     
         //Game Over ivars
     SKLabelNode *backToMain;
@@ -75,9 +91,6 @@
     @property (strong, nonatomic) SKTextureAtlas *Asteroid_Red_Atlas;
     @property (strong, nonatomic) SKTextureAtlas *Ship_Fragment_Atlas;
     @property (strong, nonatomic) SKTextureAtlas *Shield_Atlas;
-    //@property (strong, nonatomic) SKTextureAtlas *Black_Hole_Atlas;
-
-
 
 @end
 
@@ -90,6 +103,8 @@ SKLabelNode* _score;
 int shieldIndex;
 SKColor *playerLaserColorCast;
 SKColor *wingmanLaserColorCast;
+AVAudioPlayer *Explosion;
+NSMutableArray *reportArray;
 
 #define AUTOCANNON_INTERVAL 0.3
 #define AUTOCANNON_SHOTS_FIRED 25
@@ -151,7 +166,6 @@ SKColor *wingmanLaserColorCast;
     self.Asteroid_Red_Atlas = [SKTextureAtlas atlasNamed:@"Asteroid-Red"];
     self.Ship_Fragment_Atlas = [SKTextureAtlas atlasNamed:@"Ship-Fragment"];
     self.Shield_Atlas = [SKTextureAtlas atlasNamed:@"Shield"];
-    //self.Black_Hole_Atlas = [SKTextureAtlas atlasNamed:@"Black-Hole"];
     
     [textureAtlases addObject:self.Asteroid_1_Atlas];
     [textureAtlases addObject:self.Asteroid_2_Atlas];
@@ -159,10 +173,6 @@ SKColor *wingmanLaserColorCast;
     [textureAtlases addObject:self.Asteroid_Red_Atlas];
     [textureAtlases addObject:self.Ship_Fragment_Atlas];
     [textureAtlases addObject:self.Shield_Atlas];
-    //[textureAtlases addObject:self.Black_Hole_Atlas];
-    
-    //Pass achievements from temp storage area.
-    //_achievementsDictionary = [[GameKitHelper sharedGameKitHelper] achievementsDictionary];
     
     [SKTextureAtlas preloadTextureAtlases:textureAtlases withCompletionHandler:^{
         [self setUpScene];
@@ -218,14 +228,6 @@ SKColor *wingmanLaserColorCast;
         [Shield_Frames addObject:temp];
     }
     shield_Load = Shield_Frames;
-    
-    /*NSMutableArray *Black_Hole_Frames = [NSMutableArray array];
-    for (int i=1; i <= _Black_Hole_Atlas.textureNames.count; i++) {
-        NSString *textureName = [NSString stringWithFormat:@"Black-Hole-%d", i];
-        SKTexture *temp = [_Black_Hole_Atlas textureNamed:textureName];
-        [Black_Hole_Frames addObject:temp];
-    }
-    black_Hole = Black_Hole_Frames;*/
     
     self.backgroundColor = [SKColor colorWithRed:0 green:0 blue:0 alpha:1];
     [loading removeFromParent];
@@ -330,15 +332,8 @@ SKColor *wingmanLaserColorCast;
     //SKTexture *temp = black_Hole[0];
     blackHole = [SKSpriteNode spriteNodeWithImageNamed:@"Black-Hole-1"];
     blackHole.position = CGPointMake(self.size.width/2, -100);
-    //blackHole.xScale = 0.7;
-    //blackHole.yScale = 0.7;
     
     [self addChild:blackHole];
-    /*[blackHole runAction:[SKAction repeatActionForever:
-                         [SKAction animateWithTextures:black_Hole
-                                          timePerFrame:0.06f
-                                                resize:NO
-                                               restore:YES]] withKey:@"Black Hole Animate"];*/
 }
 
 #pragma mark --Create Elements
@@ -435,10 +430,8 @@ SKColor *wingmanLaserColorCast;
     obstacle.zPosition = 10;
     obstacle.name = @"asteroid2";
     
-    //int tempRand2 = arc4random()%100;
-    //double randScale = (tempRand2)/1000.0;
-    obstacle.xScale = 0.33;// + randScale;
-    obstacle.yScale = 0.33;// + randScale;
+    obstacle.xScale = 0.33;
+    obstacle.yScale = 0.33;
     
     CGMutablePathRef path = CGPathCreateMutable();
     
@@ -661,13 +654,8 @@ SKColor *wingmanLaserColorCast;
     CGPathAddLineToPoint(tempIndicatorPath, NULL, 12, 2);
     CGPathAddLineToPoint(tempIndicatorPath, NULL, 5, 2);
     CGPathCloseSubpath(tempIndicatorPath);
-    /*CGFloat dashPattern[2];
-    dashPattern[0] = 1.0;
-    dashPattern[1] = 1.0;
-    CGPathRef dashedPath = CGPathCreateCopyByDashingPath(tempIndicatorPath, NULL, 0, dashPattern, 2);*/
     [wingmanIndicator setPath:tempIndicatorPath];
     CGPathRelease(tempIndicatorPath);
-    //CGPathRelease(dashedPath);
     [wingmanIndicator setStrokeColor:[UIColor colorWithWhite:1 alpha:0]];
     [wingmanIndicator setFillColor:wingmanLaserColorCast];
     wingmanIndicator.name = @"wingmanIndicator";
@@ -815,9 +803,11 @@ SKColor *wingmanLaserColorCast;
     GKLocalPlayer *tempLocalPlayer = [GKLocalPlayer localPlayer];
     
     NSString *path = [[NSBundle mainBundle] pathForResource:@"Ranks" ofType:@"plist"];
+    NSString *pathGC = [[NSBundle mainBundle] pathForResource:@"GameCenter" ofType:@"plist"];
     NSDictionary *rankDict = [[NSDictionary alloc] initWithContentsOfFile:path];
+    NSDictionary *GCDict = [[NSDictionary alloc] initWithContentsOfFile:pathGC];
     NSArray *totalScoreCheckArray = [rankDict objectForKey:@"Ranks"];
-    NSArray *achievementNames = @[@"NO_GKACHIEVEMENT",@"flight_school_graduate",@"cadet",@"private_I",@"private_II",@"sergeant_I",@"sergeant_II",@"flight_commander",@"lieutenant_commander",@"commander",@"fleet_general",@"fleet_admiral"];
+    NSArray *achievementNames = [GCDict objectForKey:@"Rank Achievement IDs"];
     
     for (int tempRankCounter = 0; tempRankCounter <= 11; tempRankCounter++) {
         if (tempRankCounter == [GameState sharedGameData].rankAchieved && [GameState sharedGameData].rankAchieved < 11) {
@@ -825,7 +815,7 @@ SKColor *wingmanLaserColorCast;
             int rankScoreCheckValue = rankScoreToCheckAgainst.intValue;
             if (totalScore >= rankScoreCheckValue) {
                 [GameState sharedGameData].rankAchieved = [GameState sharedGameData].rankAchieved + 1;
-                GKAchievement *tempRankAchievement = [[GKAchievement alloc] initWithIdentifier:[achievementNames objectAtIndex:tempRankCounter+1] player:tempLocalPlayer];
+                GKAchievement *tempRankAchievement = [[GKAchievement alloc] initWithIdentifier:[achievementNames objectAtIndex:tempRankCounter] player:tempLocalPlayer];
                 tempRankAchievement.showsCompletionBanner = YES;
                 tempRankAchievement.percentComplete = 100.0;
                 [reportArray addObject:tempRankAchievement];
@@ -838,7 +828,10 @@ SKColor *wingmanLaserColorCast;
 
 -(void)checkAchievementsIsGameOver:(BOOL)gameIsOver {
     GKLocalPlayer *localPlayer = [GKLocalPlayer localPlayer];
-    NSArray *achievieStrings = @[@"bro_do_you_lift",@"charity_case",@"crash_dummy",@"equal_opp_destroyer",@"killing_spree",@"kill_streak",@"killpossible",@"shot_heart",@"killing_smalls",@"welcome_501st"];
+    NSString *pathGC = [[NSBundle mainBundle] pathForResource:@"GameCenter" ofType:@"plist"];
+    NSDictionary *achievieDict = [[NSDictionary alloc] initWithContentsOfFile:pathGC];
+    NSArray *achievieStrings = [achievieDict objectForKey:@"Non-Rank Achievement IDs"];
+    
     for (NSString *tempString in achievieStrings) {
         //Check non-rank achievements.
         if ([tempString isEqualToString:@"welcome_501st"] && !gameIsOver) { //Identify as 501st AND game IS NOT over.
@@ -869,27 +862,27 @@ SKColor *wingmanLaserColorCast;
             tempAchievement.percentComplete = tempMin;
             [reportArray addObject:tempAchievement];
         } else if ([tempString isEqualToString:@"equal_opp_destroyer"] && !gameIsOver) {
-            if (asteroid1Shot && asteroid2Shot && asteroid3Shot && redAsteroidShot && shipFragmentShot && !wingmanActive) {
+            if (asteroid1Shot && asteroid2Shot && asteroid3Shot && redAsteroidShot && shipFragmentShot) {
                 GKAchievement *tempAchievement = [[GKAchievement alloc] initWithIdentifier:tempString player:localPlayer];
                 tempAchievement.showsCompletionBanner = YES;
                 tempAchievement.percentComplete = 100.0;
                 [reportArray addObject:tempAchievement];
             }
-        } else if ([tempString isEqualToString:@"kill_streak"] && gameIsOver) {
+        } else if ([tempString isEqualToString:@"kill_streak"] && !gameIsOver) {
             if (!wingmanActive && (laserHitsThisRound >= 3)) {
                 GKAchievement *tempAchievement = [[GKAchievement alloc] initWithIdentifier:tempString player:localPlayer];
                 tempAchievement.showsCompletionBanner = YES;
                 tempAchievement.percentComplete = 100.0;
                 [reportArray addObject:tempAchievement];
             }
-        } else if ([tempString isEqualToString:@"killing_spree"] && gameIsOver) {
+        } else if ([tempString isEqualToString:@"killing_spree"] && !gameIsOver) {
             if (!wingmanActive && (laserHitsThisRound >= 5)) {
                 GKAchievement *tempAchievement = [[GKAchievement alloc] initWithIdentifier:tempString player:localPlayer];
                 tempAchievement.showsCompletionBanner = YES;
                 tempAchievement.percentComplete = 100.0;
                 [reportArray addObject:tempAchievement];
             }
-        } else if ([tempString isEqualToString:@"killpossible"] && gameIsOver) {
+        } else if ([tempString isEqualToString:@"killpossible"] && !gameIsOver) {
             if (!wingmanActive && (laserHitsThisRound >= 10)) {
                 GKAchievement *tempAchievement = [[GKAchievement alloc] initWithIdentifier:tempString player:localPlayer];
                 tempAchievement.showsCompletionBanner = YES;
@@ -1191,16 +1184,13 @@ SKColor *wingmanLaserColorCast;
         [self autoCannonRunFromPlayer:playerParent withColor:playerLaserColorCast withKey:autocannonKey];
     }];
     [self runAction:playerCannonRunBlock];
-    
 }
 
 -(void)makeNodeSafe: (SKSpriteNode *)node {
-    //node.physicsBody.categoryBitMask = 0;
     node.physicsBody.contactTestBitMask = CollisionCategoryBottom | CollisionCategoryMulti | CollisionCategoryPup;
 }
 
 -(void)makePlayerNodeActive: (SKSpriteNode *)node {
-    //node.physicsBody.categoryBitMask = CollisionCategoryPlayer;
     node.physicsBody.contactTestBitMask = CollisionCategoryBottom | CollisionCategoryObject | CollisionCategoryMulti | CollisionCategoryPup;
 }
 
@@ -1279,7 +1269,7 @@ SKColor *wingmanLaserColorCast;
     playerParent.physicsBody.dynamic = YES;
     playerNode.physicsBody.dynamic = YES;
     
-    //Update laser color casting to match wingman that survived.  Update new wingman color casting.
+    //Update laser color casting to match wingman that survived.  Update next wingman color casting.
     playerLaserColorCast = wingmanLaserColorCast;
     int tempInt = arc4random()%6;
     switch (tempInt) {
@@ -1315,13 +1305,11 @@ SKColor *wingmanLaserColorCast;
     activePup = NO;
     wingmanActive = NO;
     [self makeNodeSafe:playerNode];
-    //[self makeNodeSafe:wingmanNode];
     [PowerUps wingmanInvincibilityFlicker:playerParent];
     //Time 2 second safe period
     SKAction *wait = [SKAction waitForDuration:2.0];
     SKAction *activate = [SKAction runBlock:^{
         [self makePlayerNodeActive:playerNode];
-        //[self makePlayerNodeActive:wingmanNode];
     }];
     [self runAction:[SKAction sequence:@[wait, activate]]];
     [[masterAltimeter childNodeWithName:@"wingmanIndicator"] removeFromParent];
@@ -1502,7 +1490,6 @@ SKColor *wingmanLaserColorCast;
         if (playerParent.physicsBody.dynamic == NO) {
             playerParent.physicsBody.dynamic = YES;
             playerNode.physicsBody.dynamic = YES;
-            //playerParent.physicsBody.allowsRotation = YES;
             [self addChild:_score];
             [self createObstacles];
             [tapPlay removeFromParent];
@@ -1542,6 +1529,15 @@ SKColor *wingmanLaserColorCast;
     CGPoint locationLift = [touchLift locationInNode:self];
     SKNode *nodeLift = [self nodeAtPoint:locationLift];
     
+    SKAction *createSound = [SKAction playSoundFileNamed:@"Button-Press.caf" waitForCompletion:NO];
+    SKAction *playSound = [SKAction runBlock:^{
+        [self playSoundEffectsWithAction:createSound];
+    }];
+    SKAction *removals = [SKAction runBlock:^{
+        [self removeAllChildren];
+        [self removeAllActions];
+    }];
+    
     if ([nodeLift.name isEqualToString:@"backToMain"]) {
         
         [[GameState sharedGameData] reset];
@@ -1549,7 +1545,10 @@ SKColor *wingmanLaserColorCast;
         SKView *mainMenuView = (SKView *)self.view;
         SKScene *mainMenuScene = [[MainMenu alloc] initWithSize:mainMenuView.bounds.size];
         SKTransition *menuTransition = [SKTransition fadeWithDuration:.5];
-        [mainMenuView presentScene:mainMenuScene transition:menuTransition];
+        SKAction *newSceneAction = [SKAction runBlock:^{
+            [mainMenuView presentScene:mainMenuScene transition:menuTransition];
+        }];
+        [self runAction:[SKAction sequence:@[playSound,newSceneAction,removals]]];
     };
     
     if ([nodeLift.name isEqualToString:@"playButton"]) {
@@ -1569,8 +1568,12 @@ SKColor *wingmanLaserColorCast;
         levelOneScene.scaleMode = SKSceneScaleModeAspectFill;
         SKTransition *levelOneTrans = [SKTransition fadeWithColor:fadeColor duration:0.5];
         
+        SKAction *newSceneAction = [SKAction runBlock:^{
             // Present the scene.
-        [levelOneView presentScene:levelOneScene transition:levelOneTrans];
+            [levelOneView presentScene:levelOneScene transition:levelOneTrans];
+        }];
+        
+        [self runAction:[SKAction sequence:@[playSound,newSceneAction,removals]]];
     }
     
     if (![nodeLift.name isEqualToString:@"playButton"]) {
@@ -1581,21 +1584,24 @@ SKColor *wingmanLaserColorCast;
         trophyButton.texture = [SKTexture textureWithImageNamed:@"Trophy_Button"];
         NSString *defaultLeaderBoardID = @"L1HS";
         GKGameCenterViewController *leaderboardViewController = [[GKGameCenterViewController alloc] init];
-        
+
         UIViewController *rootVC = [UIApplication sharedApplication].keyWindow.rootViewController;
         if (leaderboardViewController != nil) {
             leaderboardViewController.gameCenterDelegate = rootVC;
-            leaderboardViewController.viewState = GKGameCenterViewControllerStateLeaderboards;
+            leaderboardViewController.viewState = GKGameCenterViewControllerStateDefault;
             leaderboardViewController.leaderboardIdentifier = defaultLeaderBoardID;
         }
         
-        [rootVC presentViewController:leaderboardViewController animated:YES completion:nil];
+        SKAction *leaderAction = [SKAction runBlock:^{
+            [rootVC presentViewController:leaderboardViewController animated:YES completion:nil];
+        }];
+        
+        [self runAction:[SKAction sequence:@[playSound,leaderAction]]];
     }
     
     if (![nodeLift.name isEqualToString:@"trophyButton"]) {
         trophyButton.texture = [SKTexture textureWithImageNamed:@"Trophy_Button"];
     }
-    
 }
 
 -(void)update:(NSTimeInterval)currentTime {
@@ -1797,7 +1803,6 @@ SKColor *wingmanLaserColorCast;
         } else if ([secondNode.name isEqualToString:@"debris"]) {
             [GameState sharedGameData].totalDebrisDeaths = [GameState sharedGameData].totalDebrisDeaths + 1;
         }
-        
     }
     
     //Player collides with black hole.
@@ -1838,22 +1843,21 @@ SKColor *wingmanLaserColorCast;
             localChallengePoints = localChallengePoints + 1;
         }
         
-        if ([secondNode.name isEqualToString:@"asteroid1"]) {
+        if ([secondNode.name isEqualToString:@"asteroid1"] && !wingmanActive) {
             asteroid1Shot = YES;
         }
-        if ([secondNode.name isEqualToString:@"asteroid2"]) {
+        if ([secondNode.name isEqualToString:@"asteroid2"] && !wingmanActive) {
             asteroid2Shot = YES;
         }
-        if ([secondNode.name isEqualToString:@"asteroid3"]) {
+        if ([secondNode.name isEqualToString:@"asteroid3"] && !wingmanActive) {
             asteroid3Shot = YES;
         }
-        if ([secondNode.name isEqualToString:@"redAsteroid"]) {
+        if ([secondNode.name isEqualToString:@"redAsteroid"] && !wingmanActive) {
             redAsteroidShot = YES;
         }
-        if ([secondNode.name isEqualToString:@"shipChunk"]) {
+        if ([secondNode.name isEqualToString:@"shipChunk"] && !wingmanActive) {
             shipFragmentShot = YES;
         }
-        
     }
     
     //Shield collides with object.
