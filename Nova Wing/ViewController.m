@@ -104,10 +104,10 @@
 
 -(void)handleNotification: (NSNotification *)notification {
     if ([notification.name isEqualToString:@"showAd"]) {
-        NSLog(@"Show Ad Notification received");
+        //NSLog(@"Show Ad Notification received");
         [self showsBanner];
     } else if ([notification.name isEqualToString:@"hideAd"]) {
-        NSLog(@"Hide Ad Notification received");
+        //NSLog(@"Hide Ad Notification received");
         [self hidesBanner];
     }
 }

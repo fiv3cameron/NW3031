@@ -111,8 +111,8 @@
         SKColor *fadeColor = [SKColor colorWithRed:0 green:0 blue:0 alpha:1];
         
         SKView * levelOneView = (SKView *)self.view;
-        levelOneView.showsFPS = YES;
-        levelOneView.showsNodeCount = YES;
+        //levelOneView.showsFPS = YES;
+        //levelOneView.showsNodeCount = YES;
         
         // Create and configure the scene.
         SKScene * levelOneScene = [[LevelOne alloc] initWithSize:levelOneView.bounds.size];
