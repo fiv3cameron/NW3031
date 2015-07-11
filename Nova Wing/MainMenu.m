@@ -54,11 +54,8 @@ NSTimeInterval _dt;
 -(id)initWithSize:(CGSize)size {
     if (self = [super initWithSize:size]) {
         /* Setup your scene here */
-        [GameState sharedGameData].levelIndex = 0;
-        [GameState sharedGameData].lvlIndexMax = 2;
-
         
-        if ([GameState sharedGameData].highScoreL1 < 1) {
+        if ([GameState sharedGameData].totalPoints < 1) {
             [GameState sharedGameData].audioVolume = 1.0;
         }
         
@@ -293,67 +290,6 @@ NSTimeInterval _dt;
     }
 }
 
-#pragma mark --Level Select
-
--(SKSpriteNode *)createRightArrowWithWait: (double)waitTime
-{
-    rightArrow = [SKSpriteNode spriteNodeWithImageNamed:@"arrowR"];
-    rightArrow.position = CGPointMake((self.size.width / 8)*7.5, self.size.height / 2);
-    rightArrow.name = @"rightArrow";
-    rightArrow.alpha = 0;
-    rightArrow.xScale = 0.7;
-    rightArrow.yScale = 0.7;
-    rightArrow.zPosition = 10;
-
-    [self fadeInNode:rightArrow withWait:waitTime fadeAlphaTo:1.0 fadeAlphaWithDuration:0.5];
-    
-    return rightArrow;
-}
-
--(SKSpriteNode *)createLeftArrowWithWait: (double)waitTime
-{
-    leftArrow = [SKSpriteNode spriteNodeWithImageNamed:@"arrowL"];
-    leftArrow.position = CGPointMake((self.size.width / 8)*0.5, self.size.height /2);
-    leftArrow.name = @"leftArrow";
-    leftArrow.alpha = 0;
-    leftArrow.xScale = 0.7;
-    leftArrow.yScale = 0.7;
-    leftArrow.zPosition = 10;
-    
-    [self fadeInNode:leftArrow withWait:waitTime fadeAlphaTo:1.0 fadeAlphaWithDuration:0.5];
-    
-    return leftArrow;
-}
-
--(SKSpriteNode *)levelThumbWithPositionModifier: (double) PosMod
-{
-    // Create Level %i Thumbnail
-    levelThumb = [SKSpriteNode spriteNodeWithImageNamed:[NSString stringWithFormat:@"Level-%li.png", [GameState sharedGameData].levelIndex]];
-    levelThumb.position = CGPointMake(self.size.width * PosMod, self.size.height/2);
-    levelThumb.name = [NSString stringWithFormat:@"_level%li", [GameState sharedGameData].levelIndex];
-        
-    // Add level name.
-    SKLabelNode *levelName = [SKLabelNode labelNodeWithFontNamed:@"SF Movie Poster"];
-    levelName.fontSize = 40;
-    levelName.text = [levelTitles objectAtIndex:[GameState sharedGameData].levelIndex-1];
-    levelName.position = CGPointMake(0, 125);
-    [levelThumb addChild:levelName];
-    
-    //Add high score.
-    SKLabelNode *highScore = [[SKLabelNode alloc] initWithFontNamed:@"SF Movie Poster"];
-    highScore.position = CGPointMake(0, -150);
-    highScore.fontColor = [SKColor whiteColor];
-    highScore.fontSize = 35;
-    highScore.horizontalAlignmentMode = SKLabelHorizontalAlignmentModeCenter;
-    highScore.zPosition = 101;
-    highScore.text = [NSString stringWithFormat:@"High Score: %@", [[GameState sharedGameData] valueForKey:[NSString stringWithFormat:@"highScoreL%li",[GameState sharedGameData].levelIndex]]];
-    [levelThumb addChild:highScore];
-        
-    return levelThumb;
-    
-    
-}
-
 #pragma mark --Settings
 
 -(void)musicVolumeLabel {
@@ -422,9 +358,9 @@ NSTimeInterval _dt;
     resetDisclaimer.fontSize = 25;
     resetDisclaimer.position = CGPointMake(0, -25);
     
-    [self addChild:GDReset];
-    [GDReset addChild:resetDisclaimer];
-    [self animateLeft:GDReset withDelay:1];
+    //[self addChild:GDReset];
+    //[GDReset addChild:resetDisclaimer];
+    //[self animateLeft:GDReset withDelay:1];
 }
 
 -(void)resetSuccessPop {
@@ -616,7 +552,7 @@ NSTimeInterval _dt;
     return rankScore;
 }
 
--(void) updateRank {
+-(void)updateRank {
     
             long tempScoreForRank = [GameState sharedGameData].totalPoints;
     
@@ -956,35 +892,6 @@ NSTimeInterval _dt;
         }
     }
     
-#pragma mark --Level Button Actions
-    if ([nodeLift.name isEqualToString:@"rightArrow"]) {
-        
-        //Modular level select implementation.
-        switch ([GameState sharedGameData].levelIndex) {
-            case 1:
-                [self animateLeft:[self childNodeWithName:[NSString stringWithFormat:@"_level%li",[GameState sharedGameData].levelIndex]] withDelay:0.0];
-                [GameState sharedGameData].levelIndex = [GameState sharedGameData].levelIndex + 1;
-                [self addChild:[self levelThumbWithPositionModifier:1.5]];
-                [self animateLeft:[self childNodeWithName:[NSString stringWithFormat:@"_level%li",[GameState sharedGameData].levelIndex]] withDelay:0.0];
-                
-                break;
-            case 2:
-                break;
-                
-            default:
-                break;
-        }
-    }
-    
-    if ([nodeLift.name isEqualToString:@"leftArrow"]) {
-
-        [self animateRight:[self childNodeWithName:[NSString stringWithFormat:@"_level%li",[GameState sharedGameData].levelIndex]] withDelay:0.0];
-        [GameState sharedGameData].levelIndex = [GameState sharedGameData].levelIndex - 1;
-        [self addChild:[self levelThumbWithPositionModifier: -0.5]];
-        [self animateRight:[self childNodeWithName: [NSString stringWithFormat: @"_level%li",[GameState sharedGameData].levelIndex]] withDelay:0.0];
-
-    }
-    
     if ([nodeLift.name isEqualToString:@"rankInsignia"]) {
         SKAction *sound = [SKAction playSoundFileNamed:@"Button-Press.caf" waitForCompletion:NO];
         [self playSoundEffectsWithAction:sound];
@@ -1016,58 +923,20 @@ NSTimeInterval _dt;
         // Present the scene.
         [levelOneView presentScene:levelOneScene transition:levelOneTrans];
     }
-    
-#pragma mark --Level 2
-    if ([nodeLift.name isEqualToString:@"_level2"]) {
-        // Transition to Level One Scene
-        // Configure the developer view.
-        //SKView * levelTwoView = (SKView *)self.view;
-        //levelTwoView.showsFPS = YES;
-        //levelTwoView.showsNodeCount = YES;
-        //levelTwoView.showsPhysics = YES;
-        
-        // Create and configure the scene.
-        /*SKScene * levelTwoScene = [[LevelTwo alloc] initWithSize:levelTwoView.bounds.size andDirection:self.direction];
-        levelTwoScene.scaleMode = SKSceneScaleModeAspectFill;
-        SKTransition *levelTwoTrans = [SKTransition fadeWithColor:fadeColor duration:levelFadeDuration];*/
-        
-        // Present the scene.
-        //[levelTwoView presentScene:levelTwoScene transition:levelTwoTrans];
-    }
 }
 
 #pragma mark --Update
 
 -(void)update:(CFTimeInterval)currentTime {
-    if (_lastUpdateTime)
-    {
+    if (_lastUpdateTime) {
         _dt = currentTime - _lastUpdateTime;
     }
-    else
-    {
+    else {
         _dt = 0;
     }
     _lastUpdateTime = currentTime;
     
-
-    // Fades right arrow when needed
-    if ([GameState sharedGameData].levelIndex == [GameState sharedGameData].lvlIndexMax) {
-        [self fadeOutNode:rightArrow withWait:0.6 fadeAlphaTo:0.0 fadeAlphaWithDuration:0.3];
-    }
-    
-    if ([GameState sharedGameData].levelIndex == 1 && [self.children containsObject:leftArrow]) {
-        [self fadeOutNode:leftArrow withWait:0.5 fadeAlphaTo:0.0 fadeAlphaWithDuration:0.5];
-    }
-    
-    if ([GameState sharedGameData].levelIndex > 1 && ![self.children containsObject:leftArrow]) {
-        [self addChild:[self createLeftArrowWithWait:0.3]];
-    }
-    
-    if (![self.children containsObject:rightArrow] && [GameState sharedGameData].levelIndex < [GameState sharedGameData].lvlIndexMax && [GameState sharedGameData].levelIndex > 0) {
-        [self addChild:[self createRightArrowWithWait:0.5]];
-    }
     [self moveBG];
 }
-
 
 @end

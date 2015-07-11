@@ -64,7 +64,7 @@
                 [[GKLocalPlayer localPlayer] loadDefaultLeaderboardIdentifierWithCompletionHandler: ^(NSString *leaderboardIdentifier, NSError *error) {
                     
                     if (error != nil) {
-                        NSLog(@"%@", [error localizedDescription]);
+                        //NSLog(@"%@", [error localizedDescription]);
                     } else {
                         _leaderboardIdentifier = leaderboardIdentifier;
                     }
@@ -72,7 +72,7 @@
                 [GKAchievement loadAchievementsWithCompletionHandler:^(NSArray *achievements, NSError *error) {
                     if (error != nil) {
                         //[self setLastError: error];
-                        NSLog(@"Error in loading achievements.");
+                        //NSLog(@"Error in loading achievements.");
                     }
                     if (achievements != nil) {
                         for (GKAchievement *loopAchievie in achievements) {
@@ -90,7 +90,7 @@
                 
                 [tempLeader loadScoresWithCompletionHandler:^(NSArray *tempHighScoreArray, NSError *error) {
                     GKScore *tempScore = [tempHighScoreArray firstObject];
-                    NSLog(@"loaded score %li", (long)tempScore.value);
+                    //NSLog(@"loaded score %li", (long)tempScore.value);
                     if ((tempScore.value > [GameState sharedGameData].highScoreL1) ){
                         [GameState sharedGameData].highScoreL1 = (long)tempScore.value;
                     } else if ((tempScore.value < [GameState sharedGameData].highScoreL1)) {
@@ -127,7 +127,7 @@
                 [[GKLocalPlayer localPlayer] loadDefaultLeaderboardIdentifierWithCompletionHandler: ^(NSString *leaderboardIdentifier, NSError *error) {
                     
                     if (error != nil) {
-                        NSLog(@"%@", [error localizedDescription]);
+                        //NSLog(@"%@", [error localizedDescription]);
                     } else {
                         _leaderboardIdentifier = leaderboardIdentifier;
                     }
@@ -155,7 +155,7 @@
                 
                 [tempLeader loadScoresWithCompletionHandler:^(NSArray *tempHighScoreArray, NSError *error) {
                     GKScore *tempScore = [tempHighScoreArray firstObject];
-                    NSLog(@"loaded score %li", (long)tempScore.value);
+                    //NSLog(@"loaded score %li", (long)tempScore.value);
                     if ((tempScore.value > [GameState sharedGameData].highScoreL1) ){
                         [GameState sharedGameData].highScoreL1 = (long)tempScore.value;
                     } else if ((tempScore.value < [GameState sharedGameData].highScoreL1)) {
@@ -192,13 +192,13 @@
     };
 }
 
-//setLastError creates an NSLog of the error inputted.
+//setLastError creates an //NSLog of the error inputted.
 - (void)setLastError:(NSError *)error
 {
     _lastError = [error copy];
     if (_lastError) {
-        NSLog(@"GameKitHelper ERROR: %@",
-              [[_lastError userInfo] description]);
+        //NSLog(@"GameKitHelper ERROR: %@",
+              //[[_lastError userInfo] description]);
     }
 }
 

@@ -11,12 +11,7 @@
 SKSpriteNode *musicToggle;
 SKSpriteNode *vibrationToggleButton;
 SKSpriteNode *titleImage;
-SKSpriteNode *levelThumb;
-SKSpriteNode *levelTwoThumb;
-SKSpriteNode *rightArrow;
-SKSpriteNode *leftArrow;
 SKLabelNode *GDReset;
-NSArray *levelTitles;
 SKLabelNode *highScore;
 SKSpriteNode *insigniaNode;
 

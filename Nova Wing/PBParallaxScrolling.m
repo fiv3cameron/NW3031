@@ -132,7 +132,7 @@ static inline CGFloat roundFloatToTwoDecimalPlaces(CGFloat num) { return floorf(
             self.backgrounds = [bgs copy];
             self.clonedBackgrounds = [cBgs copy];
             self.speeds = [spds copy];
-        } else { NSLog(@"Unable to find any valid backgrounds for parallax scrolling."); return nil; }
+        } else { //NSLog(@"Unable to find any valid backgrounds for parallax scrolling."); return nil; }
         
     }
     
@@ -213,7 +213,7 @@ static inline CGFloat roundFloatToTwoDecimalPlaces(CGFloat num) { return floorf(
 }
 
 - (void) showBackgroundPositions {
-    NSLog(@"Parallax background state:");
+    //NSLog(@"Parallax background state:");
     for (NSUInteger i = 0; i < self.numberOfBackgrounds; i++) {
         // determine the speed of each node
         CGFloat speed = [[self.speeds objectAtIndex:i] floatValue];
@@ -221,7 +221,7 @@ static inline CGFloat roundFloatToTwoDecimalPlaces(CGFloat num) { return floorf(
         // adjust positions
         SKSpriteNode * bg = [self.backgrounds objectAtIndex:i];
         SKSpriteNode * cBg = [self.clonedBackgrounds objectAtIndex:i];
-        NSLog(@"Layer %lu: background1 at (%f, %f), background2 at (%f, %f), speed: %f", (unsigned long)i, bg.position.x,bg.position.y, cBg.position.x, cBg.position.y, speed);
+        //NSLog(@"Layer %lu: background1 at (%f, %f), background2 at (%f, %f), speed: %f", (unsigned long)i, bg.position.x,bg.position.y, cBg.position.x, cBg.position.y, speed);
         
     }
 }

@@ -12,8 +12,8 @@
 
     @property (assign, nonatomic) int score;
     @property (assign, nonatomic) long highScoreL1;
-    @property (nonatomic) long levelIndex;
-    @property (nonatomic) long lvlIndexMax;
+    //@property (nonatomic) long levelIndex;
+    //@property (nonatomic) long lvlIndexMax;
     @property (assign, nonatomic) int scoreMultiplier;
     @property (assign, nonatomic) long audioVolume;
     @property (assign, nonatomic) BOOL vibeOn;

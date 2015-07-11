@@ -593,8 +593,8 @@ static const float duration = 0.7;
     SKNode *nodeLift = [self nodeAtPoint:locationLift];
     
     SKView * levelOneView = (SKView *)self.view;
-    levelOneView.showsFPS = YES;
-    levelOneView.showsNodeCount = YES;
+    //levelOneView.showsFPS = YES;
+    //levelOneView.showsNodeCount = YES;
     //levelOneView.showsPhysics = YES;
     
     // Create and configure the scene.

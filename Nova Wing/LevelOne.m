@@ -820,7 +820,7 @@ SKColor *wingmanLaserColorCast;
     NSArray *achievementNames = @[@"NO_GKACHIEVEMENT",@"flight_school_graduate",@"cadet",@"private_I",@"private_II",@"sergeant_I",@"sergeant_II",@"flight_commander",@"lieutenant_commander",@"commander",@"fleet_general",@"fleet_admiral"];
     
     for (int tempRankCounter = 0; tempRankCounter <= 11; tempRankCounter++) {
-        if (tempRankCounter == [GameState sharedGameData].rankAchieved) {
+        if (tempRankCounter == [GameState sharedGameData].rankAchieved && [GameState sharedGameData].rankAchieved < 11) {
             NSNumber *rankScoreToCheckAgainst = [totalScoreCheckArray objectAtIndex:tempRankCounter + 1];
             int rankScoreCheckValue = rankScoreToCheckAgainst.intValue;
             if (totalScore >= rankScoreCheckValue) {
@@ -1561,8 +1561,8 @@ SKColor *wingmanLaserColorCast;
         SKColor *fadeColor = [SKColor colorWithRed:0 green:0 blue:0 alpha:1];
         
         SKView * levelOneView = (SKView *)self.view;
-        levelOneView.showsFPS = YES;
-        levelOneView.showsNodeCount = YES;
+        //levelOneView.showsFPS = YES;
+        //levelOneView.showsNodeCount = YES;
         
             // Create and configure the scene.
         SKScene * levelOneScene = [[LevelOne alloc] initWithSize:levelOneView.bounds.size];
@@ -1629,12 +1629,6 @@ SKColor *wingmanLaserColorCast;
 #pragma mark --Game Over
 
 -(void)gameOver {
-    //Update leaderboard if necessary.
-    GKLocalPlayer *tempLocalPlayer = [GKLocalPlayer localPlayer];
-    if (tempLocalPlayer.isAuthenticated) {
-        [[GameKitHelper sharedGameKitHelper] submitScore:[GameState sharedGameData].score toLeader:@"L1HS"];
-    }
-    
     //Update GameState data & stats tracking.
     [GameState sharedGameData].highScoreL1 = MAX([GameState sharedGameData].score, [GameState sharedGameData].highScoreL1);
     [GameState sharedGameData].totalLaserHits = [GameState sharedGameData].totalLaserHits + localTotalLaserHits;
@@ -1646,6 +1640,13 @@ SKColor *wingmanLaserColorCast;
     [GameState sharedGameData].totalPoints = [GameState sharedGameData].totalPoints + [GameState sharedGameData].score;
     [GameState sharedGameData].allTimeAverageAccuracy = (float)[GameState sharedGameData].totalLaserHits / (float)[GameState sharedGameData].totalLasersFired;
     [GameState sharedGameData].allTimeAverageScore = (float)[GameState sharedGameData].totalPoints / (float)[GameState sharedGameData].totalGames;
+    
+    //Update leaderboard if necessary.
+    GKLocalPlayer *tempLocalPlayer = [GKLocalPlayer localPlayer];
+    if (tempLocalPlayer.isAuthenticated) {
+        [[GameKitHelper sharedGameKitHelper] submitScore:[GameState sharedGameData].score toLeader:@"L1HS"];
+        [[GameKitHelper sharedGameKitHelper] submitScore:[GameState sharedGameData].totalPoints toLeader:@"AllTimeHighScore"];
+    }
     
     [[GameState sharedGameData] save];
     
@@ -1677,9 +1678,9 @@ SKColor *wingmanLaserColorCast;
         [GKAchievement reportAchievements:reportArray withCompletionHandler:^(NSError *error) {
             if (error != nil) {
                 //[[GameKitHelper sharedGameKitHelper] setLastError:error];
-                NSLog(@"Error in reporting achievements.");
+                //NSLog(@"Error in reporting achievements.");
             } else {
-                NSLog(@"Achievements reported.");
+                //NSLog(@"Achievements reported.");
                 //[reportArray removeAllObjects];
             }
         }];

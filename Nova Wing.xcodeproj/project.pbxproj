@@ -199,10 +199,10 @@
 		2DB3522819996B83006BF15C /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		2DB3522A19996B83006BF15C /* Nova Wing-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Nova Wing-Prefix.pch"; sourceTree = "<group>"; };
 		2DB3522B19996B83006BF15C /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
-		2DB3522C19996B83006BF15C /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
+		2DB3522C19996B83006BF15C /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = AppDelegate.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		2DB3522F19996B83006BF15C /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		2DB3523119996B83006BF15C /* ViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
-		2DB3523219996B83006BF15C /* ViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
+		2DB3523219996B83006BF15C /* ViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = ViewController.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		2DB3523419996B83006BF15C /* MainMenu.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MainMenu.h; sourceTree = "<group>"; };
 		2DB3523519996B83006BF15C /* MainMenu.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MainMenu.m; sourceTree = "<group>"; };
 		2DB3523919996B83006BF15C /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
@@ -212,7 +212,7 @@
 		2DB3524A19996B83006BF15C /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		2DB3524C19996B83006BF15C /* Nova_WingTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Nova_WingTests.m; sourceTree = "<group>"; };
 		2DB3525C19996D6D006BF15C /* PBParallaxScrolling.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PBParallaxScrolling.h; sourceTree = "<group>"; };
-		2DB3525D19996D6D006BF15C /* PBParallaxScrolling.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PBParallaxScrolling.m; sourceTree = "<group>"; };
+		2DB3525D19996D6D006BF15C /* PBParallaxScrolling.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = PBParallaxScrolling.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		2DB35260199972CD006BF15C /* GameObjects.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GameObjects.h; sourceTree = "<group>"; };
 		2DB35261199972CD006BF15C /* GameObjects.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GameObjects.m; sourceTree = "<group>"; };
 		2DB3526919997A98006BF15C /* GameState.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GameState.h; sourceTree = "<group>"; };
@@ -232,7 +232,7 @@
 		2DD7ABE21B10170300596605 /* Trophy_Button_press@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Trophy_Button_press@2x.png"; sourceTree = "<group>"; };
 		2DD7ABE31B10170300596605 /* Trophy_Button@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Trophy_Button@2x.png"; sourceTree = "<group>"; };
 		2DE20BB51B311D0700A78F6F /* Credits.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Credits.h; sourceTree = "<group>"; };
-		2DE20BB61B311D0700A78F6F /* Credits.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Credits.m; sourceTree = "<group>"; };
+		2DE20BB61B311D0700A78F6F /* Credits.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = Credits.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		760897AD1A24FBEA002C28EB /* Tutorial.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Tutorial.h; sourceTree = "<group>"; };
 		760897AE1A24FBEA002C28EB /* Tutorial.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Tutorial.m; sourceTree = "<group>"; };
 		760897B01A250594002C28EB /* NWCollisions.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = NWCollisions.h; sourceTree = "<group>"; };
@@ -265,7 +265,7 @@
 		764B98021B4AEF5D002EA191 /* Sergeant-2-Large@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Sergeant-2-Large@2x.png"; sourceTree = "<group>"; };
 		764B980E1B4B151C002EA191 /* Ranks.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Ranks.plist; sourceTree = "<group>"; };
 		764BF94B199EBC3F007DABF8 /* KeychainWrapper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KeychainWrapper.h; sourceTree = "<group>"; };
-		764BF94C199EBC3F007DABF8 /* KeychainWrapper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KeychainWrapper.m; sourceTree = "<group>"; };
+		764BF94C199EBC3F007DABF8 /* KeychainWrapper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = KeychainWrapper.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		764BF9A019A19A11007DABF8 /* arrowL@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "arrowL@2x.png"; sourceTree = "<group>"; };
 		764BF9A119A19A11007DABF8 /* arrowR@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "arrowR@2x.png"; sourceTree = "<group>"; };
 		764BF9A419A2BC04007DABF8 /* Nova-L2@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Nova-L2@2x.png"; sourceTree = "<group>"; };
@@ -275,7 +275,7 @@
 		765C9BDF1A2109860050C847 /* NWColor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NWColor.h; sourceTree = "<group>"; };
 		765C9BE01A2109860050C847 /* NWColor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NWColor.m; sourceTree = "<group>"; };
 		765DF28C19A9290F00FBFB16 /* LevelOne.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LevelOne.h; sourceTree = "<group>"; };
-		765DF28D19A9290F00FBFB16 /* LevelOne.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LevelOne.m; sourceTree = "<group>"; };
+		765DF28D19A9290F00FBFB16 /* LevelOne.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = LevelOne.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		765DF28F19A9293100FBFB16 /* spark.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = spark.png; sourceTree = "<group>"; };
 		765DF29019A9293100FBFB16 /* Stars-L1.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = "Stars-L1.sks"; sourceTree = "<group>"; };
 		765DF29319A9293D00FBFB16 /* NORLabelNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NORLabelNode.h; sourceTree = "<group>"; };
