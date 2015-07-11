@@ -66,7 +66,6 @@
     SKAction *repeatAction = [SKAction repeatActionForever:bobSequence];
     
     [bobShip runAction:repeatAction withKey:@"bobbingAction"];
-    
 }
 
 #define THRUST_CONSTANT 550.0
@@ -77,7 +76,6 @@
         player.physicsBody.velocity = CGVectorMake(0.0f, 0.0f);
     }
     else player.physicsBody.velocity = CGVectorMake(0.0f, MIN(player.position.y * 1.5, THRUST_CONSTANT));
-    
 }
 
 -(void)logicTinyNova {

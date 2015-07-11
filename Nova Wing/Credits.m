@@ -20,6 +20,16 @@
     int creditsRoundCount;
     int positionInRound;
     int localCreditsHits;
+    SKSpriteNode *blackHole;
+    SKLabelNode *tapPlay;
+    NORLabelNode *introduction;
+    SKSpriteNode *storyBadge;
+    bool storymodeL1;
+    bool levelComplete;
+    SKSpriteNode *bottom;
+    SKEmitterNode *trail;
+    
+    SKSpriteNode *masterAltimeter;
     
     //Game Over ivars
     SKLabelNode *backToMain;
@@ -43,8 +53,9 @@
 
 NSTimeInterval _lastUpdateTime;
 NSTimeInterval _dt;
-//SKLabelNode* _score;
 int _totalCreditsHits;
+AVAudioPlayer *Explosion;
+NSMutableArray *reportArray;
 
 #pragma mark --CreateBackground
 
@@ -73,10 +84,8 @@ int _totalCreditsHits;
 }
 
 -(void)didMoveToView:(SKView *)view {
-    //[SKTextureAtlas preloadTextureAtlases:textureAtlases withCompletionHandler:^{
-        [self setUpScene];
-        isSceneLoading = NO;
-    //}];
+    [self setUpScene];
+    isSceneLoading = NO;
 }
 
 -(void)setUpScene {
@@ -94,20 +103,9 @@ int _totalCreditsHits;
     //Pre emits particles so layer is populated when scene begins
     [stars advanceSimulationTime:1.5];
     
-    //Create playerParent & wingmanParent.
+    //Create playerParent.
     playerParent = [self createPlayerParent];
     [self createPlayerNode: playerNode];
-    
-    /*//Create scoring node.
-    SKSpriteNode *scoreColumn = [SKSpriteNode node];
-    scoreColumn.physicsBody = [SKPhysicsBody bodyWithEdgeLoopFromRect:CGRectMake(0, 0, 10, self.size.height)];
-    scoreColumn.physicsBody.categoryBitMask = CollisionCategoryScore;
-    scoreColumn.physicsBody.contactTestBitMask = CollisionCategoryObject;
-    scoreColumn.physicsBody.collisionBitMask = 0;
-    scoreColumn.physicsBody.usesPreciseCollisionDetection = YES;
-    scoreColumn.physicsBody.dynamic = NO;
-    scoreColumn.position = CGPointMake(0, 0);
-    [self addChild:scoreColumn];*/
     
     [self createAudio];
     
@@ -124,10 +122,7 @@ int _totalCreditsHits;
     //shipBobbing is factory method within playerNode.
     [playerParent shipBobbing:playerParent];
     
-    //[self createScoreTextBox];
-    
     [self tapToPlay];
-    //_score.text = @"Score: 0";
     
     [self addAltimeter];
     creditsRoundCount = 0;
@@ -380,6 +375,12 @@ int _totalCreditsHits;
     [NWAudioPlayer sharedAudioPlayer].songName = Level_1;
 }
 
+-(void)playSoundEffectsWithAction: (SKAction *)action {
+    if ([GameState sharedGameData].audioVolume == 1.0) {
+        [self runAction:action];
+    }
+}
+
 #pragma mark --Animate Obstacles
 
 -(void)initializeObstaclesWithInterval: (float)interval {
@@ -399,8 +400,6 @@ int _totalCreditsHits;
         if (playerParent.physicsBody.dynamic == NO) {
             playerParent.physicsBody.dynamic = YES;
             playerNode.physicsBody.dynamic = YES;
-            //playerParent.physicsBody.allowsRotation = YES;
-            //[self addChild:_score];
             [tapPlay removeFromParent];
             [self initializeObstaclesWithInterval:1.0];
             [playerParent removeActionForKey:@"bobbingAction"];
@@ -419,12 +418,19 @@ int _totalCreditsHits;
     SKNode *nodeLift = [self nodeAtPoint:locationLift];
     
     if ([nodeLift.name isEqualToString:@"backToMain"]) {
+        SKAction *createSound = [SKAction playSoundFileNamed:@"Button-Press.caf" waitForCompletion:NO];
+        SKAction *playSound = [SKAction runBlock:^{
+            [self playSoundEffectsWithAction:createSound];
+        }];
         [self removeAllActions];
         [self removeAllChildren];
         SKView *mainMenuView = (SKView *)self.view;
         SKScene *mainMenuScene = [[MainMenu alloc] initWithSize:mainMenuView.bounds.size];
         SKTransition *menuTransition = [SKTransition fadeWithDuration:.5];
-        [mainMenuView presentScene:mainMenuScene transition:menuTransition];
+        SKAction *newSceneAction = [SKAction runBlock:^() {
+            [mainMenuView presentScene:mainMenuScene transition:menuTransition];
+        }];
+        [self runAction:[SKAction sequence:@[playSound,newSceneAction]]];
     };
 }
 

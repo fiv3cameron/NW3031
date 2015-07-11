@@ -8,13 +8,6 @@
 
 #import <SpriteKit/SpriteKit.h>
 
-SKSpriteNode *musicToggle;
-SKSpriteNode *vibrationToggleButton;
-SKSpriteNode *titleImage;
-SKLabelNode *GDReset;
-SKLabelNode *highScore;
-SKSpriteNode *insigniaNode;
-
 @interface MainMenu : SKScene
 {
 }

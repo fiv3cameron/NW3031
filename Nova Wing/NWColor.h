@@ -21,5 +21,4 @@
 +(SKColor *)NWLaserHit;
 +(SKColor *)NWShieldHit;
 
-
 @end

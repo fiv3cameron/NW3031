@@ -116,17 +116,12 @@
         [self addChild:[self createStats]];
         [self fadeNodeInWithNode:_statsPage];
         _codexIsActive = NO;
-        //Logic for transitioning to stats page goes here
-        
     } else {
         _toggleButton.texture = [SKTexture textureWithImageNamed:statsButton];
         [self fadeNodeOutWithNode:_statsPage];
         [self fadeNodeInWithNode:codexParent];
         _codexIsActive = YES;
-        //Logic for transitioning to codex page goes here
-        
     }
-    
 }
 
 -(void)fadeNodeInWithNode: (SKSpriteNode *)node {
@@ -162,11 +157,10 @@
     
     NSArray *imageNames = [codexDictionary objectForKey:@"Image Strings"];
     NSArray *scaleFactors = [codexDictionary objectForKey:@"Image Scale Factors"];
-    //NSArray *descriptions = [_codexDictionary objectForKey:@"Text"];
     
     SKNode *blackSquare = [self childNodeWithName:@"black_square"];
     
-    //Image loading starts at array index 1 because "codex" page has no image.
+    //Image loading loop starts at array index 0, but nothing happens at image zero because "codex" page has no image.
     for (int i = 0; i<=[imageNames count]-1; i++) {
         if (i == 0) {
             //do nothing, codex page has no image.
@@ -180,7 +174,7 @@
             [codexParent addChild:tempAddToCodex];
         }
         
-        //Text descriptions
+        //Text descriptions --> CANNOT LOAD THIS INTO PLIST OR NORLABELNODE WILL NOT WORK!!
         NORLabelNode *description = [[NORLabelNode alloc] initWithFontNamed:@"SF Movie Poster"];
         NSString *tempText = [NSString string];
         
@@ -253,11 +247,6 @@
         description.verticalAlignmentMode = SKLabelVerticalAlignmentModeTop;
         [codexParent addChild:description];
     }
-    
-    //Load text.
-    
-    
-    
 }
 
 #define STATS_LINE_SPACING 1.0
@@ -266,7 +255,8 @@
 -(SKSpriteNode *)createStats {
     _statsPage = [SKSpriteNode node];
     _statsPage.alpha = 0.0;
-    //stats page stuff here
+
+    //Stats Page
     NSString *highScore = [NSString stringWithFormat:@"%ld", [GameState sharedGameData].highScoreL1];
     NSString *totalLaserHits = [NSString stringWithFormat:@"%d", [GameState sharedGameData].totalLaserHits];
     NSString *totalLasersFired = [NSString stringWithFormat:@"%d", [GameState sharedGameData].totalLasersFired];
@@ -306,6 +296,13 @@
     return _statsPage;
 }
 
+#pragma mark --Create Audio
+
+-(void)playSoundEffectsWithAction: (SKAction *)action {
+    if ([GameState sharedGameData].audioVolume == 1.0) {
+        [self runAction:action];
+    }
+}
 
 #define BTM_RoundRect 8
 
@@ -313,10 +310,6 @@
 {
     SKSpriteNode *node = [SKSpriteNode node];
     node.position = CGPointMake(45.0f, self.size.height - 40);
-    
-    //CGRect rect = CGRectMake(-60, -10, 120, 40);
-    
-    
     SKShapeNode *blackStripe = [SKShapeNode node];
     [blackStripe setPath:CGPathCreateWithRoundedRect(CGRectMake(-60, -10, 120, 40), BTM_RoundRect, BTM_RoundRect, nil)];
     blackStripe.fillColor = [UIColor colorWithRed:0.0 green:0.0 blue:0.0 alpha:0.5];
@@ -367,6 +360,11 @@
     self.endPosition = [touchLift locationInNode:self];
     SKNode *nodeLift = [self nodeAtPoint:locationLift];
     
+    SKAction *createSound = [SKAction playSoundFileNamed:@"Button-Press.caf" waitForCompletion:NO];
+    SKAction *playSound = [SKAction runBlock:^{
+        [self playSoundEffectsWithAction:createSound];
+    }];
+    
     deltaXRelease = _endPosition.x - _startPosition.x;
     int swipeDirection;
     
@@ -384,7 +382,11 @@
         SKView *mainMenuView = (SKView *)self.view;
         SKScene *mainMenuScene = [[MainMenu alloc] initWithSize:mainMenuView.bounds.size];
         SKTransition *menuTransition = [SKTransition fadeWithDuration:.5];
-        [mainMenuView presentScene:mainMenuScene transition:menuTransition];
+        SKAction *newSceneAction = [SKAction runBlock:^() {
+            // Present the scene.
+            [mainMenuView presentScene:mainMenuScene transition:menuTransition];
+        }];
+        [self runAction:[SKAction sequence:@[playSound,newSceneAction]]];
     };
     
     if ([nodeLift.name isEqualToString:@"tutorialButton"]) {
@@ -394,17 +396,25 @@
         //tutView.showsNodeCount = YES;
         //levelOneView.showsPhysics = YES;
         
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"hideAd" object:nil];
+        
         // Create and configure the scene.
         SKScene * tutScene = [[Tutorial alloc] initWithSize:tutView.bounds.size];
         tutScene.scaleMode = SKSceneScaleModeAspectFill;
         SKTransition *tutTrans = [SKTransition fadeWithColor:[SKColor whiteColor] duration:0.5];
-        
-        // Present the scene.
-        [tutView presentScene:tutScene transition:tutTrans];
+        SKAction *newSceneAction = [SKAction runBlock:^() {
+            // Present the scene.
+            [tutView presentScene:tutScene transition:tutTrans];
+        }];
+        [self runAction:[SKAction sequence:@[playSound,newSceneAction]]];
     }
     
     if ([nodeLift.name isEqualToString:@"toggleButton"]) {
-        [self toggleButtonLogic];
+        SKAction *newSceneAction = [SKAction runBlock:^() {
+            // Present the scene.
+            [self toggleButtonLogic];
+        }];
+        [self runAction:[SKAction group:@[playSound,newSceneAction]]];
     }
     
     int swipeAllowed;

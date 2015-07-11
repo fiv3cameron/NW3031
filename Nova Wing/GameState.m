@@ -74,7 +74,6 @@ static NSString* const SSGameDataAllTimeAverageAccuracy = @"allTimeAverageAccura
     }
     
     return self;
-
 }
 
 +(instancetype)sharedGameData {
@@ -131,9 +130,5 @@ static NSString* const SSGameDataAllTimeAverageAccuracy = @"allTimeAverageAccura
         [KeychainWrapper createKeychainValue:checksum forIdentifier:SSGameDataChecksumKey];
     }
 }
-
-
-
-
 
 @end
