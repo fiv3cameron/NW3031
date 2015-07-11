@@ -406,7 +406,7 @@ NSMutableArray *reportArray;
             [self addChild:[self backToMenu]];
         }
         
-        [playerParent thrustPlayer:playerParent withHeight:self.size.height];
+        [playerParent thrustPlayer:playerParent withHeight:self.size.height tinyActive:NO];
         [playerParent rotateNodeUpwards:playerParent];
     }
 }
