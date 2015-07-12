@@ -70,12 +70,17 @@
 
 #define THRUST_CONSTANT 550.0
 
--(void)thrustPlayer:(Ships *)player withHeight:(float)levelHeight {
+-(void)thrustPlayer:(Ships *)player withHeight:(float)levelHeight tinyActive:(BOOL)tinyActive {
+    float tinyBoost = 1.0;
+    if (tinyActive) {
+        tinyBoost = 1.25;
+    }
+    
     if (player.position.y > levelHeight - 50)
     {
         player.physicsBody.velocity = CGVectorMake(0.0f, 0.0f);
     }
-    else player.physicsBody.velocity = CGVectorMake(0.0f, MIN(player.position.y * 1.5, THRUST_CONSTANT));
+    else player.physicsBody.velocity = CGVectorMake(0.0f, MIN(player.position.y * 1.5 * tinyBoost, THRUST_CONSTANT*tinyBoost));
 }
 
 -(void)logicTinyNova {

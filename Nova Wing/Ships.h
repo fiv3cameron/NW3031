@@ -14,7 +14,7 @@
 -(void)rotateNodeUpwards: (SKNode *)nodeRotate;
 -(void)rotateNodeDownwards: (SKNode *)nodeRotate;
 -(void)shipBobbing: (SKNode *)bobShip;
--(void)thrustPlayer:(SKNode *)player withHeight:(float)levelHeight;
+-(void)thrustPlayer:(SKNode *)player withHeight:(float)levelHeight tinyActive:(BOOL)tinyActive;
 -(void)logicTinyNova;
 -(void)closeTinyNova;
 

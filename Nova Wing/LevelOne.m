@@ -1499,10 +1499,10 @@ NSMutableArray *reportArray;
             [playerParent removeActionForKey:@"bobbingAction"];
         }
         
-        [playerParent thrustPlayer:playerParent withHeight:self.size.height];
+        [playerParent thrustPlayer:playerParent withHeight:self.size.height tinyActive:tinyActive];
         if (wingmanActive == YES) {
             float tempheight = self.size.height + 50;
-            [wingmanParent thrustPlayer:wingmanParent withHeight:tempheight];
+            [wingmanParent thrustPlayer:wingmanParent withHeight:tempheight tinyActive:tinyActive];
         }
 
         [playerParent rotateNodeUpwards:playerParent];
