@@ -58,7 +58,6 @@
         [self createCodexParent];
         [self createCodex];
         [self fadeNodeInWithNode:codexParent];
-        
     }
     return self;
 }

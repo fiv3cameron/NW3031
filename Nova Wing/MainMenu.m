@@ -144,7 +144,7 @@ NSTimeInterval _dt;
     startButton.xScale = 0.5;
     startButton.yScale = 0.5;
     startButton.name = @"_startButton";
-    SKAction *buttonWait = [SKAction waitForDuration:1.0];
+    SKAction *buttonWait = [SKAction waitForDuration:0.5];
     SKAction *buttonShift = [SKAction moveTo:CGPointMake(self.size.width/2, BUTTON_HEIGHT) duration:0.75];
     buttonShift.timingMode = SKActionTimingEaseInEaseOut;
     SKAction *buttonSequence = [SKAction sequence:@[buttonWait,buttonShift]];
@@ -159,7 +159,7 @@ NSTimeInterval _dt;
     leaderButton.xScale = 0.5;
     leaderButton.yScale = 0.5;
     leaderButton.name = @"_leaderButton";
-    SKAction *buttonWait = [SKAction waitForDuration:1.25];
+    SKAction *buttonWait = [SKAction waitForDuration:0.75];
     SKAction *buttonShift = [SKAction moveTo:CGPointMake(self.size.width/2, BUTTON_HEIGHT - BUTTON_OFFSET) duration:0.75];
     buttonShift.timingMode = SKActionTimingEaseInEaseOut;
     SKAction *buttonSequence = [SKAction sequence:@[buttonWait,buttonShift]];
@@ -173,7 +173,7 @@ NSTimeInterval _dt;
     codexButton.xScale = 0.5;
     codexButton.yScale = 0.5;
     codexButton.name = @"codexButton";
-    SKAction *buttonWait = [SKAction waitForDuration:1.5];
+    SKAction *buttonWait = [SKAction waitForDuration:1.0];
     SKAction *buttonShift = [SKAction moveTo:CGPointMake(self.size.width/2, BUTTON_HEIGHT - (BUTTON_OFFSET * 2)) duration:0.75];
     buttonShift.timingMode = SKActionTimingEaseInEaseOut;
     SKAction *buttonSequence = [SKAction sequence:@[buttonWait,buttonShift]];
@@ -187,7 +187,7 @@ NSTimeInterval _dt;
     creditButton.xScale = 0.5;
     creditButton.yScale = 0.5;
     creditButton.name = @"creditsButton";
-    SKAction *buttonWait = [SKAction waitForDuration:1.75];
+    SKAction *buttonWait = [SKAction waitForDuration:1.25];
     SKAction *buttonShift = [SKAction moveTo:CGPointMake(self.size.width/2, BUTTON_HEIGHT - (BUTTON_OFFSET * 3)) duration:0.75];
     buttonShift.timingMode = SKActionTimingEaseInEaseOut;
     SKAction *buttonSequence = [SKAction sequence:@[buttonWait,buttonShift]];
@@ -643,15 +643,6 @@ NSTimeInterval _dt;
     SKAction *leftMove = [SKAction moveBy:CGVectorMake(-self.size.width, 0) duration:0.75];
     leftMove.timingMode = SKActionTimingEaseInEaseOut;
     SKAction *moveSequence = [SKAction sequence:@[delay, leftMove]];
-    [levelNode runAction: moveSequence];
-}
-
--(void)animateRight: (SKNode *)levelNode withDelay: (double)delayTime
-{
-    SKAction *delay = [SKAction waitForDuration:delayTime];
-    SKAction *rightMove = [SKAction moveBy:CGVectorMake(self.size.width, 0) duration:0.75];
-    rightMove.timingMode = SKActionTimingEaseInEaseOut;
-    SKAction *moveSequence = [SKAction sequence:@[delay, rightMove]];
     [levelNode runAction: moveSequence];
 }
 

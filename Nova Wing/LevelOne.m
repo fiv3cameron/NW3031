@@ -153,7 +153,10 @@ NSMutableArray *reportArray;
         
             //Set up Arrays
         reportArray = [NSMutableArray array];
+        
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"hideAd" object:nil];
     }
+    
     return self;
 }
 

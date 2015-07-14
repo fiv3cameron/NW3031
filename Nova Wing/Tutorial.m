@@ -137,6 +137,7 @@
         _score.text = @"Score: 0";
         tutorialStage = 1;
         
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"hideAd" object:nil];
     }
     
     return self;
@@ -582,20 +583,12 @@ static const float duration = 0.7;
     CGPoint locationLift = [touchLift locationInNode:self];
     SKNode *nodeLift = [self nodeAtPoint:locationLift];
     
-    SKView * levelOneView = (SKView *)self.view;
-    //levelOneView.showsFPS = YES;
-    //levelOneView.showsNodeCount = YES;
-    //levelOneView.showsPhysics = YES;
     
-    // Create and configure the scene.
-    SKScene * levelOneScene = [[LevelOne alloc] initWithSize:levelOneView.bounds.size];
-    levelOneScene.scaleMode = SKSceneScaleModeAspectFill;
-    SKTransition *levelOneTrans = [SKTransition fadeWithColor:[SKColor whiteColor] duration:0.5];
     
     if ([nodeLift.name isEqualToString:@"skipButton"]) {
         
         // Present the scene.
-        [levelOneView presentScene:levelOneScene transition:levelOneTrans];
+        [self levelOneLoad];
     } else
         switch (tutorialStage) {
             case 1:
@@ -614,12 +607,26 @@ static const float duration = 0.7;
                 [self tutStageSix];
                 break;
             case 6:
-                [levelOneView presentScene:levelOneScene transition:levelOneTrans];
+                [self levelOneLoad];
                 break;
             default:
                 break;
         }
         tutorialStage ++;
+}
+
+-(void)levelOneLoad {
+    SKView * levelOneView = (SKView *)self.view;
+    //levelOneView.showsFPS = YES;
+    //levelOneView.showsNodeCount = YES;
+    //levelOneView.showsPhysics = YES;
+    
+    // Create and configure the scene.
+    SKScene * levelOneScene = [[LevelOne alloc] initWithSize:levelOneView.bounds.size];
+    levelOneScene.scaleMode = SKSceneScaleModeAspectFill;
+    SKTransition *levelOneTrans = [SKTransition fadeWithColor:[SKColor whiteColor] duration:0.5];
+    
+    [levelOneView presentScene:levelOneScene transition:levelOneTrans];
 }
 
 -(void)update:(NSTimeInterval)currentTime {
