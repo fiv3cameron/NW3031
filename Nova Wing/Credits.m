@@ -79,6 +79,8 @@ NSMutableArray *reportArray;
         
         //Set up Arrays
         reportArray = [NSMutableArray array];
+        
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"hideAd" object:nil];
     }
     return self;
 }
@@ -171,85 +173,120 @@ NSMutableArray *reportArray;
     tempNode.text = @"Developers";
     tempNode.alpha = 0.0;
     
-    SKAction *waitIn = [SKAction waitForDuration:0.2];
+    SKAction *waitIn = [SKAction waitForDuration:0.8];
     SKAction *fadeIn = [SKAction fadeInWithDuration:0.6];
     SKAction *inSeq = [SKAction sequence:@[waitIn, fadeIn]];
     
-    SKAction *wait = [SKAction waitForDuration:2.2];
-    SKAction *fade = [SKAction fadeOutWithDuration:0.6];
+    SKAction *wait = [SKAction waitForDuration:2.0];
+    SKAction *fade = [SKAction fadeOutWithDuration:0.4];
     SKAction *rename = [SKAction runBlock:^{
-        tempNode.text = @"Beta Testers";
+        tempNode.text = @"Grand Tsar";
     }];
-    SKAction *waitAgain = [SKAction waitForDuration:0.2];
+    SKAction *waitAgain = [SKAction waitForDuration:0.6];
     SKAction *fadeBackIn = [SKAction fadeInWithDuration:0.6];
-    SKAction *waitAgainAgain = [SKAction waitForDuration:4];
-    SKAction *fadeOutLast = [SKAction fadeOutWithDuration:0.6];
+    SKAction *waitAgainAgain = [SKAction waitForDuration:1.75];
+    SKAction *fadeOutFromMike = [SKAction fadeOutWithDuration:0.4];
+    SKAction *renameToProducers = [SKAction runBlock:^{
+        tempNode.text = @"Producers";
+    }];
+    SKAction *waitForProducer = [SKAction waitForDuration:0.5];
+    SKAction *fadeInForProducer = [SKAction fadeInWithDuration:0.6];
+    SKAction *waitAtProducer = [SKAction waitForDuration:1.0];
+    SKAction *fadeOutFromProducer = [SKAction fadeOutWithDuration:0.6];
     SKAction *remove = [SKAction removeFromParent];
-    SKAction *seq = [SKAction sequence:@[inSeq,wait,fade,rename,waitAgain,fadeBackIn,waitAgainAgain,fadeOutLast,remove]];
+    SKAction *seq = [SKAction sequence:@[inSeq,wait,fade,rename,waitAgain,fadeBackIn,waitAgainAgain,fadeOutFromMike,renameToProducers,waitForProducer,fadeInForProducer,waitAtProducer,fadeOutFromProducer,remove]];
     
     [self addChild:tempNode];
     [tempNode runAction:seq];
 }
 
 -(void)rollCredits {
-        //Set Up Dictionary
+    //Set Up Dictionary
     NSString *path = [[NSBundle mainBundle] pathForResource:@"Credits" ofType:@"plist"];
     NSMutableDictionary *dict = [[NSMutableDictionary alloc] initWithContentsOfFile:path];
     NSMutableArray *devsDict = [dict objectForKey:@"Devs"];
     NSMutableArray *betaDict = [dict objectForKey:@"Betas"];
+    NSMutableArray *otherDict = [dict objectForKey:@"Others"];
     NSArray *devsSorted = [devsDict sortedArrayUsingSelector:@selector(localizedCaseInsensitiveCompare:)];
     NSArray *betasSorted = [betaDict sortedArrayUsingSelector:@selector(localizedCaseInsensitiveCompare:)];
+    NSArray *othersSorted = [otherDict sortedArrayUsingSelector:@selector(localizedCaseInsensitiveCompare:)];
     int matrixSize = (int)[betasSorted count];
-    _totalCreditsHits = matrixSize + (int)[devsSorted count];
+    _totalCreditsHits = matrixSize + (int)[devsSorted count]+(int)[othersSorted count];
     
-    NSArray *combinedCredits = @[devsSorted,betasSorted];
+    NSArray *combinedCredits = @[devsSorted,othersSorted,betasSorted];
     
-    SKSpriteNode *devNode = [SKSpriteNode node];
-    SKLabelNode *name = [[SKLabelNode alloc] initWithFontNamed:@"SF Movie Poster"];
-    
-    [self addChild:devNode];
-    [devNode addChild:name];
-    
-    name.text = [[combinedCredits objectAtIndex:creditsRoundCount] objectAtIndex:positionInRound];
-    name.position = CGPointMake(0, 0);
-    
-    devNode.physicsBody = [SKPhysicsBody bodyWithRectangleOfSize:CGSizeMake(name.frame.size.width, name.frame.size.height) center:CGPointMake(0, name.frame.size.height/2)];
-    devNode.physicsBody.restitution = 0.5;
-    devNode.physicsBody.dynamic = YES;
-    devNode.physicsBody.allowsRotation = NO;
-    devNode.physicsBody.categoryBitMask = CollisionCategoryObject;
-    devNode.physicsBody.contactTestBitMask = CollisionCategoryPlayer | CollisionCategoryBottom;
-    devNode.physicsBody.collisionBitMask = CollisionCategoryPlayer | CollisionCategoryBottom;
-    devNode.physicsBody.affectedByGravity = NO;
-    devNode.physicsBody.linearDamping = 0;
-    devNode.name = @"credit";
-    
-    int tempRand = arc4random()%50;
-    double randYPosition = (tempRand+25)/100.0;
-    devNode.position = CGPointMake(self.size.width+name.frame.size.width, self.size.height*randYPosition);
-    SKAction *waitToLaunch = [SKAction waitForDuration: 0.5];
-    SKAction *impulse = [SKAction runBlock:^{
-        [devNode.physicsBody applyImpulse:CGVectorMake(-15, 0)];
-    }];
-    SKAction *wait = [SKAction waitForDuration:2];
-    SKAction *diminish = [SKAction fadeOutWithDuration:0.6];
-    SKAction *remove = [SKAction removeFromParent];
-    SKAction *devNodeSequence = [SKAction sequence:@[waitToLaunch,impulse,wait,diminish,remove]];
-    
-    [devNode runAction:devNodeSequence withKey:objectRemoveTimerKey];
-    
-    positionInRound = positionInRound + 1;
     if (creditsRoundCount == 0 && positionInRound == 2) {
         positionInRound = 0;
         creditsRoundCount = creditsRoundCount + 1;
+    } else if (creditsRoundCount == 1 && positionInRound == 1) {
+        positionInRound = 0;
+        creditsRoundCount = creditsRoundCount + 1;
+    } else if (creditsRoundCount == 2 && positionInRound == matrixSize) {
+        [self removeActionForKey:objectCreateKey];
+        [self creditsEnd];
+    } else {
+        SKSpriteNode *devNode = [SKSpriteNode node];
+        SKLabelNode *name = [[SKLabelNode alloc] initWithFontNamed:@"SF Movie Poster"];
+        
+        [self addChild:devNode];
+        [devNode addChild:name];
+        
+        name.text = [[combinedCredits objectAtIndex:creditsRoundCount] objectAtIndex:positionInRound];
+        name.position = CGPointMake(0, 0);
+        
+        devNode.physicsBody = [SKPhysicsBody bodyWithRectangleOfSize:CGSizeMake(name.frame.size.width, name.frame.size.height) center:CGPointMake(0, name.frame.size.height/2)];
+        devNode.physicsBody.restitution = 0.5;
+        devNode.physicsBody.dynamic = YES;
+        devNode.physicsBody.allowsRotation = NO;
+        devNode.physicsBody.categoryBitMask = CollisionCategoryObject;
+        devNode.physicsBody.contactTestBitMask = CollisionCategoryPlayer | CollisionCategoryBottom;
+        devNode.physicsBody.collisionBitMask = CollisionCategoryPlayer | CollisionCategoryBottom;
+        devNode.physicsBody.affectedByGravity = NO;
+        devNode.physicsBody.linearDamping = 0;
+        devNode.name = @"credit";
+        
+        int tempRand = arc4random()%50;
+        double randYPosition = (tempRand+25)/100.0;
+        devNode.position = CGPointMake(self.size.width+name.frame.size.width, self.size.height*randYPosition);
+        SKAction *waitToLaunch = [SKAction waitForDuration: 0.5];
+        SKAction *impulse = [SKAction runBlock:^{
+            [devNode.physicsBody applyImpulse:CGVectorMake(-15, 0)];
+        }];
+        SKAction *wait = [SKAction waitForDuration:2.4];
+        SKAction *diminish = [SKAction fadeOutWithDuration:0.6];
+        SKAction *remove = [SKAction removeFromParent];
+        SKAction *devNodeSequence = [SKAction sequence:@[waitToLaunch,impulse,wait,diminish,remove]];
+        
+        [devNode runAction:devNodeSequence withKey:objectRemoveTimerKey];
+        
+        positionInRound = positionInRound + 1;
     }
+}
+
+-(void)creditsEnd {
+    [self removeActionForKey:objectCreateKey];
+    NORLabelNode *wivesThanks = [NORLabelNode node];
+    [wivesThanks setText:@"Special thanks to our wives,\nHailee & Jessica, for putting\nup with all of this!"];
+    [wivesThanks setPosition:CGPointMake(self.size.width*0.6, self.size.height*0.5)];
+    [wivesThanks setHorizontalAlignmentMode:SKLabelHorizontalAlignmentModeCenter];
+    [wivesThanks setVerticalAlignmentMode:SKLabelVerticalAlignmentModeCenter];
+    wivesThanks.alpha = 0.0;
+    [wivesThanks setFontSize:28.0];
+    [wivesThanks setFontName:@"SF Movie Poster"];
+    [self addChild:wivesThanks];
     
-    if (creditsRoundCount == 1 && positionInRound == matrixSize) {
+    SKAction *wait1 = [SKAction waitForDuration:2.0];
+    SKAction *fadeIn = [SKAction fadeInWithDuration:0.4];
+    SKAction *wait2 = [SKAction waitForDuration:5.0];
+    SKAction *fadeOut = [SKAction fadeOutWithDuration:0.4];
+    SKAction *finishCredits = [SKAction runBlock:^{
         //end credits.
         [self removeAllActions];
         [self checkAchievementsCredits];
         [self buttonsAfterCredits];
-    }
+    }];
+    
+    [wivesThanks runAction:[SKAction sequence:@[wait1,fadeIn,wait2,fadeOut,finishCredits]]];
 }
 
 -(void)checkAchievementsCredits {

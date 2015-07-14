@@ -34,8 +34,6 @@
 		<string>Craig Jackson</string>
 		<string>Justin Hettler</string>
 		<string>Marco Gallaga</string>
-		<string>Jessica Todd</string>
-		<string>Hailee Frank</string>
 		<string>Remi Emre</string>
 		<string>Tom Edwards</string>
 		<string>Levi Murray</string>
@@ -54,11 +52,18 @@
 		<string>Devyn Schuetz</string>
 		<string>Ryan Reynolds</string>
 		<string>Taylor Myers</string>
+		<string>Dustin Goad</string>
+		<string>Brian Meister</string>
+		<string>Paul Tabeling</string>
 	</array>
 	<key>Devs</key>
 	<array>
 		<string>Cameron Frank</string>
 		<string>Bryan Todd</string>
+	</array>
+	<key>Others</key>
+	<array>
+		<string>Mike Keahbone</string>
 	</array>
 </dict>
 </plist>
