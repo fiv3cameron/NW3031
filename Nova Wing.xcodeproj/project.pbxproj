@@ -56,7 +56,6 @@
 		2DB352791999940A006BF15C /* buttonPressStart.png in Resources */ = {isa = PBXBuildFile; fileRef = 2DB352731999940A006BF15C /* buttonPressStart.png */; };
 		2DB3527A1999940A006BF15C /* buttonSettings.png in Resources */ = {isa = PBXBuildFile; fileRef = 2DB352741999940A006BF15C /* buttonSettings.png */; };
 		2DB3527B1999940A006BF15C /* buttonStart.png in Resources */ = {isa = PBXBuildFile; fileRef = 2DB352751999940A006BF15C /* buttonStart.png */; };
-		2DB35299199994B9006BF15C /* Stars-Seamless.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 2DB35298199994B9006BF15C /* Stars-Seamless.jpg */; };
 		2DB3529B199994C0006BF15C /* Title.png in Resources */ = {isa = PBXBuildFile; fileRef = 2DB3529A199994C0006BF15C /* Title.png */; };
 		2DB352A4199998BA006BF15C /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2DB352A3199998BA006BF15C /* AVFoundation.framework */; };
 		2DB352A619999942006BF15C /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2DB352A519999942006BF15C /* AudioToolbox.framework */; };
@@ -142,6 +141,8 @@
 		76C2BC521A89820A005F71A2 /* iAd.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 76C2BC511A89820A005F71A2 /* iAd.framework */; };
 		76C2BC541AA54A87005F71A2 /* Audio_disengage@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 76C2BC531AA54A87005F71A2 /* Audio_disengage@2x.png */; };
 		76C6F15419A2CCB100B37331 /* Level-1@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 76C6F15319A2CCB100B37331 /* Level-1@2x.png */; };
+		76FE853A1B5957BD00F8769B /* Stars-Seamless@2x.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 76FE85381B5957BD00F8769B /* Stars-Seamless@2x.jpg */; };
+		76FE853B1B5957BD00F8769B /* Stars-Seamless@3x.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 76FE85391B5957BD00F8769B /* Stars-Seamless@3x.jpg */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -214,7 +215,6 @@
 		2DB352731999940A006BF15C /* buttonPressStart.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = buttonPressStart.png; sourceTree = "<group>"; };
 		2DB352741999940A006BF15C /* buttonSettings.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = buttonSettings.png; sourceTree = "<group>"; };
 		2DB352751999940A006BF15C /* buttonStart.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = buttonStart.png; sourceTree = "<group>"; };
-		2DB35298199994B9006BF15C /* Stars-Seamless.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "Stars-Seamless.jpg"; sourceTree = "<group>"; };
 		2DB3529A199994C0006BF15C /* Title.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Title.png; sourceTree = "<group>"; };
 		2DB352A3199998BA006BF15C /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
 		2DB352A519999942006BF15C /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
@@ -311,6 +311,8 @@
 		76C2BC511A89820A005F71A2 /* iAd.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = iAd.framework; path = System/Library/Frameworks/iAd.framework; sourceTree = SDKROOT; };
 		76C2BC531AA54A87005F71A2 /* Audio_disengage@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Audio_disengage@2x.png"; sourceTree = "<group>"; };
 		76C6F15319A2CCB100B37331 /* Level-1@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Level-1@2x.png"; sourceTree = "<group>"; };
+		76FE85381B5957BD00F8769B /* Stars-Seamless@2x.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "Stars-Seamless@2x.jpg"; sourceTree = "<group>"; };
+		76FE85391B5957BD00F8769B /* Stars-Seamless@3x.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "Stars-Seamless@3x.jpg"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -493,12 +495,13 @@
 		2DB3526D199993DA006BF15C /* Main */ = {
 			isa = PBXGroup;
 			children = (
+				76FE85381B5957BD00F8769B /* Stars-Seamless@2x.jpg */,
+				76FE85391B5957BD00F8769B /* Stars-Seamless@3x.jpg */,
 				767320EA1A3CBD810057EF70 /* Backgrounds */,
 				76B9E91C19FC1891000EF044 /* Game Objects */,
 				76B9E91D19FC18A8000EF044 /* Buttons */,
 				76B9E92219FC2863000EF044 /* Icons */,
 				2DB3529A199994C0006BF15C /* Title.png */,
-				2DB35298199994B9006BF15C /* Stars-Seamless.jpg */,
 				764B97F61B4AEF2A002EA191 /* Ranks - Small */,
 				764B97F71B4AEF37002EA191 /* Ranks - Large */,
 			);
@@ -840,7 +843,6 @@
 				764BF9A719A2BC04007DABF8 /* Nova-L1@2x.png in Resources */,
 				763BCECD1A32B67600AF65DB /* buttonCodex.png in Resources */,
 				767320E31A3B96530057EF70 /* NovaWingAppIcon-1024.jpg in Resources */,
-				2DB35299199994B9006BF15C /* Stars-Seamless.jpg in Resources */,
 				7673213A1A5B66870057EF70 /* Asteroid-1.atlas in Resources */,
 				2D4117D51B4F715D00ADEF7B /* CodexBG@3x.jpg in Resources */,
 				2D5060861B0C0DC200A73DD6 /* LTCommander@2x.png in Resources */,
@@ -857,6 +859,7 @@
 				7651E8D519B0EC8900F7E9D0 /* Level-1-Music.m4a in Resources */,
 				76C6F15419A2CCB100B37331 /* Level-1@2x.png in Resources */,
 				764B98091B4AEF5D002EA191 /* LT-Commander-Large@2x.png in Resources */,
+				76FE853A1B5957BD00F8769B /* Stars-Seamless@2x.jpg in Resources */,
 				2DB3529B199994C0006BF15C /* Title.png in Resources */,
 				760C79C21A70281900E58170 /* Ship-Fragment.atlas in Resources */,
 				76B9821419FC7A4E00F7E606 /* Autocannon@2x.png in Resources */,
@@ -883,6 +886,7 @@
 				767321401A5C276A0057EF70 /* Asteroid-Red.atlas in Resources */,
 				2DB352771999940A006BF15C /* buttonPressLeaderboard.png in Resources */,
 				767321361A574CE00057EF70 /* Ship-Explode.caf in Resources */,
+				76FE853B1B5957BD00F8769B /* Stars-Seamless@3x.jpg in Resources */,
 				763BCEC91A32A8A500AF65DB /* buttonPressCodex.png in Resources */,
 				767320E91A3B96530057EF70 /* NovaWingSpotlight@3x.png in Resources */,
 				763BCECF1A32BA2300AF65DB /* Settings.png in Resources */,
