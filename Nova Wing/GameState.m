@@ -30,6 +30,7 @@ static NSString* const SSGameDataTotalAsteroidDeaths = @"totalAsteroidDeaths";
 static NSString* const SSGameDataTotalDebrisDeaths = @"totalDebrisDeaths";
 static NSString* const SSGameDataAllTimeAverageScore = @"allTimeAverageScore";
 static NSString* const SSGameDataAllTimeAverageAccuracy = @"allTimeAverageAccuracy";
+static NSString* const SSGameDataAdGameCounter = @"adGameCounter";
 
 -(void)encodeWithCoder:(NSCoder *)encoder {
     [encoder encodeDouble:self.highScoreL1 forKey:SSGameDataHighScoreL1Key];
@@ -49,6 +50,7 @@ static NSString* const SSGameDataAllTimeAverageAccuracy = @"allTimeAverageAccura
     [encoder encodeInt:self.totalDebrisDeaths forKey:SSGameDataTotalDebrisDeaths];
     [encoder encodeFloat:self.allTimeAverageScore forKey:SSGameDataAllTimeAverageScore];
     [encoder encodeFloat:self.allTimeAverageAccuracy forKey:SSGameDataAllTimeAverageAccuracy];
+    [encoder encodeInt:self.adGameCounter forKey:SSGameDataAdGameCounter];
 }
 
 -(instancetype)initWithCoder:(NSCoder *)decoder {
@@ -71,6 +73,7 @@ static NSString* const SSGameDataAllTimeAverageAccuracy = @"allTimeAverageAccura
         _totalDebrisDeaths = [decoder decodeIntForKey:SSGameDataTotalDebrisDeaths];
         _allTimeAverageScore = [decoder decodeFloatForKey:SSGameDataAllTimeAverageScore];
         _allTimeAverageAccuracy = [decoder decodeFloatForKey:SSGameDataAllTimeAverageAccuracy];
+        _adGameCounter = [decoder decodeIntForKey:SSGameDataAdGameCounter];
     }
     
     return self;

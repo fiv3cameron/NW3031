@@ -32,6 +32,7 @@
     @property (assign, nonatomic) float allTimeAverageAccuracy;
     @property (assign, nonatomic) NSMutableDictionary *achievementsDictionary;
     @property (assign, nonatomic) int rankAchieved;
+    @property (assign, nonatomic) int adGameCounter;
 
 +(instancetype)sharedGameData;
 -(void)reset;

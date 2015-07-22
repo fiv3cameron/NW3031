@@ -6,8 +6,9 @@
 //  Copyright (c) 2014 FIV3 Interactive, LLC. All rights reserved.
 //
 
-#import "ViewController.h"
+@import GoogleMobileAds;
 
+#import "ViewController.h"
 #import "MainMenu.h"
 
 @interface ViewController () {
@@ -29,16 +30,25 @@
 
 }
 
-
 - (void)viewDidLoad
 {
     [super viewDidLoad];
     
+    self.interstitial = [self createAndLoadInterstitial];
+    
         // Configure iAd
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handleNotification:) name:@"showAd" object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handleNotification:) name:@"hideAd" object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handleNotification:) name:@"showInterstitial" object:nil];
     
-
+    NSLog(@"Google Mobile Ads SDK Version: %@",[GADRequest sdkVersion]);
+    
+    self.bannerView = [[GADBannerView alloc] initWithAdSize:kGADAdSizeSmartBannerPortrait origin:CGPointMake(0, self.view.frame.size.height-CGSizeFromGADAdSize(kGADAdSizeBanner).height)];
+    self.bannerView.hidden = YES;
+    self.bannerView.adUnitID = @"ca-app-pub-2182637269476458/9989623723";
+    self.bannerView.rootViewController = self;
+    [self.view addSubview:self.bannerView];
+    
     // Configure the view.
     SKView * skView = (SKView *)self.originalContentView;
     // Create and configure the scene.
@@ -47,13 +57,13 @@
     
     // Present the scene.
     [skView presentScene:scene];
-    self.canDisplayBannerAds = YES;
+    //self.canDisplayBannerAds = YES;
     
-    theBanner = [[ADBannerView alloc] initWithFrame:CGRectZero];
+    /*theBanner = [[ADBannerView alloc] initWithFrame:CGRectZero];
     theBanner.frame = CGRectMake(0, skView.bounds.size.height - theBanner.frame.size.height, theBanner.frame.size.width, theBanner.frame.size.height);
     theBanner.delegate = self;
     [self.view addSubview:theBanner];
-    self.allowsBanner = YES;
+    self.allowsBanner = YES;*/
 }
 
 - (void)viewDidAppear:(BOOL)animated {
@@ -79,7 +89,7 @@
     [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
--(void)bannerView:(ADBannerView *)banner didFailToReceiveAdWithError:(NSError *)error {
+/*-(void)bannerView:(ADBannerView *)banner didFailToReceiveAdWithError:(NSError *)error {
     if (!self.bannerIsVisible) {
         [UIView beginAnimations:@"animateAdBannerOff" context:NULL];
         banner.frame = CGRectOffset(banner.frame, 0, banner.frame.size.height);
@@ -96,19 +106,23 @@
         [UIView commitAnimations];
         self.bannerIsVisible = YES;
     }
-}
+}*/
 
 -(void)handleNotification: (NSNotification *)notification {
     if ([notification.name isEqualToString:@"showAd"]) {
         //NSLog(@"Show Ad Notification received");
-        [self showsBanner];
+        [self showBanner];
     } else if ([notification.name isEqualToString:@"hideAd"]) {
         //NSLog(@"Hide Ad Notification received");
-        [self hidesBanner];
+        [self hideBanner];
+    } else if ([notification.name isEqualToString:@"showInterstitial"]) {
+        if ([self.interstitial isReady]) {
+            [self.interstitial presentFromRootViewController:self];
+        }
     }
 }
 
--(void)hidesBanner {
+/*-(void)hidesBanner {
     //NSLog(@"Hiding Banner");
     [theBanner setAlpha:0.0];
     self.bannerIsVisible = NO;
@@ -120,11 +134,35 @@
     [theBanner setAlpha:1.0];
     self.bannerIsVisible = YES;
     self.allowsBanner = YES;
+}*/
+
+-(void)showBanner {
+    self.bannerView.hidden = NO;
+    GADRequest *request = [GADRequest request];
+    request.testDevices = @[@"1ee8a254a93a6f089ce1fdf6553dd250"];
+    [[self bannerView] loadRequest:request];
+}
+
+-(void)hideBanner {
+    self.bannerView.hidden = YES;
 }
 
 - (BOOL)shouldAutorotate
 {
     return YES;
+}
+
+-(GADInterstitial *)createAndLoadInterstitial {
+    GADInterstitial *interstitial = [[GADInterstitial alloc] initWithAdUnitID:@"ca-app-pub-2182637269476458/8512890523"];
+    interstitial.delegate = self;
+    GADRequest *request = [GADRequest request];
+    request.testDevices = @[@"1ee8a254a93a6f089ce1fdf6553dd250"];
+    [interstitial loadRequest:request];
+    return interstitial;
+}
+
+- (void)interstitialDidDismissScreen:(GADInterstitial *)interstitial {
+    self.interstitial = [self createAndLoadInterstitial];
 }
 
 - (NSUInteger)supportedInterfaceOrientations
