@@ -65,6 +65,7 @@
 		2DD7ABE41B10170300596605 /* Trophy_Button_press@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 2DD7ABE21B10170300596605 /* Trophy_Button_press@2x.png */; };
 		2DD7ABE51B10170300596605 /* Trophy_Button@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 2DD7ABE31B10170300596605 /* Trophy_Button@2x.png */; };
 		2DE20BB71B311D0700A78F6F /* Credits.m in Sources */ = {isa = PBXBuildFile; fileRef = 2DE20BB61B311D0700A78F6F /* Credits.m */; };
+		2DE9B8321B5F154C006C2E82 /* GoogleMobileAds.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2DE9B8311B5F154C006C2E82 /* GoogleMobileAds.framework */; };
 		760897AF1A24FBEA002C28EB /* Tutorial.m in Sources */ = {isa = PBXBuildFile; fileRef = 760897AE1A24FBEA002C28EB /* Tutorial.m */; };
 		760C79C21A70281900E58170 /* Ship-Fragment.atlas in Resources */ = {isa = PBXBuildFile; fileRef = 760C79C11A70281900E58170 /* Ship-Fragment.atlas */; };
 		760C79C41A702B9700E58170 /* Shield.atlas in Resources */ = {isa = PBXBuildFile; fileRef = 760C79C31A702B9700E58170 /* Shield.atlas */; };
@@ -224,6 +225,7 @@
 		2DD7ABE31B10170300596605 /* Trophy_Button@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Trophy_Button@2x.png"; sourceTree = "<group>"; };
 		2DE20BB51B311D0700A78F6F /* Credits.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Credits.h; sourceTree = "<group>"; };
 		2DE20BB61B311D0700A78F6F /* Credits.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = Credits.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
+		2DE9B8311B5F154C006C2E82 /* GoogleMobileAds.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = GoogleMobileAds.framework; sourceTree = "<group>"; };
 		760897AD1A24FBEA002C28EB /* Tutorial.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Tutorial.h; sourceTree = "<group>"; };
 		760897AE1A24FBEA002C28EB /* Tutorial.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Tutorial.m; sourceTree = "<group>"; };
 		760897B01A250594002C28EB /* NWCollisions.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = NWCollisions.h; sourceTree = "<group>"; };
@@ -320,6 +322,7 @@
 			files = (
 				76C2BC521A89820A005F71A2 /* iAd.framework in Frameworks */,
 				2DB352A619999942006BF15C /* AudioToolbox.framework in Frameworks */,
+				2DE9B8321B5F154C006C2E82 /* GoogleMobileAds.framework in Frameworks */,
 				2DB352A4199998BA006BF15C /* AVFoundation.framework in Frameworks */,
 				2DB3521D19996B83006BF15C /* CoreGraphics.framework in Frameworks */,
 				2DB3521F19996B83006BF15C /* UIKit.framework in Frameworks */,
@@ -353,6 +356,7 @@
 		2DB3520E19996B83006BF15C = {
 			isa = PBXGroup;
 			children = (
+				2DE9B8311B5F154C006C2E82 /* GoogleMobileAds.framework */,
 				2DB3522219996B83006BF15C /* Nova Wing */,
 				2DB3524619996B83006BF15C /* Nova WingTests */,
 				2DB3521919996B83006BF15C /* Frameworks */,
@@ -1086,6 +1090,10 @@
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)",
+				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Nova Wing/Nova Wing-Prefix.pch";
 				INFOPLIST_FILE = "Nova Wing/Nova Wing-Info.plist";
@@ -1104,6 +1112,10 @@
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)",
+				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Nova Wing/Nova Wing-Prefix.pch";
 				INFOPLIST_FILE = "Nova Wing/Nova Wing-Info.plist";

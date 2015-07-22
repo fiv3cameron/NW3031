@@ -10,11 +10,15 @@
 #import <SpriteKit/SpriteKit.h>
 #import <iAd/iAd.h>
 
-@interface ViewController : UIViewController <ADBannerViewDelegate>
+@import GoogleMobileAds;
+
+@interface ViewController : UIViewController <ADBannerViewDelegate,GADInterstitialDelegate>
 {
-        ADBannerView *theBanner;
+        //ADBannerView *theBanner;
 }
 
-@property (nonatomic) BOOL bannerIsVisible;
+//@property (nonatomic) BOOL bannerIsVisible;
+@property (strong,nonatomic) GADBannerView *bannerView;
+@property (strong, nonatomic) GADInterstitial *interstitial;
 
 @end

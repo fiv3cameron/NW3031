@@ -1650,14 +1650,13 @@ NSMutableArray *reportArray;
     [GameState sharedGameData].allTimeAverageAccuracy = (float)[GameState sharedGameData].totalLaserHits / (float)[GameState sharedGameData].totalLasersFired;
     [GameState sharedGameData].allTimeAverageScore = (float)[GameState sharedGameData].totalPoints / (float)[GameState sharedGameData].totalGames;
     
+    
     //Update leaderboard if necessary.
     GKLocalPlayer *tempLocalPlayer = [GKLocalPlayer localPlayer];
     if (tempLocalPlayer.isAuthenticated) {
         [[GameKitHelper sharedGameKitHelper] submitScore:[GameState sharedGameData].score toLeader:@"L1HS"];
         [[GameKitHelper sharedGameKitHelper] submitScore:[GameState sharedGameData].totalPoints toLeader:@"AllTimeHighScore"];
     }
-    
-    [[GameState sharedGameData] save];
     
     [self checkAchievementsIsGameOver:YES];
     [self checkAchievementsForRank];
@@ -1681,7 +1680,39 @@ NSMutableArray *reportArray;
     SKAction *wait = [SKAction waitForDuration:0.5];
     SKAction *gameOver = [SKAction runBlock:^{[self gameOverComplete];}];
     [self runAction:[SKAction sequence:@[wait,gameOver]]];
+    
+    if ([GameState sharedGameData].adGameCounter == 1) {
+        int rand = arc4random()%8;
+        NSLog(@"rand = %i",rand);
+        switch (rand) {
+            case 1:
+            case 2:
+                break;
+            case 3:
+            case 4:
+                [[NSNotificationCenter defaultCenter] postNotificationName:@"showInterstitial" object:nil];
+                break;
+            case 5:
+            case 6:
+                break;
+            case 7:
+                [[NSNotificationCenter defaultCenter] postNotificationName:@"showInterstitial" object:nil];
+                break;
+            case 8:
+                break;
+            default:
+                break;
+        }
+        [GameState sharedGameData].adGameCounter =  0;
+    } else {
+        [GameState sharedGameData].adGameCounter = [GameState sharedGameData].adGameCounter + 1;
+    }
+    
+    NSLog(@"adGameCounter = %i",[GameState sharedGameData].adGameCounter);
+    
     [[NSNotificationCenter defaultCenter] postNotificationName:@"showAd" object:nil];
+    
+    [[GameState sharedGameData] save];
     
     if (tempLocalPlayer.isAuthenticated) {
         [GKAchievement reportAchievements:reportArray withCompletionHandler:^(NSError *error) {
