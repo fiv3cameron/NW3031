@@ -698,6 +698,9 @@ NSMutableArray *reportArray;
 
 -(void)scoreAddWithMultiplier: (int)tempMultiplier {
     [self playSoundEffectsWithAction:_ScoreCollect];
+    if (tinyActive) {
+        tempMultiplier = tempMultiplier*2;
+    }
     [GameState sharedGameData].score = [GameState sharedGameData].score + [GameState sharedGameData].scoreMultiplier*tempMultiplier;
     _score.text = [NSString stringWithFormat:@"Score: %i", [GameState sharedGameData].score];
 }
@@ -708,6 +711,9 @@ NSMutableArray *reportArray;
     plusOne.fontColor = [SKColor whiteColor];
     plusOne.fontSize = 30;
     plusOne.zPosition = 101;
+    if (tinyActive) {
+        tempMultiplier = tempMultiplier*2;
+    }
     int tempScore = [GameState sharedGameData].scoreMultiplier*tempMultiplier;
     plusOne.text = [NSString stringWithFormat:@"+%i", tempScore];
     
@@ -792,7 +798,7 @@ NSMutableArray *reportArray;
             [[self childNodeWithName:@"multiplier"] removeFromParent];
             [GameState sharedGameData].scoreMultiplier ++;
             [self removeActionForKey:objectCreateKey];
-            [self initializeObstaclesWithInterval:0.27];
+            [self initializeObstaclesWithInterval:0.25];
             [self removeActionForKey:multiKey];
             break;
         default:
