@@ -11,17 +11,17 @@
 		<string>Overshield</string>
 		<string>TinyNova</string>
 		<string>2xMulti</string>
-		<string>FlightSchoolGraduate</string>
-		<string>Cadet</string>
-		<string>Private-1</string>
-		<string>Private-2</string>
-		<string>Sergeant-1</string>
-		<string>Sergeant-2</string>
-		<string>FlightCommander</string>
-		<string>LTCommander</string>
-		<string>Commander</string>
-		<string>FleetGeneral</string>
-		<string>FleetAdmiral</string>
+		<string>FSG-Large</string>
+		<string>Cadet-Large</string>
+		<string>Private-1-Large</string>
+		<string>Private-2-Large</string>
+		<string>Sergeant-1-Large</string>
+		<string>Sergeant-2-Large</string>
+		<string>FlightCommander-Large</string>
+		<string>LT-Commander-Large</string>
+		<string>Commander-Large</string>
+		<string>FleetGeneral-Large</string>
+		<string>FleetAdmiral-Large</string>
 	</array>
 	<key>Image Scale Factors</key>
 	<array>
@@ -32,17 +32,17 @@
 		<integer>1</integer>
 		<integer>1</integer>
 		<real>0.8</real>
-		<real>1.5</real>
-		<real>1.5</real>
-		<real>1.5</real>
-		<real>1.5</real>
-		<real>1.5</real>
-		<real>1.5</real>
-		<real>1.5</real>
-		<real>1.5</real>
-		<real>1.5</real>
-		<real>1.5</real>
-		<real>1.5</real>
+		<real>0.15</real>
+		<real>0.15</real>
+		<real>0.15</real>
+		<real>0.15</real>
+		<real>0.15</real>
+		<real>0.15</real>
+		<real>0.15</real>
+		<real>0.15</real>
+		<real>0.15</real>
+		<real>0.15</real>
+		<real>0.15</real>
 	</array>
 	<key>Text</key>
 	<array>

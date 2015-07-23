@@ -13,11 +13,7 @@
 @import GoogleMobileAds;
 
 @interface ViewController : UIViewController <ADBannerViewDelegate,GADInterstitialDelegate>
-{
-        //ADBannerView *theBanner;
-}
 
-//@property (nonatomic) BOOL bannerIsVisible;
 @property (strong,nonatomic) GADBannerView *bannerView;
 @property (strong, nonatomic) GADInterstitial *interstitial;
 

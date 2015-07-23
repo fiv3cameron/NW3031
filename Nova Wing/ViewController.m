@@ -57,13 +57,6 @@
     
     // Present the scene.
     [skView presentScene:scene];
-    //self.canDisplayBannerAds = YES;
-    
-    /*theBanner = [[ADBannerView alloc] initWithFrame:CGRectZero];
-    theBanner.frame = CGRectMake(0, skView.bounds.size.height - theBanner.frame.size.height, theBanner.frame.size.width, theBanner.frame.size.height);
-    theBanner.delegate = self;
-    [self.view addSubview:theBanner];
-    self.allowsBanner = YES;*/
 }
 
 - (void)viewDidAppear:(BOOL)animated {
@@ -89,25 +82,6 @@
     [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
-/*-(void)bannerView:(ADBannerView *)banner didFailToReceiveAdWithError:(NSError *)error {
-    if (!self.bannerIsVisible) {
-        [UIView beginAnimations:@"animateAdBannerOff" context:NULL];
-        banner.frame = CGRectOffset(banner.frame, 0, banner.frame.size.height);
-        [UIView commitAnimations];
-        self.bannerIsVisible = NO;
-    }
-}
-
--(void)bannerViewDidLoadAd:(ADBannerView *)banner {
-    if (!self.bannerIsVisible && self.allowsBanner) {
-        [UIView beginAnimations:@"animateAdBannerOn" context:NULL];
-        banner.frame = CGRectOffset(banner.frame, 0, 0);
-        [theBanner setAlpha:0.0];
-        [UIView commitAnimations];
-        self.bannerIsVisible = YES;
-    }
-}*/
-
 -(void)handleNotification: (NSNotification *)notification {
     if ([notification.name isEqualToString:@"showAd"]) {
         //NSLog(@"Show Ad Notification received");
@@ -121,20 +95,6 @@
         }
     }
 }
-
-/*-(void)hidesBanner {
-    //NSLog(@"Hiding Banner");
-    [theBanner setAlpha:0.0];
-    self.bannerIsVisible = NO;
-    self.allowsBanner = NO;
-}
-
--(void)showsBanner {
-    //NSLog(@"Showing Banner");
-    [theBanner setAlpha:1.0];
-    self.bannerIsVisible = YES;
-    self.allowsBanner = YES;
-}*/
 
 -(void)showBanner {
     self.bannerView.hidden = NO;
