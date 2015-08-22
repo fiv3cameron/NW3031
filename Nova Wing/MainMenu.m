@@ -78,7 +78,7 @@ NSTimeInterval _dt;
         [self createRankInsignia];
         
         [self createAudio];
-        [[NSNotificationCenter defaultCenter] postNotificationName:@"showAd" object:nil];
+        //[[NSNotificationCenter defaultCenter] postNotificationName:@"showAd" object:nil];
         
         _largeRankIsActive = NO;
 
