@@ -1689,7 +1689,7 @@ NSMutableArray *reportArray;
     
     if ([GameState sharedGameData].adGameCounter == 1) {
         int rand = arc4random()%8;
-        NSLog(@"rand = %i",rand);
+        //(@"rand = %i",rand);
         switch (rand) {
             case 1:
             case 2:
@@ -1714,7 +1714,7 @@ NSMutableArray *reportArray;
         [GameState sharedGameData].adGameCounter = [GameState sharedGameData].adGameCounter + 1;
     }
     
-    NSLog(@"adGameCounter = %i",[GameState sharedGameData].adGameCounter);
+    //NSLog(@"adGameCounter = %i",[GameState sharedGameData].adGameCounter);
     
     [[NSNotificationCenter defaultCenter] postNotificationName:@"showAd" object:nil];
     
@@ -1832,13 +1832,13 @@ NSMutableArray *reportArray;
     if (firstBody.categoryBitMask == CollisionCategoryPlayer && secondBody.categoryBitMask == CollisionCategoryObject) {
         [self vibrate];
         [self playSoundEffectsWithAction:_ShipExplode];
-            if (wingmanActive == YES) {
-                //Run wingman or player removal
-                [self wingmanRemove:firstNode objectRemove:secondNode];
-            } else {
-                [self gameOver];
-            }
-        if ([secondNode.name isEqualToString:@"asteroid"] || [secondNode.name isEqualToString:@"red_asteroid"]) {
+        if (wingmanActive == YES) {
+            //Run wingman or player removal
+            [self wingmanRemove:firstNode objectRemove:secondNode];
+        } else {
+            [self gameOver];
+        }
+        if ([secondNode.name isEqualToString:@"asteroid1"] || [secondNode.name isEqualToString:@"asteroid2"] || [secondNode.name isEqualToString:@"asteroid3"] || [secondNode.name isEqualToString:@"redAsteroid"]) {
             [GameState sharedGameData].totalAsteroidDeaths = [GameState sharedGameData].totalAsteroidDeaths + 1;
         } else if ([secondNode.name isEqualToString:@"debris"]) {
             [GameState sharedGameData].totalDebrisDeaths = [GameState sharedGameData].totalDebrisDeaths + 1;
@@ -1879,7 +1879,7 @@ NSMutableArray *reportArray;
             localTotalAsteroidHits = localTotalAsteroidHits + 1;
         } else if ([secondNode.name isEqualToString:@"debris"]) {
             localTotalDebrisHits = localTotalDebrisHits + 1;
-        } else if ([secondNode.name isEqualToString:@"red_asteroid"]) {
+        } else if ([secondNode.name isEqualToString:@"redAsteroid"]) {
             localChallengePoints = localChallengePoints + 1;
         }
         

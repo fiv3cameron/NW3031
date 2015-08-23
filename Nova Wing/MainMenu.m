@@ -78,7 +78,7 @@ NSTimeInterval _dt;
         [self createRankInsignia];
         
         [self createAudio];
-        //[[NSNotificationCenter defaultCenter] postNotificationName:@"showAd" object:nil];
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"showAd" object:nil];
         
         _largeRankIsActive = NO;
 
@@ -233,9 +233,6 @@ NSTimeInterval _dt;
 
 -(SKLabelNode *)backToMainButton
 {
-    SKNode *mainButtonHouse;
-    mainButtonHouse.alpha = 0.0;
-    
     SKLabelNode *backToMain = [SKLabelNode labelNodeWithFontNamed:@"SF Movie Poster"];
     backToMain.alpha = 0.0;
     backToMain.position = CGPointMake(60.0f, self.size.height - 40);
@@ -387,7 +384,18 @@ NSTimeInterval _dt;
     [self addChild:success];
     [self fadeOutNode:rect withWait:2 fadeAlphaTo:0 fadeAlphaWithDuration:.5];
     [self fadeOutNode:success withWait:2 fadeAlphaTo:0 fadeAlphaWithDuration:.5];
-    
+}
+
+-(void)buildNumber {
+    SKLabelNode *buildNumberNode = [SKLabelNode labelNodeWithFontNamed:@"SF Movie Poster"];
+    buildNumberNode.text = @"Version 1.0.1";
+    [buildNumberNode setHorizontalAlignmentMode:SKLabelHorizontalAlignmentModeRight];
+    buildNumberNode.position = CGPointMake(self.size.width-30, self.size.height-40);
+    buildNumberNode.fontSize = 30;
+    buildNumberNode.fontColor = [SKColor whiteColor];
+    buildNumberNode.alpha = 0.0;
+    [self addChild:buildNumberNode];
+    [self fadeInNode:buildNumberNode withWait:1.0 fadeAlphaTo:1.0 fadeAlphaWithDuration:0.3];
 }
 
 #pragma mark --Game Center
@@ -838,6 +846,7 @@ NSTimeInterval _dt;
         [self vibrationLabel];
         [self vibrationToggleButtonCreate];
         [self resetGameData];
+        [self buildNumber];
         [self addChild:[self backToMainButton]];
     }
     

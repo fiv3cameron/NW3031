@@ -173,19 +173,33 @@ NSMutableArray *reportArray;
     tempNode.text = @"Developers";
     tempNode.alpha = 0.0;
     
-    SKAction *waitIn = [SKAction waitForDuration:0.8];
-    SKAction *fadeIn = [SKAction fadeInWithDuration:0.6];
-    SKAction *inSeq = [SKAction sequence:@[waitIn, fadeIn]];
+    //Developer Titles
+    SKAction *waitInDevs = [SKAction waitForDuration:0.7];
+    SKAction *fadeInDevs = [SKAction fadeInWithDuration:0.6];
+    SKAction *waitAtDevs = [SKAction waitForDuration:2.0];
+    SKAction *fadeOutDevs = [SKAction fadeOutWithDuration:0.4];
+    SKAction *devSequence = [SKAction sequence:@[waitInDevs,fadeInDevs,waitAtDevs,fadeOutDevs]];
     
-    SKAction *wait = [SKAction waitForDuration:2.0];
-    SKAction *fade = [SKAction fadeOutWithDuration:0.4];
-    SKAction *rename = [SKAction runBlock:^{
+    //Mike & Brennan Titles
+    SKAction *renameToGrandTsar = [SKAction runBlock:^{
         tempNode.text = @"Grand Tsar";
     }];
-    SKAction *waitAgain = [SKAction waitForDuration:0.6];
-    SKAction *fadeBackIn = [SKAction fadeInWithDuration:0.6];
-    SKAction *waitAgainAgain = [SKAction waitForDuration:1.75];
-    SKAction *fadeOutFromMike = [SKAction fadeOutWithDuration:0.4];
+    SKAction *waitInGrandTsar = [SKAction waitForDuration:0.7];
+    SKAction *fadeInGrandTsar = [SKAction fadeInWithDuration:0.6];
+    SKAction *waitAtGrandTsar = [SKAction waitForDuration:1.5];
+    SKAction *fadeOutGrandTsar = [SKAction fadeOutWithDuration:0.4];
+    SKAction *GrandTsarSequence = [SKAction sequence:@[renameToGrandTsar,waitInGrandTsar,fadeInGrandTsar,waitAtGrandTsar,fadeOutGrandTsar]];
+    
+    SKAction *renameToBroAtArms = [SKAction runBlock:^{
+        tempNode.text = @"Brother At Arms";
+    }];
+    SKAction *waitInBroAtArms = [SKAction waitForDuration:0.5];
+    SKAction *fadeInBroAtArms = [SKAction fadeInWithDuration:0.6];
+    SKAction *waitAtBroAtArms = [SKAction waitForDuration:1.5];
+    SKAction *fadeOutBroAtArms = [SKAction fadeOutWithDuration:0.4];
+    SKAction *BroAtArmsSequence = [SKAction sequence:@[renameToBroAtArms,waitInBroAtArms,fadeInBroAtArms,waitAtBroAtArms,fadeOutBroAtArms]];
+    
+    //Betas & Producers
     SKAction *renameToProducers = [SKAction runBlock:^{
         tempNode.text = @"Producers";
     }];
@@ -193,35 +207,40 @@ NSMutableArray *reportArray;
     SKAction *fadeInForProducer = [SKAction fadeInWithDuration:0.6];
     SKAction *waitAtProducer = [SKAction waitForDuration:1.0];
     SKAction *fadeOutFromProducer = [SKAction fadeOutWithDuration:0.6];
+    SKAction *ProducerSequence = [SKAction sequence:@[renameToProducers,waitForProducer,fadeInForProducer,waitAtProducer,fadeOutFromProducer]];
     SKAction *remove = [SKAction removeFromParent];
-    SKAction *seq = [SKAction sequence:@[inSeq,wait,fade,rename,waitAgain,fadeBackIn,waitAgainAgain,fadeOutFromMike,renameToProducers,waitForProducer,fadeInForProducer,waitAtProducer,fadeOutFromProducer,remove]];
+    SKAction *seq = [SKAction sequence:@[devSequence,GrandTsarSequence,BroAtArmsSequence,ProducerSequence,remove]];
     
     [self addChild:tempNode];
     [tempNode runAction:seq];
 }
 
 -(void)rollCredits {
+    //Credits order - Developers first, then Mike & Brennan, then betas, then special thanks to the wives.  creditsRoundCount = 0 is devs, 1 = Mike & Brennan, round 2 is betas, and
+    
     //Set Up Dictionary
     NSString *path = [[NSBundle mainBundle] pathForResource:@"Credits" ofType:@"plist"];
     NSMutableDictionary *dict = [[NSMutableDictionary alloc] initWithContentsOfFile:path];
     NSMutableArray *devsDict = [dict objectForKey:@"Devs"];
     NSMutableArray *betaDict = [dict objectForKey:@"Betas"];
-    NSMutableArray *otherDict = [dict objectForKey:@"Others"];
+    NSMutableArray *otherArrayUnsorted = [dict objectForKey:@"Others"];
     NSArray *devsSorted = [devsDict sortedArrayUsingSelector:@selector(localizedCaseInsensitiveCompare:)];
     NSArray *betasSorted = [betaDict sortedArrayUsingSelector:@selector(localizedCaseInsensitiveCompare:)];
-    NSArray *othersSorted = [otherDict sortedArrayUsingSelector:@selector(localizedCaseInsensitiveCompare:)];
-    int matrixSize = (int)[betasSorted count];
-    _totalCreditsHits = matrixSize + (int)[devsSorted count]+(int)[othersSorted count];
+    //NSArray *othersSorted = [otherDict sortedArrayUsingSelector:@selector(localizedCaseInsensitiveCompare:)];
+    int devsSize = (int)[devsSorted count];
+    int othersSize = (int)[otherArrayUnsorted count];
+    int betaSize = (int)[betasSorted count];
+    _totalCreditsHits = betaSize + devsSize + othersSize;
     
-    NSArray *combinedCredits = @[devsSorted,othersSorted,betasSorted];
+    NSArray *combinedCredits = @[devsSorted,otherArrayUnsorted,betasSorted];
     
-    if (creditsRoundCount == 0 && positionInRound == 2) {
+    if (creditsRoundCount == 0 && positionInRound == devsSize) {
         positionInRound = 0;
         creditsRoundCount = creditsRoundCount + 1;
-    } else if (creditsRoundCount == 1 && positionInRound == 1) {
+    } else if (creditsRoundCount == 1 && positionInRound == othersSize) {
         positionInRound = 0;
         creditsRoundCount = creditsRoundCount + 1;
-    } else if (creditsRoundCount == 2 && positionInRound == matrixSize) {
+    } else if (creditsRoundCount == 2 && positionInRound == betaSize) {
         [self removeActionForKey:objectCreateKey];
         [self creditsEnd];
     } else {
@@ -248,7 +267,15 @@ NSMutableArray *reportArray;
         int tempRand = arc4random()%50;
         double randYPosition = (tempRand+25)/100.0;
         devNode.position = CGPointMake(self.size.width+name.frame.size.width, self.size.height*randYPosition);
-        SKAction *waitToLaunch = [SKAction waitForDuration: 0.5];
+        float waitDuration;
+        if (creditsRoundCount == 1 && positionInRound == 1) {
+            waitDuration = 2;
+        } else if (creditsRoundCount == 2 && positionInRound < 4){
+            waitDuration = 3-2.2*(positionInRound/5);
+        } else {
+            waitDuration = 0.8;
+        }
+        SKAction *waitToLaunch = [SKAction waitForDuration: waitDuration];
         SKAction *impulse = [SKAction runBlock:^{
             [devNode.physicsBody applyImpulse:CGVectorMake(-15, 0)];
         }];
@@ -275,7 +302,7 @@ NSMutableArray *reportArray;
     [wivesThanks setFontName:@"SF Movie Poster"];
     [self addChild:wivesThanks];
     
-    SKAction *wait1 = [SKAction waitForDuration:2.0];
+    SKAction *wait1 = [SKAction waitForDuration:2.7];
     SKAction *fadeIn = [SKAction fadeInWithDuration:0.4];
     SKAction *wait2 = [SKAction waitForDuration:5.0];
     SKAction *fadeOut = [SKAction fadeOutWithDuration:0.4];
